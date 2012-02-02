@@ -1,0 +1,154 @@
+<?php
+$this->headScript();
+$this->headLink()->appendStylesheet($this->locateFile('magiczoom.css'));
+//$url   = $this->baseUrl() . '/' . 'cart/index/ajax/';
+$url     = $this->baseUrl() . '/' . 'tmpDownload.php?img=';
+$langId  = Zend_Registry::get('languageID');
+$product = $this->productDetails;
+$arrow   = ' ' . $this->clientImage('arrowBreadcrumb.jpg');
+$hasDocPub = (!empty ($product['PI_FicheTechniquePublicPDF'])) ? 1:0;
+
+?>
+<?php $this->headTitle($product['PI_Name']) ?>
+<div id="content-right-catalog">
+    <?php echo $this->partial(
+        'partials/breadcrumb.phtml', 
+        array(
+            'view' => $this
+//            'currentType'        => $this->currentType,
+//            'currentCollections' => $this->currentCollection,
+//            'currentClientele'   => $this->currentClientele
+            )
+        ); 
+    ?>
+    <div id="blockDetailTop">
+        <p class="productTypeNum">
+            <span class="productTypeTitle"><?php //echo $product['type']['TI_Name']; ?></span>
+            <span class="separator">|</span>
+            <span class="productNumTitle"><?php //echo $product['P_Number']; ?></span>
+        </p>
+        <div class="boldLine" ></div>
+    </div>
+    <div id="blockDetailRight">
+        <?php if (!empty($product['PI_DescriptionPublic'])): ?>
+        <div id="blockDescription">
+            <?php echo $product['PI_DescriptionPublic']; ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($product['PI_Features'])): ?>
+        <div id="blockFeatures">
+            <p class="blockTitle"><?php echo $this->getCibleText('product_features_label_description'); ?></p>
+            <?php echo $product['PI_Features']; ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($product['PI_Composition'])): ?>
+        <div id="blockCompo">
+            <p class="blockTitle"><?php echo $this->getCibleText('product_compo_label_description'); ?></p>
+            <?php echo $product['PI_Composition']; ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($product['PI_SizesDescr'])): ?>
+        <div id="blockSizes">
+            <p class="blockTitle"><?php echo $this->getCibleText('product_size_label_description'); ?></p>
+            <?php echo $product['PI_SizesDescr']; ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($product['PI_PricesDescr'])): ?>
+        <div id="blockPrices">
+            <p class="blockTitle"><?php echo $this->getCibleText('product_price_label_description'); ?></p>
+            <?php echo $product['PI_PricesDescr']; ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($product['PI_ColorsDescr'])): ?>
+        <div id="blockColors">
+            <p class="blockTitle"><?php echo $this->getCibleText('product_color_label_description'); ?></p>
+            <?php echo $product['PI_ColorsDescr']; ?>
+        </div>
+        <?php endif; ?>
+    </div>
+    <div id="blockDetailLeft">
+        <div id="blockImage">
+            <?php if(!empty($product['P_Photo'])): ?>
+            
+            <?php echo $this->moduleImage(
+                    'catalog',
+                    'products/' . $product['P_ID'],
+                    $product['P_Photo'],
+                    'medium',
+                array(
+                    'class' => 'MagicZoom',
+                    'alt'   => $product['PI_Name'],
+                    'useSize' => false,
+                    'magicZoom'=>array(
+                        'size'  => 'original',
+                        'image' => $product['P_Photo'],
+                        'rel' => 'zoom-width:250px;zoom-height:300px;zoom-fade: true;opacity-reverse:true;zoom-distance: 50;smoothing-speed:17;'
+                        )
+                )); ?>
+            <?php else:
+                $alt = $product["PI_Name"];
+                echo $this->clientImage('noPic_258x307.jpg', array('alt'=>$alt));
+            ?>
+            <?php endif; ?>
+
+        </div>
+        <div id="blockDownloadLink">
+            
+            <a href="<?php echo $url . $product['P_Photo'] . '&amp;pid=' . $product['P_ID']; ?>">
+                <?php echo $this->getClientText('product_label_download_img'); ?>
+            </a>
+            <?php 
+            echo $arrow;
+//            echo $this->link($product['PI_ValUrl'] .'/img/'.$product['P_Photo'] . '/pid/' . $product['P_ID'] ,
+//                $this->getClientText('product_label_download_img'),
+//                array('id' => 'techPdfFile', 'target' => '_blank')
+//                );
+            ?>
+        </div>
+        <?php if ($hasDocPub): ?>
+        <div id="linkCharteGrandeur">
+            <?php 
+            echo $this->link(
+                $product['PI_FicheTechniquePublicPDF'],
+                $this->getCibleText('product_label_charte_grandeur') . $arrow,
+                array('id' => 'techPdfFile', 'target' => '_blank')
+                );
+            ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+<div id="content-left-catalog">
+    <?php echo $this->partial(
+        'partials/searchEngine.phtml', 
+        array(
+            'types' => $this->types,
+            'collections' => $this->collections,
+            'clientele'   => $this->clientele
+            )
+        ); ?>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    $(document).ready(function(){
+//        $('.addCart a').click(function(e){
+//            var options = new Array();
+//            options.borderColor = "#BABE00";
+//            $('#cible-tooltip-box').tooltip_appear(options);
+//        });
+    var imgHeight = $('#blockImage img').height();
+    var divHeight = 308;
+    var topValue  = (divHeight - imgHeight)/2;
+    var parent = $('#blockImage img').parent()
+    parent.css('top', topValue);
+        
+    $('#blockImage img').mouseover(function(){
+        $('.MagicZoomBigImageCont').css('top', -topValue);
+    });
+    $('.MagicZoomBigImageCont').mouseleave(function(){
+        
+    });
+    
+    });
+//]]>
+</script>

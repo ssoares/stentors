@@ -1,0 +1,37 @@
+/* Version SVN: $Id: sitemap.css 426 2011-03-24 13:19:50Z ssoares $*/
+/***************************************/
+/* SITEMAP CLASSES */       
+#div-sitemap    {
+    padding-left: 15px;
+}
+#div-sitemap ul.sitemap {
+    list-style: none;
+    margin: 0px;
+    padding: 3px 0px !important;
+}
+#div-sitemap ul.sitemap li  {
+    list-style-image: url("../images/common/puce-content.jpg");
+    margin: 0px; 
+    padding: 3px 0px !important;
+    font-size: 16px !important;    
+    font-weight: bold;    
+}
+#div-sitemap ul.sitemap li a  {    
+    font-size: 12px !important;    
+    font-weight: bold;    
+}
+
+#div-sitemap ul.sitemap ul > li a  {    
+    font-size: 13px !important;
+    font-weight: bold;                                
+}
+#div-sitemap ul.sitemap ul li a  {    
+    font-size: 12px !important;
+    font-weight: normal;
+}
+#div-sitemap ul.sitemap ul li a:hover   {
+    color: #E4222E;
+} 
+#div-sitemap ul.sitemap li a:hover  {
+    color: #E4222E;
+}

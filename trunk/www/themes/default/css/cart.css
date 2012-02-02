@@ -1,0 +1,424 @@
+div#cart    {
+    clear: both;
+    padding: 0px;
+    margin: 0 0 0 8px;
+    width: 860px;
+}
+div#cart p {
+    padding: 0;
+    margin: 0;
+}
+
+div#cart div#cart-big-steps {
+    padding: 0px;
+    margin: 10px 0 25px 0;
+    font-size: 17px;
+    color: #3399CC;
+}
+
+div#cart div#cart-order-steps {
+    padding: 1px;
+    margin: 0 0 15px 0;
+    height: 46px;
+    background: transparent url('../images/common/bg_DualDotLine_H46.png') repeat-x;
+}
+div#cart div#cart-order-steps ul    {
+    width: 990px;
+    list-style: none;
+    padding: 0px;
+}
+div#cart div#cart-order-steps ul li {
+    display: inline-block;
+    margin-right: 0px;
+    font-size: 18px;
+    color: #666666;
+    width: 240px;
+   
+}
+div#cart div#cart-order-steps ul li.selected {
+    color: #BABE00;
+}
+div#cart .greenText{
+    color: #BABE00;
+    font-size:13px;
+    text-transform: uppercase;
+}
+
+div#cart div#cart-big-buttons   {
+    padding: 0px;
+    margin: 0 0 25px 0;
+    text-align: right;
+}
+div#cart div#cart-big-buttons ul    {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+div#cart div#cart-big-buttons ul li {
+    display: inline-block;
+    margin: 0px;
+    margin-top:-2px;
+    padding: 2px 0;
+    height: 21px;
+    background: transparent url(../images/common/btn-round-corner-middle.png) repeat-x;
+}
+div#cart div#cart-big-buttons ul li.left   {
+    background: transparent url(../images/common/btn-round-corner-left.png) no-repeat;
+    width: 4px;
+    padding: 2px 0;
+}
+div#cart div#cart-big-buttons ul li.right   {
+    background: transparent url(../images/common/btn-round-corner-right.png) no-repeat;
+    padding: 2px 0;
+    margin-right: 10px;
+    width: 6px;
+}
+div#cart div#cart-big-buttons ul li.last    {
+    margin-right: 0px;
+    padding: 2px 0;
+}
+div#cart div#cart-big-buttons ul li.link-blue a,
+div#cart div#cart-big-buttons ul li.link-red a   {
+    text-decoration: none;
+    color: #666666;
+    font-size: 13px;
+    padding: 0 0 1px 0px;
+    margin-top:-2px;
+}
+
+div#cart div#cart-big-buttons ul li.link-blue a:hover,
+div#cart div#cart-big-buttons ul li.link-red a:hover    {
+    color: #666666;
+}
+
+div#cart div#explication-text   {
+    
+    padding: 0px;
+    margin: 0 0 20px 0;
+}
+div#cart div#explication-text p {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+/*div#cart div#cart-info  {
+    
+    padding: 0px;
+    margin: 20px 0 20px 0;
+
+    border: solid 1px red;
+}*/
+/*div#cart div#cart-info span#  {
+    
+    padding: 0px;
+    margin: 0px;
+
+    border: solid 1px red;
+}*/
+
+
+
+/* Product list */
+
+div#cart div#headerProductList{
+    background: transparent url('../images/common/bg_DualDotLine_H30.png') repeat-x;
+    height: 30px;
+}
+div#cart div#headerProductList p{
+    margin-top: 7px;
+    display: inline-block;
+    text-align: left;
+    height: 23px;
+}
+div#cart div#headerProductList p.left{
+    width: 450px;
+    padding-left: 114px;
+}
+div#cart div#headerProductList p.center{
+    padding-left: 15px;
+    width: 105px;
+}
+div#cart div#headerProductList p.middle{
+    width: 90px;
+}
+div#cart div#headerProductList p.right{
+    width: auto;
+}
+div#cart div#product-list   {
+    
+    padding: 0px;
+    margin: 0px;
+
+}
+
+div#cart div#product-list div.product   {
+    padding: 0px;
+    margin: 0 0 40px 0;
+}
+div#cart div#product-list div.product div#dataLeftCol   {
+    float: left;
+    padding: 12px 0 0 0;
+    margin: 0px;
+    width: 500px;
+}
+
+div#cart div#product-list div.product div#dataRightCol   {
+    padding: 12px 0 0 80px;
+    margin: 0;
+    width: auto;
+    float: left;
+}
+div#cart div#product-list div.product div{
+    padding: 0px;
+    margin: 0px;
+/*    width: 150px;*/
+    display: inline-block;
+}
+div#cart div#product-list div.product div.sumLine,
+div#cart div#product-list div.product div.quantity{
+    text-align: center;
+    width: 74px;
+}
+div#cart div#product-list div.product div.sumLine{
+    text-align: right;
+}
+div#cart div#product-list div.product p.quantity{
+    padding-left: 10px;
+}
+div#cart div#product-list div.product div.right{
+    width: 100px;
+    color: #3399CC;
+}
+
+div#cart div#product-list div.product div#dataLeftCol div.product-description
+{
+    padding: 0px;
+    margin: 0 0 10px 30px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000;
+}
+div#cart div#product-list div.product div#dataLeftCol div.product-description .alertSpecial{
+    font-size: 16px;
+}
+div#cart div#product-list div.product div#dataLeftCol div.product-description .delete{
+    color: #999999;
+    font-size: 11px;
+}
+div.product div#dataLeftCol div#image   {
+    float: left;
+    padding: 0px;
+    margin: 0 15px 0 0;
+}
+
+div.product div#dataLeftCol div#image img   {
+    border: solid 1px #EEEEEE;
+    padding: 4px;
+    width: 75px;
+}
+
+div.product div#dataLeftCol div#linkDeleteProduct   {
+    
+    padding: 0px;
+    margin: 10px 0 0 0;
+}
+div.product div#dataLeftCol div#linkDeleteProduct a {
+    text-decoration: none;
+    color: #000;
+}
+div.product div#dataLeftCol div#linkDeleteProduct a:hover {
+    color: #FF0000;
+}
+
+div#order-now   {
+    
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+div#order-now a {
+    text-decoration: none;
+    color: #CC0000;
+}
+div#order-now a:hover {
+    color: #000;
+}
+div#order-now a.order-button-fr    {
+    border: none;
+    background: transparent url(../images/fr/btn-order-cart.png) no-repeat;
+    color: #FFF;
+    cursor: pointer;
+    width: 106px;
+    height: 24px;
+
+    padding: 0px;
+    margin: 0px;
+}
+div#order-now a.order-button-en    {
+    border: none;
+    background: transparent url(../images/en/btn-order-cart.png) no-repeat;
+    color: #FFF;
+    cursor: pointer;
+    width: 106px;
+    height: 24px;
+    padding: 0px;
+    margin: 0px;
+}
+
+div#cart div#no-item    {
+    
+    padding: 0px;
+    margin: 0px;
+    font-size: 13px;
+    font-weight: normal;
+    color: #002255;
+}
+
+div#dataRightCol p{
+    display: inline;
+    margin: 5px !important;
+}
+
+div#dataRightCol p a{
+    color: #000;
+    padding: 0 5px;
+}
+
+div#dataRightCol input, div#dataRightCol select{
+    border: 1px solid #CCCCCC;
+}
+
+p.quantityColumn{
+    width: 40px;
+}
+div#cart div#product-list div.product div#dataRightCol .firstLine p.quantityColumn{
+    padding-left: 5px;
+}
+
+div#cart div#product-list div.product div#dataRightCol .firstLine p.sizeFields{
+    padding-left: 15px;
+}
+div#cart div#product-list div.product div#dataRightCol .categoryItem{
+    width: 250px;
+    margin: 2px;
+}
+
+.tailleItem{
+    width: 120px;
+    margin: 2px;
+}
+
+input.qtyField{
+    text-align: center;
+    width: 40px;
+}
+
+p.sizeFields{
+    width: 400px !important;
+}
+
+div#dataRightCol p.linkAddSize{
+    display: block;
+    margin: 2px 10px;
+}
+
+.sizeLine{
+    margin: 2px;
+}
+div#dataRightCol p.deleteLine{
+    background: transparent url('../images/common/img-delete.png') no-repeat center;
+    height: 14px;
+    width: 14px;
+    margin: 2px;
+    padding-left: 14px;
+    cursor: pointer;
+}
+.hide{
+    display: none;
+}
+
+div#cart p.stepText{
+    background: transparent url('../images/common/bg_cart.png') no-repeat left 50%;
+    height: 23px;
+    width: 200px;
+    padding-left: 30px;
+    color: #BABE00;
+    font-size: 22px;
+}
+
+div#cart p.stepText span{
+    line-height: 25px;
+    vertical-align: middle;
+}
+
+div#cart div#totalSummary{
+    border: 1px solid #EEEEEE;
+    margin: 15px 0 19px 0;
+    padding: 4px;
+    width: 100%;
+}
+div#cart div#totalSummary div{
+    min-height: 200px;
+
+}
+div#cart div#summaryContent{
+    background-color: #F5F5D9;
+    border: none;
+    margin-left: 0px;
+    padding: 15px 30px 14px 650px;
+    text-align: right;
+}
+div#cart div#pointBoni{
+    width: 430px;
+    border: none;
+    padding: 15px 0 0 35px;
+    margin-left: 0px;
+    float: left;
+    font-size: 15px;
+    position:absolute;
+}
+div#cart div#pointBoni span{
+    color: #3399CC;
+    font-size: 14px;
+    font-weight: bold;
+}
+div#cart p.leftCol{
+    float: left;
+    width: 100px;
+}
+div#cart p#zoneTitle{
+    margin: 0 0 23px 0;
+}
+div#cart p.blueTxt{
+    color: #3399CC;
+    font-size: 17px;
+}
+div#cart #subTotalLbl, div#cart #subTotalValue{
+    margin: 0 0 17px 0;
+}
+div#cart #transportLbl, div#cart #transportValue{
+    margin: 0 0 11px 0;
+}
+div#cart #totalLbl, div#cart #totalValue{
+    margin: 20px 0 0 0;
+}
+.zipCode_format{
+    text-transform: uppercase;
+}
+
+div#cart p.infoTpsFees{
+    text-align: left;
+    padding: 28px 0 0 0;
+}
+div#cart p.infoLimitOrder{
+    padding-right: 30px;
+}
+
+div#cart div.dotLine{
+    width: 858px;
+    margin: 10px 0px 10px 0px;
+}
+div#cart div.dotLine{
+    width: 858px;
+    margin: 10px 0px 10px 0px;
+}

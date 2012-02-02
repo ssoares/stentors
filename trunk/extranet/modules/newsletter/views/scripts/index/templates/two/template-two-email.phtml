@@ -1,0 +1,291 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<base href="<?php echo Zend_Registry::get('absolute_web_root') ?>" />
+</head>
+<?php
+
+//    $sourceHeaderLeft = "/themes/default/images/common/logo-{$this->moduleId}-{$this->newsletterID}-{$this->memberId}.jpg";
+    $sourceTitreBleu = Zend_Registry::get('www_root');
+    $sourceTitreBleu .= "/themes/default/images/common/attraction_fier.jpg";
+    $sourceEnteteMail2 = Zend_Registry::get('www_root');
+    $sourceEnteteMail2 .= "/themes/default/images/common/entete_courriel2.jpg";
+    $sourceEnteteMail3 = Zend_Registry::get('www_root');
+    $sourceEnteteMail3 .= "/themes/default/images/common/entete_courriel3.jpg";
+    $spacerWhite3 = Zend_Registry::get('www_root');
+    $spacerWhite3 .= "/themes/default/images/common/whiteSpacer_left.jpg";
+    $spacerWhite4 = Zend_Registry::get('www_root');
+    $spacerWhite4 .= "/themes/default/images/common/whiteSpacer_down.jpg";
+    $spacerWhite5 = Zend_Registry::get('www_root');
+    $spacerWhite5 .= "/themes/default/images/common/whiteSpacer_down2.jpg";
+
+
+
+    $subscribeLink = $this->subscribeLink . '/uid/' . $this->memberId. '/newsletterID/' . $this->newsletterID;
+    $unsubscribeLink = $this->unsubscribeLink . '/uid/' . $this->memberId . '/newsletterID/' . $this->newsletterID;
+    $archiveLink = $this->archiveLink . '/uid/' . $this->memberId;
+?>
+<?php
+    $date = new Zend_Date($this->parution_date,null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));
+    $date_string = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_MONTH_YEAR,'.');
+ ?>
+<body>
+   <img style="border:0px;height:1px;" src="<?php echo $sourceTitreBleu;?>" alt="" />
+<table width="700px" border="0" cellspacing="0" cellpadding="0" height="191px" style="background-color:#007DC7;border-bottom:5px solid #333333;">
+    <tr>
+        <td>
+            <?php
+            if ($this->isOnline != 2)
+            {
+                echo $this->getCibleText('email_not_show_go_online1',$this->languageRelease);
+                echo "<a href='";
+                //echo $this->details_release;
+                // exit;
+                echo Zend_Registry::get('absolute_web_root') . $this->details_release;
+                echo "'>";
+                echo $this->getCibleText('email_not_show_go_online2',$this->languageRelease);
+                echo "</a>";
+            }
+           ?>
+            <img style="border:0px;" src="<?php echo $sourceEnteteMail1;?>" alt="">
+        </td>
+        <td rowspan="3">
+            <img style="border:0px;" src="<?php echo $sourceEnteteMail2;?>" alt="">
+        </td>
+    </tr>
+    <tr>
+        <td height="35px" style="background-color:#007DC7;font-size:18px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;padding-left:50px;">
+            <?php
+                echo $date_string;
+            ?>
+        </td>
+    </tr>
+    <tr>
+    <td colspan="2">
+        <div class="intro_text_to_replace">
+        <?php
+            echo $this->intro;
+        ?>
+        </div>
+    </td>
+</tr>
+
+</table>
+<table cellpadding="0px" cellspacing="0px" border="0" style="vertical-align:top;width:700px;font-size:13px; font-family:Arial; color:#666666; font-weight:regulier;text-transform:none;">
+    <tr>
+        <td style="width:498px;font-size:13px; font-family:Arial; color:#666666; font-weight:regulier;text-transform:none;">
+            <table cellpadding="0px" cellspacing="0px">
+                <tr>
+                    <td width="42px;">
+                        <img style="border:0px;" src="<?php echo $spacerWhite3;?>" alt="">
+                    </td>
+                    <td width="402px">
+                        <?php
+                        $counter = 0;
+                        foreach ($this->articles as $article)
+                        {
+                            if($article['NA_ZoneID'] == 1)
+                            {
+                            ?>
+                            <table cellpadding="0px" cellspacing="0px" width="400px">
+                                <tr>
+                                    <td height="5px">&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:32px; font-family:Arial; color:#666666; font-weight:regulier;text-transform:none;">
+                                        <?php if(!empty($article['NA_Title'])){ ?>
+                                           <?php echo($article['NA_Title']); ?>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php $config = Zend_Registry::get('config')->toArray(); ?>
+                                        <?php $thumbMaxHeight = $config['newsletter']['image']['thumb']['maxHeight']; ?>
+                                        <?php $thumbMaxWidth  = $config['newsletter']['image']['thumb']['maxWidth']; ?>
+                                        <?php
+                                        if($article['NA_ImageAlt']){
+                                        ?>
+                                        <img align="left" style="margin-top:20px;margin-right:10px;border:0px solid #737779;" src="<?php echo Zend_Registry::get('absolute_web_root') ?>/data/images/newsletter/<?php echo($this->newsletterID); ?>/<?php echo($article['NA_ID']); ?>/<?php echo(str_replace($article['NA_ImageSrc'],$thumbMaxWidth.'x'.$thumbMaxHeight.'_'.$article['NA_ImageSrc'],$article['NA_ImageSrc'])); ?>" alt="<?php echo($article['NA_ImageAlt']); ?>"/>
+                                        <?php
+                                        }
+                                        ?>
+                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                      <?php if($article['NA_Resume']){ ?>
+                                        <?php echo($article['NA_Resume']); ?>
+                                    <?php } ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top:1px dotted #737779;border-bottom:1px dotted #737779;font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:none;line-height:20px">
+                                       <a style="font-family:Arial;font-size:13px;font-weight: bold;color:#666666;text-decoration:none;" href="<?php echo Zend_Registry::get('absolute_web_root') . '/' . $this->details_page . '/ID/' . $article['NA_ID'] . '/newsletterID/' . $this->newsletterID ?>">
+                                            <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>
+                                        </a>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td height="20px">
+                                       &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                           <?php
+                           }
+                        }
+                        ?>
+                    </td>
+                    <td width="46px">
+                        <img style="border:0px;" src="<?php echo $spacerWhite3;?>" alt="">
+                    </td>
+                </tr>
+            </table>
+            </td>
+          <td style="background-color: #F0F1F1;vertical-align:top;width:202px;font-size:13px; font-family:Arial; color:#666666; font-weight:regulier;text-transform:none;border-left: #B4B5B5 1px dotted;">
+            <table cellpadding="0px" cellspacing="0px" style="vertical-align:top;">
+                <tr>
+                    <td height="13px">&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width="202">
+                        <?php
+                        $counter = 0;
+                        foreach ($this->articles as $article)
+                        {
+                            if($article['NA_ZoneID'] == 2)
+                            {
+                            ?>
+                            <table  cellpadding="0px" cellspacing="0px">
+                                <tr>
+                                    <td width="20px;">&nbsp;
+                                    </td>
+                                    <td style="font-size:32px; font-family:Arial; color:#666666; font-weight:regulier;text-transform:none;">
+                                        <?php if(!empty($article['NA_Title'])){ ?>
+                                            <?php echo($article['NA_Title']); ?>
+                                        <?php } ?>
+                                    </td>
+                                    <td width="20px;">&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20px;">&nbsp;
+                                    </td>
+                                    <td>
+                                        <?php if($article['NA_Resume']){ ?>
+                                        <?php echo($article['NA_Resume']); ?>
+                                        <?php } ?>
+                                    </td>
+                                    <td width="20px;">&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20px;">&nbsp;
+                                    </td>
+                                    <td style="border-top:1px dotted #737779;border-bottom:1px dotted #737779;font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:none;line-height:20px">
+                                            <a style="font-family:Arial;font-size:13px;font-weight: bold;color:#666666;text-decoration:none;" href="<?php echo Zend_Registry::get('absolute_web_root') . '/' . $this->details_page . '/ID/' . $article['NA_ID'] . '/newsletterID/' . $article['NA_ReleaseID'] ?>">
+                                            <?php echo($this->getClientText('see_details_newsletter_text')); ?>
+                                            </a>
+                                    </td>
+                                    <td width="20px;">&nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                           <?php
+                           }
+                        }
+                        ?>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr >
+        <td colspan="2" height="20px;" style="border-top: #000000 5px solid;">&nbsp;
+        </td>
+    </tr>
+</table>
+<table width="700px" cellpadding="0px" cellspacing="0px">
+    <tr>
+        <td width="500px">
+            <table cellpadding="0px" cellspacing="0px">
+               <tr>
+                    <td width="49">
+                        &nbsp;
+                    </td>
+                    <td  height="30px" style="font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;">
+                        <a style="font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;" href="<?php echo Zend_Registry::get('absolute_web_root') . $subscribeLink; ?>">
+                        <?php
+                            echo($this->getCibleText('newsletter_button_subscribe_client_footer',$this->languageRelease));
+                        ?>
+                       </a>
+                    </td>
+                    <td width="10">
+                        &nbsp;
+                    </td>
+                    <td width="10">
+                        |
+                    </td>
+                    <td height="30px" style="font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;">
+                       <a style="font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;" href="<?php echo Zend_Registry::get('absolute_web_root') . $unsubscribeLink; ?>">
+                        <?php
+                            echo($this->getCibleText('newsletter_button_unsubscribe',$this->languageRelease));
+                        ?>
+                        </a>
+                    </td>
+                    <td width="10">
+                        &nbsp;
+                    </td>
+                    <td width="10">
+                        |
+                    </td>
+                    <td style="font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;" height="30px">
+                        <a style="font-size:12px; font-family:Arial; color:#333333; font-weight:bold;text-transform:uppercase;" href="<?php echo Zend_Registry::get('absolute_web_root') . $archiveLink; ?>">
+                        <?php
+                            echo($this->getCibleText('newsletter_button_archives_client',$this->languageRelease));
+                        ?>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <img style="border:0px;" src="<?php echo $spacerWhite4;?>" alt="">
+        </td>
+        <td width="20px;">&nbsp;
+        </td>
+        <td width="180">
+            <?php
+             echo($this->getCibleText('newsletter_cible_courriel_link',$this->languageRelease));
+             ?>
+            <img style="border:0px;" src="<?php echo $spacerWhite5;?>" alt="">
+        </td>
+    </tr>
+    <tr>
+        <td style="font-size:11px; font-family:Arial; color:#333333; font-weight:normal;text-transform:none;" colspan="2">
+            <table cellpadding="0px" cellspacing="0px">
+               <tr>
+                    <td width="49">
+                        <img style="border:0px;" src="<?php echo $spacerWhite3;?>" alt="">
+                    </td>
+                    <td>
+                         <?php echo str_replace('%%%GET_DATE_YEAR%%%', date('Y'), $this->getCibleText('footer_copyright_courriel')) ?>
+                    </td>
+               </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+
+
+
+
+
+

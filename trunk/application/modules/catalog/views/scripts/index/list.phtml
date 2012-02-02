@@ -1,0 +1,22 @@
+<?php
+$url            = $this->baseUrl() . '/' . 'cart/index/ajax/';
+$config         = Zend_Registry::get('config');
+$module         = $this->current_module;
+$keywords       = $this->keywords;
+$productsCount  = count($this->paginator);
+$languageSuffix = $this->languageSuffix;
+$langId         = Zend_Registry::get('languageID');
+?>
+
+<?php
+echo $this->partial(
+    'partials/product.list.phtml',
+    array(
+        'current_module' => $this->current_module,
+        'keywords'       => $this->keywords,
+        'languageSuffix' => $this->languageSuffix,
+        'paginator'      => $this->paginator,
+        'request'        => $this->request
+    )
+);
+?>

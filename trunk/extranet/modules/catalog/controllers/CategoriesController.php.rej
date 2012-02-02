@@ -1,0 +1,10 @@
+--- modules/catalog/controllers/CategoriesController.php	(rÃ©vision 281)
++++ modules/catalog/controllers/CategoriesController.php	(rÃ©vision 336)
+@@ -479,6 +479,7 @@
+                 {
+                     // get all';
+                     $oCategories->delete($id);
++                    Cible_FunctionsGeneral::delFolder($this->_imageFolder . $id);
+                 }
+ 
+                 $this->_redirect($returnUrl);

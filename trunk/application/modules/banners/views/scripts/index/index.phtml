@@ -1,0 +1,62 @@
+<?php $this->headScript()->appendFile($this->locateFile('jquery.cycle.all.js', 'jquery')); ?>
+<?php if ($this->navi): ?>
+<div id ="masterControl_left" class="masterControl masterControl_left">
+    <span class="control_fade leftControl">
+        <?php echo $this->image($this->baseUrl() . "/themes/default/images/common/realisation_prev.png", array("alt" => $this->getCibleText("form_paginator_previous"), "title" => $this->getCibleText("form_paginator_previous"))) ?>
+    </span>
+</div>
+<?php endif; ?>
+<div id="bannerContainer">
+<?php
+$imgID = 1;
+    foreach ($this->imageToShow as $index => $image){
+    ?>
+    <div id="slideContainer-<?php echo $imgID ?>" class="slide">
+        <div class="promoImg">
+        <?php
+            echo $this->image($image['img'],array("alt" => "banner"));
+        ?>
+        </div>
+    </div>
+    <?php 
+    $imgID++;
+    } ?>
+</div>
+<?php if ($this->navi): ?>
+    <div id="masterControl_right" class="masterControl masterControl_right">
+        <span class="control_fade rightControl">
+            <?php echo $this->image($this->baseUrl() . "/themes/default/images/common/realisation_next.png", array("alt" => $this->getCibleText("form_paginator_next"), "title" => $this->getCibleText("form_paginator_next"))) ?>
+        </span>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function(){    
+        var timerToRotate = 0;
+        var autoP = <?php echo $this->autoPlay; ?>;
+        var transitionTime = 0;
+        // var currentPosition = 0;
+        var showNavi = 0;
+        var effectTrans = 0; 
+    
+        transitionTime = <?php echo $this->transition; ?>;
+        showNavi = <?php echo $this->navi; ?>;
+        effectTrans = "<?php echo $this->effect; ?>";  // slide= scrollHorz , fading = fade
+
+        if (autoP)
+            timerToRotate = <?php echo $this->delais; ?> * 1000;
+   
+        $('#bannerContainer') 
+        .after('<div id="masterControl_paginator" class="masterControl_paginator whiteArrow">')
+        .cycle({
+            fx:     effectTrans, 
+            speed:  transitionTime, 
+            timeout: timerToRotate, 
+            pager:  '#masterControl_paginator' ,
+            prev: '#masterControl_left',
+            next: '#masterControl_right'
+        });
+        $('#masterControl_paginator a').html('&nbsp;');
+    });
+    //]]>
+</script>

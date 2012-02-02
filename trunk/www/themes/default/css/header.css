@@ -1,0 +1,40 @@
+/* Version SVN: $Id: header.css 724 2011-12-06 19:51:24Z freynolds $*/
+
+/***************************************/
+/* HEADER CLASSES */
+div#headerContainer    {    
+    overflow: hidden;
+    width: 100%;
+}
+
+div#headerContainer div#headerLeft    {
+    float: left;
+    width: 50%;    
+}
+
+div#headerContainer div#headerRight    {
+    width: 50%;
+    float: left;
+}
+
+div#headerContainer div#headerRight ul li{
+    display: inline;
+}
+div#headerContainer div#headerRightTop,
+div#headerContainer div#headerSearchLanguages   {
+    width: 100%;
+}
+/* HEADER CLASSES */
+/***************************************/
+
+/***************************************/
+/* TOOLS BOX CLASSES */
+
+/* TOOLS BOX CLASSES */
+/***************************************/
+
+/***************************************/
+/* LANGUAGES SWITCHER MENU CLASSES */
+
+/* LANGUAGES SWITCHER MENU CLASSES */
+/***************************************/

@@ -1,0 +1,21 @@
+/* Version SVN: $Id: site-ie7.css 526 2011-07-15 15:54:27Z ssoares $*/
+
+
+.stdTextarea{
+    margin-left: -80px;
+    margin-top:3px;
+}
+
+dd{
+    margin-left: 0px;
+}
+/** Fixes for display inline for li - menu */
+div#top-menu-container ul.top-menu li{
+    zoom:1;
+    *display: inline;
+    
+}
+
+/** END: Fix for li in menu */
+
+

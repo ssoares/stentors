@@ -1,0 +1,36 @@
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+        $(window).load(function(){
+            $('#search-box-terme').val('<?php echo $this->getClientText('search_box_default_value') ?>');
+        });
+    $('#search-box-terme').keypress(function(key){
+        if (key.which == 13){
+            $('#search-link').click();    
+        }
+    });
+
+    $('#search-box-terme').click(function(event){
+        if($('#search-box-terme').val() == '<?php echo $this->getClientText('search_box_default_value') ?>')
+        {
+            $(this).val('');
+        }
+    });
+    
+    $('#search-box-terme').blur(function(event){
+        if($(this).val() == '')
+            $(this).val('<?php echo $this->getClientText('search_box_default_value') ?>');
+    });
+    
+    $('#search-link').click(function(event){
+        event.preventDefault();
+        if($('#search-box-terme').val() != '<?php echo $this->getClientText('search_box_default_value') ?>'
+            && $('#search-box-terme').val() != '')
+        {
+            var url = $('#search-url').val()+"/" + $('#search-box-terme').val();
+            window.location = url;                
+        }
+    });
+});
+//]]> 
+</script>

@@ -1,0 +1,45 @@
+<div class="newsletter_title">
+    <?php echo($this->getCibleText('newsletter_title_abonnement_text'));?>
+</div>
+<div class="newsletter_left_web">
+    <?
+        $inscriptionValidate = $this->inscriptionValidate;
+        if(!$inscriptionValidate){
+    ?>      
+        <?php
+            echo($this->form);
+    //        echo($this->messageConfidentialite);
+        ?>
+    <?  }
+        else{
+    ?>      
+    <div class="text">
+        <?php 
+        echo($this->message);
+        ?>
+    </div>
+    <?  } ?>
+</div>
+
+<div class="newsletter_right_web">
+    <div class="newsletter_subscribe newsletter_menu_item"> 
+        <a class="newsletterMenuItemLink" href="<?php echo $this->subscribeLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_subscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_unsubscribe newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->unsubscribeLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_unsubscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_archives newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->archivesLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_archives'));?>
+        </a>
+    </div>
+</div>
+<div class="newsletter_politics_confidentiality">
+    <?php
+    echo($this->messageConfidentialite);
+?>
+</div>

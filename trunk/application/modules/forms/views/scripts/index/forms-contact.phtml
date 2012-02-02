@@ -1,0 +1,16 @@
+<?php
+    $inscriptionValidate = $this->inscriptionValidate;
+
+    if(!$inscriptionValidate){
+        echo($this->form);
+    }
+    else{
+    ?>
+    <div class="contact_text_succeed">
+    <?php
+        echo($this->getCibleText('message_contact_succeed'));
+        ?>
+    </div>
+    <?php
+    } ?>
+

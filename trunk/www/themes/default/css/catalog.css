@@ -1,0 +1,328 @@
+/*
+    Document   : catalog
+    Created on : 2011-06-06, 14:38:30
+    Author     : soaser
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   $Id: catalog.css 707 2011-11-28 19:32:07Z ssoares $
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+div#content-top-catalog,
+div.content_catalog_left_right{
+    background-color: #fff;
+    float: right;
+    min-height: 19.57em;
+    width: 86.25%;
+}
+div#content-top-catalog{
+    margin: 0px 0 5px 0;
+}
+div.content_catalog_left_right{
+    border-bottom: 4px solid #ACBF20;
+    margin: 0 0 -1px 0;
+}
+div.content_catalog_left_right h1{
+    margin: 40px 0 0 35px;
+}
+div#content-left-catalog,
+div.content-left
+{
+    width: 75%;
+}
+div#content-right-catalog{
+    width: 25%;
+}
+
+div#content-left-catalog {
+    background-color: #FFFFFF;
+    float: left;
+    padding: 15px 0 0 0;
+    margin-bottom: 20px;
+}
+div#content-right-catalog{
+    float: right;
+    padding: 15px 20px 0 21px;
+}
+
+div.searchEngine{
+    background: #FFFFFF url('../images/common/bgSearchEngine.jpg') repeat-y;
+}
+h2.criteriaTitle{
+    color: #9FB11E;
+    font-family: BiffoMTRegular;
+    font-size: 30px;
+    line-height: 32px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    padding: 20px 0 0 25px;
+    text-transform: none;
+}
+ul.criterias{
+    background: transparent url('../images/common/bgBottomSeparate.jpg') no-repeat 0 100%;
+    padding: 0 22px 30px 25px;
+    list-style: none;
+    margin: 0;
+}
+ul.criterias li{
+    background: transparent url('../images/common/criteriaUnchecked.png') no-repeat 0 3px;
+    color: #5FB9C9;
+    font: bold 11px arial;
+    line-height: 18px;
+    padding-left: 18px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+ul.criterias li.checked{
+    color: #666;
+    background: transparent url('../images/common/criteriaChecked.png') no-repeat 0 3px;
+}
+ul.criterias li.clearAll{
+    margin: 10px 0 0 0;
+    color: #666;
+    background: none;
+    font-weight: normal;
+}
+ul.last{
+    background: none;
+}
+
+/*** Image of the collection list ***/
+#list-products-container{
+    width: 100%;
+}
+.collectionList {
+    float: left;
+    width: 33.3333333%;
+    margin-bottom: 27px;
+}
+p.collectionListImg {
+    background: #fff url('../images/common/bgImgCatalog.jpg') no-repeat 0 0;
+    height: 227px;
+    margin: 0;
+    padding: 3px 0 0 0px;
+    position: relative;
+    text-align: center;
+    line-height: 16em;
+}
+p.collectionListImg img{
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0;
+    vertical-align: middle;
+}
+p.collectionListTitle{
+    font-family: BiffoMTRegular;
+    font-size: 24px;
+    line-height: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 5px 0 0 0px;
+    text-align: center;
+    text-transform: none;
+    width: 190px;
+}
+p.collectionListTitle a{
+    color: #999;
+}
+div.greenThinLine{
+    border: 0;
+    border-bottom: 1px solid #ACBF20;
+    clear: both;
+    margin-bottom: 25px;
+    /*    width: 100%;*/
+}
+/*** END: Image of the collection list ***/
+
+/*** Image of the products list ***/
+div#catalogBreadcrumb{
+    color: #666;
+    text-transform: none;
+}
+div#catalogBreadcrumb a{
+    color: #666;
+}
+h1#collectionPageTitle{
+    color: #ACBF1F;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+div.boldLine{
+    background: #EEF2D2 url('../images/common/bgBoldLine.jpg') no-repeat right top;
+    border: 0 none;
+    height: 10px;
+    margin: 2px 0 35px 0;
+}
+p.productTitle,
+p.productNum{
+    margin: 0;
+    padding: 0px;
+    text-align: center;
+    text-transform: none;
+}
+p.productTitle{
+    margin-top: 6px;
+}
+p.productTitle a{
+    color: #666;
+}
+p.productNum a{
+    color: #ADBF21;
+}
+
+/*** END: Image of the products list ***/
+
+/*** Style Bloc Promo ***/
+div#promoContainer {
+    height: 19.57em;
+    overflow: hidden;
+}
+div.content-left{
+    background: #ACBF20 url('../images/common/greenLine.jpg') no-repeat 0 122px;
+    min-height: 19.57em;
+    float: left;
+}
+div.content-left p{
+    color: #fff;
+    font-size: 1.429em;
+    line-height: 25px;
+    margin: 0;
+    padding: 62px 0 0 25px;
+    text-transform: uppercase;
+}
+div#promoContainer div.promoDescr{
+    border: 0;
+    border-left: 1px solid #ccc;
+    float: right;
+    margin: 52px 36px 45px 0;
+    min-height: 140px;
+    padding-left: 19px;
+    width: 298px;
+}
+div#promoContainer div.promoDescr p{
+    margin: 0 0 10px 0;
+}
+
+div#promoContainer div.promoDescr p.blueText{
+    color: #5fb9c9;
+    font-family: BiffoMTRegular;
+}
+
+
+div#promoContainer div.promoImg{
+    float: left;
+    margin: 1.929em 28px 2.857em 55px;
+    max-height: 207px;
+    overflow: hidden;
+    text-align: center;
+    width: 174px;
+}
+div#promoContainer div.promoImg img{
+    vertical-align: middle;
+}
+
+div.masterControl_paginator a{
+    background: transparent url('../images/common/banner_next_blue.png') no-repeat;
+    padding: 0 6px;
+    text-indent: -10000px;
+}
+div.masterControl_paginator a.activeSlide{
+    background: transparent url('../images/common/banner_next_grey.png') no-repeat;
+    padding: 0 6px;
+    text-indent: -10000px;
+}
+
+/*** END: Style Bloc Promo ***/
+
+/***** Bloc product details *****/
+.productTypeNum{
+    color: #ADBF21;
+    font-size: 20px;
+    margin: 10px 0;
+    text-transform: uppercase;
+}
+.separator {
+    font-size: 18px;
+    line-height: 20px;
+    padding: 2px 5px;
+    vertical-align: text-top;
+}
+#blockDetailRight{
+    float: right;
+    margin: 15px 3px 0 4px;
+    padding: 0 28px 0 0;
+    width: 241px;
+}
+#blockDetailRight div {
+    border-bottom: 1px solid #ccc;
+    margin: 0 0 17px 0;
+    padding: 0 0 12px 0;
+}
+#blockDetailRight div p{
+    margin: 0;
+}
+#blockDetailRight div p.blockTitle{
+    color: #5FB9C9;
+}
+
+#blockDetailRight #blockDescription{
+    color: #5FB9C9;
+    font-family: BiffoMTRegular;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+#blockDetailRight #blockFeatures{
+    color: #ACBF1F;
+}
+#blockDetailRight .labelColor{
+    margin-right: 5px;
+    padding: 16px 12px;
+}
+#blockDetailLeft{
+    float: left;
+    width: 274px;
+}
+#blockDetailLeft #blockImage{
+    background: transparent url("../images/common/bgImgDetail.png") no-repeat ;
+    padding: 26px 9px 6px 9px;
+    text-align: center;
+    height: 308px;
+}
+#blockDetailLeft #blockImage #imgProductDetails{
+    position: absolute;
+    padding-left: 15px;
+}
+#blockDetailLeft #linkCharteGrandeur a,
+#blockDetailLeft #blockDownloadLink a{
+    color: #ADBF21;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+#blockDetailLeft #linkCharteGrandeur {
+    margin: 10px 0 10px 0;
+
+}
+#blockDetailLeft #blockDownloadLink {
+    margin: 32px 0 10px 0;
+
+}
+
+
+/** END: Bloc product details **/
+
+@media screen and (max-width: 600px) {
+  .collectionList{
+    float: none;
+    width: auto;
+  }

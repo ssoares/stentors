@@ -1,0 +1,104 @@
+<?php $config = Zend_Registry::get("config") ?>
+<?php $array_replace = array('<p>', '<P>', '</p>', '</P>'); ?>
+<?php $imgAlt = str_replace($array_replace, '', $this->getClientText('home_page_link_title')); 
+    //var_dump($this);// $this->view->altImageFirst;
+  $imageFirstALT = ""; 
+    if(Zend_Registry::isRegistered('altImageFirst')){
+        $imageFirstALT = Zend_Registry::get('altImageFirst');
+    }
+    if($imageFirstALT==""){            
+        if(Zend_Registry::isRegistered('pageTitle')){
+            $imageFirstALT = Zend_Registry::get('pageTitle');
+        }
+        else if($imgAlt!=""){
+            $imageFirstALT = $imgAlt;
+        }
+        else{
+            $imageFirstALT = $config->site->title;
+        }
+    }
+?>
+
+<div id="headerLeft">
+    <div id="headerLogo">
+        <?php
+        
+        
+        
+        $currentLang = Zend_Registry::get('languageID');
+        if($currentLang==1){
+            echo $this->link(
+                    $this->baseUrl() . '/',
+                    $this->clientImage(
+                            'logo.jpg',
+                            array('alt' => str_replace('%%%SITE_NAME%%%', $config->site->title, $imageFirstALT))
+                            ),
+                    array('title' => str_replace('%%%SITE_NAME%%%', $config->site->title, $imageFirstALT))
+                    );
+         }
+         else{
+             echo $this->link(
+                    $this->baseUrl() . '/home/',
+                    $this->clientImage(
+                            'logo.jpg',
+                            array(
+                                'alt' => str_replace('%%%SITE_NAME%%%', $config->site->title, $imageFirstALT)
+                                )
+                            ),
+                    array('title' => str_replace('%%%SITE_NAME%%%', $config->site->title, $imageFirstALT))
+                    );
+             }
+        ?>
+    </div>
+</div>
+<div id="headerRight">
+    <div id="headerRightTop">
+     <?php
+        // echo only this menu
+        //echo $this->menu('header', array('class' => 'top-menu-top', 'id' => 'top-menu-top', 'parentIdAlt' => 'parentIdTop-'));
+        
+        // echo 2 menus as one menu (easier to align differents menus in the same way as one menu
+        $menuTrio1 = $this->partial('partials/language.switcher.phtml');
+        //$menuTrio2 = $this->menu('header', array('class' => 'font_size_small', 'id' => 'top-menu', 'parentIdAlt' => 'parentIdTop-',));
+        $menuTrio2 = $this->menu('header', array('class' => 'font_size_small', 'id' => 'top-menu', 'parentIdAlt' => 'parentIdTop-'));
+        
+        //echo $menuTrio2;
+      // echo Cible_FunctionsGeneral::returnMenuFromMenus(" class = 'topMenu2' id='topMenu2'",array(array($menuTrio2," class='menuHaut2'"),array($menuTrio1," class='menuHaut1'")),true,true,array('addSeparator' => '#','addSeparatorBeforeFirst'=>true,'addSeparatorAfterLast'=>true));
+       echo Cible_FunctionsGeneral::returnMenuFromMenus(" class = 'topMenu2' id='topMenu2'",array(array($menuTrio2," class='menuHaut2'"),array($menuTrio1," class='menuHaut1'")),true,true);
+                
+     ?>
+    </div>
+    <div id="headerSearchLanguages">                          
+        <!-- Search box -->
+        <ul>
+            <li class="first">
+                <?php echo $this->clientImage('btn-loupe-search.png', array('alt'=>'')) ?>
+            </li>
+            <li><input type="hidden" id="search-url" value="<? echo ($this->baseUrl()."/".Cible_FunctionsCategories::getPagePerCategoryView(0,'index',10)."/words");?>"/><input type="text" id="search-box-terme" name="search-box-terme" value="" /><a id="searchLink" href="#"><?php echo $this->clientImage('btn-search-' . Zend_Registry::get("languageSuffix") . '.png', array('alt'=>'')) ?></a></li>
+        </ul>
+
+        <!-- Add this print button -->
+        <ul class="print-link">
+            <li><a class="addthis_button_print" href="javascript:void(0);">Imprimer<!--<img src="<?php echo $this->baseUrl() ?>/themes/default/images/common/pix.gif" border="1" width="1px" height="1px" alt="" />-->&nbsp;</a></li>
+        </ul>
+
+        <!-- Font-size and print link -->
+        <?php if ($config->fontController->embeded): ?>                
+        <div id="toolBoxFontsize">
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    fontSize(
+                        "#font-sizer", 
+                        "p, label", 
+                        13, 15, 17, 
+                        '<?php echo $this->baseUrl() ?>'
+                    );
+                });
+            </script>
+            <ul id="fontSizer">
+                <li><?php echo $this->link('javascript:void(0);', $this->clientImage('btn-13px.png', array('alt'=>'')), array('title'=>'13px', 'id'=>'font-13px')) ?></li><li><?php echo $this->link('javascript:void(0);', $this->clientImage('btn-15px.png', array('alt'=>'')), array('title'=>'15px', 'id'=>'font-15px')) ?></li><li><?php echo $this->link('javascript:void(0);', $this->clientImage('btn-17px.png', array('alt'=>'')), array('title'=>'17px', 'id'=>'font-17px')) ?></li>
+            </ul>
+        </div>
+        <?php endif; ?>
+    </div>            
+</div>
