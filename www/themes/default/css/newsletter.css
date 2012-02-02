@@ -1,0 +1,162 @@
+/*
+    Document   : newsletter
+    Created on : 2011-03-30, 15:00:20
+    Author     : admin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+div.newsletter_container{
+    width: 100%;
+}
+
+div.newsletter_title{
+    width: 100%;
+    float: left;
+    font-size: 20px;
+    color: #FF00FF;
+}
+
+div.newsletter_left_web{
+    width: 70%;
+    float: left;
+}
+
+div.newsletter_right_web{
+    width: 30%;
+    float: left;
+    background-color: #CAF4F7;
+}
+
+.newsletter_politics_confidentiality{
+    width: 100%;
+    float:left;
+    clear: both;
+    padding-bottom: 10px;
+}
+
+div.newsletter_subscribe{
+
+}
+
+div.newsletter_unsubscribe{
+
+}
+
+div.newsletter_archives{
+
+}
+
+div.newsletter_menu_item{
+    padding: 8px;
+}
+
+.stdTextInputInvisible{
+    visibility: hidden;
+}
+
+.newsletter_left_web form dd{
+    float: left;
+    width: 70%;
+    padding-top: 10px;
+}
+.newsletter_left_web form dt{
+    float: left;
+    width: 30%;
+    padding-top: 10px;
+}
+
+.newsletter_left_web form dd#dd_captcha{
+    width: 70%;
+    float: right;
+    top: 130px;
+}
+
+.newsletter_left_web form dd.dd_captcha{
+    width: 70%;
+    float: right;
+}
+
+.newsletter_left_web form dd.dd-submit-button{
+    width: 30%;
+    float: left;
+    padding-top: 70px;
+}
+
+#refresh_captcha_newsletter{
+    float: left;
+}
+
+.newsletter_left_web form dd.dd-refresh-captcha-button{
+    float: right;
+    width: 70%;
+    padding-top: 10px;
+    text-align: right;
+}
+
+.label_long_required{
+    width: 70%;
+    padding-top: 30px;
+    float:right;
+}
+
+.newsletter_left_web form dd.label_required_fields{
+    width: 100%;
+}
+
+.newsletter_left_web form dd.label_politique{
+    width: 100%;
+}
+
+.newsletter_article_image{
+    float: left;
+    width: 20%;
+}
+.newsletter_photo{
+    max-width: 100%;
+}
+.newsletter_article_text{
+    float: left;
+    width: 80%;
+}
+.newsletter_article_return{
+    float: left;
+    width: 100%;
+}
+
+.newsletterArticleTextNoImage{
+}
+
+div.newsletter_zone2{
+    background-color:#FFFFFF;
+}
+
+a.newsletterMenuItemLink,
+a.newsletterMenuItemLink:hover{
+    text-transform: uppercase;
+    color: #333333;
+}
+.newsletter_left_web form dd.reasonSelect{
+    width: 60%;
+}
+
+.newsletter_left_web form dd.reasonSelect select.stdSelect{
+    margin-left: 38%;
+    width: 50%;
+}
+.newsletter_left_web form dd.reasonOther{
+    width: 30%
+}
+.newsletter_left_web form dd.hidden textarea{
+    display: none;
+}
+.newsletter_left_web form dd.reasonOther .reasonTextarea{
+    width: 100%;
+    max-height: 7em;
+    margin-left: 10px;
+}

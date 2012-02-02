@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#styledtext_dlg.title}</title>
+	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="js/dialog.js"></script>
+        <link href="css/dialog.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<form onsubmit="StyledtextDialog.insert();return false;" action="#">
+	<p>{#styledtext_dlg.label}</p>
+        <p>{#styledtext_dlg.titleLbl} </p>
+        <p><input id="title" name="title" type="text" class="text" /></p>
+        <p>{#styledtext_dlg.descriptionLbl}</p>
+        <p><textarea id="content" cols="12" rows="4" name="content" class="text" ></textarea></p>
+
+	<div class="mceActionPanel">
+		<div style="float: left">
+			<input type="button" id="insert" name="insert" value="{#insert}" onclick="StyledtextDialog.insert();" />
+		</div>
+
+		<div style="float: right">
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+		</div>
+	</div>
+</form>
+
+</body>
+</html>

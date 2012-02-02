@@ -1,0 +1,43 @@
+<?php
+    // One place_holder template, so grab only the first place_holder elements
+    $ph1_blocks = isset($this->blocks[1]) ? $this->blocks[1] : array();
+    $user = Zend_Registry::get('user');
+?>
+    <div id="top-menu-container">
+        <?php echo $this->menu('principal', array('class' => 'top-menu', 'id' => 'top-menu')) ?>
+</div>
+<!--    <div id="bread-crumb"><?php echo $this->breadcrumb() ?><?php echo htmlspecialchars_decode($this->pageTitle) ?></div>-->
+<div id="bread-crumb">
+    <?php echo $this->breadcrumbmenu(array('menuTitle' => 'principal')) ?><?php echo htmlspecialchars_decode($this->pageTitle) ?>
+</div>
+    <?php if($this->showTitle): ?>
+        <h1 class="titre">
+            <?php
+            echo $this->pageTitle;
+            ?>
+        </h1>
+    <?php
+    endif;
+    ?>
+    <?php $this->placeholder('blocksLeft')->captureStart();
+        $authDisplayed = false;
+        foreach ($ph1_blocks as $block){
+            $module = $block['module'];
+            switch ($block['params']['secured'])
+            {
+                case 1:
+                    if(count($user))
+                        echo $this->action($block['action'],'index',$module, $block['params']);
+                    break;
+                case 2:
+                    if(!count($user))
+                        echo $this->action($block['action'],'index',$module, $block['params']);
+                    break;
+                default:
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                    break;
+            }
+        }
+        $this->placeholder('blocksLeft')->captureEnd();
+    ?>
+    <?php echo $this->placeholder('blocksLeft') ?>

@@ -1,0 +1,63 @@
+<div class="block block-events">
+    <?php if ($this->paginator): ?>
+
+        <?php $first = true; ?>
+
+        <?php foreach($this->paginator as $event): ?>
+            <?php
+            //var_dump($event);
+            $date = new Zend_Date($event['EDR_StartDate'],null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));
+            $date_string_url = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_SQL,'-');
+            $class = '';
+            ?>
+            <div class="each-event<?php echo $class ?>">  
+            
+                <?php
+                    if(!empty($event['ED_ImageSrc'])){
+                        $withImage = true;
+                        echo "<div style='float:left; margin-right:15px; padding-bottom:5px;'><a href='" . $this->baseUrl() . '/' . $this->details_page . '/ID/' . $event['ED_ID'] . "'>" . $this->eventImage($event['ED_ID'], $event['ED_ImageSrc'], 'thumb', array('class'=>'events-list-photo', 'border'=>'0', 'thickbox' => array('size'=>'original'))) . "</a></div>";
+                    }    
+                ?>
+                
+                <?php 
+                    $date_string = '';
+                    foreach($event['dates'] as $date){
+                        $startDate = new Zend_Date($date['EDR_StartDate'],null, 'fr_CA');
+                        $endDate = new Zend_Date($date['EDR_EndDate'],null, 'fr_CA');
+                        
+                        if( !empty($date_string) ){
+                            $date_string .= $this->getCibleText('events_s_and_s');
+                        }
+                        
+                        if( $startDate->get(Zend_Date::MONTH) == $endDate->get(Zend_Date::MONTH) && $startDate->get(Zend_Date::YEAR) == $endDate->get(Zend_Date::YEAR) ){
+                            if( $startDate->get(Zend_Date::DAY) != $endDate->get(Zend_Date::DAY) )
+                                $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));   
+                            else
+                                $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                        }
+                        else{
+                            $dateElse = "%d %s %d" . $this->getCibleText('events_s_to_s') . "%d %s %d";
+                            $date_string .= sprintf($dateElse, $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), utf8_decode($endDate->get(Zend_Date::MONTH_NAME)), $endDate->get(Zend_Date::YEAR));
+                        }
+                    }
+                ?>
+                <div class="date-large"><?php echo $date_string; ?></div>
+                <div class="title"><?php echo $event['EI_Title']; ?></div>
+                <div class="brief"><?php echo $event['EI_Brief']; ?></div>
+            </div>
+            <div class="clear_both"></div>
+            <div class="view-details">
+                <a href="<?php echo $this->baseUrl() . '/' . $this->details_page . "/"  . $date_string_url . "/" . $event['EI_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text'); ?>">
+                <?php echo $this->getClientText('see_details_news_text'); ?>
+                </a>
+                <!--<?php echo $this->link( "{$this->baseUrl()}/{$this->details_page}/ID/{$event['ED_ID']}", $this->getClientText('see_details_news_text')) ?></div>-->
+            <div class="clear_both spacerLarge"></div> 
+        <?php endforeach; ?>
+        
+        <?php
+        echo $this->paginationControl($this->paginator,'sliding', 'partials/products.paginator.phtml');
+        ?>
+    <?php else: ?>
+    <div><?php echo $this->getCibleText('events_no_events') ?></div>
+    <?php endif; ?>
+</div>

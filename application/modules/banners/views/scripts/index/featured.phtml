@@ -1,0 +1,78 @@
+<div id="blockBannerImageFeatured">
+    <div class="blockImages">
+        <?php foreach ($this->imgFeat as $image): ?>
+            <div class="imgContainer">
+                <p class="topPart">
+                    <?php
+                    $prefix = $this->imgCfg['medium']['maxWidth'] . 'x';
+                    $prefix .= $this->imgCfg['medium']['maxHeight'] . '_';
+                    if (!empty($image['IF_Img']))
+                    {
+                        $path = $this->imgPath . $prefix . $image['IF_Img'];
+                        
+                        echo $this->link(
+                            $image['IFI_Url'], 
+                            $this->image($path), 
+                            array('class' => 'imageFeatured')
+                        );
+                    }
+                    else
+                    {
+                        $alt = $image['IFI_Label'];
+                        echo $this->link(
+                            $image['IFI_Url'], 
+                            $this->clientImage('noPic_174x207.jpg', array('alt' => $alt))
+                        );
+                    }
+                    ?>
+                </p>
+                <p class="bottomPart">
+                    <?php
+                    $label = '&nbsp;';
+                    if (!empty ($image['IFI_Label']))
+                        $label = $image['IFI_Label'];
+                    echo $this->link(
+                        $image['IFI_Url'], 
+                        $image['IFI_Label'],
+                        array('class' => $image['IF_Style'])
+                    );
+                    ?>
+                </p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

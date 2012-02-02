@@ -1,0 +1,242 @@
+div.form #accountManagement fieldset {
+    padding-left: 0;
+}
+div.form #accountManagement fieldset dl{
+    border-top: 1px solid #999999;
+    margin-top: 2px;
+    padding: 9px 0 0 0px;
+    width: 100%;
+}
+#fieldset-leftColumn,
+#fieldset-rightColumn{
+    float: left;
+    width: 48%;
+}
+#fieldset-rightColumn{
+    margin: 40px 0 0 4px;
+}
+div.form #accountManagement #fieldset-identification{
+    background: transparent url("../images/common/news_ligne_jaune.jpg") no-repeat right bottom;
+    margin-bottom: 30px;
+
+}
+div.form #accountManagement fieldset dl #fieldset-leftColumn dl,
+div.form #accountManagement fieldset dl #fieldset-rightColumn dl{
+    border: 0;
+}
+
+.leftZone {
+    float: left;
+    width: 50%;
+}
+div.form div.login .login-form{
+    margin: 0;
+}
+div.form div.login .login-form dd{
+    margin: 0;
+    margin-left: 116px;
+}
+div.form div.login .login-form input#email{
+    position: inherit;
+}
+div.form div.login .login-form input#submit_login{
+    margin:2px 0 0 0px;
+}
+#forgot-password,
+#lostPasswordPanel{
+    margin: 0 0 0 116px;
+}
+#forgot-password{
+    margin-top: -13px ;
+}
+#lostPasswordPanel{
+    margin-top: 7px ;
+}
+.button,
+form#accountManagement button#refresh_captcha,
+form#accountManagement #submit,
+form.login-form #submit_login,
+button.recoverButton,
+#addToCart .button,
+#createAccountSideBlock .button{
+    background-color: #ACBF20;
+    border: 0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    height: 27px;
+    min-width: 130px;
+    margin-top: 5px;
+    text-align: center;
+    width: 131px;
+}
+
+form.login-form #submit_login{
+    font-size: 11px;
+}
+
+form#accountManagement button#refresh_captcha{
+    min-width: 100px;
+    cursor: pointer;
+}
+form#accountManagement ul.errors{
+    min-width: 100px;
+}
+
+div.textIntro {
+    text-transform: none;
+    margin: 32px 0 0 35px;
+}
+
+.alignVertical{
+    margin-top: -8px;
+}
+
+.confirm{
+    margin: 25px 20px 0 35px;
+}
+.home_right{
+    display: none;
+}
+
+/*-----------------------------*/
+
+#loginSideBlock,
+#createAccountSideBlock{
+    background-color: #fff;
+    font-size: 12px;
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+#loginSideBlock{
+    width: 145px;
+    margin-top: 6px;
+}
+
+#loginSideBlock p.title{
+    background-color: #666;
+    color: #fff;
+    font-weight: bold;
+    height: 22px;
+    margin: 0px 0 9px 0;
+    padding: 8px 0 0 15px;
+    text-transform: uppercase;
+}
+#loginSideBlock form.login-form {
+    padding-left: 15px;
+}
+#loginSideBlock form ul.errors {
+    left: 0;
+    position: inherit;
+    top: 0;
+    width: 130px;
+}
+#loginSideBlock p#login_error{
+    margin-left: 15px;
+}
+#loginSideBlock form.login-form {
+    padding-left: 15px;
+}
+#loginSideBlock form.login-form dt,
+#loginSideBlock form.login-form dd{
+    float: none;
+    margin: 0;
+}
+#loginSideBlock form.login-form dd{
+    margin-bottom: 12px;
+}
+#loginSideBlock form.login-form input#stayOn{
+    margin: -4px 0 0 0;
+    vertical-align: -13%;
+}
+#loginSideBlock form.login-form input#password,
+#loginSideBlock form.login-form input#email,
+#loginSideBlock #lostPasswordEmail{
+    position: inherit;
+    left: 0;
+    top:0;
+    margin: 0;
+    width: 114px;
+}
+#loginSideBlock form.login-form input#submit_login,
+#loginSideBlock #lostPasswordButton{
+    margin: 0 0 0 -7px;
+}
+#loginSideBlock form.login-form dd.loginPwd,
+#loginSideBlock form.login-form dd.loginBtn{
+    margin-bottom: 7px;
+}
+
+#loginSideBlock .firstLinkStyle,
+#addToCart .firstLinkStyle,
+#createAccountSideBlock p.firstLinkStyle{
+    color: #5FBCC9;
+    font-weight: bold;
+    margin: 0 0 0 15px;
+    text-transform: none;
+}
+#loginSideBlock #lostPasswordPanel{
+    margin: 0 0 10px 15px;
+}
+#loginSideBlock #lostPasswordEmail{
+    margin-bottom: 5px;
+}
+
+#loginSideBlock ul.secondLinkStyle,
+#loginSideBlock p.welcome{
+    font-weight: bold;
+    line-height: 14px;
+    list-style: none;
+    margin: 7px 0 0px 0;
+    padding-left: 15px;
+    text-align: left;
+}
+#loginSideBlock ul.secondLinkStyle{
+    margin-bottom: -6px;
+
+}
+#loginSideBlock ul.secondLinkStyle li{
+    color: #ACBF1F;
+    margin-bottom: 7px;
+    padding-right: 16px;
+}
+#createAccountSideBlock{
+    font-size: 11px;
+    margin-top: 6px;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 145px;
+}
+#createAccountSideBlock p{
+    color: #666;
+    margin:0;
+}
+#addToCart p.text,
+#loginSideBlock p.text,
+#createAccountSideBlock p.text{
+    margin: 0 16px;
+    padding-top: 18px;
+    text-align: center;
+}
+
+#addToCart p.button,
+#createAccountSideBlock p.button{
+    height: 21px;
+    font-size: 11px;
+    margin: 10px 8px 0;
+    padding: 6px 0 0;
+}
+#createAccountSideBlock p.center{
+    margin: 8px 0 7px;
+    text-align: center;
+}
+
+#createAccountSideBlock .optionsList{
+    margin-top: 5px;
+    padding-left: 8px;
+}
+
+dd.loginBtn{
+    text-transform: uppercase;
+}

@@ -1,0 +1,14 @@
+<?php $data = $this->emailRenderData; ?>
+<html>
+    <head>
+        <meta http-equiv="content-language" content="fr">
+        <title><?php echo $this->getCibleText('newsletter_notification_admin_title'); ?></title>
+
+    </head>
+    <body bgcolor="#FFFFFF" alink="#000" vlink="#000" link="#000" text="#000" topmargin="0" leftmargin="0" style="margin:0px;padding:0px;">
+        <?php echo $this->alert; ?>
+        <?php echo $data['message']; ?>
+        <?php $list = implode('<br />', $data['list']);
+        echo $list; ?>
+    </body>
+</html>

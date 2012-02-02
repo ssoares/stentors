@@ -1,0 +1,93 @@
+<?php
+// One place_holder template, so grab only the first place_holder elements
+$ph1_blocks = isset($this->blocks[1]) ? $this->blocks[1] : array();
+$ph2_blocks = isset($this->blocks[2]) ? $this->blocks[2] : array();
+?>
+<div id="top-menu-container">
+        <?php echo $this->menu('principal', array('class' => 'top-menu', 'id' => 'top-menu')) ?>
+</div>
+<!--    <div id="bread-crumb"><?php echo $this->breadcrumb() ?><?php echo htmlspecialchars_decode($this->headTitle()->toString(null, null, true)) ?></div>-->
+<div id="bread-crumb">
+    <?php echo $this->breadcrumbmenu(array('menuTitle' => 'principal')) ?><?php echo htmlspecialchars_decode($this->pageTitle) ?>
+</div>
+<?php if ($this->showTitle): ?>
+    <h1 id="title" class="font_size_xxLarge"><?php echo $this->pageTitle ?></h1>
+<?php endif; ?>
+<?php
+    $tree = $this->subMenu(array('id' => 'submenu', 'class' => 'open'));
+    echo $this->menu(
+        $tree,
+        array(
+            'id' => 'submenu',
+            'startLevel' => 2,
+            'parentIdAlt' => 'subMenu-',
+            'parentId' => $tree['MID_ParentId'],
+            'class' => 'open')
+        );
+?>
+<!-- Placeholder 1 -->
+<?php
+    $this->placeholder('blocksLeft')->captureStart();
+    $authDisplayed = false;
+    foreach ($ph1_blocks as $block){
+        $module = $block['module'];
+        switch ($block['params']['secured'])
+        {
+            case 1:
+                $user = Zend_Registry::get('user');
+                if(count($user))
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+            case 2:
+                $user = Zend_Registry::get('user');
+                if(!count($user))
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+            default:
+                echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+        }
+    }
+    $this->placeholder('blocksLeft')->captureEnd();
+?>
+<div class="content-left">
+    <?php echo $this->placeholder('blocksLeft') ?>
+</div>
+
+<!-- Placeholder 2 -->
+<?php
+        $this->placeholder('blocksRight')->captureStart();
+    $authDisplayed = false;
+    foreach ($ph2_blocks as $block){
+        $module = $block['module'];
+        switch ($block['params']['secured'])
+        {
+            case 1:
+                $user = Zend_Registry::get('user');
+                if(count($user))
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+            case 2:
+                $user = Zend_Registry::get('user');
+                if(!count($user))
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+            default:
+                echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+        }
+    }
+    $this->placeholder('blocksRight')->captureEnd();
+?>
+<div class="content-right">
+    <?php echo $this->placeholder('blocksRight') ?>
+</div>
+<script type="text/javascript">
+   $(document).ready(function() {
+        if($('#ul_submenu').length > 0){
+            var subName = $('#ul_submenu').find('.selected').attr("id");
+            var subID = subName.split('-');
+            $('#parentid-' + subID[1]).parent().parent().addClass('selected');
+        }
+    });
+   </script>

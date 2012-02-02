@@ -1,0 +1,21 @@
+/* Version SVN: $Id: footer.css 709 2011-11-29 14:22:30Z svincent $*/
+/***************************************/
+/* FOOTER CLASSES */
+div#footer-container    {    
+    clear: both;
+    overflow: hidden;
+    width: 100%;
+    clear: both;
+}
+
+div#footer-container .footer-left    {
+    float: left;
+    width: 50%;    
+}
+
+div#footer-container .footer-right   {
+    margin-left: 50%;    
+    text-align: right;
+}
+/* FOOTER CLASSES */
+/***************************************/

@@ -1,0 +1,57 @@
+<div class="newsletter_title">
+    <?php echo($this->getCibleText('newsletter_title_abonnement_text'));?>
+</div>
+<div class="newsletter_left_web">   
+    <?php    
+    if(count($this->listArchives) > 0)
+    {
+        ?>
+        <ul>
+            <?php
+            foreach ($this->listArchives as $archive)
+            {
+                $date = new Zend_Date($archive['NR_Date'],null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));
+                $date_string = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_LONG_NO_DAY,'.');
+                $date_string_url = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_SQL,'-');
+            ?>
+                <li>
+                    <a href="<?php echo $this->baseUrl() . '/' . $this->detailsRelease . "/"  . $date_string_url . "/" . $archive['NR_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text') ?>">
+                    <!--<a href="<?php echo $this->detailsRelease . '/ID/' . $archive['NR_ID'] ?>" class="archives-date">-->
+                        <?php echo($date_string); ?>
+                    </a>
+                    <div class="clear_both spacerXSmall"></div>
+                    <a href="<?php echo $this->baseUrl() . '/' . $this->detailsRelease . "/"  . $date_string_url . "/" . $archive['NR_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text') ?>">
+                        <?php echo($archive['NR_Title']); ?>
+                    </a>
+                </li>
+            <?php
+            }
+            ?>
+        </ul>
+    <?php
+    }
+    else
+    {
+    ?>
+        <div class="article-resume-left-web"><?php echo($this->getClientText('newsletter_no_archives_client'));?></div>
+    <?php
+    }
+    ?>    
+</div>
+<div class="newsletter_right_web">
+    <div class="newsletter_subscribe newsletter_menu_item"> 
+        <a class="newsletterMenuItemLink" href="<?php echo $this->subscribeLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_subscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_unsubscribe newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->unsubscribeLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_unsubscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_archives newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->archivesLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_archives'));?>
+        </a>
+    </div>
+</div>

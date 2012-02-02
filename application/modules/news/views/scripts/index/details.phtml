@@ -1,0 +1,74 @@
+<div class="block">
+    <div class="news">
+        <?php
+        if($this->news)
+        {
+            foreach($this->news as $news)
+            {
+                $this->headTitle($news['NI_Title']);
+                $date = new Zend_Date($news['ND_Date'],null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));                                              
+                $date_string = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_NUM,'.');
+                ?> 
+                <?php                
+                if(!empty($news['NI_ImageSrc']))
+                {
+                    ?>
+                    <div class="news_full_image_left">
+                    <?php
+                    echo $this->newsImage($news['ND_ID'], $news['NI_ImageSrc'], 'original', array('noGroup'=>'true','class'=>'news_photo_list', 'border'=>'0', 'prettyPhoto' => array('size'=>'original')));
+                     //    echo $this->newsImage($news['ND_ID'], $news['NI_ImageSrc'], 'original', array('noGroup'=>'true','class'=>'news_photo_list', 'border'=>'0', 'prettyPhoto' => array('size'=>'original','alt'=>$news['NI_Title'],'title'=>$news['NI_Text'])));
+                    ?>
+                    </div>
+                <?php            
+                }                
+                if(!empty($news['NI_ImageSrc']))
+                {
+                ?>
+                    <div class="news_half_full_texts_right">                
+                <?php
+                }
+                else{
+                    ?>
+                   <div class="news_full_texts">                
+                <?php
+                    }
+                ?>
+                    <div class="news_title">
+                        <?php echo $news['NI_Title'] ?>
+                    </div>
+                    <div class="news_date">
+                        <?php echo $date_string ?>
+                    </div>
+                    <div class="news_full_text">
+                        <?php echo $news['NI_Text']; ?>
+                    </div>
+                    <div class="news_view_all">
+                        <?php 
+                            if($this->pagePrecedente==''){
+                                $backLink = $this->baseUrl() . '/' . $this->listall_page;
+                            }
+                            else{
+                                $backLink = $this->pagePrecedente;
+                            }
+                            ?>
+                            <a href="<?php echo $backLink ?>" title="<?php echo $this->getClientText('see_all_news_text') ?>" class="view-all-image">
+                            <?php echo $this->getClientText('see_all_news_text') ?>&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </div>
+                </div>                
+                <?php
+            }
+        }
+        else
+        {
+         ?>
+            <div>
+                <p>
+                    <?php echo $this->getCibleText('news_no_news'); ?>
+                </p>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>

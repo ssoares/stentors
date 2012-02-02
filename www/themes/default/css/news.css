@@ -1,0 +1,179 @@
+/* Version SVN: $Id: news.css 724 2011-12-06 19:51:24Z freynolds $*/
+
+/***************************************/
+/* NEWS CLASSES */
+
+div.news_title{ 
+    margin-bottom: 10px;
+}
+
+div.news_date,
+div.news_date a,
+div.news_date a:hover{
+    margin-bottom: 10px;
+}
+
+.news_title_home{
+    font-size: 2em;
+    padding-bottom: 5px;
+}
+
+.news_brief{
+    margin-bottom: 5px;    
+}
+
+div.news_photo_container_home_page{    
+    margin-bottom: 5px;
+}
+
+div.news_view_all,
+div.news_view_all a,
+div.news_view_all a:hover{
+    color: #E4222E;    
+    margin-bottom: 10px;
+    padding: 5px 0px 5px 0px;   
+}
+
+img.news_photo {
+    border: 0px;
+}
+
+div.view_all_home_news_details,
+div.view_all_home_news_details a,
+div.view_all_home_news_details a:hover{        
+    color: #000000;    
+}
+
+div.news_view_details_list,
+div.news_view_details_list a,
+div.news_view_details_list a:hover{    
+    color: #000000;
+    padding-bottom: 15px;
+}
+
+div.news_list_date,
+div.news_list_date a
+div.news_list_date a:hover{    
+    color: #000000;    
+}
+
+div.news_list_all,
+div.news_list_all a,
+div.news_list_all a:hover{    
+    color: #000000;    
+}
+
+div.news_list_photo_container{
+    border: 0px;    
+}
+
+div.news_list_text_container_without_photo,
+div.news_list_text_container_without_photo a,
+div.news_list_text_container_without_photo a:hover{    
+    color: #000000;    
+}
+
+div.news_list_text_container,
+div.news_list_text_container a,
+div.news_list_text_container a:hover{
+    color: #000000;    
+}
+
+div.news_list_title,
+div.news_list_title a,
+div.news_list_title a:hover{
+    color: #000000;    
+}
+
+div.news_list_brief,
+div.news_list_brief a,
+div.news_list_brief a:hover{
+    color: #000000;    
+}
+
+div.news_list_no_news,
+div.news_list_no_news a,
+div.news_list_no_news a:hover{
+    color: #000000;
+}
+
+div.news_full_texts_right{
+    float: left;
+    width: 58%;
+    padding: 5px;
+}
+div.news_half_full_texts_right{
+    float: left;
+    width: 58%;
+    padding: 5px;
+}
+div.news_full_texts{
+    float: left;
+    width: 88%;
+    padding: 5px;
+}
+
+div.news_full_image_left{
+    float:left;
+    width: 38%;
+    padding: 5px;
+}
+
+div.news_separator{
+    float: left;
+    width: 100%;
+}
+
+div.news_3columns{
+    float: left;
+    width: 30%;
+    margin: .5em .5em;
+}
+
+div.news_2columns{
+    float: left;
+    width: 45%;    
+    margin: .5em .5em;
+   
+}
+
+div.news_1columns{
+    width: 100%;   
+
+}
+
+.news_photo_list{
+    max-width: 100%;
+}
+
+/*
+empty classes that can be usefull
+*/
+div.news{    
+}
+
+div.news_title,
+div.news_title a,
+div.news_title a:hover{    
+}
+
+div.news_text_container_home_page{    
+}
+
+div.news_position_3columns_2{   
+}
+
+div.news_position_3columns_1{    
+}
+
+div.news_position_3columns_0{   
+}
+
+div.news_position_2columns_1{    
+}
+
+div.news_position_2columns_0{    
+}
+/*
+empty classes that can be usefull
+*/

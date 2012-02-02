@@ -1,0 +1,40 @@
+<?php
+$section = $this->section;
+$currentLang = Zend_Registry::get('languageID');
+
+switch ($section)
+{
+    case 'home':
+        break;
+}
+
+$baseUrl = Zend_Registry::get('web_root');
+$config = Zend_Registry::get('config');
+?>
+
+<?php
+$array_replace = array('<p>', '<P>', '</p>', '</P>');
+$copyrightText = str_replace($array_replace, '', $this->getClientText('footer_copyright'));
+?>
+
+<div class="footer-top">
+    <?php echo $this->menu('footer', array('class' => 'footer-menu-1', 'id' => 'footer-menu-1', 'parentIdAlt' => 'footerParentId')) ?>
+</div>
+<div class="footer-left">
+    <?php
+    echo str_replace(
+        array('%%%GET_DATE_YEAR%%%', '%%%SITE_NAME%%%'), array(date('Y'), $config->site->title), $copyrightText)
+    ?>
+</div>
+<div class="footer-right"><?php echo $this->getClientText('footer_cible_realisation') ?></div>
+
+<?php
+$config = Zend_Registry::get('config');
+if ($config->zIndexCalculator->embeded):
+    ?>
+    <script type="text/javascript" src="<?php echo $this->locateFile('zIndexGenerator.js'); ?>"></script>
+<?php endif; ?>
+<?php 
+if ($config->searchbox->embeded)
+    echo $this->partial('partials/jsSearchBox.phtml')
+?>

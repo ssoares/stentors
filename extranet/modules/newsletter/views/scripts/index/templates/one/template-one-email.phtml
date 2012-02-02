@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href="<?php echo Zend_Registry::get('absolute_web_root') ?>" />
+</head>
+<?php
+    $date_string = $this->dateString;
+    $date_string_url = $this->parutionDate;
+ ?>
+<?php
+
+    $sourceHeaderLeft = Zend_Registry::get('absolute_web_root');
+    // Logo image used to test if the mail is opened when image is displayed.
+    $sourceHeaderLeft .= "/themes/default/images/common/logo-{$this->moduleId}-{$this->newsletterID}-{$this->memberId}.jpg";
+
+    $sourceHeaderRightTop = Zend_Registry::get('www_root');
+    $sourceHeaderRightTop .= "/themes/default/images/common/newsletter_top_right3.jpg";
+    $sourceHeaderRightBottom = Zend_Registry::get('www_root');
+    $sourceHeaderRightBottom .= "/themes/default/images/common/attraction_right_bottom.jpg";
+    $sourceHeaderJeansEn = Zend_Registry::get('www_root');
+    $sourceHeaderJeansEn .= "/themes/default/images/common/infolettre_top_bleu_en.jpg";
+    $sourceHeaderJeansFr = Zend_Registry::get('www_root');
+    $sourceHeaderJeansFr .= "/themes/default/images/common/infolettre_top_bleu_fr.jpg";
+    $sourceJaune = Zend_Registry::get('absolute_web_root');
+    $sourceJaune .= "/themes/default/images/common/ligne_jaune_courriel.jpg";
+    $sourceJaune = Zend_Registry::get('absolute_web_root');
+    $sourceJaune .= "/themes/default/images/common/ligne_jaune_courriel.jpg";
+
+    $imageFleche = Zend_Registry::get('www_root');
+    $imageFleche .= "/themes/default/images/common/fleche_courriel.jpg";
+    $imageFlecheCouleur = Zend_Registry::get('www_root');
+    $imageFlecheCouleur .= "/themes/default/images/common/fleche_courriel_couleur.jpg";
+
+    $subscribeLink = $this->subscribeLink . '/uid/' . $this->memberId. '/newsletterID/' . $this->newsletterID;
+    $unsubscribeLink = $this->unsubscribeLink . '/uid/' . $this->memberId . '/newsletterID/' . $this->newsletterID;
+    $archiveLink = $this->archiveLink . '/uid/' . $this->memberId;
+
+    $image20pxWhite = Zend_Registry::get('www_root');
+    $image20pxWhite .= "/themes/default/images/common/email_top_left_1X20.jpg";
+ ?>
+<body>
+
+
+<table cellpadding="0" cellspacing="0" border="0" align="center" id="table-template-email" style='vertical-align: middle;width:701px;margin-bottom: 20px;font-family: arial;'>
+<!-- Lien : problème à lire l'infolettre -->
+    <tr>
+        <td colspan="3" id="div-header-text-right-email" style="height:30px;">
+          <?php
+            if ($this->isOnline != 2)
+            {
+                echo $this->getCibleText('email_not_show_go_online1',$this->languageRelease);
+                echo "<a href='";
+                //echo $this->details_release;
+                // exit;
+                echo Zend_Registry::get('absolute_web_root') . $this->details_release;
+                echo "'>";
+                echo $this->getCibleText('email_not_show_go_online2',$this->languageRelease);
+                echo "</a>";
+            }
+           ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="701">
+                <tr>
+                    <td width="385" height="108" rowspan="2" cellpadding="0" cellspacing="0">
+                        <img width="385" style="border:0px;" src="<?php echo $sourceHeaderLeft;?>" alt="" />
+                    </td>
+                    <td width="315" height="63" colspan="2" style="border:0px;margin:0px;padding:0px;">
+                        <img width="315" style="border:0px;" src="<?php echo $sourceHeaderRightTop;?>" alt="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="388" align="right" height="45" bgcolor="#FFFFFF" style="border:0px;margin:0px;padding:0px;font-family:Arial;text-transform:uppercase;font-weight:bold;letter-spacing:0.03em;font-size:20px;color:#666666;">
+                        <?php echo $date_string;?>
+                    </td>
+                    <td width="7" height="45" style="border:0px;margin:0px;padding:0px;">
+                        <img style="border:0px;" src="<?php echo $sourceHeaderRightBottom;?>" alt="" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0" border="0"  style="border:0px;margin:0px;padding:0px;height:64px;width:701px;">
+                <tr style="border:0px;margin:0px;padding:0px;height:0px;">
+                    <td style="border:0px;margin:0px;padding:0px;height:64px;width:701px;" cellpadding="0" cellspacing="0" bgcolor="#5AAFC4">
+                        <?php
+                        if($this->languageRelease==1){ ?>
+                            <img style="border:0px;height:64px;width:701px;" src="<?php echo $sourceHeaderJeansFr;?>" alt="" />
+                        <?php
+                        }
+                        else{ ?>
+                            <img style="border:0px;height:64px;width:701px;" src="<?php echo $sourceHeaderJeansEn;?>" alt="" />
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        ////echo($this->newsletterTitle);
+                        // font-family:Arial;text-transform:none;font-weight:bold;letter-spacing:0.03em;font-size:18px;color:#004072;padding-bottom: 0px;padding-left:19px;background-color:#99B3C7;
+                        ?>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <div class="intro_text_to_replace">
+            <?php
+                echo $this->intro;
+            ?>
+            </div>
+        </td>
+    </tr>
+    <tr valign="top" class="topAl" >
+        <td colspan="1" style="width:480px;padding-left:0px;border-left:1px solid #CCCCCC;" rowspan="1" >
+            <table class="outterZ1"  border="0" cellpadding="0" cellspacing="0" width="480px" style="padding-right:10px;padding-left:19px;height:100%;">
+                <tr>
+                    <td valign="top">
+
+                        <?php
+
+                        foreach ($this->articles as $article)
+                        {
+                            if($article['NA_ZoneID'] == 1)
+                            {
+                            ?>
+                                    <br>
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-left:0px;padding-right:0px;padding-top:12px;padding-bottom:23px;font-size: 12px;color: #727678;">
+
+                                    <tr>
+                                        <td colspan="2" style="font-family:Arial;font-weight:normal;font-size:30px;color:#ACBF20;padding-bottom: 0px;">
+                                            <?php echo($article['NA_Title']); ?>
+                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <?php if(!empty($article['NA_ImageSrc'])): ?>
+                                            <?php $config = Zend_Registry::get('config')->toArray(); ?>
+                                            <?php $thumbMaxHeight = $config['newsletter']['image']['thumb']['maxHeight']; ?>
+                                            <?php $thumbMaxWidth  = $config['newsletter']['image']['thumb']['maxWidth']; ?>
+
+                                            <td>
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <table>
+                                                                <tr>
+                                                                    <td colspan="2" valign="top" style="font-family:Arial;font-size:14px;color: #666666;font-style:normal;font-weight:normal;">
+                                                                        <?php if($article['NA_Resume']){
+                                                                            echo $article['NA_Resume'];
+                                                                        }
+                                                                        ?>
+
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </table>
+
+                                                        </td>
+                                                        <td width="10">&nbsp;</td>
+
+                                                        <td align="right" valign="top" style="text-align:right;padding-top:0px;padding-right:0px;width:<?php echo($thumbMaxWidth); ?>px">
+                                                            <p>
+                                                            &nbsp;<img style="border:0px solid #737779;" src="<?php echo Zend_Registry::get('absolute_web_root') ?>/data/images/newsletter/<?php echo($this->newsletterID); ?>/<?php echo($article['NA_ID']); ?>/<?php echo(str_replace($article['NA_ImageSrc'],$thumbMaxWidth.'x'.$thumbMaxHeight.'_'.$article['NA_ImageSrc'],$article['NA_ImageSrc'])); ?>" alt="<?php echo($article['NA_ImageAlt']); ?>"/>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="100%" colspan="3">
+                                                            <?php if($article['NA_Text']){ ?>
+                                                                <table class="articleReadMore" cellpadding="0" cellspacing="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="padding-bottom:3px;text-align:right;" width="100%" >
+                                                                            <?php
+                                                                            if($article['NA_TextLink']==1){
+                                                                            ?>
+                                                                                <a style="font-family: Arial;text-decoration: none;font-size: 14px;line-height: 18px;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;"
+                                                                                   href="<?php echo Zend_Registry::get('absolute_web_root') . '/' . $this->details_page . "/"  . $date_string_url . "/" . $article['NA_ValUrl'] .'-uid-' . $this->memberId?>">
+                                                                                <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>&nbsp;
+                                                                                <img src="<?php echo $imageFleche; ?>" alt="" border="0"/>
+                                                                                </a>
+                                                                            <?php
+                                                                            }
+                                                                            else if($article['NA_TextLink']==2){?>
+                                                                               <a style="font-family: Arial;text-decoration: none;font-size: 14px;line-height: 18px;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;"
+                                                                                  href="<?php echo $article['NA_URL']; ?>" target="_blank">
+                                                                                    <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>&nbsp;
+                                                                                    <img src="<?php echo $imageFleche; ?>" alt="" border="0"/>
+                                                                               </a>
+                                                                             <?php
+                                                                             }
+                                                                             ?>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2" height="30">
+                                                                            <img src="<?php echo $sourceJaune; ?>"/>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                        <?php } ?>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="30">
+                                            </td>
+                                        <?php else: ?>
+                                              <td>
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                <td valign="top" style="font-family:Arial;font-size:14px;color: #666666;font-style:normal;font-weight:normal;">
+                                                    <?php if($article['NA_Resume']){
+                                                        echo $article['NA_Resume'];
+                                                    }
+                                                    ?>
+                                                    <?php if($article['NA_Text']){ ?>
+                                                    <table class="articleReadMore" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tr>
+                                                        <td style="padding-bottom:3px;text-align:right;" width="100%">
+                                                            <?php
+                                                                if($article['NA_TextLink']==1){
+                                                            ?>
+                                                            <a style="font-family: Arial;text-decoration: none;font-size: 14px;line-height: 18px;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;" href="<?php echo Zend_Registry::get('absolute_web_root') . '/' . $this->details_page . "/"  . $date_string_url . "/" . $article['NA_ValUrl'] .'-uid-' . $this->memberId ?>">
+                                                            <!--<a style="font-family: Arial;font-size: 14px;line-height: 18px;text-decoration: none;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;" href="<?php echo Zend_Registry::get('absolute_web_root') . '/' . $this->details_page . '/ID/' . $article['NA_ID'] . '/newsletterID/' . $this->newsletterID ?>">-->
+                                                            <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>&nbsp;
+                                                            <img src="<?php echo $imageFleche; ?>" alt="" border="0"/>
+                                                            </a>
+                                                             <?php
+                                                            }
+                                                            else if($article['NA_TextLink']==2){?>
+                                                               <a style="font-family: Arial;text-decoration: none;font-size: 14px;line-height: 18px;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;" href="<?php echo $article['NA_URL']; ?>" target="_blank">
+                                                                    <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>&nbsp;
+                                                                    <img src="<?php echo $imageFleche; ?>" alt="" border="0"/>
+                                                               </a>
+                                                             <?php
+                                                             }
+                                                             ?>
+                                                        </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" height="30">
+                                                                <img src="<?php echo $sourceJaune; ?>"/>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                         </table>
+                                     </td>
+                                     <td width="30">
+                                     </td>
+                                    <?php endif; ?>
+                                </tr>
+                            </table>
+                        <?php
+                        }
+                    }
+                    ?>
+                    </td>
+                </tr>
+          </table>
+        </td>
+        <td style="height:1px;width:20px;">&nbsp;</td>
+        <td style="height:100%;width:180px;border-right:1px solid #CCCCCC;" colspan="1">
+
+            <table cellpadding="0" cellspacing="0" width="100%" style="height:100%;">
+                <tr>
+                    <td style="height:1px;background-color:#FFFFFF;" colspan="2" class="whiteBack">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td id="zone2TD" style="height:100%;width:180px;vertical-align:top;background-color:#E8E7E4;">
+                         <table class="tableDiva2" border="0" cellpadding="0" cellspacing="0" width="180px" style="height:100%;margin-left:0px;padding-left:10px;padding-right:10px;padding-top:0px;padding-bottom:0px;font-size: 12px;color: #727678;">
+                        <?php
+                        foreach ($this->articles as $article)
+                        {
+                            if($article['NA_ZoneID'] == 2)
+                            {
+                            ?>
+
+                                <tr>
+                                    <td style="height:100%;vertical-align:top;" >
+                                        <table class="tableDiv2" border="0" cellpadding="0" cellspacing="0" width="160px" style="vertical-align:top;height:100%;margin-left:0px;padding-left:0px;padding-right:0px;padding-top:16px;padding-bottom:10px;font-size: 12px;color: #727678;">
+                                        <tr>
+                                            <td width="100%" style="font-family:Arial;font-weight:normal;font-size:30px;color:#ACBF20;padding-bottom: 10px;">
+                                                <?php echo($article['NA_Title']); ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align:top;height:100%;font-family:Arial;font-size: 14px;color: #666666;font-style:normal; font-weight:normal;">
+                                                <?php echo($article['NA_Resume']); ?>
+                                                <?php if($article['NA_Text']): ?>
+                                                <table class="articleReadMore" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                    <td style="padding-bottom:3px;text-align:right;border-bottom:1px solid #CCCCCC;" width="100%">
+                                                        <?php
+                                                                if($article['NA_TextLink']==1){
+                                                            ?>
+                                                        <a style="font-family: Arial;text-decoration: none;font-size: 14px;line-height: 18px;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;" href="<?php echo Zend_Registry::get('absolute_web_root') . '/' . $this->details_page . "/"  . $date_string_url . "/" . $article['NA_ValUrl'] .'-uid-' . $this->memberId ?>">
+                                                            <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>&nbsp;
+                                                            <img src="<?php echo $imageFlecheCouleur; ?>" alt="" border="0"/>
+                                                        </a>
+                                                        <?php
+                                                        }
+                                                        else if($article['NA_TextLink']==2){?>
+                                                           <a style="font-family: Arial;text-decoration: none;font-size: 14px;line-height: 18px;font-style: normal;font-weight: bold;font-variant: normal;text-transform: uppercase;color: #ACBF20;text-align: right;" href="<?php echo $article['NA_URL']; ?>" target="_blank">
+                                                                <?php echo($this->getClientText('see_details_newsletter_text',$this->languageRelease)); ?>&nbsp;
+                                                                <img src="<?php echo $imageFlecheCouleur; ?>" alt="" border="0"/>
+                                                           </a>
+                                                         <?php
+                                                         }
+                                                         ?>
+                                                    </td>
+                                                    </tr>
+                                                </table>
+
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        <?php
+                        }
+                    }
+                    ?>
+                    </table>
+                </td>
+                <td width="8">&nbsp;</td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" height="60" style="border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;">&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="3" bgcolor="#3D3D3D" border-top="4px solid #BECB50">
+            <table style="border:0px;padding:10px;" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="475" height="35">
+                        <table>
+                            <tr>
+                                <td style="line-height:13px;text-align:left;height:100%;font-family:Arial;font-weight:bold;font-size:13px;color:#ACBF20;">
+                                  <a style="text-decoration:none;color:#ACBF20;text-transform:uppercase;" href="<?php echo Zend_Registry::get('absolute_web_root') . $subscribeLink; ?>">
+                                    <?php
+                                        echo($this->getClientText('newsletter_button_subscribe_client',$this->languageRelease));
+                                     ?>
+                                   &nbsp;&nbsp;i&nbsp;&nbsp;</a>
+                                </td>
+                                <td style="text-align:left;height:100%;font-family:Arial;font-weight:bold;font-size:13px;color:#ACBF20;">
+                                    <a style="text-decoration:none;color:#ACBF20;text-transform:uppercase;" href="<?php echo Zend_Registry::get('absolute_web_root') . $unsubscribeLink; ?>">
+                                    <?php
+                                        echo($this->getCibleText('newsletter_button_unsubscribe',$this->languageRelease));
+                                    ?>
+                                    &nbsp;&nbsp;i&nbsp;&nbsp;</a>
+                                </td>
+                                <td style="text-align:left;height:100%;font-family:Arial;font-weight:bold;font-size:13px;color:#ACBF20;">
+                                    <a style="text-decoration:none;color:#ACBF20;text-transform:uppercase;" href="<?php echo Zend_Registry::get('absolute_web_root') . $archiveLink; ?>">
+                                    <?php
+                                        echo($this->getClientText('newsletter_button_archives_client',$this->languageRelease));
+                                    ?>
+                                    </a>
+                               </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td align="right" width="226" height="35" style="font-family:Arial;font-weight:bold;font-size:13px;color:#FFFFFF;text-transform:uppercase;">
+                        <?php echo $this->getCibleText('footer_site_web',$this->languageRelease); ?>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="2" width="701" height="43" style="font-family:Arial;font-weight:bold;font-size:13px;color:#FFFFFF;">
+                        <?php echo str_replace("%%%GET_DATE_YEAR%%%", date('Y'), $this->getClientText('footer_copyright',$this->languageRelease)); ?>
+                    </td>
+                </tr>
+           </table>
+        </td>
+    </tr>
+</table>

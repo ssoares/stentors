@@ -1,0 +1,22 @@
+<script type="text/javascript">
+
+    $("#genericProfile").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: "/ss/edith/www/extranet/users/index/user-exists/",
+                    type: "post"
+                }
+            }
+        },
+        messages: {
+            email: {
+                required: 'Obligatoire',
+                email: "Adresse invalide",
+                remote:'Existe deja' 
+            }
+        }
+    });
+</script>

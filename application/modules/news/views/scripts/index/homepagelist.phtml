@@ -1,0 +1,85 @@
+<div class="block_news_home">
+    <h2 class="news_title_home">
+        éà<?php echo $this->getClientText('news_latest_news_text'); ?>
+    </h2>
+    <?php
+    if($this->news)
+    {
+        foreach($this->news as $news)
+        {
+            $date = new Zend_Date($news['ND_Date'],null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));
+            $date_string_url = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_SQL,'-');
+        ?>
+            <div class="news">
+                <div class="news_text_container">
+                    <div class="news_title">
+                        <a href="<?php echo $this->baseUrl() . '/' . $this->details_page . "/"  . $date_string_url . "/" . $news['NI_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text') ?>">
+                           <?php echo $news['NI_Title']; ?>
+                        </a>
+                    </div>
+                    <?php
+                    if( $this->params['5'] )
+                    {
+                        $date_string = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_NUM,'.');
+                        ?>
+                        <div class="news_date">
+                            <?php echo $date_string; ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                    <?php
+                    if( $this->params['3'] && !empty($news['NI_Brief']) )
+                    {
+                        // Show brief text
+                        $text = Cible_FunctionsGeneral::html2text($news['NI_Brief']);
+                        $text = Cible_FunctionsGeneral::truncateString($text, 150);
+                    }
+                    else
+                    {
+                        // If not, show long text
+                        $text = Cible_FunctionsGeneral::html2text($news['NI_Text']);
+                        $text = Cible_FunctionsGeneral::truncateString($text, 150);
+                    }
+                    ?>
+                    <div class="news_brief">
+                        <a href="<?php echo $this->baseUrl() . '/' . $this->details_page . "/"  . $date_string_url . "/" . $news['NI_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text') ?>">
+                            <?php echo $text ?>
+                        </a>
+                    </div>
+                </div>
+                <?php
+                if(!empty($news['NI_ImageSrc']))
+                { ?>
+                    <div class="news_photo_container">
+                    <?php
+                        echo $this->newsImage($news['ND_ID'], $news['NI_ImageSrc'], 'thumb', array('class'=>'news_photo_list', 'border'=>'0', 'prettyPhoto'=>array('size'=>'original','alt'=>$news['NI_Title'],'title'=>$news['NI_Text'])));
+                        //echo $this->newsImage($news['ND_ID'], $news['NI_ImageSrc'], 'thumb', array('class'=>'news_photo_list', 'border'=>'0', 'prettyPhoto' => array('size'=>'original')));
+                    ?>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
+        <?php
+        }
+        ?>
+     <div class="news_view_all">
+        <a href="<?php echo $this->baseUrl() . '/' . $this->listall_page ?>" title="<?php echo $this->getClientText('see_all_news_text') ?>" class="news_view_all">
+            <?php echo $this->getClientText('see_all_news_text') ?>
+        </a>
+    </div>
+    <?php
+    }
+    else
+    {
+    ?>
+    <div class="news_brief_home_page">
+        <p>
+            <?php
+            echo $this->getCibleText('news_no_news'); ?>
+        </p>
+    </div><?php
+    }
+    ?>
+</div>

@@ -1,0 +1,97 @@
+/* 
+    Document   : banners
+    Created on : 2011-06-30, 23:06:13
+    Author     : ssoares
+    Description:
+        Style for the images displayed in the banners module.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#blockBannerImageFeatured{ 
+    padding: 0px 0 43px 0;
+}
+.blockImages{
+    background-color: #fff;
+    padding: 0 0 0 5px;
+}
+.imgContainer{
+    background: transparent url('../images/common/bgImgFeaturedBanner.jpg') no-repeat 0 0;
+    display: inline-block;
+    height: 286px;
+    margin-top: 3px;
+    padding: 1px 0 0 0px;
+    vertical-align: top;
+    width: 202px;
+}
+.topPart{
+    height: 221px;
+    padding: 0;
+    position: relative;
+    width: 186px;
+}
+.topPart img{
+    max-width: 176px;
+    max-height: 221px;
+    bottom: 0;
+    margin: auto 8%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0;
+    vertical-align: middle;
+}
+.bottomPart{
+    font-family: BiffoMTRegular;
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.bottomPart a {
+    color: white;
+}
+
+.biffoNormal{
+    font-family: BiffoMTRegular;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+.bluePaleText{
+    color: #94eaee !important;
+}
+.fontSize35{
+    font-size: 35px;
+}
+.fontSize20{
+    font-size: 20px;
+}
+
+.containerBgHeader_sliding{
+    overflow: hidden;
+}
+
+div.bannerImageAbsoluteFloat{
+    float:left;
+    width: 830px;
+    height: 271px;
+}
+
+div.masterControl_paginator.whiteArrow a.activeSlide{
+
+    background: transparent url('../images/common/banner_next_white.png') no-repeat;
+    padding: 0 6px;
+    text-indent: -10000px;
+}
+
+div#bannerContainer{
+    height: 275px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}

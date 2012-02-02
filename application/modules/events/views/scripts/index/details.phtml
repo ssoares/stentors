@@ -1,0 +1,71 @@
+<div class="block block-events">
+    <?php if ($this->events): ?>
+        
+        <?php foreach($this->events as $event): ?>
+        
+            <?php $this->headTitle($event['EI_Title']) ?>
+            
+            <?php $withImage = false; ?>
+            
+            <div class="each-event first-event">
+                <?php
+                    if(!empty($event['ED_ImageSrc'])){
+                        echo $this->moduleImage('event',$event['ED_ID'], $event['ED_ImageSrc'], 'medium', array('class'=>'events_photo', 'border'=>'0', 'prettyPhoto' => array('size'=>'original','theme' => 'facebook','alt'=>$event['EI_Title'],'title'=>$event['EI_Brief'])));
+                    }                
+                    $date_string = '';
+                    foreach($event['dates'] as $date){
+                        $startDate = new Zend_Date($date['EDR_StartDate'],null, 'fr_CA');
+                        $endDate = new Zend_Date($date['EDR_EndDate'],null, 'fr_CA');
+                        
+                        if( !empty($date_string) ){
+                            $date_string .= $this->getCibleText('events_s_and_s');
+                        }
+                        
+                        if( $startDate->get(Zend_Date::MONTH) == $endDate->get(Zend_Date::MONTH) && $startDate->get(Zend_Date::YEAR) == $endDate->get(Zend_Date::YEAR) ){
+                            if( $startDate->get(Zend_Date::DAY) != $endDate->get(Zend_Date::DAY) )
+                                $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));   
+                            else
+                                $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                        }
+                        else{
+                            $dateElse = "%d %s %d" . $this->getCibleText('events_s_to_s') . "%d %s %d";
+                            $date_string .= sprintf($dateElse, $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), utf8_decode($endDate->get(Zend_Date::MONTH_NAME)), $endDate->get(Zend_Date::YEAR));
+                        }
+                    }
+                ?>
+                <?php
+                if($withImage)
+                    $classDate = 'date';
+                else
+                    $classDate = 'date-without-padding';
+                ?>
+                <div class="<?php echo $classDate ?>"><?php echo $date_string ?></div>
+                <div class="brief"><?php echo $event['EI_Brief'] ?></div>
+                <div class="text"><?php echo $event['EI_Text'] ?></div>
+                <!--<div class="register"><?php echo $this->clientImage('button-register-event.jpg'); ?></div>-->
+            </div>
+            
+            <div class="clear_both"></div>            
+        
+        <?php endforeach; ?>
+
+    <?php else: ?>
+        
+        <!--<div class="each-event first-event brief"><?php echo $this->getClientText('events_no_events') ?></div>-->
+
+    <?php endif; ?>
+    <div class="events_view_all">
+        <?php
+        if($this->pagePrecedente==''){
+            $backLink = $this->baseUrl() . '/' . $this->listall_page;
+        }
+        else{
+            $backLink = $this->pagePrecedente;
+        }
+        
+        ?>
+        <a href="<?php echo $backLink ?>" title="<?php echo $this->getClientText('see_all_news_text') ?>" class="view-all-image">
+            <?php echo $this->getClientText('see_all_events_text') ?>&nbsp;&nbsp;&nbsp;
+        </a>
+    </div>
+</div>

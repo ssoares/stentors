@@ -1,0 +1,41 @@
+<?php if ($this->pageCount > 1): ?>
+
+    <?php
+
+        // images
+        //$_first_img = $this->first_link_image ? $this->first_link_image : $this->image("{$this->baseUrl()}/icons/paging_first.png", array('border'=> 0));
+        $_prev_img = $this->prev_link_image ? $this->prev_link_image : $this->image("{$this->baseUrl()}/icons/paging_prev.png", array('border'=> 0));
+
+        $_next_img = $this->next_link_image ? $this->next_link_image : $this->image("{$this->baseUrl()}/icons/paging_next.png", array('border'=> 0));
+        //$_last_img = $this->last_link_image ? $this->last_link_image : $this->image("{$this->baseUrl()}/icons/paging_last.png", array('border'=> 0));
+
+    ?>
+
+    <div class="paginationControl">
+<?php
+    //var_dump($this->url());
+?>
+        <!-- Numbered page links -->
+        <div id="page-list">
+             <?php if (isset($this->previous)){ ?>
+                <a href="<?php echo $this->url(array('page' => $this->previous)); ?>" class="product-navigation-previous">
+                <img src="<?php echo Zend_Registry::get('www_root') ?>/themes/default/images/common/fleche_precedent.png" alt="" border="0">
+                </a>
+            &nbsp;
+            <?php } ?>
+        <?php foreach ($this->pagesInRange as $page): ?>
+            <?php if ($page != $this->current): ?>
+                <a href="<?php echo $this->url(array('page' => $page)); ?>" class="paginator_link_page_number"><?php echo $page; ?></a>
+            <?php else: ?>
+                <span class="paginator_link_page_number selected"><?php echo $page; ?></span>
+            <?php endif; ?>
+        <?php endforeach; ?>
+         &nbsp;
+        <?php if (isset($this->next)){ ?>
+                <a href="<?php echo $this->url(array('page' => $this->next)); ?>" class="product-navigation-next">
+                <img src="<?php echo Zend_Registry::get('www_root') ?>/themes/default/images/common/fleche_suivant.png" alt="" border="0">
+                </a>
+         <?php } ?>
+        </div>
+    </div>
+<?php endif; ?>

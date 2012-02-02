@@ -1,0 +1,131 @@
+<?php
+    $date = new Zend_Date($this->parution_date,null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));
+    $date_string = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_LONG_NO_DAY,'.');
+    $date_string_url = Cible_FunctionsGeneral::dateToString($date,Cible_FunctionsGeneral::DATE_SQL,'-');
+?>
+<div class="newsletter_title">
+<?php
+    echo($this->parution_title);    
+?>
+</div>
+<div class="newsletter_left_web">
+<?php
+    foreach ($this->articles as $article){ 
+        if($article['NA_ZoneID'] == 1){
+           //var_dump($article);
+        ?>
+        <div class="newsletter_titre_article_zone1">
+            <?php
+            if($article['NA_Title']){
+                echo($article['NA_Title']);
+            }
+            ?>
+        </div>
+        <div class="newsletter_resume_article_zone1">
+            <?php
+            if($article['NA_Resume']){
+                echo($article['NA_Resume']);
+            }
+            ?>
+        </div>
+        <div class="newsletter_image_article_zone1">
+            <?php
+           // echo $this->moduleImage('gallery',$gallery['G_ID'] . "/" . $gallery['G_ImageID'], $gallery['I_OriginalLink'], 'thumb', array('class'=>'newsletter_photo', 'border'=>'0', 'prettyPhoto' => array('size'=>'original','alt'=>$gallery['GI_Title'],'title'=>$gallery['GI_Description'])));
+            echo $this->moduleImage('newsletter',$article['NA_ReleaseID'] . "/" . $article['NA_ID'], $article['NA_ImageSrc'], 'thumb', array('class'=>'newsletter_photo news_photo_list', 'border'=>'0', 'prettyPhoto' => array('size'=>'original','alt'=>$article['NA_Title'],'title'=>$article['NA_Resume'])));
+           // var_dump($article);
+            ?>
+           
+
+  </div>
+        <div class="newsletter_details_lire_suite">
+            <?php
+            if($article['NA_TextLink']==1){
+            ?>
+                <a href="<?php echo $this->baseUrl() . '/' . $this->details_page . "/"  . $date_string_url . "/" . $article['NA_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text') ?>">
+                     <?php echo($this->getClientText('see_details_newsletter_text')); ?>&nbsp;
+                </a>
+               <?php
+                }
+                else if($article['NA_TextLink']==2){?>
+                    <div class="newsletter_details_lire_suite">
+                       <a href="<?php echo $article['NA_URL']; ?>" target="_blank">
+                             <?php echo($this->getClientText('see_details_newsletter_text')); ?>&nbsp;
+                       </a>
+                   </div>
+                 <?php
+                 }
+                 ?>
+        </div> 
+        <?php
+        }
+    }
+?>
+</div>
+<!--
+    <div class="news_photo_container">                        
+        <a href="/fr/edith/www/data/images/news/25/600x400_cameron-diaz.jpg" rel="prettyPhoto[gallery1]" alt="News en francais" title="<p>or. Sed quam purus, vehicula et commodo vitae, fringilla id neque. Duis eu est sapien, in </p>" ><img src="/fr/edith/www/data/images/news/25/225x171_cameron-diaz.jpg" alt="News en francais" class="news_photo_list" border="0" prettyPhoto="Array"   /></a>                          
+    </div>
+-->
+<div class="newsletter_right_web">
+    <div class="newsletter_subscribe newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->subscribeLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_subscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_unsubscribe newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->unsubscribeLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_unsubscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_archives newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->archivesLink; ?>">
+        <?php echo($this->getCibleText('newsletter_button_archives'));?>
+        </a>
+    </div>
+    <div class="newsletter_zone2">
+        <?php
+        foreach ($this->articles as $article){
+            if($article['NA_ZoneID']==2){
+             ?>
+                <div class="newsletter_titre_article_zone1">
+                    <?php
+                    if($article['NA_Title']){
+                        echo($article['NA_Title']);
+                    }
+                    ?>
+                </div>
+                <div class="newsletter_article_resume">
+                    <?php if($article['NA_Resume']){ ?>
+                    <?php echo($article['NA_Resume']); ?>
+                <?php } ?>
+                </div>
+                <?php
+                if($article['NA_TextLink']==1){
+                ?>
+                <div class="newsletter_details_lire_suite">
+                    <a href="<?php echo $this->baseUrl() . '/' . $this->details_page . "/"  . $date_string_url . "/" . $article['NA_ValUrl'] ?>" title="<?php echo $this->getClientText('see_details_news_text') ?>">
+                        <?php echo($this->getClientText('see_details_newsletter_text')); ?>
+                    </a>
+                </div>
+                <?php
+                }
+                else if($article['NA_TextLink']==2){?>
+                    <div class="newsletter_details_lire_suite">
+                       <a href="<?php echo $article['NA_URL']; ?>" target="_blank">
+                            <?php echo($this->getClientText('see_details_newsletter_text')); ?>
+                       </a>
+                   </div>
+                 <?php
+                 }
+                 ?>
+                <?php
+                }
+        }
+        ?>
+    </div>
+</div>
+<div class="newsletter_politics_confidentiality">
+<?php
+    echo($this->messageConfidentialite);
+?>
+</div>

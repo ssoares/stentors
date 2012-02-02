@@ -1,0 +1,46 @@
+<div class="block block-events">
+    <?php if ($this->events): ?>
+
+        <div class="title-others">AUTRES ÉVÉNEMENTS À VENIR...</div>
+         
+        <?php foreach($this->events as $event): ?>
+            
+            <div class="each-event">                
+                <?php 
+                    $date_string = '';
+                    foreach($event['dates'] as $date){
+                        $startDate = new Zend_Date($date['EDR_StartDate'],null, 'fr_CA');
+                        $endDate = new Zend_Date($date['EDR_EndDate'],null, 'fr_CA');
+                        
+                        if( !empty($date_string) )
+                            $date_string .= ' et ';
+                        
+                        if( $startDate->get(Zend_Date::MONTH) == $endDate->get(Zend_Date::MONTH) && $startDate->get(Zend_Date::YEAR) == $endDate->get(Zend_Date::YEAR) ){
+                            if( $startDate->get(Zend_Date::DAY) != $endDate->get(Zend_Date::DAY) )
+                                $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));   
+                            else
+                                $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                        }
+                        else
+                            $date_string .= sprintf("%d %s %d au %d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), utf8_decode($endDate->get(Zend_Date::MONTH_NAME)), $endDate->get(Zend_Date::YEAR));
+                    }
+                ?>
+                <div class="date"><a href="<?php echo $this->baseUrl() . '/' . $this->details_page . '/ID/' . $event['ED_ID'] ?>"><?php echo $date_string ?></a></div>
+                <div class="title"><a href="<?php echo $this->baseUrl() . '/' . $this->details_page . '/ID/' . $event['ED_ID'] ?>"><?php echo $event['EI_Title'] ?></a></div>
+                <div class="brief"><a href="<?php echo $this->baseUrl() . '/' . $this->details_page . '/ID/' . $event['ED_ID'] ?>"><?php echo $event['EI_Brief'] ?></a></div>
+                <!--<div class="view-details"><?php echo $this->link( "{$this->baseUrl()}/{$this->details_page}/ID/{$event['ED_ID']}", $this->getClientText('see_details_news_text')) ?></div>-->
+                <!--<div class="register"><?php echo $this->clientImage('button-register-event.jpg'); ?></div>-->
+            </div>
+            
+            <div class="clear_both spacerMedium"></div>            
+        
+        <?php endforeach; ?>
+        
+        <div class="view-all"><?php echo $this->link( "{$this->baseUrl()}/{$this->listall_page}/ID/{$event['ED_ID']}", $this->getClientText('see_all_events_text')) ?></div>
+
+    <?php else: ?>
+        
+        <!--<div><?php echo $this->getClientText('events_no_events') ?></div>-->
+
+    <?php endif; ?>
+</div>

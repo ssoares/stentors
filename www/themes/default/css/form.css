@@ -1,0 +1,185 @@
+/* Version SVN: $Id: form.css 726 2011-12-06 22:18:46Z ssoares $*/
+
+/***************************************/
+/* HTML FORM CLASSES */
+
+
+div.form form dl.zend_form div fieldset    {
+    margin-bottom: 20px;
+    padding: 10px 10px 0 10px;
+}
+div.form form dl.zend_form div fieldset legend    {
+    padding: 0 5px 0 5px;
+    color: #CC0000;
+}
+
+div.form form fieldset div.textzone,
+div.form form fieldset div.answer-zone,
+div.form form dl dd#dd_captcha    {
+    margin-bottom: 15px;
+}
+
+div.form form fieldset div.answer-zone label    {
+    font-size: 11px;
+}
+
+div.form form dl.zend_form dd    {
+    margin-bottom: 15px;
+}
+
+div.form form fieldset div label    {
+    display: inline;
+}
+div.form form fieldset div input    {
+    display: inline;
+}
+div.form form fieldset div label input[type=checkbox],
+div.form form fieldset div label input[type=radio]    {
+    display: inline !important;
+}
+
+div.form form dl dd#dd_captcha img  {
+    width: 148px;
+}
+
+
+
+.stdTextInput,
+.smallTextInput,
+.mediumTextInput,
+.stdSelect,
+.stdTextarea,
+.stdTextInputCaptcha,
+.dateTextInput   {
+    width: 41.6666667%;
+    height: 20px;
+    padding-left: 3px;
+    color: #727678;
+}
+.smallTextInput {
+    width: 50px;
+}
+.dateTextInput {
+    width: 80px;
+}
+.mediumTextInput {
+    width: 125px;
+}
+.stdTextarea{
+    width: 41.6666667%;
+    max-width: 41.6666667%;
+    height: 7em;
+    max-height: 15.625%;
+    overflow: auto;
+}
+.stdSelect {
+    color: #727678;
+    width: 41.6666667%;
+    height: 22px;
+}
+.stdTextInputCaptcha    {
+    width: 15.1041667%;
+}
+
+
+
+
+.subscribeButton-fr    {
+    border: none;
+    background: #fcfcfc url(../images/fr/btn-send-up.png) no-repeat;
+    color: #727678;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 84px;
+    height: 25px;
+}
+.subscribeButton-en    {
+    border: none;
+    background: #fcfcfc url(../images/en/btn-send-up.png) no-repeat;
+    color: #727678;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 84px;
+    height: 25px;
+}
+.refreshCaptchaButton-fr   {
+    border: none;
+    background: #fcfcfc url(../images/fr/btn-refresh-captcha-up.png) no-repeat;
+    color: #727678;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 84px;
+    height: 25px;
+}
+.refreshCaptchaButton-en   {
+    border: none;
+    background: #fcfcfc url(../images/en/btn-refresh-captcha-up.png) no-repeat;
+    color: #727678;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 84px;
+    height: 25px;
+}
+
+
+
+
+form ul.errors,
+ul.errors,
+form ul.errors li,
+ul.errors li,
+div.answer-zone li  {
+    margin-top: 2px !important;
+    color:#CC0000;
+}
+form ul.errors li,
+form div.answer-zone li   {
+}
+
+div.answer-zone span.detailOptions li   {
+    margin-left: 20px;
+}
+
+span.detailOptions {
+    margin-left: 20px;
+}
+span.detailOptions input    {
+    width: 327px;
+    height: 20px;
+    padding-left: 3px;
+    color: #727678;
+}
+
+span.field_required {
+    color: #CC0000;
+}
+div.title{
+    padding-bottom: 15px;
+}
+
+
+.stdTextInput{
+}
+
+.mediumTextInput{
+}
+
+.stdTextarea{
+    margin-top:3px;
+}
+
+dl.zend_form dd{
+    padding-bottom:15px;
+}
+
+dd#dd_captcha img{
+   margin-top:3px;
+   margin-bottom: 5px;
+}
+
+#refresh_captcha{
+}
+
+#submit{
+    margin-top:20px;
+}

@@ -1,0 +1,84 @@
+<?php $this->headScript()->appendFile($this->locateFile('jquery.cycle.all.js', 'jquery')); ?>
+<div class="content-left">
+    <p class="labelInfos">
+        <?php echo $this->promoLbl; ?>
+    </p>
+</div>
+<?php if ($this->navi): ?>
+<div id ="masterControl_left" class="masterControl masterControl_left promo">
+    <span class="control_fade leftControl">
+        <?php echo $this->image($this->baseUrl() . "/themes/default/images/common/realisation_prev.png", array("alt" => $this->getCibleText("form_paginator_previous"), "title" => $this->getCibleText("form_paginator_previous"))) ?>
+    </span>
+</div>
+<?php endif; ?>
+<div id="promoContainer">
+    <?php
+    foreach ($this->promos as $promo):
+        ?>
+        <div id="slideContainer-<?php echo $promo['PR_ID']; ?>" class="slide">
+            <div class="promoDescr">
+                <?php echo $promo['PRI_Description']; ?>
+            </div>
+            <div class="promoImg">
+                <?php
+                if ($promo['PR_Photo'] != '')
+                {
+                    echo $this->link(
+                        $promo['PRI_ValUrl'], $this->moduleImage(
+                            'catalog', 'promotions/' . $promo['PR_ID'], $promo['PR_Photo'], 'medium', array(
+                            'class' => '',
+                            'key' => 'promo'
+                            )
+                        ), array('class' => 'promo')
+                    );
+                }
+                else
+                {
+                    $alt = $promo["PRI_Name"];
+                    echo $this->clientImage('noPic_174x207.jpg', array('alt' => $alt));
+                }
+                ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php if ($this->navi): ?>
+    <div id="masterControl_right" class="masterControl masterControl_right">
+        <span class="control_fade rightControl">
+        <?php echo $this->image($this->baseUrl() . "/themes/default/images/common/realisation_next.png", array("alt" => $this->getCibleText("form_paginator_next"), "title" => $this->getCibleText("form_paginator_next"))) ?>
+        </span>
+    </div>
+<?php endif; ?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function(){    
+        var timerToRotate = 0;
+        var autoP = <?php echo $this->autoPlay; ?>;
+        var transitionTime = 0;
+        // var currentPosition = 0;
+        var showNavi = 0;
+        var effectTrans = 0; 
+    
+        transitionTime = <?php echo $this->transition; ?>;
+        showNavi = <?php echo $this->navi; ?>;
+        effectTrans = "<?php echo $this->effect; ?>";  // slide= scrollHorz , fading = fade
+
+        if (autoP)
+            timerToRotate = <?php echo $this->delais; ?> * 1000;
+
+   
+        $('#promoContainer') 
+        .after('<div id="masterControl_paginator" class="masterControl_paginator">')
+        .cycle({
+            fx:     effectTrans, 
+            speed:  transitionTime, 
+            timeout: timerToRotate, 
+            pager:  '#masterControl_paginator' ,
+            prev: '#masterControl_left',
+            next: '#masterControl_right'
+        });
+        $('#masterControl_paginator a').html('&nbsp;');
+    });
+    //]]>
+</script>

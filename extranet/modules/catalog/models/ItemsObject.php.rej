@@ -1,0 +1,10 @@
+--- extranet/modules/catalog/models/ItemsObject.php	(rÃ©vision 281)
++++ extranet/modules/catalog/models/ItemsObject.php	(copie de travail)
+@@ -32,6 +32,7 @@
+     protected $_indexLanguageId = 'II_LanguageID';
+ //    protected $_indexColumns    = array();
+     protected $_constraint      = 'I_ProductID';
++    protected $_foreignKey      = 'I_ProductID';
+ 
+     /**
+      * Fetch items data for the product and build the rendering.

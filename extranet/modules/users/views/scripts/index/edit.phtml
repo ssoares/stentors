@@ -1,0 +1,53 @@
+<?php
+echo $this->partial('partials/header.pageDetails.phtml', array(
+    'pageTitle' => $this->getCibleText('header_edit_profile_text'),
+    'pageDescription' => $this->getCibleText('header_edit_profile_description'),
+    'breadcrumb' => ''
+));
+?>
+<div id="default_form">
+    <div id="form_panel">
+        <?php
+        $this->tabPane("newstab",
+                  $this->form,
+                  array('title' => 'General', 'id' => 'tabGeneral'));
+        $this->tabPane("newstab",
+                  "Ici le formulaire pour gérer les inscriptions à l'infolettre",
+                  array('title' => 'Infolettre', 'id' => 'tabNewsletter'));
+
+        echo $this->tabContainer("newstab",
+                        array(),
+                        array('class' => 'flora'));
+        ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input[type=radio][id^=retailerForm-isDistributeur]').click(function(){
+            if($('#retailerForm-isDistributeur-2').is(':checked'))
+                $('#fieldset-retailerForm').children().children().each(function(){
+                    var child = $(this).children().find('input[type=radio][id^=retailerForm-isDistributeur]');
+                    var label = $(this).children().get(0).htmlFor;
+                    if(child.length != 2 || label != 'retailerForm-isDistributeur')
+                        $(this).show();
+                });
+            else
+                $('#fieldset-retailerForm').children().children().each(function(){
+                    var label = $(this).children().get(0).htmlFor;
+                    var child = $(this).children().find('input[type=radio][id^=retailerForm-isDistributeur]');
+
+                    if(child.length != 2 && label != 'retailerForm-isDistributeur')
+                        $(this).hide();
+                });
+        });
+        $(window).load(function(){
+
+            $('input[type=radio][id^=retailerForm-isDistributeur]').each(function(){
+                if($(this).is(':checked'))
+                    $(this).click();
+            });
+        });
+    });
+</script>
+<?php echo $this->partial('partials/js.GenericFormValidate.phtml'); ?>

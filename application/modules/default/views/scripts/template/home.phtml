@@ -1,0 +1,73 @@
+<?php
+    // One place_holder template, so grab only the first place_holder elements
+    $ph1_blocks = isset($this->blocks[1]) ? $this->blocks[1] : array();
+    $ph2_blocks = isset($this->blocks[2]) ? $this->blocks[2] : array();
+    
+    $this->placeholder('blocksRight')->captureStart();
+    foreach ($ph2_blocks as $block){
+        $module = $block['module'];
+        switch ($block['params']['secured']){
+            case 1:
+                $user = Zend_Registry::get('user');
+                if(count($user))
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+            case 2:
+                $user = Zend_Registry::get('user');
+                if(!count($user))
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+            default:
+                echo $this->action($block['action'],'index',$module, $block['params']);
+                break;
+        }
+    }
+    $this->placeholder('blocksRight')->captureEnd();
+    $this->placeholder('blocksLeft')->captureStart();
+        $authDisplayed = false;
+        foreach ($ph1_blocks as $block){
+            $module = $block['module'];
+            
+            switch ($block['params']['secured'])
+            {
+                case 1:
+                    $user = Zend_Registry::get('user');
+                    if(count($user))
+                        echo $this->action($block['action'],'index',$module, $block['params']);
+                    break;
+                case 2:
+                    $user = Zend_Registry::get('user'); 
+                    if(!count($user))
+                        echo $this->action($block['action'],'index',$module, $block['params']);
+                    break;
+                default:
+                    echo $this->action($block['action'],'index',$module, $block['params']);
+                    break;
+            }
+        }
+    $this->placeholder('blocksLeft')->captureEnd();
+?>
+<div id="top-menu-container"> 
+        <?php echo $this->menu(
+                'principal',
+                array(
+                    'class' => 'top-menu font_size_xSmall',
+                    'id' => 'top-menu',
+                    'parentAltId' => 'parentIdTop-')
+                );
+        ?> 
+</div>
+<!--<div id="bread-crumb"><?php //echo $this->breadcrumb() ?><?php echo htmlspecialchars_decode($this->pageTitle) ?></div>
+<div id="bread-crumb"><?php //echo $this->breadcrumbmenu(array('menuTitle' => 'principal')) ?><?php echo htmlspecialchars_decode($this->pageTitle) ?></div>-->
+<?php if($this->showTitle): ?>
+    <h1 class="title"><?php echo $this->pageTitle?></h1>
+<?php endif; ?>
+
+<!-- Placeholder 1 -->
+<div class="content-left-home">
+    <?php echo $this->placeholder('blocksLeft') ?>
+</div>
+<!-- Placeholder 2 -->
+<div class="content-right-home">    
+    <?php echo $this->placeholder('blocksRight') ?>    
+</div>                                                                                                                 

@@ -1,0 +1,259 @@
+<?php
+$url       = $this->baseUrl() . '/' . 'cart/index/ajax/';
+$langId    = Zend_Registry::get('languageID');
+$product   = $this->productDetails;
+$hasDocPro = (!empty ($product['PI_FicheTechniqueProPDF'])
+    || !empty ($product['PI_OutilPromoPDF'])
+    || !empty ($product['PI_FicheTechniquePublicPDF'])) ? 1:0;
+$hasDocPub = (!empty ($product['PI_FicheTechniquePublicPDF'])) ? 1:0;
+?>
+
+<?php echo($this->partial('partials/tooltip.box.phtml')); ?>
+<div id="blockDetailLeft">
+    <div id="blockImage">
+        <?php if(!empty($product['P_Photo'])): ?>
+        <?php echo $this->moduleImage(
+                'catalog',
+                'products/' . $product['P_ID'],
+                $product['P_Photo'],
+                'medium',
+            array(
+                'class' => '',
+                'alt'   => $product['PI_Name'],
+                'useSize' => false,
+                'prettyPhoto'=>array(
+                    'size'  => 'original',
+                    'image' => $product['P_Photo']
+                    )
+            )); ?>
+        <?php else:
+            $alt = $product["PI_Name"];
+            echo $this->clientImage('noPic.jpg', array('alt'=>$alt));
+        ?>
+        <?php endif; ?>
+
+    </div>
+    <?php if(Zend_Registry::get('user')):?>
+    <div id="blockLogged">
+        <?php if($hasDocPro): ?>
+        <div id="techDocs">
+            <?php if(!empty ($product['PI_FicheTechniqueProPDF'])): ?>
+                <?php echo $this->link(
+                    $product['PI_FicheTechniqueProPDF'],
+                    $this->getClientText('product_details_technical_pdf_link'),
+                    array(
+                        'id' => 'techPdfFile',
+                        'alt' => $product['PI_FicheTechniqueProPDF'])
+                    );
+                ?>
+            <?php endif; ?>
+            <?php if(!empty ($product['PI_OutilPromoPDF'])): ?>
+                <?php echo $this->link(
+                    $product['PI_OutilPromoPDF'],
+                    $this->getClientText('product_details_tool_pdf_link'),
+                    array(
+                        'id' => 'toolsPdfFile',
+                        'alt' => $product['PI_OutilPromoPDF'])
+                    );
+                ?>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($product['PI_NoteSupplementairePro'])): ?>
+        <div id="post-it">
+                <?php echo $product['PI_NoteSupplementairePro']; ?>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php else: ?>
+    <?php if($hasDocPub): ?>
+        <p class="publicTechPdf">
+            <?php if(!empty ($product['PI_FicheTechniquePublicPDF'])): ?>
+                <?php echo $this->link(
+                    $product['PI_FicheTechniquePublicPDF'],
+                    $this->getClientText('product_details_technical_pdf_link'),
+                    array(
+                        'id' => 'techPdfFile',
+                        'alt' => $product['PI_FicheTechniquePublicPDF'])
+                    );
+                ?>
+            <?php endif; ?>
+        </p>
+        <?php endif; ?>
+    <?php if (!empty($product['PI_NoteSupplementairePublic'])): ?>
+        <div id="post-it">
+                <?php echo $product['PI_NoteSupplementairePublic']; ?>
+        </div>
+    <?php endif; ?>
+    <div id="blockConnection">
+        <p class="title">
+            <?php echo $this->getClientText('professional_area'); ?>
+        </p>
+        <?php echo $this->action('login', 'index', 'order'); ?>
+        <div class="smallDotLineWhite"></div>
+        <p class="title">
+            <?php echo $this->getClientText('public_area'); ?>
+        </p>
+        <p class="retailersLink">
+            <?php
+            echo $this->link(
+                    Cible_FunctionsPages::getPageLinkByID(32),
+                    $this->getClientText('product_details_retailers_link'),
+                    array(
+                        'id' => 'retailersLink',
+                        'alt' => '')
+                    );
+            ?>
+        </p>
+    </div>
+    <?php endif; ?>
+</div>
+<div id="blockDetailRight">
+    <div id="logoMarque">
+        <?php echo $this->moduleImage(
+                    'catalog',
+                    'categories/' . $product['CC_ID'],
+                    $product['C_LogoMarqueJPG'],
+                    'thumb',
+                    array(
+                        'class'=>'logoCategory',
+                        'alt'=>$product['CCI_Name'],
+                        'type' => 'category'
+                        )
+                    ); ?>
+    </div>
+    <div id="blockProductName" class="greenParagraph">
+    <?php echo $product['PI_Name']; ?>
+    </div>
+    <div id="blockDescription">
+        <?php if(Zend_Registry::get('user')):?>
+        <?php echo $product['PI_DescriptionPro']; ?>
+        <br />
+            <?php if($hasDocPro)
+                    echo $this->getClientText('product_details_refer_technical_data');
+            ?>
+        <?php else: ?>
+        <?php echo $product['PI_DescriptionPublic']; ?>
+        <br />
+            <?php
+            if($hasDocPub)
+                echo $this->getClientText('product_details_refer_technical_data');
+            ?>
+        <?php endif; ?>
+    </div>
+    
+    <div id="blockItems">
+        <table class="listItems">
+        <?php
+            $nbItems = count($product['items']);
+            $trClass = 'top';
+            foreach ($product['items'] as $key => $item):
+                if(($key == ($nbItems - 1))&&($key>1)){
+                    $trClass = 'bottom';
+                }
+        ?>
+            <tr class="<?php echo $trClass; ?>">
+                <td class="ItemName"><?php echo $item['II_Name']; ?></td>
+                <td class="price">
+                    <?php if(Zend_Registry::get('user')){?>
+                    <?php
+                    if($item['I_PriceVol1']>0)
+                        echo sprintf("%.2f", $item['I_PriceVol1']) . "$";
+                    ?>
+                    <?php }else{ ?>
+                    <?php
+                       /* if($item['I_PriceDetail']>0)
+                            echo sprintf("%.2f", $item['I_PriceDetail']) . "$";*/ ?>
+                     <?php }?>
+                    
+
+                </td>
+                <td class="addCart">
+                    <?php if(Zend_Registry::get('user')):?>
+                    <a href="javascript:addToCart('<?php echo $url; ?>','<?php echo $product['P_ID'] .'-'.$item['I_ID']; ?>', '<?php echo $langId; ?>')">
+                    <span>
+                    <?php echo $this->getClientText('products_details_add_cart');?>
+                    </span>
+                    <?php
+                    echo $this->ClientImage('bg_cart.png', array())
+                    ?>
+                    </a>
+                     <?php endif;?>
+                </td>
+            </tr>
+        <?php
+                if($key < ($nbItems - 1)){
+                    $trClass = 'dotBorder';
+                }
+
+            endforeach;
+        ?>
+        </table>
+        <div class="smallDotLine"></div>
+    </div>
+    <div id="blockRelatedProducts">
+        
+        <?php
+        if (count($product['relatedProducts']) > 0)
+        {
+            echo '<p class="complemProduct">' . $this->getClientText('product_details_complementary_products') . '</p>';
+            $i = 0;
+            $columns = 3;
+            $modulo = 0;
+            $controllerName = $this->request->getParam('controller');
+            foreach ($product['relatedProducts'] as $key => $relProd)
+            {
+                $modulo = $i % $columns;
+
+                if($modulo == 0)
+                    $class = '';
+                else
+                    $class = 'marginLeft';
+                echo '<div class="inline ' . $class . '">';
+                echo $this->link(
+                        $this->BaseUrl() . '/'
+                        . $controllerName . '/'
+                        . $relProd['CCI_ValUrl'] . '/'
+                        . $relProd['SCI_ValUrl'] .'/'
+                        . $relProd['PI_ValUrl'],
+                        $this->moduleImage(
+                            'catalog',
+                            'products/' . $relProd['P_ID'],
+                            $relProd['P_Photo'],
+                            'medium',
+                        array(
+                            'class'=>'',
+                            'alt'=>$relProd['PI_Name'],
+                            'useSize' => false,
+                            'prettyPhoto'=>array('size' => '')
+                            )
+                        )
+                     );
+                echo $this->link(
+                        $this->BaseUrl() . '/'
+                        . $controllerName . '/'
+                        . $relProd['CCI_ValUrl'] . '/'
+                        . $relProd['SCI_ValUrl'] .'/'
+                        . $relProd['PI_ValUrl'],
+                        $relProd['PI_Name']
+                     );
+                echo '</div>';
+                $i++;
+            }
+        }
+        ?>
+    </div>
+   
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    $(document).ready(function(){
+        $('.addCart a').click(function(e){
+            var options = new Array();
+            options.borderColor = "#BABE00";
+            $('#cible-tooltip-box').tooltip_appear(options);
+        });
+    });
+//]]>
+</script>

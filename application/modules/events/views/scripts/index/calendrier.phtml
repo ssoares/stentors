@@ -1,0 +1,208 @@
+<div class="block block-events">
+    
+    <?php $this->headLink()->appendStylesheet("{$this->baseUrl()}/themes/default/css/calendrier.css") ?>
+    <?php $this->headScript()->appendFile("{$this->baseUrl()}/js/jquery/jMonthCalendarCible.js") ?>
+	    
+    <script type="text/javascript">
+    
+    // Diviseur pour le nombre de lettre maximum par case du calendrier
+    var diviseurNombreLetterMax = 5;
+    var indiceNombreLetterMax = 30;
+
+    function CutTitle(strToCut, maxLength)
+    {           
+        strToCut += " .";
+        var trimmedString = strToCut.substr(0, (maxLength));  
+
+        trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")));         
+        return trimmedString + "...";
+    }
+    
+    function PopUp(e, state)
+    {  
+        // retrouver la hauteur et la largeur de la div info
+        var height = $('#Eventdetail').height();  
+        
+        //var width = $('#Eventdetail').width();  
+        //calculer le offset
+        
+        leftVal = e.pageX+(20)+"px";  
+        topVal = e.pageY-(height+20)+"px";  
+        
+        //show -> affiche le popup
+        
+        if(state == "show")
+        {
+            $('#Eventdetail').css({left:leftVal,top:topVal});
+            $('#Eventdetail').show();
+            //$('#Eventdetail').fadeTo('fast', 1).stopPropagation();           
+        }
+        else
+        {
+            $('#Eventdetail').hide();
+            //$('#Eventdetail').fadeTo('fast', 0).stopPropagation();
+        }
+
+        
+    }       
+            
+    $().ready(function() 
+    {       
+            var Url = "<?php echo $this->BaseUrl() ?>";
+            var blockID = "<?php echo $this->BlockID ?>";
+            
+            var options = {
+                onMonthChanging: function(dateIn) 
+                {   
+                    $.getJSON(Url + "/events/index/calendrier/BlockID/" + blockID + "/Year/" + dateIn.getFullYear() + "/Month/" + (dateIn.getMonth() + 1), null,
+                    function(data) 
+                    {
+                        //Array of my events                    
+                        var events = new Array();
+
+                        //Boucle parmis les événements et les chrger dans un tableau
+                        $.each(data, function(i, item) 
+                        {                            
+                            var event = { "EventID": item.EventID, 
+                                "Identifiant" : item.CellsIds,
+                                "DateComplete" : item.DateComplete,
+                                "Date": item.StartDate,                        
+                                "EndDateTime": item.EndDate,
+                                "Title": item.Title, 
+                                "Description": item.Description,
+                                "URL": item.URL
+                                //"URL": Url + "/evenement/detail/I1D/" + item.EventID
+                            };
+                            events.push(event);
+                        });                       
+                        
+                        // Charger les événements dans le calendrier
+                        $.jMonthCalendar.ReplaceEventCollection(events);
+                        $.jMonthCalendar.DrawCalendar(dateIn);
+                        
+                        $('.Event').each(function(index)
+                        {                            
+                            var strMax = Math.floor(($(this).width() / indiceNombreLetterMax) * diviseurNombreLetterMax);
+                            
+                            //var content = $(this).text();
+                            var content = $(this).find('a').text();                            
+                                                        
+                            var newContent = CutTitle(content, strMax);                            
+                            $(this).find('a').text(newContent);                              
+                        });                        
+                    });
+                    
+                    return true;
+                },
+                onEventBlockOver: function(cell) 
+                {   
+                    cell.stopPropagation();
+                    var InfoEvent = "<p id='date'>" + cell.data.Event.DateComplete + "</p>";
+                    InfoEvent += "<p id='title'>" + cell.data.Event.Title + "</p>";
+                    InfoEvent += "<p id='description'>" + cell.data.Event.Description + "</p>";                    
+                    
+                    $('#Eventdetail').html(InfoEvent)
+                    PopUp(cell, "show");                                      
+                    
+                    return false;
+                },
+                onEventBlockOut: function(cell) 
+                {
+                    PopUp(cell, "hide");
+                    cell.stopPropagation();
+                    return false;
+                },
+                onDayLinkClick: function(cell) 
+                {                 
+                    /*alert(cell.data.Date.toLocaleDateString());*/
+                    return true;
+                },
+                onDayCellClick: function(cell) 
+                {   
+                    //alert(cell.data.Date.toLocaleDateString());
+                    return true;
+                },
+                dragableEvents:false,
+                navLinks: {
+                enableToday: false,
+                enableNextYear: false,
+                enablePrevYear: false,
+                p:'<?php echo $this->clientImage('previous-month.jpg'); ?>',
+                n:'<?php echo $this->clientImage('next-month.jpg'); ?>',
+                t:'Today',
+                showMore: ''
+                },                
+                locale: {
+                    dayNames:[<?php echo $this->getCibleText('events_calendar_days');?>],
+                    abbreviatedDayNames:[<?php echo $this->getCibleText('events_calendar_day');?>],
+                    shortestDayNames:[<?php echo $this->getCibleText('events_calendar_da');?>],
+                    firstLetterDayNames:[<?php echo $this->getCibleText('events_calendar_d');?>],
+                    monthNames:[<?php echo $this->getCibleText('events_calendar_months');?>],
+                    abbreviatedMonthNames:[<?php echo $this->getCibleText('events_calendar_month');?>]       
+                },
+                useLocale: true,
+                smallCalendar: true,
+                arrowToEventContinuty: false
+            };
+            
+           
+                        
+            // Créer le calendrier et charger les événements dedans
+            //$.jMonthCalendar.Initialize(options, events);
+            
+            // Créer le calendrier vide
+            $.jMonthCalendar.Initialize("#jMonthCalendar",options, null);
+            
+            var dateTmp = new Date();            
+                    
+            // Charger les événements en ajax
+            $.getJSON(Url + "/events/index/calendrier/BlockID/" + blockID + "/Year/" + dateTmp.getFullYear() + "/Month/" + (dateTmp.getMonth() + 1), null,
+            function(data) 
+            {
+                //Array of my events                    
+                var events = new Array();
+
+                //Boucle parmis les événements et les chrger dans un tableau
+                $.each(data, function(i, item) 
+                {                            
+                    //var oResultData = eval('(' + item + ')');
+                    var event = { "EventID": item.EventID, 
+                        "Identifiant" : item.CellsIds,
+                        "DateComplete" : item.DateComplete,
+                        "Date": item.StartDate,                        
+                        "EndDateTime": item.EndDate,
+                        "Title": item.Title, 
+                        "Description": item.Description,
+                        "URL": item.URL
+                       // "URL": Url + "/evenement/detail/ID1/" + item.EventID
+                    };
+
+                    events.push(event);
+
+                });                       
+
+                // Charger les événements dans le calendrier
+                $.jMonthCalendar.ReplaceEventCollection(events);
+                
+                $('.Event').each(function(index)
+                {
+                    var strMax = Math.floor(($(this).width() / indiceNombreLetterMax) * diviseurNombreLetterMax);
+
+                    //var content = $(this).text();
+                    var content = $(this).find('a').text();                            
+
+                    var newContent = CutTitle(content, strMax);
+
+                    $(this).find('a').text(newContent);                            
+
+                });     
+                
+            });                        
+           
+        });
+    </script>    
+    <center>
+        <div id="jMonthCalendar"></div>          
+        <div id="Eventdetail"></div>		
+    </center>
+</div>

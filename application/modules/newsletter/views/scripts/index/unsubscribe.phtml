@@ -1,0 +1,59 @@
+ <div class="newsletter_title">
+    <?php echo($this->getCibleText('newsletter_title_desabonnement_text'));?>
+</div>
+<div class="newsletter_left_web">
+<?php
+    $inscriptionValidate = $this->unsubscribeValidate;
+    if(!$inscriptionValidate){
+        echo($this->form);
+    }
+    else{
+    ?>
+        <div class="text"><?php echo($this->message);?></div>
+<?php } ?>
+</div>
+<div class="newsletter_right_web">
+    <div class="newsletter_subscribe newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->subscribeLink; ?>">
+            <?php echo($this->getCibleText('newsletter_button_subscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_unsubscribe newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->unsubscribeLink; ?>">
+            <?php echo($this->getCibleText('newsletter_button_unsubscribe'));?>
+        </a>
+    </div>
+    <div class="newsletter_archives newsletter_menu_item">
+        <a class="newsletterMenuItemLink" href="<?php echo $this->archivesLink; ?>">
+            <?php echo($this->getCibleText('newsletter_button_archives'));?>
+        </a>
+    </div>
+</div>
+<div class="newsletter_politics_confidentiality">
+    <?php
+    echo($this->messageConfidentialite);
+?>
+</div>
+
+<div class="dddd">
+    <div class="fffff"></div>
+    <div class="dddddddd"></div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var reasonSelect = $('#reason');
+    if (reasonSelect)
+    {
+        reasonSelect.change(function(){
+            var value = $(this).val();
+            var other = $('#reasonOther');
+
+            if (value == 0)
+                other.show();
+            else
+                other.hide();
+        }).change();
+    }
+});
+</script>

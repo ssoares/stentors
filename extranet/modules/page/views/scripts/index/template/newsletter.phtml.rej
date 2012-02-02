@@ -1,0 +1,11 @@
+--- modules/page/views/scripts/index/template/newsletter.phtml	(rÃ©vision 281)
++++ modules/page/views/scripts/index/template/newsletter.phtml	(rÃ©vision 336)
+@@ -10,7 +10,7 @@
+         <td valign="top" width="600px">
+             <!-- Placeholder Left Menu
+             <div class="zone_panel zone_desactive_panel block_title">
+-                Menu de gauche<br><br>
++                Menu de gauche
+             </div>-->
+             
+             <!-- Placeholder 1 -->

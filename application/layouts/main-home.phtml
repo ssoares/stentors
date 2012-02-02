@@ -1,0 +1,57 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo(Zend_Registry::get("languageSuffix")); ?>" lang="<?php echo(Zend_Registry::get("languageSuffix")); ?>">
+<head>
+    <title><?php echo $this->headTitle(); ?></title>
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <!-- META (START) -->
+    <?php echo $this->headMeta() ?>  
+    <?php echo $this->placeholder('metaOther'); ?>
+<!--    <meta name="google-site-verification" content="" /> 
+    <meta name="y_key" content="" />
+    <meta name="msvalidate.01" content="" />-->
+    <!-- META (END) -->
+    
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="<?php echo $this->absolute_web_root ?>/favicon.ico" />
+    
+    <?php $this->jQuery()->addJavascriptFile("{$this->baseUrl()}/js/initMenus.js"); ?>
+    
+    <?php echo $this->jQuery(); ?>
+    
+    <?php echo $this->headScript() ?>
+    
+    <?php echo $this->headLink(); ?>
+    
+    <?php echo $this->headStyle(); ?>
+    
+    <!-- Tag to force the AddThis thumbnail image
+    <link rel='image_src' href='<?php echo Zend_Registry::get('addThis') ?>' /> -->
+   <?php //echo $this->partial('partials/google.analytic.phtml'); ?>
+</head>
+<body>
+   
+    <!-- Start : WRAPPER -->
+    <div id="wrapper">
+        
+        <!-- Start : HEADER -->
+            <div id="headerContainer">
+                <?php echo $this->partial('partials/header.phtml') ?>                              
+            </div>
+        <!-- End : HEADER -->
+        
+        <!-- Start : MAIN -->
+            <div id='main-content' class="photoPretty_block">
+                <?php echo $this->layout()->content; ?>
+            </div>
+        <!-- End : MAIN -->
+        
+        <!-- Start : FOOTER -->
+            <div id="footer-container">
+                <?php echo $this->partial('partials/footer.phtml', array('section' => 'home')) ?>                        
+            </div>
+        <!-- End : FOOTER -->
+        
+   </div>
+   <!-- END : WRAPPER -->
+    <?php echo $this->partial('partials/jsPrettyPhoto.phtml') ?>
+</body>
+</html>

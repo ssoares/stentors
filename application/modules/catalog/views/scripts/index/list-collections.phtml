@@ -1,0 +1,91 @@
+<?php $controllerName = $this->request->getParam('controller'); ?>
+<?php
+$i = 0;
+$modulo = 0;
+$columns = 3;
+?>
+<div id="content-right-catalog">
+    <?php foreach ($this->collections as $name => $data): ?>
+        <div id="<?php echo $data['SCI_ValUrl'] .'-'. $data['SC_ID']; ?>" class="collectionList">
+            <p class="collectionListImg">
+            <?php
+            $modulo = $i % $columns;
+            if (isset($data['SC_Image'])):
+                if ($data['SC_Image'] != '')
+                {
+                    echo $this->link(
+                        $this->BaseUrl() . '/'
+                        . $this->page . '/'
+                        . 'catalog-corpo/'
+                        . 'collection/'
+                        . $data['SCI_ValUrl'],
+                        $this->moduleImage(
+                            'catalog',
+                            'sub-categories/' . $data['SC_ID'],
+                            $data['SC_Image'],
+                            'medium',
+                            array(
+                                'class' => '',
+                                'key' => 'subcategory',
+                            )
+                        ),
+                        array('class' => 'collectionsList')
+                    );
+                }
+                else
+                {
+                    $alt = $data["SCI_Name"];
+                    echo 
+                    $this->link(
+                        $this->BaseUrl() . '/'
+                        . $this->page . '/'
+                        . 'catalog-corpo/'
+                        . 'collection/'
+                        . $data['SCI_ValUrl'],
+                        $this->clientImage('noPic_174x207.jpg', array('alt' => $alt)),
+                        array('class' => 'collectionsList')
+                    );
+                }
+            ?>
+            </p>
+            <?php 
+                $addClass = '';
+            if ($modulo == 2)
+                $addClass = 'marginTop';
+            ?>
+            <p class="collectionListTitle <?php echo $addClass; ?>">
+            <?php
+                if (!empty($data['SCI_Name']))
+                    echo $this->link(
+                        $this->BaseUrl() . '/'
+                        . $this->page . '/'
+                        . 'catalog-corpo/'
+                        . 'collection/'
+                        . $data['SCI_ValUrl'],
+                        $data['SCI_Name']
+                    );
+                else
+                    echo '&nbsp;';
+            ?>
+            </p>
+        <?php endif; ?>
+            </div>
+    <?php if ($modulo == 2): ?>
+    <div class="greenThinLine"></div>
+    <?php endif; ?>
+    <?php $i++;
+    endforeach; ?>
+    <?php if ($modulo != 2): ?>
+        <div class="greenThinLine"></div>
+    <?php endif; ?>
+</div>
+<div id="content-left-catalog">
+    <?php echo $this->partial(
+        'partials/searchEngine.phtml', 
+        array(
+            'types' => $this->types,
+            'collections' => $this->collections,
+            'clientele'   => $this->clientele
+            )
+        ); ?>
+</div>
