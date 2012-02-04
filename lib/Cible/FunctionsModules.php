@@ -55,7 +55,18 @@ abstract class Cible_FunctionsModules
         return $col;
     }
 
-    public static function getModuleNameByID($id)
+    public static function getModules()
+    {
+        $db = Zend_Registry::get("db");
+        $select = $db->select()
+            ->distinct()
+            ->from('Modules', array('M_MVCModuleTitle', 'M_ID'));
+
+        $data = $db->fetchAll($select);
+
+        return $data;
+    }
+    public static function getModuleNameByID($id = null)
     {
         $db = Zend_Registry::get("db");
         $select = $db->select()
@@ -114,17 +125,27 @@ abstract class Cible_FunctionsModules
      */
     public static function modulesProfile()
     {
+        Zend_Registry::set('pwdOn', false);
         $modules = array();
         $db = Zend_Registry::get('db');
 
         $select = $db->select()
-            ->from('Modules', array('M_ID', 'M_Title'))
+            ->from('Modules', array('M_ID', 'M_Title', 'M_MVCModuleTitle', 'M_NeedAuth'))
             ->where('M_UseProfile = ?', 1);
 
         $data = $db->fetchAll($select);
-        
+
         foreach ($data as $module)
-            $modules[$module['M_ID']] = $module['M_Title'];
+        {
+            $modules[$module['M_ID']] = array(
+                'M_Title' => $module['M_Title'],
+                'M_ID' => $module['M_ID'],
+                'M_MVCModuleTitle' => $module['M_MVCModuleTitle'],
+                'M_NeedAuth' => $module['M_NeedAuth']);
+
+            if ($module['M_NeedAuth'])
+                Zend_Registry::set('pwdOn', true);
+        }
 
         return $modules;
     }

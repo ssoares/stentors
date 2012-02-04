@@ -13,3 +13,9 @@ RewriteRule ^.*$ index.php [NC,L]
 
 php_value default_charset 'UTF-8'
 
+AddType audio/ogg .oga
+AddType video/ogg .ogv
+AddType video/ogg .ogg
+AddType video/mp4 .mp4
+AddType video/webm .webm
+AddType video/3gpp .3gp

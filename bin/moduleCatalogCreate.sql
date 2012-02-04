@@ -1,4 +1,4 @@
--- Version SVN: $Id: moduleCatalogCreate.sql 824 2012-02-01 01:21:12Z ssoares $
+-- Version SVN: $Id: moduleCatalogCreate.sql 826 2012-02-01 04:15:13Z ssoares $
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -194,29 +194,6 @@ CREATE TABLE IF NOT EXISTS `Catalog_Parameters` (
 ) ENGINE = MyISAM DEFAULT CHARACTER SET = latin1;
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `Catalog_RetailersProfiles`
---
-
-DROP TABLE IF EXISTS `Catalog_RetailersData`;
-CREATE TABLE IF NOT EXISTS `Catalog_RetailersData` (
-  `R_RetailerProfileId` int(11) NOT NULL auto_increment,
-  `R_GenericProfileId` int(11) NOT NULL,
-  `R_RetailerAddressId` int(11) NOT NULL,
-  `R_Status` tinyint(1) default '0',
-  PRIMARY KEY (`R_RetailerProfileId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-ALTER TABLE MemberProfiles
-  ADD `MP_BillingAddrId` INT(11) NULL ,
-  ADD `MP_ShippingAddrId` INT(11) NULL ,
-  ADD `MP_hasAccount` TINYINT(1) NULL ,
-  ADD `MP_AccountNumber` VARCHAR(45) NULL ,
-  ADD `MP_NoProvTax` TINYINT(1) NULL DEFAULT 1 ,
-  ADD `MP_NoFedTax` TINYINT(1) NULL DEFAULT 1 ;
 
 --
 -- Table structure for table `Catalog_CustomerProfiles`

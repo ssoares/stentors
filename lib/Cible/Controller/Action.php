@@ -45,6 +45,15 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
     public function getRobot(){}
 
     /**
+     * Set the module id.
+     *
+     * @return int
+     */
+   public function setModuleId()
+    {
+        $this->_moduleID = Cible_FunctionsModules::getModuleIDByName($this->_request->getModuleName());
+    }
+    /**
      * Get the module id from controller.
      *
      * @return int
@@ -108,6 +117,9 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
 
                 foreach($_request->getPost() as $key => $value)
                 {
+                    if (is_array($value))
+                        $_request->setPost($key, $value);
+                    else
                     $_request->setPost($key, utf8_decode($value) );
                 }
 
@@ -552,8 +564,77 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
         }
     }
 
-    public function setModuleId()
+    public function ajaxCitiesAction()
     {
-        $this->_moduleID = Cible_FunctionsModules::getModuleIDByName($this->_request->getModuleName());
+        if ($this->_isXmlHttpRequest)
+        {
+            $this->getHelper('viewRenderer')->setNoRender();
+
+            $stateId    = $this->_getParam('stateId');
+            $cities     = new CitiesObject();
+            $citiesData = $cities->getCitiesDataByStates($stateId);
+
+            foreach ($citiesData as $id => $data)
+            {
+                $citiesData[$id]['C_Name'] = utf8_encode($data['C_Name']);
+            }
+
+            echo json_encode($citiesData);
+        }
+    }
+
+    public function ajaxStatesAction()
+    {
+        if ($this->_isXmlHttpRequest)
+        {
+            $this->getHelper('viewRenderer')->setNoRender();
+
+            $countryId  = $this->_getParam('countryId');
+            $languageId = $this->_getParam('langId');
+            $statesData = array();
+            $states = Cible_FunctionsGeneral::getStateByCode(
+                    $countryId,
+                    null,
+                    $languageId);
+
+            if (is_array($states))
+            {
+                foreach ($states as $id => $data)
+                {
+                    $statesData[$id ]['id']   = $data['id'];
+                    $statesData[$id ]['name'] = utf8_encode($data['name']);
+                }
+            }
+
+            echo json_encode($statesData);
+        }
+    }
+
+    public function ajaxAction()
+    {
+        $action = $this->_getParam('actionAjax');
+
+        switch ($action)
+        {
+            case 'citiesList':
+                $this->disableView();
+                $value = $this->_getParam('q');
+                $limit = $this->_getParam('limit');
+                $oCity = new CitiesObject();
+
+                if (!empty($value))
+                    $data = $oCity->autocompleteSearch(
+                        $value,
+                        $this->getCurrentInterfaceLanguage(),
+                        $limit
+                        );
+
+                foreach ($data as $value)
+                    echo $value['C_Name'] . "\n";
+                break;
+
+            default:
+                break;
+        }
     }
 }

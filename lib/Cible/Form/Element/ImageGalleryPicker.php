@@ -71,11 +71,13 @@
             //$content .= "<a href=\"javascript:mcImageManager.upload({fields : '', path : '../../../../../data/images/gallery/".$this->galleryID."'});\">[Parcourir]</a>";
             //$content .= "<img id='".$this->getId()."_preview' src='' border=0 />";
             //$content .= "<input id='temporaire' type='hidden' value='' />";
+            
+            //var_dump($this->galleryID);
             if($this->galleryID <> "")
                 $pathTmp = "../../../../../data/images/gallery/".$this->galleryID."/tmp";
             else
                 $pathTmp = "../../../../../data/images/gallery/tmp";
-            $content .= "<a href=\"javascript:mcImageManager.upload({fields : '".$this->getId()."', 
+                $content .= "<a href=\"javascript:mcImageManager.upload({fields : '".$this->getId()."', 
                                                                         path : '".$pathTmp."',
                                                                         insert_filter : function (data){
                                                                         },
@@ -88,7 +90,7 @@
                                                                                     }});\">[Parcourir]</a>";
             //$content .=  "&nbsp;&nbsp;<img class='action_icon' alt='Supprimer' src='".$_baseUrl."/icons/del_icon_16x16.png' onclick='separateImage(\"".$this->associatedElement."\",\"".$defaultImage."\",\"".$this->getId()."\")' />";
                 
-            //alert(dump(data)); 
+           // alert(dump(data)); 
             //document.getElementById('".$this->getId()."_preview').src = imageSrc;
             
             foreach ($this->getDecorators() as $decorator) {
@@ -96,6 +98,7 @@
                 $content = $decorator->render($content);
             }
             //echo($mcImageManagerConfig['filesystem.rootpath']);
+           // var_dump($content);
             return $content;
         }
     }

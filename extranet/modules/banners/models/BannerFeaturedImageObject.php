@@ -45,6 +45,8 @@ class BannerFeaturedImageObject extends DataObject
         if ($bannerId)
             $select->where('IF_DataID = ?', $bannerId);
         
+        
+        
         $data = $this->_db->fetchAll($select);
         
         return $data;

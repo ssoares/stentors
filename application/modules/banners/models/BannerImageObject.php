@@ -9,7 +9,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: BannerImageObject.php 568 2011-08-22 21:12:48Z ssoares $id
+ * @version   $Id: BannerImageObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -20,7 +20,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: BannerImageObject.php 568 2011-08-22 21:12:48Z ssoares $id
+ * @version   $Id: BannerImageObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class BannerImageObject extends DataObject
 {
@@ -91,6 +91,7 @@ class BannerImageObject extends DataObject
             foreach ($details as $key => $detail)
             {
                 $data[$key]['text'] = $detail['BII_Text'];
+                $data[$key]['url'] = $detail['BII_Url'];
                 $data[$key]['img'] = Zend_Registry::get("web_root")
                     . "/data/images/banners/"
                     . $detail['BI_ID'] . "/"

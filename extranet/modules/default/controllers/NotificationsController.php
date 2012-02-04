@@ -91,7 +91,7 @@ class NotificationsController extends Cible_Extranet_Controller_Module_Action
      *
      * @return void
      */
-    public function notificationssAction($getParams = false)
+    public function notificationAction($getParams = false)
     {
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
@@ -176,6 +176,8 @@ class NotificationsController extends Cible_Extranet_Controller_Module_Action
                         'moduleName' => $this->_moduleTitle . "/"
                             . $this->_objectList[$this->_currentAction],
                         'imageSrc'   => $imageSrc,
+                        'object'     => $oData,
+                        'addAction'  => true,
                         'imgField'   => $this->_imageSrc,
                         'dataId'     => '',
                         'isNewImage' => true
@@ -404,6 +406,7 @@ class NotificationsController extends Cible_Extranet_Controller_Module_Action
                                 'baseDir'    => $baseDir,
                                 'cancelUrl'  => $cancelUrl,
                                 'imageSrc'   => $imageSrc,
+                                'object '    => $oData,
                                 'imgField'   => $this->_imageSrc,
                                 'dataId'     => $id,
                                 'data'       => $data,

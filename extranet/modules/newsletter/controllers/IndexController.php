@@ -1049,6 +1049,20 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
                 $this->view->assign('languageRelease', $releaseLanguage);
                 $this->view->newsletter = $newsletterData->toArray();
                 $this->view->template = $newsletterData['NM_DirectoryEmail'];
+                
+                
+                $absolute_web_root = Zend_Registry::get('absolute_web_root');
+                $sourceHeaderLeft = $absolute_web_root;
+                if($releaseLanguage==1){
+                    $sourceHeaderLeft .= "/themes/default/images/common/infolettreimage.png";
+                }
+                else if($releaseLanguage==2){
+                    $sourceHeaderLeft .= "/themes/default/images/common/infolettreimagean.png";
+                }
+                else{
+                    $sourceHeaderLeft .= "/themes/default/images/common/infolettreimagees.png";
+                }
+                $this->view->imageHeader = $sourceHeaderLeft;
 
                 $this->view->newsletterTitle = $newsletterData['NR_Title'];
 

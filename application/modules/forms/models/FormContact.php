@@ -102,7 +102,7 @@ EOS;
 
             // Refresh button
             $refresh_captcha = new  Zend_Form_Element_Button('refresh_captcha');
-            $refresh_captcha->setLabel('Refresh captcha')
+            $refresh_captcha->setLabel($this->getView()->getCibleText('button_captcha_refresh'))
                    ->setAttrib('onclick', "refreshCaptcha('captcha[id]')")
                    ->setAttrib('class','grayish-button')
                    ->removeDecorator('Label')

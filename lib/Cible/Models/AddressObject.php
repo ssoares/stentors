@@ -9,7 +9,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: AddressObject.php 801 2012-01-23 04:46:26Z ssoares $id
+ * @version   $Id: AddressObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -20,7 +20,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: AddressObject.php 801 2012-01-23 04:46:26Z ssoares $id
+ * @version   $Id: AddressObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class AddressObject extends DataObject
 {

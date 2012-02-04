@@ -6,7 +6,7 @@
 -- Generation Time: Apr 21, 2010 at 10:12 AM
 -- Server version: 5.0.70
 -- PHP Version: 5.2.10-pl0-gentoo
--- Version SVN: $Id: defaultData.sql 824 2012-02-01 01:21:12Z ssoares $
+-- Version SVN: $Id: defaultData.sql 826 2012-02-01 04:15:13Z ssoares $
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -17,6 +17,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Table structure for table `Address`
 --
+
 DROP TABLE IF EXISTS `AddressData`;
 CREATE TABLE IF NOT EXISTS `AddressData` (
   `A_AddressId` int(10) NOT NULL auto_increment,
@@ -904,9 +905,10 @@ CREATE TABLE IF NOT EXISTS `FilesImport` (
 CREATE TABLE IF NOT EXISTS `GenericProfiles` (
   `GP_MemberID` int(11) NOT NULL auto_increment,
   `GP_Salutation` int(2) NOT NULL COMMENT 'elem:select|src:salutations',
-  `GP_FirstName` varchar(255) NOT NULL default 'empty',
-  `GP_LastName` varchar(255) NOT NULL default 'empty',
-  `GP_Email` varchar(255) NOT NULL default 'empty' COMMENT 'validate:email|unique:true',
+  `GP_FirstName` varchar(255) NOT NULL default '',
+  `GP_LastName` varchar(255) NOT NULL default '',
+  `GP_Email` varchar(255) NOT NULL default '' COMMENT 'validate:email|unique:true',
+  `GP_Password` VARCHAR(50) NULL ,
   `GP_Language` int(2) NOT NULL default '-1' COMMENT 'elem:select|src:languages',
   PRIMARY KEY  (`GP_MemberID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -984,7 +986,6 @@ CREATE TABLE IF NOT EXISTS `MemberProfiles` (
   `MP_GenericProfileMemberID` int(11) NOT NULL,
   `MP_CompanyName` varchar(30) default NULL,
   `MP_AddressId` int(11) NOT NULL,
-  `MP_Password` VARCHAR(30) NOT NULL ,
   `MP_Hash` VARCHAR(30) NULL ,
   `MP_ValidateEmail` VARCHAR(30) NULL ,
   `MP_Status` INT(1) NOT NULL ,
@@ -1131,6 +1132,7 @@ CREATE TABLE IF NOT EXISTS `Modules` (
   `M_Title` varchar(255) NOT NULL,
   `M_MVCModuleTitle` varchar(255) NOT NULL,
   `M_UseProfile` tinyint(1) NOT NULL default 0,
+  `M_NeedAuth` tinyint(1) NOT NULL default 0,
   PRIMARY KEY  (`M_ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
@@ -1189,31 +1191,19 @@ INSERT INTO ModuleViewsIndex (MVI_ModuleViewsID, MVI_LanguageID, MVI_ActionName)
 
 DROP TABLE IF EXISTS `NotificationManagerData`;
 CREATE TABLE IF NOT EXISTS `NotificationManagerData` (
-  `NM_ID` int(11) NOT NULL auto_increment,
-  `NM_ModuleId` int(11) NOT NULL,
-  `NM_Event` varchar(50) NOT NULL,
-  `NM_Type` enum('email', 'screen') DEFAULT 'email',
-  `NM_Recipient` enum('client', 'admin') DEFAULT 'client',
-  `NM_Active` tinyint(1) NOT NULL Default 1,
-  `NM_Message` varchar(255) NOT NULL,
-  `NM_Title` varchar(255) NOT NULL,
-  `NM_Email` varchar(255) NOT NULL default 'empty',
-  `NM_ModifDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP ,
+  `NM_ID` int(11) NOT NULL auto_increment COMMENT 'exclude:1',
+  `NM_ModuleId` int(11) NOT NULL COMMENT 'elem:select|src:modules',
+  `NM_Event` varchar(50) NOT NULL ,
+  `NM_Type` enum('email', 'screen') DEFAULT 'email' COMMENT 'elem:enum',
+  `NM_Recipient` enum('client', 'admin') DEFAULT 'client' COMMENT 'elem:enum',
+  `NM_Active` tinyint(1) NOT NULL Default 1 COMMENT 'elem:checkbox',
+  `NM_Message` varchar(255) NOT NULL COMMENT 'elem:select|src:salutations',
+  `NM_Title` varchar(255) NOT NULL ,
+  `NM_Email` varchar(255) NOT NULL default 'empty' COMMENT 'validate:email|unique:true',
+  `NM_ModifDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT 'exclude:1',
   PRIMARY KEY (`NM_ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=UTF8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
-REPLACE INTO `NotificationManagerData` (`NM_ID`, `NM_ModuleId`, `NM_Event`, `NM_Type`, `NM_Recipient`, `NM_Active`, `NM_Message`, `NM_Title`, `NM_Email`) VALUES
-(1, 17, 'newAccount', 'email', 'client', 1, 'validate_notification_client_email_message', 'validate_notification_client_email_title', 'empty'),
-(2, 17, 'newAccount', 'email', 'admin', 1, 'account_created_admin_notification_message', 'account_created_admin_notification_title', 'empty'),
-(3, 17, 'editResend', 'email', 'client', 1, 'revalidate_notification_client_email_message', 'validate_notification_client_email_title', 'empty'),
-(4, 17, 'editAccount', 'email', 'admin', 1, 'account_modified_admin_notification_message', 'account_modified_admin_notification_title', 'empty'),
-(5, 17, 'welcome', 'email', 'client', 1, 'account_notification_client_email_message', 'account_notification_client_email_title', 'empty'),
-(6, 17, 'newOrder', 'email', 'client', 1, 'order_order_notification_client_email_message', 'order_order_notification_client_email_title', 'empty'),
-(7, 17, 'newOrder', 'email', 'admin', 1, 'order_notification_admin_email_message', 'order_order_notification_client_email_title', 'empty'),
-(8, 17, 'confirmOrder', 'email', 'client', 1, 'order_order_notification_approbation_email_message', 'order_order_notification_approbation_email_title', 'empty'),
-(9, 17, 'rejectOrder', 'email', 'client', 1, 'order_order_notification_decline_email_message', 'order_order_notification_decline_email_title', 'empty'),
-(10, 17, 'newPassword', 'email', 'client', 1, 'lost_password_notification_message', 'lost_password_notification_email_subject', 'empty'),
-(11, 11, 'contact', 'email', 'admin', 1, 'contact_form_notification_admin_message', 'contact_form_notification_admin_title', 'francis.raynolds@ciblesolutions.com');
 -- ------------------------------------------------------
 
 --
@@ -1698,7 +1688,8 @@ REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`
 ('header_add_administrator_group_description', 1, 'Cette page vous permet d''ajouter un groupe d''administrateurs.', 'cible', '', 0, 0),
 ('header_add_administrator_group_description', 2, 'This page is to add an administrator group.', 'cible', '', 0, 0),
 ('header_edit_administrator_text', 1, 'Édition du profil d''un administrateur', 'cible', '', 0, 0),
-('header_edit_administrator_text', 2, 'Administrator edit', 'cible', '', 0, 0),
+('header_edit_administrator_text', 2, 'Administrator edit', 'cible', '', 0, 0);
+REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`, `ST_Desc_backend`, `ST_Editable`, `ST_ModuleID`) VALUES
 ('header_edit_administrator_description', 1, '<b>Entrez les renseignements requis</b><br>pour le profil de cet administrateur.<br><br>Vous pouvez redéfinir le mot de passe sur cette page.', 'cible', '', 0, 0),
 ('header_edit_administrator_description', 2, 'This page is to edit the information of an administrator.', 'cible', '', 0, 0),
 ('header_edit_administrator_group_text', 1, 'Édition d''un groupe', 'cible', '', 0, 0),
@@ -1821,8 +1812,12 @@ REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`
 ('list_column_S_Code', 2, 'Status', 'cible', '', 0, 0),
 ('button_add_profile', 2, 'Add new person', 'cible', '', 0, 0),
 ('button_add_profile', 1, 'Ajouter une nouvelle personne', 'cible', '', 0, 0),
+('button_add_general', 1, 'Ajouter une nouvelle personne', 'cible', '', 0, 0),
+('button_add_general', 2, 'Add new person', 'cible', '', 0, 0),
 ('header_list_profile_text', 1, 'Liste ', 'cible', '', 0, 0),
 ('header_list_profile_description', 1, 'Liste des personnes présentes dans le système', 'cible', '', 0, 0),
+('form_label_account_status', 1, 'Status du compte', 'cible', '', 0, 20),
+('form_label_account_status', 2, 'Account status', 'cible', '', 0, 20),
 ('search_result_items_found', 2, 'Your search generated<br />%ITEM_COUNT% items found', 'cible', '', 0, 0),
 ('search_list_all_items', 2, 'See the complete list »', 'cible', '', 0, 0),
 ('button_preview_close', 1, 'Fermer', 'cible', '', 0, 0),
@@ -1966,6 +1961,7 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('utilities_googleAnalytics_account', 1, 'Google Analytics', 'cible', '', 0, 0),
 ('utilities_googleAnalytics_username', 1, 'Nom d''utilisateur', 'cible', '', 0, 0),
 ('utilities_googleAnalytics_password', 1, 'Mot de passe', 'cible', '', 0, 0);
+
 REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`, `ST_Desc_backend`, `ST_Editable`, `ST_ModuleID`) VALUES
 ('utilities_googleAnalytics_access_link', 1, 'Accéder à Google Analytics maintenant', 'cible', '', 0, 0),
 ('utilities_googleAnalytics_title', 1, 'Statistiques d''audience Internet', 'cible', '', 0, 0),
@@ -2138,7 +2134,8 @@ REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`
 ('list_column_date', 1, 'Date', 'cible', '', 0, 0),
 ('list_column_date', 2, 'Date', 'cible', '', 0, 0),
 ('list_column_status', 1, 'Statut', 'cible', '', 0, 0),
-('list_column_status', 2, 'Status', 'cible', '', 0, 0),
+('list_column_status', 2, 'Status', 'cible', '', 0, 0);
+REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`, `ST_Desc_backend`, `ST_Editable`, `ST_ModuleID`) VALUES
 ('form_label_subscribe', 1, 'Restez au courant! Inscrivez-vous pour recevoir l''information sur nos produits, nos événements et nos nouvelles. Nous respectons vos <a href="%URL_PRIVACY_POLICY%" target="_blank">renseignements personnels</a> et vous pouvez vous désabonner en tout temps.', 'cible', '', 0, 0),
 ('form_label_subscribe', 2, 'Stay in the loop. Sign up to receive the latest info on XXXXXXXXXX products, news and happenings. We strongly respect your <a href="%URL_PRIVACY_POLICY%" target="_blank">privacy</a> and you may unsubscribe at any time.', 'cible', '', 0, 0),
 ('form_label_salutation', 1, 'Salutation', 'cible', '', 0, 0),
@@ -2307,8 +2304,95 @@ REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`
 ('form_enum_unsubscrArg', 2, 'Unsubscription', 'cible', '', 0, 0),
 ('label_altFirstImage', '1', 'ALT de la première image', 'cible', '', '0', '0'),
 ('label_altFirstImage', '2', 'ALT of the first image', 'cible', '', '0', '0'),
+('profile_tab_title_general', '1', 'Général', 'cible', '', '0', '0'),
+('profile_tab_title_general', '2', 'General', 'cible', '', '0', '0'),
+('profile_delete_alert_existing_profiles', '1', "Cet utilsateur possède ##NBPROFILE## profil(s) actif(s). <br />
+La suppression de l'utilisateur est <strong>DÉFINITIVE</strong>. <strong>Toutes les données relatives aux profils seront perdues.</strong> <br /><br />
+Profil(s) associé(s):<br />
+##PROFILESLIST##<br />
+Pour supprimer un profil en particulier, passez par l'édition des profil.", 'cible', '', '0', '20'),
+('profile_delete_alert_existing_profiles', '2', "This user has ##NBPROFILE## active profile(s). <br />
+The removal of the user is <strong>FINAL</strong>. <strong>All profile data will be lost.</strong> <br />
+Releated profile(s):<br />
+##PROFILESLIST##<br />
+To delete a profile, in particular, go through the profile editing.", 'cible', '', '0', '20'),
+('form_legend_infoPage', '1', 'Info page', 'cible', '', '0', '1'),
+('form_legend_infoPage', '2', 'Page info', 'cible', '', '0', '1'),
+('form_legend_blockData', '1', 'Texte', 'cible', '', '0', '1'),
+('form_legend_blockData', '2', 'Text', 'cible', '', '0', '1'),
+('list_column_GP_LastName', '1', 'Nom', 'cible', '', '0', '0'),
+('list_column_GP_LastName', '2', 'Name', 'cible', '', '0', '0'),
+('list_column_GP_FirstName', '1', 'Prénom', 'cible', '', '0', '0'),
+('list_column_GP_FirstName', '2', 'Firstname', 'cible', '', '0', '0'),
+('list_column_GP_Email', '1', 'Courriel', 'cible', '', '0', '0'),
+('list_column_GP_Email', '2', 'Email', 'cible', '', '0', '0'),
 ('captcha_label', 1, "<br /><br />Pour des raisons de sécurité, veuillez entrer les caractères alphanumériques de l'image dans l'espace ci-dessous.", 'cible', '', 0, 0),
 ('captcha_label', 2, '<br /><br />For security reasons, please enter the alphanumeric <br />characters from the image into the space below.', 'cible', '', 0, 0);
+
+REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`, `ST_Desc_backend`, `ST_Editable`, `ST_ModuleID`) VALUES
+('dashboard_administration_video_description', '1', 'Liste de vidéos', 'cible', '', '0', 21),
+('dashboard_administration_video_description', '2', 'List of videos', 'cible', '', '0', 21),
+('list_column_V_Alias', '1', 'Alias', 'cible', '', '0', 21),
+('list_column_V_Alias', '2', 'Alias', 'cible', '', '0', 21),
+('list_column_VI_Description', '1', 'Description', 'cible', '', '0', 21),
+('list_column_VI_Description', '2', 'Description', 'cible', '', '0', 21),
+('header_list_video_text', '1', 'Liste des vidéos', 'cible', '', '0', 21),
+('header_list_video_text', '2', 'List of video', 'cible', '', '0', 21),
+('header_list_video_description', '1', 'Cliquez sur Ajouter une video pour
+créer une nouvelle.<br />
+Vous pouvez rechercher par mots-clés,
+la liste des videos. Pour revenir à la liste complète,
+cliquez sur Voir la liste complète. <br />
+Vous pouvez modifier ou supprimer une
+video. ', 'cible', '', '0', 21),
+('header_list_video_description', '2', 'Cliquez sur Ajouter une video pour
+créer une nouvelle.<br />
+Vous pouvez rechercher par mots-clés,
+la liste des videos. Pour revenir à la liste complète,
+cliquez sur Voir la liste complète.<br />
+Vous pouvez modifier ou supprimer une
+video. ', 'cible', '', '0', 21),
+('dashboard_administration_video', '1', 'Vidéos', 'cible', '', '0', 21),
+('dashboard_administration_video', '2', 'Videos', 'cible', '', '0', 21),
+('header_add_video_description', '1', 'Cette page vous permet d''ajouter une vidéo ', 'cible', '', '0', 21),
+('header_add_video_description', '2', 'Add a video to the video library. ', 'cible', '', '0', 21),
+('extranet_video_autoPlay', '1', 'Autoplay', 'cible', '', '0', 21),
+('extranet_video_autoPlay', '2', 'Autoplay', 'cible', '', '0', 21),
+('form_label_video_autoplay', '1', 'Autoplay', 'cible', '', '0', 21),
+('form_label_video_autoplay', '2', 'Autoplay', 'cible', '', '0', 21),
+('button_add_video', '1', 'Ajouter une vidéo', 'cible', '', '0', 21),
+('button_add_video', '2', 'Add a video', 'cible', '', '0', 21),
+('form_label_video_alias', '1', 'Alias', 'cible', '', '0', 21),
+('form_label_video_alias', '2', 'Alias', 'cible', '', '0', 21),
+('form_label_video_name', '1', 'Nom', 'cible', '', '0', 21),
+('form_label_video_name', '2', 'Name', 'cible', '', '0', 21),
+('form_label_video_width', '1', 'Largeur', 'cible', '', '0', 21),
+('form_label_video_width', '2', 'Width', 'cible', '', '0', 21),
+('form_label_video_height', '1', 'Hauteur', 'cible', '', '0', 21),
+('form_label_video_height', '2', 'Height', 'cible', '', '0', 21),
+('form_label_video_description', '1', 'Description', 'cible', '', '0', 21),
+('form_label_video_description', '2', 'Description', 'cible', '', '0', 21),
+('form_label_video_poster', '1', 'Poster', 'cible', '', '0', 21),
+('form_label_video_poster', '2', 'Poster', 'cible', '', '0', 21),
+('form_label_video_VI_MP4', '1', 'Vidéo MP4', 'cible', '', '0', 21),
+('form_label_video_VI_MP4', '2', 'Video MP4', 'cible', '', '0', 21),
+('form_label_video_VI_WEBM', '1', 'Vidéo WEBM', 'cible', '', '0', 21),
+('form_label_video_VI_WEBM', '2', 'Video WEBM', 'cible', '', '0', 21),
+('form_label_video_VI_OGG', '1', 'Vidéo OGG', 'cible', '', '0', 21),
+('form_label_video_VI_OGG', '2', 'Video OGG', 'cible', '', '0', 21),
+('header_delete_video_text', '1', 'Suppression d''une vidéo', 'cible', '', '0', 21),
+('header_delete_video_text', '2', 'Delete a video', 'cible', '', '0', 21),
+('header_edit_video_text', '1', 'Edition d''une vidéo', 'cible', '', '0', 21),
+('header_edit_video_text', '2', 'Edit a video', 'cible', '', '0', 21),
+('header_edit_video_description', '1', 'Cette page permet d''éditer une vidéo', 'cible', '', '0', 21),
+('header_edit_video_description', '2', 'This page allows the edition of a video', 'cible', '', '0', 21),
+('video_module_name', '1', 'Vidéos', 'cible', '', '0', 21),
+('video_module_name', '2', 'Videos', 'cible', '', '0', 21),
+('management_module_video_list', '1', 'Liste des vidéos', 'cible', '', '0', 21),
+('management_module_video_list', '2', 'Videos'' list', 'cible', '', '0', 21),
+('header_add_video_text', '1', 'Ajouter une vidéo', 'cible', '', '0', 21),
+('header_add_video_text', '2', 'Add a video', 'cible', '', '0', 21);
+
 -- --------------------------------------------------------
 
 --
@@ -2346,6 +2430,41 @@ CREATE TABLE IF NOT EXISTS `TextData` (
   `TD_ToApprove` int(11) NOT NULL,
   PRIMARY KEY  (`TD_ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Videos`
+--
+
+DROP TABLE IF EXISTS `Videos`;
+CREATE TABLE IF NOT EXISTS `Videos` (
+  `V_ID` int(11) NOT NULL auto_increment,
+  `V_Alias` varchar(255) NOT NULL,
+  `V_Width` int(11) NOT NULL,
+  `V_Height` int(11) NOT NULL,
+  `V_Autoplay` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`V_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `VideosIndex`
+--
+
+DROP TABLE IF EXISTS `VideosIndex`;
+CREATE TABLE IF NOT EXISTS `VideosIndex` (
+  `VI_ID` int(11) NOT NULL auto_increment,
+  `VI_LanguageID` int(11) NOT NULL,
+  `VI_Description` text NOT NULL,
+  `VI_Name` varchar(255) NOT NULL,
+  `VI_Poster` varchar(255) NOT NULL,
+  `VI_MP4` varchar(255) NOT NULL,
+  `VI_WEBM` varchar(255) NOT NULL,
+  `VI_OGG` varchar(255) NOT NULL,
+  PRIMARY KEY  (`VI_ID`,`VI_LanguageID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

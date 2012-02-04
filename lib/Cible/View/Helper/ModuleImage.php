@@ -27,9 +27,10 @@
                 $_source = "{$this->view->baseUrl()}/data/images/{$module}/{$id}/$_image";
                 $exludeOptions = array(
                     'alt',
-//                    'prettyPhoto',
+                    'prettyPhoto',
                     'magicZoom',
                     'thickbox',
+                    'noGroup',
                     'useSize'
                     );
 
@@ -86,10 +87,10 @@
                         //var_dump(array('rel'=>'prettyPhoto[gallery1]','alt' => $alt, 'title' => $title));
 
                         if(isset($options['noGroup'])){
-                            return $this->view->link($_prettyPhoto_image_source, str_replace(array('%SOURCE%','%ALT%','%ATTR%'), array($_source, $alt, $_attr), $_image_tag), array('rel'=>'prettyPhoto','alt' => $alt, 'title' => $title));
+                            return $this->view->link($_prettyPhoto_image_source, str_replace(array('%SOURCE%','%ALT%','%ATTR%'), array($_source, $alt, $_attr), $_image_tag), array('rel'=>'prettyPhoto', 'title' => $title));
                         }
                         else{
-                            return $this->view->link($_prettyPhoto_image_source, str_replace(array('%SOURCE%','%ALT%','%ATTR%'), array($_source, $alt, $_attr), $_image_tag), array('rel'=>'prettyPhoto[gallery1]','alt' => $alt, 'title' => $title));
+                            return $this->view->link($_prettyPhoto_image_source, str_replace(array('%SOURCE%','%ALT%','%ATTR%'), array($_source, $alt, $_attr), $_image_tag), array('rel'=>'prettyPhoto[gallery1]', 'title' => $title));
                         }
                     }
                 }

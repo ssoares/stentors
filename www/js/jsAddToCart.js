@@ -68,7 +68,8 @@ var cartActions = {
                 var tmpArray = data.split('-');
                 if (tmpArray[0] == 'inserted')
                     cartActions.newLine(tmpArray[1]);
-            }
+            },
+            'json'
         );
     },
     

@@ -90,7 +90,7 @@ class Retailers_IndexController extends Cible_Controller_Action
             $stateId = $this->_getParam('stateId');
             $filter = $this->_getParam('filter');
 
-            $cities = new CitiesData();
+            $cities = new CitiesObject();
 
             /*
              * if $filter = true(1) then only display cities having

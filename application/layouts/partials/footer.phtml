@@ -34,7 +34,8 @@ if ($config->zIndexCalculator->embeded):
     ?>
     <script type="text/javascript" src="<?php echo $this->locateFile('zIndexGenerator.js'); ?>"></script>
 <?php endif; ?>
-<?php 
+<?php
 if ($config->searchbox->embeded)
     echo $this->partial('partials/jsSearchBox.phtml')
 ?>
+<?php echo $this->placeholder('footerScript'); ?>

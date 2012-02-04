@@ -8,7 +8,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FormRetailersProfile.php 804 2012-01-23 17:53:00Z ssoares $id
+ * @version   $Id: FormRetailersProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -20,7 +20,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FormRetailersProfile.php 804 2012-01-23 17:53:00Z ssoares $id
+ * @version   $Id: FormRetailersProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class FormRetailersProfile extends Cible_Form
 {

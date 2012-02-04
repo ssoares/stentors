@@ -103,7 +103,7 @@ class Gallery_IndexController extends Cible_Controller_Action
             $baseDir = $this->view->baseUrl();
             $config  = Zend_Registry::get('config')->toArray();
             $imageId = $idGallery;
-            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
+           // $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
 
             $galleryID     = $idGallery;
             $db            = Zend_Registry::get('db');
@@ -170,7 +170,7 @@ class Gallery_IndexController extends Cible_Controller_Action
             $baseDir = $this->view->baseUrl();
             $config  = Zend_Registry::get('config')->toArray();
             $imageId = $idGallery;
-            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
+           // $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
 
             $galleryID     = $idGallery;
             $db            = Zend_Registry::get('db');

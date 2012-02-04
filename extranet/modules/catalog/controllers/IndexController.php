@@ -30,7 +30,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
     protected $_disableExportToCSV   = false;
     protected $_enablePrint          = false;
     protected $_constraint;
-    
+
     /**
      * Set some properties to redirect and process actions.
      *
@@ -131,7 +131,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
                 $params = array(
                     'columns'    => $this->_colTitle,
                     'joinTables' => $this->_joinTables);
-                
+
                 return $params;
             }
 
@@ -151,7 +151,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
     {
         $oDataName = $this->_objectList[$this->_currentAction];
         $oData     = new $oDataName();
-        
+
         $lang = $this->_getParam('lang');
         if (!$lang)
         {
@@ -163,7 +163,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
             $langId = Cible_FunctionsGeneral::getLanguageID($lang);
             $this->_registry->currentEditLanguage = $langId;
         }
-        
+
         $returnAction = $this->_getParam('return');
 
         $baseDir = $this->view->baseUrl() . "/";
@@ -182,7 +182,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
             }
 
             if ($returnAction)
-                $returnUrl = $this->_moduleTitle . "/" 
+                $returnUrl = $this->_moduleTitle . "/"
                     . $this->_name . "/"
                     . $returnAction;
             else
@@ -664,7 +664,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
         $constraint = $lines->getForeingKey();
 
         $params['constraint'] = $constraint;
-        
+
         $this->tables = array(
             $lines->getDataTableName() => $lines->getDataColumns()
         );
@@ -680,9 +680,9 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
 
         $select = $lines->getAll($langId, false);
         $select = $this->_addJoinQuery($select, $params);
-        
+
         $this->select = $select;
-        
+
         parent::toExcelAction();
     }
 
@@ -746,7 +746,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
         $actionPanel = array(
             'width' => '50px'
         );
-        
+
         $options = array();
 
         if (count($this->_actionsList) == 0)
@@ -763,6 +763,10 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
                 switch ($action)
                 {
                     case 'add':
+                        $lang = $this->_getParam('lang');
+                        if (!empty ($lang))
+                        $langId = Cible_FunctionsGeneral::getLanguageID($lang);
+                        if ($langId == $this->_defaultEditLanguage)
                         $commands = array(
                             $this->view->link($this->view->url(
                                             array(
@@ -837,7 +841,7 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
             $options['enable-print']= 'true';
 
         $options['actionKey'] = $this->_currentAction;
-        
+
         return $options;
     }
 
@@ -868,17 +872,17 @@ class Catalog_IndexController extends Cible_Controller_Block_Abstract
     /**
      * Add some data from other table, tests the joinTables
      * property. If not empty add tables and join clauses.
-     * 
+     *
      * @param Zend_Db_Table_Select $select
      * @param array $params
-     * 
+     *
      * @return Zend_Db_Table_Select
      */
     private function _addJoinQuery($select, array $params = array())
     {
         if (isset($params['joinTables']) && count($params['joinTables']))
             $this->_joinTables = $params['joinTables'];
-        
+
         /* If needs to add some data from other table, tests the joinTables
          * property. If not empty add tables and join clauses.
          */

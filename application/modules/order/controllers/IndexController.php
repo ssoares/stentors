@@ -76,7 +76,7 @@ class Order_IndexController extends Cible_Controller_Action
                     'data' => $data
                 );
 
-                $oNotification = new Cible_NotificationManager($options);
+                $oNotification = new Cible_Notifications_Email($options);
             }
             else
             {
@@ -388,7 +388,7 @@ class Order_IndexController extends Cible_Controller_Action
                         'data' => $data
                     );
 
-                    $oNotification = new Cible_NotificationManager($options);
+                    $oNotification = new Cible_Notifications_Email($options);
 
 //                    $notifyAdmin = array();
                     $this->view->assign('needConfirm', true);
@@ -474,7 +474,7 @@ class Order_IndexController extends Cible_Controller_Action
                             'data' => $data
                         );
 
-                        $oNotification = new Cible_NotificationManager($options);
+                        $oNotification = new Cible_Notifications_Email($options);
 
                         $this->view->assign('needConfirm', true);
                         $this->renderScript('index/confirm-email.phtml');
@@ -529,7 +529,7 @@ class Order_IndexController extends Cible_Controller_Action
                             'data' => $data
                         );
 
-                        $oNotification = new Cible_NotificationManager($options);
+                        $oNotification = new Cible_Notifications_Email($options);
                     }
                     $this->_redirect(Cible_FunctionsCategories::getPagePerCategoryView(0, 'modify_inscription', $this->_moduleID));
                 }
@@ -1494,7 +1494,7 @@ class Order_IndexController extends Cible_Controller_Action
                         'data' => $data
                     );
 
-                    $oNotification = new Cible_NotificationManager($options);
+                    $oNotification = new Cible_Notifications_Email($options);
 
                     $this->view->assign('needConfirm', true);
                 }
@@ -1551,7 +1551,7 @@ class Order_IndexController extends Cible_Controller_Action
                     'data' => $data
                 );
 
-                $oNotification = new Cible_NotificationManager($options);
+                $oNotification = new Cible_Notifications_Email($options);
 
                 $this->renderScript('index/become-client-thank-you.phtml');
             }
@@ -2005,8 +2005,7 @@ class Order_IndexController extends Cible_Controller_Action
 
     private function _buildData($orderOnly = false)
     {
-        $url = $this->view->BaseUrl() . '/'
-            . Cible_FunctionsCategories::getPagePerCategoryView(0, 'list_collections', 14);
+        $url = Cible_FunctionsCategories::getPagePerCategoryView(0, 'list_collections', 14);
         $this->view->headLink()->appendStylesheet($this->view->locateFile('cart.css'));
         $account = Cible_FunctionsGeneral::getAuthentication();
         if (!$account)

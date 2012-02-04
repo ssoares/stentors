@@ -183,14 +183,15 @@
                // Catch cancel
                 $('form button#cancel', parent).click(function(event){
                     event.preventDefault();
-                    //$(this).attr('onclick', "");
-                    ////alert($(this).attr('onclick'));
                     $('#page_edit').slideUp('slow');
                     $('#page_content').empty();
                     overlay.hide();
                     if (!$('#overlay').is(':hidden'))
                         $('#overlay').hide();
                     var cancel = $('#pageCancel');
+                    if (tinyMCE)
+                        tinyMCE.execCommand('mceRemoveControl', false, 'GI_Description');
+
                     if(cancel.size() > 0){
                         cancel.click();
                     }
@@ -215,7 +216,6 @@
                     var submitData = 'buttonAction=' + button + '&' + $(this).serialize();
 
                     $.post(url, submitData, function(data){
-                        //alert("non");
                         var success = false;
                         loadContent(data, url);
                     });

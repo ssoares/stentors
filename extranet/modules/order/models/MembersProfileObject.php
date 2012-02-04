@@ -6,7 +6,7 @@
  * @category  Extranet_Modules
  * @package   Extranet_Modules_Retailer
  * @copyright Copyright (c) Cibles solutions d'affaires. (http://www.ciblesolutions.com)
- * @version   $Id: MembersProfileObject.php 741 2011-12-16 22:12:45Z ssoares $
+ * @version   $Id: MembersProfileObject.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**

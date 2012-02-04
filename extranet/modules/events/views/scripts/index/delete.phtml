@@ -1,13 +1,13 @@
 <?php
-    
+
     $event  = $this->event;
     //print_r($event);
 ?>
-<div id="container_middle_full">    
+<div id="container_middle_full">
 <?php
     if ($event):
 ?>      <h3><?php echo($event['Title']) ?></h3>
-        <p>�tes-vous s�r de vouloir supprimer l'�v�nement <em><b><?php echo($event['Title']); ?></b></em>?</p>
+        <p>Êtes-vous sûr de vouloir supprimer l'événement <em><b><?php echo($event['Title']); ?></b></em>?</p>
         <form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
             <div>
                 <input type="hidden" name="blockID" value="<?php echo $event['Title']?>" />
@@ -17,9 +17,9 @@
         </form>
 <?php
     else:
-?>      <p>Cette �v�nement est inexistant</p>
+?>      <p>Cette événement est inexistant</p>
         <a href="<?php echo ($this->return); ?>">Retour</a>
-    
+
 <?php
     endif;
 ?>

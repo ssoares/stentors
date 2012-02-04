@@ -3,15 +3,15 @@ $(document).ready(function() {
         event.preventDefault();
         var associationSetContent = $(this).parents('.associationSetContent');
         var associationSetID = associationSetContent.attr('associationSetID');
-        
+
         var associationContent   = associationSetContent.children('.associationContent');
         var associationTable     = associationContent.children('table');
-        
+
         var associationCountID   = parseInt(associationContent.children('#associationCountID').val());
         var associationAction    = "new";
-                    
+
         var url = $("#ajaxLink").val();
-        
+
         $.getJSON(url,{associationAction : associationAction, associationID : (associationCountID+1), associationSetID : associationSetID},
             function(data){
                 var row = '';
@@ -20,7 +20,7 @@ $(document).ready(function() {
                 else
                     row = 'odd';
 
-                newAssociation   = "" 
+                newAssociation   = ""
                 newAssociation += "<tr class='association' associationID='"+(associationCountID+1)+"'>";
                 newAssociation += "  <td class='tdSelectAssociationOption row_"+row+"'>";
                 newAssociation +=        data['newElement'];
@@ -36,30 +36,28 @@ $(document).ready(function() {
                 newAssociation += "      </div>";
                 newAssociation += "  </td>";
                 newAssociation += "</tr>";
-                
+
                 associationTable.append(newAssociation);
-                
-                
                 associationContent.children('#associationCountID').val(associationCountID+1);
                 associationContent.children('#associationCount').val(parseInt(associationContent.children('#associationCount').val())+1);
-                
+
             }
         );
     });
-    
+
     $("#addAssociationSeq").live('click',function(event){
         event.preventDefault();
         var associationSetContent = $(this).parents('.associationSetContent');
         var associationSetID = associationSetContent.attr('associationSetID');
-        
+
         var associationContent   = associationSetContent.children('.associationContent');
         var associationTable     = associationContent.children('table');
-        
+
         var associationCountID   = parseInt(associationContent.children('#associationCountID').val());
         var associationAction    = "new";
-                    
+
         var url = $("#ajaxLink").val();
-        
+
         $.getJSON(url,{associationAction : associationAction, associationID : (associationCountID+1), associationSetID : associationSetID},
             function(data){
                 var row = '';
@@ -68,7 +66,7 @@ $(document).ready(function() {
                 else
                     row = 'odd';
 
-                newAssociation   = "" 
+                var newAssociation   = ""
                 newAssociation += "<tr class='association' associationID='"+(associationCountID+1)+"'>";
                 newAssociation += "  <td class='tdSelectAssociationOption row_"+row+"'>";
                 newAssociation +=        data['newElement'];
@@ -86,30 +84,30 @@ $(document).ready(function() {
                 newAssociation += "      </div>";
                 newAssociation += "  </td>";
                 newAssociation += "</tr>";
-                
+
                 associationTable.append(newAssociation);
-                
-                
+
+
                 associationContent.children('#associationCountID').val(associationCountID+1);
                 associationContent.children('#associationCount').val(parseInt(associationContent.children('#associationCount').val())+1);
-                
+
             }
         );
     });
-    
+
     $(".delAssociation").live('click',function(event){
         event.preventDefault();
         var associationSetContent = $(this).parents('.associationSetContent');
         var associationContent   = associationSetContent.children('.associationContent');
         var associationSetID = associationSetContent.attr('associationSetID');
-        var association      = $(this).parents('.association');      
+        var association      = $(this).parents('.association');
         var associationID    = association.attr('associationID');
-        
+
         associationContent.children('#associationCountID').val(associationContent.children('#associationCountID').val()-1);
         associationContent.children('#associationCount').val(associationContent.children('#associationCount').val()-1);
-        
+
         association.remove();
-        
+
         var rows = associationContent.children('table').children('tbody').children('tr');
         var cells = '';
         var rowClass = 'even';
@@ -122,7 +120,7 @@ $(document).ready(function() {
             if(rowClass == 'even')
                 rowClass = 'odd';
             else
-                rowClass = 'even'; 
+                rowClass = 'even';
         });
-    });  
+    });
 });

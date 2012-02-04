@@ -15,7 +15,7 @@
  * @package
  * @copyright Copyright (c)2011 Cibles solutions d'affaires - http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: Email.php 823 2012-01-31 22:32:37Z ssoares $
+ * @version   $Id: Email.php 825 2012-02-01 04:13:56Z ssoares $
  */
 class Cible_Notifications_Email extends Cible_Notifications
 {

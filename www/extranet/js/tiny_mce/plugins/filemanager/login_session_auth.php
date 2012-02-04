@@ -28,9 +28,12 @@
 	} */
     session_start();
 
-    if( isset( $_SESSION['Zend_Auth']) && !empty($_SESSION['Zend_Auth']['storage']) ){
-        $_SESSION['isLoggedIn'] = true;
-        $_SESSION['user'] = $_SESSION['Zend_Auth']['storage'];
+    if( (isset( $_SESSION['Zend_Auth']) && !empty($_SESSION['Zend_Auth']['storage'])) || isset($_SESSION['isLoggedIn']) ){
+        if (!isset($_SESSION['isLoggedIn']))
+        {
+            $_SESSION['isLoggedIn'] = true;
+            $_SESSION['user'] = $_SESSION['Zend_Auth']['storage'];
+        }
         header("location: " . $_REQUEST['return_url']);
         die;
 	}

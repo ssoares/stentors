@@ -23,70 +23,39 @@
  * @version   $Id: FormBannerFeatured.php 153 2011-07-04 20:41:52Z ssoares $id
  */
 class FormBannerFeatured extends Cible_Form_Multilingual {
-
-    protected $_imageSrcFirst;
-    protected $_imageSrcSecond;
-    protected $_imageSrcThird;
-    protected $_imageSrcFourth;
-    protected $_isNewImageSt;
-    protected $_isNewImageSec;
-    protected $_isNewImageRd;
-    protected $_isNewImageTh;
+       
+    protected $_numberImageFeature;
+    protected $_isNewImage;
+    protected $_imageSrc;
     
     protected $_dataId;
     protected $_moduleName;
     protected $_filePath;
+    
+    protected $_listVideo;    
 
     /**
      * Class constructor
      *
      * @return void
      */
-    public function __construct($options)
+    public function __construct($options,$listVideo)
     {
         parent::__construct($options);
 
-        $this->setParameters($options);
-
+        $this->setParameters($options);      
+        
         if ($this->_dataId == '')
         {
-            $pathTmp = "../../../../../data/images/"
-                . $this->_moduleName . "/tmp";
+            $pathTmp = "../../../../../data/images/" . $this->_moduleName . "/tmp";
         }
         else
         {
-            $pathTmp = "../../../../../data/images/"
-                . $this->_moduleName . "/"
+            $pathTmp = "../../../../../data/images/" . $this->_moduleName . "/"
                 . $this->_dataId . "/tmp";
         }
 
         $this->_filePath = '../../../' . $this->_filePath;
-
-//        $config = Zend_Registry::get('config');
-//        
-//        $largeWidth  = $config->catalog->IF_Img1->original->maxWidth;
-//        $largeHeight = $config->catalog->IF_Img1->original->maxHeight;
-//
-//        $smallWidth = $config->catalog->IF_Img2->original->maxWidth;
-//        $smallHeight = $config->catalog->IF_Img2->original->maxHeight;
-//
-//        $replaceLarge = $largeWidth . ' x ' . $largeHeight;
-//        $replaceSmall = $smallWidth . ' x ' . $smallHeight;
-//
-//        $this   = new Zend_Form_SubForm();
-//        $this  = new Zend_Form_SubForm();
-//        $productFormBottom = new Zend_Form_SubForm();
-//
-//        $largeImgLbl = str_replace(
-//                '%DIMENSIONS1%',
-//                $replaceLarge,
-//                $this->getView()->getCibleText('large_image_for_collection_page'));
-//
-//        $smallImgLbl = str_replace(
-//                '%DIMENSIONS2%',
-//                $replaceSmall,
-//                $this->getView()->getCibleText('small_image_for_collection_page'));
-
 
         // Name of the banner
         $name = new Zend_Form_Element_Text('BF_Name');
@@ -121,561 +90,247 @@ class FormBannerFeatured extends Cible_Form_Multilingual {
             )
             ->setAttrib('class', 'stdTextInput');
 
-//        $label = $name->getDecorator('Label');
-//        $label->setOption('class', $this->_labelCSS);
+        $this->addElement($name);        
+        
+        $listVideos = array();
+        for($xx=0; $xx<count($listVideo);$xx++)
+        {
+            $listVideos[$listVideo[$xx]['V_ID']] = $listVideo[$xx]['V_Alias'];
+        }      
+      
+        for($x=1; $x<=$this->_numberImageFeature;$x++){
+            
+            $isNewImage = 'isNewImage' . $x; 
+            
+            $newImage = new Zend_Form_Element_Hidden($isNewImage, array('value' => $this->_isNewImage[$x]));
+            $newImage->removeDecorator('Label');
 
-        $this->addElement($name);
+            $this->addElement($newImage);
+            // Image to load
+            $IF_Img_tmp = 'IF_Img' . $x . '_tmp';
+            $IF_Img_original = 'IF_Img' . $x . '_original';
+            $IF_Img_preview = 'IF_Img' . $x . '_preview';   
+            $IF_Img = 'IF_Img' . $x; 
+            
+            $imageTmp = new Zend_Form_Element_Hidden($IF_Img_tmp);
+            $imageTmp->removeDecorator('Label');
+            $this->addElement($imageTmp);
 
-        //**** 1st Image.*****
-        // hidden specify if new image
-        $newImageSt = new Zend_Form_Element_Hidden('isNewImageSt', array('value' => $this->_isNewImageSt));
-        $newImageSt->removeDecorator('Label');
+            $imageOrg = new Zend_Form_Element_Hidden($IF_Img_original);
+            $imageOrg->removeDecorator('Label');
+            $this->addElement($imageOrg);
 
-        $this->addElement($newImageSt);
-        // Image to load
-        $imageTmpSt = new Zend_Form_Element_Hidden('IF_Img1_tmp');
-        $imageTmpSt->removeDecorator('Label');
-        $this->addElement($imageTmpSt);
-
-        $imageOrgSt = new Zend_Form_Element_Hidden('IF_Img1_original');
-        $imageOrgSt->removeDecorator('Label');
-        $this->addElement($imageOrgSt);
-
-        $imageViewSt = new Zend_Form_Element_Image(
-                'IF_Img1_preview',
-                array('onclick' => 'return false;')
-        );
-        $imageViewSt->setImage($this->_imageSrcFirst)->removeDecorator('Label')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
+            $imageView= new Zend_Form_Element_Image($IF_Img_preview,
+                    array('onclick' => 'return false;')
             );
-        
-        $this->addElement($imageViewSt);
-
-        $imagePickerSt = new Cible_Form_Element_ImagePicker(
-                'IF_Img1',
-                array(
-                    'onchange' => "document.getElementById('IF_Img1').src = document.getElementById('IF_Img1').value",
-                    'associatedElement' => 'IF_Img1_preview',
-                    'pathTmp' => $pathTmp,
-                    'contentID' => $this->_dataId
-            ));
-        $imagePickerSt->setLabel('')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
+            
+            
+            $imageView->setImage($this->_imageSrc[$x])->removeDecorator('Label')
+                ->setDecorators(
                     array(
-                        array('row' => 'HtmlTag'),
+                        'ViewHelper',
                         array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
-            );
-        
-        $imagePickerSt->removeDecorator('Label');
-        $this->addElement($imagePickerSt);
+                            array('row' => 'HtmlTag'),
+                            array(
+                                'tag' => 'dd',
+                                'class' => 'alignCenter',
+                                'id' => 'title')
+                        ),
+                    )
+                );
 
-        // label for the image
-        $labelSt = new Zend_Form_Element_Text('IFI_Label1');
-        $labelSt->setLabel(
-            $this->getView()->getCibleText('form_label_label'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
+            $this->addElement($imageView);
+            //echo $IF_Img . $pathTmp . "<br />";
+            $imagePicker = new Cible_Form_Element_ImagePicker($IF_Img,
                     array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
-
-        $label = $labelSt->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
-
-        $this->addElement($labelSt);
-        // label for the link
-        $urlSt = new Zend_Form_Element_Text('IFI_Url1');
-        $urlSt->setLabel(
-            $this->getView()->getCibleText('form_label_url'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
+                        'onchange' => "document.getElementById('" . $IF_Img . "').src = document.getElementById('" . $IF_Img . "').value",
+                        'associatedElement' => $IF_Img_preview,
+                        'pathTmp' => $pathTmp,
+                        'contentID' => $this->_dataId
+                ));
+            $imagePicker->setLabel('')
+                ->setDecorators(
                     array(
-                        array('row' => 'HtmlTag'),
+                        'ViewHelper',
                         array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
+                            array('row' => 'HtmlTag'),
+                            array(
+                                'tag' => 'dd',
+                                'class' => 'alignCenter',
+                                'id' => 'title')
+                        ),
+                    )
+                );
 
-        $label = $urlSt->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
+            $imagePicker->removeDecorator('Label');
+            $this->addElement($imagePicker);
 
-        $this->addElement($urlSt);
-        
-        // List of available styles
-        $styleSt = new Zend_Form_Element_Select('IF_Style1');
-        $styleSt->setLabel($this->getView()->getCibleText('form_style_label'))
-                ->setAttrib('class', 'largeSelect')
-                ;
-
-        $listStyles = array(
-            'bluePaleText biffoNormal fontSize35' => 'Texte bleu, 35px',
-            'bluePaleText biffoNormal fontSize20' => 'Texte bleu, 20px',
-        );
-        $styleSt->addMultiOption('', $this->getView()->getCibleText('form_select_default_label'));
-        $styleSt->addMultiOptions($listStyles);
-
-        $this->addElement($styleSt);
-        
-        //***** 2nd Image.****
-        // hidden specify if new image
-        $newImageSec = new Zend_Form_Element_Hidden('isNewImageSec', array('value' => $this->_isNewImageSec));
-        $newImageSec->removeDecorator('Label');
-
-        $this->addElement($newImageSec);
-        // Image for the colection line
-        $imageTmpSec = new Zend_Form_Element_Hidden('IF_Img2_tmp');
-        $imageTmpSec->removeDecorator('Label');
-        $this->addElement($imageTmpSec);
-
-        $imageOrgSec = new Zend_Form_Element_Hidden('IF_Img2_original');
-        $imageOrgSec->removeDecorator('Label');
-        $this->addElement($imageOrgSec);
-
-        $imageViewSec = new Zend_Form_Element_Image(
-                'IF_Img2_preview',
-                array('onclick' => 'return false;')
-        );
-        $imageViewSec->setImage($this->_imageSrcSecond)->removeDecorator('Label')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
-            );
-        $this->addElement($imageViewSec);
-
-        $imagePickerSec = new Cible_Form_Element_ImagePicker(
-                'IF_Img2',
-                array(
-                    'onchange' => "document.getElementById('IF_Img2').src = document.getElementById('IF_Img2').value",
-                    'associatedElement' => 'IF_Img2_preview',
-                    'pathTmp' => $pathTmp,
-                    'contentID' => $this->_dataId
-            ));
-        $imagePickerSec->setLabel('')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
-            );
-        $imagePickerSec->removeDecorator('Label');
-        $this->addElement($imagePickerSec);
-        
-        // label for the image
-        $labelSec = new Zend_Form_Element_Text('IFI_Label2');
-        $labelSec->setLabel(
+            // label for the image
+            $IFI_Label = 'IFI_Label' . $x;
+            $labelX = new Zend_Form_Element_Text($IFI_Label);
+            $labelX->setLabel(
                 $this->getView()->getCibleText('form_label_label'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
+                ->setDecorators(
                     array(
-                        array('row' => 'HtmlTag'),
+                        'ViewHelper',
+                        array('label', array('placement' => 'prepend')),
                         array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
+                            array('row' => 'HtmlTag'),
+                            array(
+                                'tag' => 'dd',
+                                'class' => 'form_title_inline',
+                                'id' => 'title')
+                        ),
+                    )
                 )
-            )
-            ->setAttrib('class', 'stdTextInput');
+                ->setAttrib('class', 'stdTextInput');
 
-        $label = $labelSec->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
+            $label = $labelX->getDecorator('Label');
+            $label->setOption('class', $this->_labelCSS);
 
-        $this->addElement($labelSec);
-        // List of available styles
-        $styleSec = new Zend_Form_Element_Select('IF_Style2');
-        $styleSec->setLabel($this->getView()->getCibleText('form_style_label'))
+            $this->addElement($labelX);
+            // label for the link
+            
+            $IFI_UrlVideo = 'IFI_UrlVideo' . $x;
+            $optionUrlVideo = new Zend_Form_Element_Radio($IFI_UrlVideo);
+            $optionUrlVideo->setRequired(false)
+                ->addMultiOption('0', $this->getView()->getCibleText('extranet_form_label_url'),'number1')
+                ->addMultiOption('1', $this->getView()->getCibleText('extranet_form_label_video'),'number2')
+            ;
+          
+            $this->addElement($optionUrlVideo);
+            
+            
+            $IFI_Url = 'IFI_Url' . $x;            
+            
+            $urlX = new Zend_Form_Element_Text($IFI_Url);
+            $urlX->setLabel(
+                $this->getView()->getCibleText('form_label_url'))
+                ->setDecorators(
+                    array(
+                        'ViewHelper',
+                        array('label', array('placement' => 'prepend')),
+                        array(
+                            array('row' => 'HtmlTag'),
+                            array(
+                                'tag' => 'dd',
+                                'class' => 'form_title_inline_link',
+                                'id' => 'title')
+                        ),
+                    )
+                )
+                ->setAttrib('class', 'stdTextInput');
+
+            $label = $urlX->getDecorator('Label');
+            $label->setOption('class', $this->_labelCSS);
+
+            $this->addElement($urlX);
+            
+           /* $optionUrlVideo = new Zend_Form_Element_Radio($IFI_UrlVideo);
+            $optionUrlVideo->setRequired(false)
+                
+                ->addMultiOption('1', $this->getView()->getCibleText('extranet_newsletter_option_text_url_url'))
+            ;
+            $this->addElement($optionUrlVideo);*/
+            
+            
+            $IFI_Video = 'IFI_Video' . $x; 
+           
+            $video = new Zend_Form_Element_Select($IFI_Video);
+            $video->setLabel($this->getView()->getCibleText('form_label_video'))
+                ->setAttrib('class', 'largeSelect');            
+                                      
+            $video->addMultiOptions($listVideos);
+            $this->addElement($video);            
+            
+            $IFI_Text1 = 'IFI_TextA' . $x; 
+            $IFI_Text2 = 'IFI_TextB' . $x; 
+            
+            $IFI_Text1X = new Zend_Form_Element_Text($IFI_Text1);
+            $IFI_Text1X->setLabel(
+                $this->getView()->getCibleText('form_label_text_1'))
+                ->setDecorators(
+                    array(
+                        'ViewHelper',
+                        array('label', array('placement' => 'prepend')),
+                        array(
+                            array('row' => 'HtmlTag'),
+                            array(
+                                'tag' => 'dd',
+                                'class' => 'form_title_inline',
+                                'id' => 'title')
+                        ),
+                    )
+                )
+                ->setAttrib('class', 'stdTextInput');
+
+            $label = $IFI_Text1X->getDecorator('Label');
+            $label->setOption('class', $this->_labelCSS);
+
+            $this->addElement($IFI_Text1X);
+            
+            $IFI_Text2X = new Zend_Form_Element_Text($IFI_Text2);
+            $IFI_Text2X->setLabel(
+                $this->getView()->getCibleText('form_label_text_2'))
+                ->setDecorators(
+                    array(
+                        'ViewHelper',
+                        array('label', array('placement' => 'prepend')),
+                        array(
+                            array('row' => 'HtmlTag'),
+                            array(
+                                'tag' => 'dd',
+                                'class' => 'form_title_inline',
+                                'id' => 'title')
+                        ),
+                    )
+                )
+                ->setAttrib('class', 'stdTextInput');
+
+            $label = $IFI_Text2X->getDecorator('Label');
+            $label->setOption('class', $this->_labelCSS);
+
+            $this->addElement($IFI_Text2X);  
+            
+            
+            $IF_Style = 'IF_Style' . $x; 
+            $style = new Zend_Form_Element_Select($IF_Style);
+            $style->setLabel($this->getView()->getCibleText('form_style_label'))
                 ->setAttrib('class', 'largeSelect')
                 ;
 
-        $listStyles = array(
-            'bluePaleText biffoNormal fontSize35' => 'Texte bleu, 35px',
-            'bluePaleText biffoNormal fontSize20' => 'Texte bleu, 20px',
-        );
-        $styleSec->addMultiOption('', $this->getView()->getCibleText('form_select_default_label'));
-        $styleSec->addMultiOptions($listStyles);
-
-        $this->addElement($styleSec);
-        
-        // label for the link
-        $urlSec = new Zend_Form_Element_Text('IFI_Url2');
-        $urlSec->setLabel(
-            $this->getView()->getCibleText('form_label_url'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
-
-        $label = $urlSec->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
-
-        $this->addElement($urlSec);
-        
-        //**** 3rd Image .*****
-        // hidden specify if new image
-        $newImageRd = new Zend_Form_Element_Hidden('isNewImageRd', array('value' => $this->_isNewImageRd));
-        $newImageRd->removeDecorator('Label');
-
-        $this->addElement($newImageRd);
-        // Image to load
-        $imageTmpRd = new Zend_Form_Element_Hidden('IF_Img3_tmp');
-        $imageTmpRd->removeDecorator('Label');
-        $this->addElement($imageTmpRd);
-
-        $imageOrgRd = new Zend_Form_Element_Hidden('IF_Img3_original');
-        $imageOrgRd->removeDecorator('Label');
-        $this->addElement($imageOrgRd);
-
-        $imageViewRd = new Zend_Form_Element_Image(
-                'IF_Img3_preview',
-                array('onclick' => 'return false;')
-        );
-        $imageViewRd->setImage($this->_imageSrcThird)->removeDecorator('Label')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
+            $listStyles = array(
+                'sec0' => 'Style over 0 secondes',
+                'sec1' => 'Style over 1 secondes',
+                'secUp1' => 'Style up 1 secondes',
             );
-        $this->addElement($imageViewRd);
+            $style->addMultiOption('', $this->getView()->getCibleText('form_select_default_label'));
+            $style->addMultiOptions($listStyles);
 
-        $imagePickerRd = new Cible_Form_Element_ImagePicker(
-                'IF_Img3',
+            $this->addElement($style);
+            
+            $imageDisplay = 'imageDisplay' . $x;
+            $this->addDisplayGroup(
                 array(
-                    'onchange' => "document.getElementById('IF_Img3').src = document.getElementById('IF_Img3').value",
-                    'associatedElement' => 'IF_Img3_preview',
-                    'pathTmp' => $pathTmp,
-                    'contentID' => $this->_dataId
-            ));
-        $imagePickerRd->setLabel('')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
-            );
-        $imagePickerRd->removeDecorator('Label');
-        $this->addElement($imagePickerRd);
-
-        // label for the image
-        $labelRd = new Zend_Form_Element_Text('IFI_Label3');
-        $labelRd->setLabel(
-            $this->getView()->getCibleText('form_label_label'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
-
-        $label = $labelRd->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
-
-        $this->addElement($labelRd);
+                    $isNewImage, 
+                    $IF_Img_tmp, 
+                    $IF_Img_original, 
+                    $IF_Img_preview, 
+                    $IF_Img,
+                    $IFI_Label,
+                    $IFI_UrlVideo,
+                    $IFI_Url,                    
+                    $IFI_Video,
+                    $IFI_Text1,
+                    $IFI_Text2,
+                    $IF_Style), 
+                $imageDisplay);
         
-        // label for the link
-        $urlRd = new Zend_Form_Element_Text('IFI_Url3');
-        $urlRd->setLabel(
-            $this->getView()->getCibleText('form_label_url'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
-
-        $label = $urlRd->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
-
-        $this->addElement($urlRd);
-        
-        // List of available styles
-        $styleRd = new Zend_Form_Element_Select('IF_Style3');
-        $styleRd->setLabel($this->getView()->getCibleText('form_style_label'))
-                ->setAttrib('class', 'largeSelect')
-                ;
-
-        $listStyles = array(
-            'bluePaleText biffoNormal fontSize35' => 'Texte bleu, 35px',
-            'bluePaleText biffoNormal fontSize20' => 'Texte bleu, 20px',
-        );
-        $styleRd->addMultiOption('', $this->getView()->getCibleText('form_select_default_label'));
-        $styleRd->addMultiOptions($listStyles);
-
-        $this->addElement($styleRd);
-        
-        //***** 4th Image.****
-        // hidden specify if new image
-        $newImageTh = new Zend_Form_Element_Hidden('isNewImageTh', array('value' => $this->_isNewImageTh));
-        $newImageTh->removeDecorator('Label');
-
-        $this->addElement($newImageTh);
-        // Image for the colection line
-        $imageTmpTh = new Zend_Form_Element_Hidden('IF_Img4_tmp');
-        $imageTmpTh->removeDecorator('Label');
-        $this->addElement($imageTmpTh);
-
-        $imageOrgTh = new Zend_Form_Element_Hidden('IF_Img4_original');
-        $imageOrgTh->removeDecorator('Label');
-        $this->addElement($imageOrgTh);
-
-        $imageViewTh = new Zend_Form_Element_Image(
-                'IF_Img4_preview',
-                array('onclick' => 'return false;')
-        );
-
-        $imageViewTh->setImage($this->_imageSrcFourth)->removeDecorator('Label')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
-            );
-        $this->addElement($imageViewTh);
-
-        $imagePickerTh = new Cible_Form_Element_ImagePicker(
-                'IF_Img4',
-                array(
-                    'onchange' => "document.getElementById('IF_Img4').src = document.getElementById('IF_Img4').value",
-                    'associatedElement' => 'IF_Img4_preview',
-                    'pathTmp' => $pathTmp,
-                    'contentID' => $this->_dataId
-            ));
-        $imagePickerTh->setLabel('')
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'alignCenter',
-                            'id' => 'title')
-                    ),
-                )
-            );
-        $imagePickerTh->removeDecorator('Label');
-        $this->addElement($imagePickerTh);
-        
-        // label for the image
-        $labelTh = new Zend_Form_Element_Text('IFI_Label4');
-        $labelTh->setLabel(
-                $this->getView()->getCibleText('form_label_label'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
-
-        $label = $labelTh->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
-
-        $this->addElement($labelTh);
-
-        // label for the link
-        $urlTh = new Zend_Form_Element_Text('IFI_Url4');
-        $urlTh->setLabel(
-            $this->getView()->getCibleText('form_label_url'))
-            ->setDecorators(
-                array(
-                    'ViewHelper',
-                    array('label', array('placement' => 'prepend')),
-                    array(
-                        array('row' => 'HtmlTag'),
-                        array(
-                            'tag' => 'dd',
-                            'class' => 'form_title_inline',
-                            'id' => 'title')
-                    ),
-                )
-            )
-            ->setAttrib('class', 'stdTextInput');
-
-        $label = $urlTh->getDecorator('Label');
-        $label->setOption('class', $this->_labelCSS);
-
-        $this->addElement($urlTh);
-        
-        // List of available styles
-        $styleTh = new Zend_Form_Element_Select('IF_Style4');
-        $styleTh->setLabel($this->getView()->getCibleText('form_style_label'))
-                ->setAttrib('class', 'largeSelect')
-                ;
-
-        $listStyles = array(
-            'bluePaleText biffoNormal fontSize35' => 'Texte bleu, 35px',
-            'bluePaleText biffoNormal fontSize20' => 'Texte bleu, 20px',
-        );
-        $styleTh->addMultiOption('', $this->getView()->getCibleText('form_select_default_label'));
-        $styleTh->addMultiOptions($listStyles);
-
-        $this->addElement($styleTh);
-        
-        $this->addDisplayGroup(
-            array(
-                'isNewImageSt', 
-                'IF_Img1_tmp', 
-                'IF_Img1_original', 
-                'IF_Img1_preview', 
-                'IF_Img1',
-                'IFI_Label1',
-                'IFI_Url1',
-                'IF_Style1'), 
-            'firstImage');
-        
-        $this->getDisplayGroup('firstImage')
-            ->setLegend('Image 1')
-            ->setAttrib('class', 'imageGroup first')
-            ->removeDecorator('DtDdWrapper');
-        $this->addDisplayGroup(
-            array(
-                'isNewImageSec', 
-                'IF_Img2_tmp', 
-                'IF_Img2_original', 
-                'IF_Img2_preview', 
-                'IF_Img2',
-                'IFI_Label2',
-                'IFI_Url2',
-                'IF_Style2'), 
-            'secondImage');
-        
-        $this->getDisplayGroup('secondImage')
-            ->setLegend('Image 2')
-            ->setAttrib('class', 'imageGroup second')
-            ->removeDecorator('DtDdWrapper');
-        $this->addDisplayGroup(
-            array(
-                'isNewImageRd', 
-                'IF_Img3_tmp', 
-                'IF_Img3_original', 
-                'IF_Img3_preview', 
-                'IF_Img3',
-                'IFI_Label3',
-                'IFI_Url3',
-                'IF_Style3'), 
-            'thirdImage');
-        
-        $this->getDisplayGroup('thirdImage')
-            ->setLegend('Image 3')
-            ->setAttrib('class', 'imageGroup third')
-            ->removeDecorator('DtDdWrapper');
-        $this->addDisplayGroup(
-            array(
-                'isNewImageTh', 
-                'IF_Img4_tmp', 
-                'IF_Img4_original', 
-                'IF_Img4_preview', 
-                'IF_Img4',
-                'IFI_Label4',
-                'IFI_Url4',
-                'IF_Style4'), 
-            'fourthImage');
-        
-        $this->getDisplayGroup('fourthImage')
-            ->setLegend('Image 4')
-            ->setAttrib('class', 'imageGroup fourth')
-            ->removeDecorator('DtDdWrapper');
-    
+            $this->getDisplayGroup($imageDisplay)
+                ->setLegend('Image ' .$x)
+                ->setAttrib('class', 'imageGroup first')
+                ->removeDecorator('DtDdWrapper'); 
+        }
     }
     
     /**
@@ -700,5 +355,6 @@ class FormBannerFeatured extends Cible_Form_Multilingual {
             }
         }
     }
-
 }
+
+

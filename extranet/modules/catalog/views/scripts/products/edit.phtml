@@ -1,32 +1,31 @@
 <script type="text/javascript">
     $(document).ready(function() {
+       /* $("#ImageSrc_preview").load(function(){
+            var imageUrl = $("#imageUrl").val();
+            if($(this).attr('src') != imageUrl){
+                $("#isNewImage").val('true');
+            }
+        });       
         $("#ImageSrc_preview").load(function(){
             var imageUrl = $("#imageUrl").val();
             if($(this).attr('src') != imageUrl){
                 $("#isNewImage").val('true');
             }
-        });
-        
-        $(document).ready(function() {
-            $("#ImageSrc_preview").load(function(){
-                var imageUrl = $("#imageUrl").val();
-                if($(this).attr('src') != imageUrl){
-                    $("#isNewImage").val('true');
-                }
-            });
+        });*/
 
-            var specPublic = ($('#productFormBotPub-PI_FicheTechniquePublicPDF').val()).split('/');
-            var specPro    = ($('#productFormBotPro-PI_FicheTechniqueProPDF').val()).split('/');
+        var specPublic = ($('#VI_MP4').val()).split('/');
+        var specPro    = ($('#VI_WEBM').val()).split('/');
+        var specPro    = ($('#VI_OGG').val()).split('/');
 //            var toolPromo  = ($('#productFormBotPro-PI_OutilPromoPDF').val()).split('/');
-            $('#productFormBotPub-technicalSpecsName[type=hidden]').remove();
-            $('#productFormBotPro-technicalSpecsPro[type=hidden]').remove();
+        $('#productFormBotPub-technicalSpecsName[type=hidden]').remove();
+        $('#productFormBotPro-technicalSpecsPro[type=hidden]').remove();
 //            $('#productFormBotPro-toolPromoName[type=hidden]').remove();
 
-            $('#productFormBotPub-technicalSpecsName').val(specPublic.pop());
-            $('#productFormBotPro-technicalSpecsPro').val(specPro.pop());
+        $('#productFormBotPub-technicalSpecsName').val(specPublic.pop());
+        $('#productFormBotPro-technicalSpecsPro').val(specPro.pop());
 //            $('#productFormBotPro-toolPromoName').val(toolPromo.pop());
 
-        });
+       
     });
 </script>
 <input type="hidden" id="imageUrl" value="<?php echo($this->imageUrl) ?>"/>

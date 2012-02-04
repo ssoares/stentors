@@ -69,5 +69,13 @@ div.news_1columns{
 }
 
 div.gallery_4columns{
-     outline: solid 1px;
+     outline: solid 1px  !important;
+}
+
+#blockBannerImageFeatured{
+    outline: solid blue 1px  !important;
+}
+
+#blockBannerImageFeatured .imgContainer{
+    outline: solid red 1px  !important;
 }

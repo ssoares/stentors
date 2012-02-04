@@ -13,7 +13,7 @@
 * @author     Alexandre Beaudet <alexandre.beaudet@ciblesolutions.com>
 * @copyright  2009 CIBLE Solutions d'Affaires
 * @license    http://www.ciblesolutions.com
-* @version    $Id: PageController.php 824 2012-02-01 01:21:12Z ssoares $
+* @version    $Id: PageController.php 826 2012-02-01 04:15:13Z ssoares $
 */
 
 class PageController extends Cible_Controller_Action
@@ -195,6 +195,8 @@ class PageController extends Cible_Controller_Action
         {
             $this->view->headScript()->appendFile($this->view->locateFile('addthis_widget.js'));
         }
+
+        if ($this->_config->setBgStyle)
+            $this->view->setBgStyle();
     }
 }
-?>

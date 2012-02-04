@@ -37,6 +37,7 @@
         . PATH_SEPARATOR . "$extranet_path/modules/order/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/page/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/profile/models/"
+        . PATH_SEPARATOR . "$extranet_path/modules/video/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/retailers/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/rss/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/search/models/"

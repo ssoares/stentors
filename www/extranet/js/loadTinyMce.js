@@ -8,7 +8,9 @@
  * @return void
  */
 var loadTinyMce = {
-    load: function (id,theme){
+    load: function (id,theme, cssPath){
+
+
         tinyMCE.init({
             // General options
             relative_urls : false,
@@ -38,7 +40,7 @@ var loadTinyMce = {
 
             // Example content CSS (should be your site CSS)
             //content_css : "{$_cssPath}",
-            content_css : "/ss/edith/www/themes/default/css/integration.css",
+            content_css : cssPath,
             theme_advanced_styles : "Grand titre blue =h2_large_blue;Grand titre orange =h2_large_orange;Grand titre rouge =h2_large_red;Moyen titre rouge =h2_medium_red;Grand texte gris =large_gray_text;Lien - Téléchargement =telechargement;Ligne de tableau - Pair=even;Ligne de tableau - Impaire=odd",
             theme_advanced_blockformats : "p,h2",
 

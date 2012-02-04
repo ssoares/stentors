@@ -114,7 +114,7 @@ class FormBlockBanners extends Cible_Form_Block
         
         $script =<<< EOS
         $('#Param999').change(function(){
-        console.log('passe');
+       // console.log('passe');
             if ($(this).val() == 'index')
             {
                 $('#Param2').show();
@@ -144,5 +144,7 @@ class FormBlockBanners extends Cible_Form_Block
         }).change();
 EOS;
         $this->getView()->inlineScript()->appendScript($script);
+        
+        //var_dump($this->getView()->inlineScript());
     }
 }

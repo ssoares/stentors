@@ -6,7 +6,7 @@
  * @category  Extranet_Modules
  * @package   Extranet_Modules_Retailers
  * @copyright Copyright (c) Cibles solutions d'affaires. (http://www.ciblesolutions.com)
- * @version   $Id: RetailersData.php 422 2011-03-24 03:25:10Z ssoares $
+ * @version   $Id: RetailersData.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**
@@ -18,5 +18,5 @@
  */
 class RetailersData extends Zend_Db_Table
 {
-    protected $_name = 'Catalog_RetailersData';
+    protected $_name = 'RetailersData';
 }

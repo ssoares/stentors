@@ -10,12 +10,16 @@
 <?php
 $imgID = 1;
     foreach ($this->imageToShow as $index => $image){
+       // var_dump($image);
     ?>
     <div id="slideContainer-<?php echo $imgID ?>" class="slide">
         <div class="promoImg">
+            <a href="<?php echo $image['url']; ?>">
         <?php
+        
             echo $this->image($image['img'],array("alt" => "banner"));
         ?>
+            </a>
         </div>
     </div>
     <?php 
@@ -32,6 +36,47 @@ $imgID = 1;
 <script type="text/javascript">
     //<![CDATA[
     $(document).ready(function(){    
+        
+        $("#masterControl_right").hide();
+        $("#masterControl_left").hide();       
+        
+               
+        $( "#bannerContainer" ).hover(
+            function(){
+                $('#masterControl_left').show();
+                $('#masterControl_right').show()
+            },
+            function(){
+                $('#masterControl_left').hide();
+                $('#masterControl_right').hide();
+            }       
+        );
+            
+                    
+        $( "#masterControl_right" ).hover(
+            function(){
+                $('#masterControl_left').show();
+                $('#masterControl_right').show().stop();
+            },
+            function(){
+                $('#masterControl_left').hide();
+                $('#masterControl_right').hide().stop();
+            }
+        );
+            
+        $( "#masterControl_left" ).hover(
+            function(){
+                $('#masterControl_right').show();
+                $('#masterControl_left').show().stop();
+            },
+            function(){
+                $('#masterControl_right').hide();
+                $('#masterControl_left').hide().stop();
+            }
+        );
+        
+        
+        
         var timerToRotate = 0;
         var autoP = <?php echo $this->autoPlay; ?>;
         var transitionTime = 0;

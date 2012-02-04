@@ -1,78 +1,113 @@
 <div id="blockBannerImageFeatured">
-    <div class="blockImages">
-        <?php foreach ($this->imgFeat as $image): ?>
-            <div class="imgContainer">
-                <p class="topPart">
-                    <?php
-                    $prefix = $this->imgCfg['medium']['maxWidth'] . 'x';
-                    $prefix .= $this->imgCfg['medium']['maxHeight'] . '_';
-                    if (!empty($image['IF_Img']))
-                    {
-                        $path = $this->imgPath . $prefix . $image['IF_Img'];
-                        
+    <div class="blockImages">       
+        <?php 
+        $x=0;
+        //var_dump($this->imgFeat);
+        foreach ($this->imgFeat as $image): 
+        $pID = "image_" .  $x;
+            ?>
+        <?php //var_dump($image);
+            
+                if (!empty($image['IF_Img']))
+                {?>
+            <div class="imgContainer <?php echo $image['IF_Style']; ?>" >
+                <p class="title">
+                    <?php 
+                    if($image['IFI_UrlVideo']==1){
                         echo $this->link(
                             $image['IFI_Url'], 
-                            $this->image($path), 
-                            array('class' => 'imageFeatured')
+                            $image['IFI_Label'],
+                            array()
                         );
                     }
-                    else
-                    {
-                        $alt = $image['IFI_Label'];
-                        echo $this->link(
-                            $image['IFI_Url'], 
-                            $this->clientImage('noPic_174x207.jpg', array('alt' => $alt))
-                        );
+                    else{ // $this->videoPath
+                        
                     }
                     ?>
                 </p>
-                <p class="bottomPart">
-                    <?php
-                    $label = '&nbsp;';
-                    if (!empty ($image['IFI_Label']))
-                        $label = $image['IFI_Label'];
+                <p class="text1">
+                    <?php                    
                     echo $this->link(
                         $image['IFI_Url'], 
-                        $image['IFI_Label'],
-                        array('class' => $image['IF_Style'])
+                        $image['IFI_TextA'],
+                        array()
+                    );
+                    ?>
+                </p>                
+                    <?php
+                    $prefix = $this->imgCfg['thumb']['maxWidth'] . 'x';
+                    $prefix .= $this->imgCfg['thumb']['maxHeight'] . '_';                   
+                    $path = $this->imgPath . $prefix . $image['IF_Img'];
+                   ?>
+                <p id="<?php echo $pID; ?>" class="image" style="background-image:url(<?php echo $path; ?>); background-repeat:no-repeat; background-position:center">
+                <?php
+                if($image['IFI_UrlVideo']==0){
+                    echo $this->link($image['IFI_Url'], $this->image($this->baseUrl() . "/themes/default/images/common/pix.gif"), array('class' => 'imageFeatured')); 
+                }
+                else{
+                    $dataVideo = array('IFI_Video' => $image['IFI_Video'],'V_Width'=> $image['V_Width'],'V_Height'=> $image['V_Height'], 'VI_MP4' => $image['VI_MP4'],'VI_WEBM' => $image['VI_WEBM'],'VI_OGG' => $image['VI_OGG'],'V_Autoplay' => $image['V_Autoplay'],'VI_Poster' => $image['VI_Poster']);
+                   
+                    echo $this->videoFeature($pID,$this->videoPath, $dataVideo);
+                }
+                ?>
+                  
+                </p>                    
+                <p class="text2">
+                    <?php                    
+                    echo $this->link(
+                        $image['IFI_Url'], 
+                        $image['IFI_TextB'],
+                        array()
                     );
                     ?>
                 </p>
+             
             </div>
-        <?php endforeach; ?>
+        <?php  } ?>
+        <?php 
+        $x++;
+        endforeach; ?>
     </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    /* $('div.sec0').live('mouseenter', function(){   
+        $(this).find('.text2').show(0);         
+        //$('div#blockBannerImageFeatured p.text2').fadeIn(2000);          
+         
+    });
+    $('div.sec0').live('mouseout', function(){   
+        $(this).find('.text2').hide(0);
+        //$('div#blockBannerImageFeatured p.text2').fadeIn(2000);          
+         
+    });
+    
+    $('div.sec1').live('mouseenter', function(){   
+        $(this).find('.text2').fadeIn(1000);         
+        //$('div#blockBannerImageFeatured p.text2').fadeIn(2000);          
+         
+    });
+    $('div.sec1').live('mouseout', function(){   
+        $(this).find('.text2').fadeOut(1000).stop();
+        //$('div#blockBannerImageFeatured p.text2').fadeIn(2000);          
+         
+    });
+    
+    $('div.secUp1').live('mouseenter', function(){   
+        $(this).find('.text2').fadeIn(1000);  
+        $(this).find('.text2').animate({"top": "-=150px"}, "slow");       
+        //$('div#blockBannerImageFeatured p.text2').fadeIn(2000);          
+         
+    });
+    $('div.secUp1').live('mouseout', function(){   
+        
+        $(this).find('.text2').animate({"top": "+=150px"}, "slow");
+        $(this).find('.text2').fadeOut(1000);
+        //$('div#blockBannerImageFeatured p.text2').fadeIn(2000);          
+         
+    });*/
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
+</script>

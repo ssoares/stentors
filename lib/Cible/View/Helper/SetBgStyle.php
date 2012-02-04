@@ -9,7 +9,7 @@
  * @subpackage Cible_View_Helper
  * @copyright  Copyright (c) 2009 Cible Solutions d'affaires
  *             (http://www.ciblesolutions.com)
- * @version    $Id: SetBgStyle.php 762 2012-01-12 19:21:56Z ssoares $
+ * @version    $Id: SetBgStyle.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**

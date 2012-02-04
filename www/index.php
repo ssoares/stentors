@@ -38,6 +38,7 @@
         . PATH_SEPARATOR . "$application_path/modules/search/models/"
         . PATH_SEPARATOR . "$application_path/modules/sitemap/models/"
         . PATH_SEPARATOR . "$application_path/modules/text/models/"
+        . PATH_SEPARATOR . "$application_path/modules/video/models/"        
         . PATH_SEPARATOR . "$application_path/modules/rssreader/models/"
         . PATH_SEPARATOR . get_include_path());
     require_once 'Zend/Loader.php';
