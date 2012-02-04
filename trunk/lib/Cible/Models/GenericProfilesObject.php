@@ -1,4 +1,4 @@
-stentors<?php
+<?php
 /**
  * Generic Profile data
  * Management of the Items.
