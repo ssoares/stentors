@@ -14,6 +14,27 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
 ?>
 <div id="default_form">
     <div id="form_panel">
-        <?php echo($this->form);?>        
-    </div>                    
+        <?php echo($this->form);?>   
+        <?php //var_dump($this->listVideo);?>  .
+     </div>                    
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    //:odd
+    //alert('dd');
+    $("input[id^='IFI_UrlVideo']:odd").each(function() { 
+        //alert('s');
+        $(this).parent().css('position', 'relative');
+        $(this).parent().css('top', '55px');
+        $(this).parent().css('left', '-4px');
+    });
+    
+    $("input[id^='IFI_UrlVideo']:even").each(function() { 
+        //alert('s');
+        $(this).parent().css('position', 'relative');
+        $(this).parent().css('top', '5px');
+        $(this).parent().css('left', '-4px');
+    });
+});
+</script>

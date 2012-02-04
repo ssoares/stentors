@@ -6,7 +6,7 @@
  * @category  Extranet_Modules
  * @package   Extranet_Modules_Retailer
  * @copyright Copyright (c) Cibles solutions d'affaires. (http://www.ciblesolutions.com)
- * @version   $Id: CitiesObject.php 801 2012-01-23 04:46:26Z ssoares $
+ * @version   $Id: CitiesObject.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**

@@ -1,4 +1,4 @@
-/* Version SVN: $Id: header.css 724 2011-12-06 19:51:24Z freynolds $*/
+/* Version SVN: $Id: header.css 826 2012-02-01 04:15:13Z ssoares $*/
 
 /***************************************/
 /* HEADER CLASSES */
@@ -23,6 +23,10 @@ div#headerContainer div#headerRight ul li{
 div#headerContainer div#headerRightTop,
 div#headerContainer div#headerSearchLanguages   {
     width: 100%;
+}
+
+div#headerSearchLanguages ul{
+    float: right;
 }
 /* HEADER CLASSES */
 /***************************************/

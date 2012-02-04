@@ -8,7 +8,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: SubCategoriesController.php 611 2011-09-16 17:45:41Z ssoares $id
+ * @version   $Id: SubCategoriesController.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -19,7 +19,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: SubCategoriesController.php 611 2011-09-16 17:45:41Z ssoares $id
+ * @version   $Id: SubCategoriesController.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class Catalog_SubCategoriesController extends Cible_Controller_Block_Abstract
 {
@@ -473,18 +473,19 @@ class Catalog_SubCategoriesController extends Cible_Controller_Block_Abstract
             $select->joinLeft('BannerGroup', 'BG_ID = SC_BannerGroupID');
             $select->joinLeft('Catalog_CategoriesIndex', 'CC_ID = CCI_CategoryID AND CCI_LanguageID = "' . $langId . '"' );
 
-            $options = array(
-                'commands' => array(
+            $commands = array();
+            if ($langId == $this->_defaultEditLanguage)
+                $commands = array(
                     $this->view->link($this->view->url(
-                                    array(
-                                        'controller' => $this->_name,
-                                        'action' => 'add'
-                                    )
-                            ),
-                            $this->view->getCibleText('button_add_subcategory'),
-                            array('class' => 'action_submit add')
+                            array(
+                                'controller' => $this->_name,
+                                'action' => 'add'
+                            )
+                        ), $this->view->getCibleText('button_add_news'), array('class' => 'action_submit add')
                     )
-                ),
+                );
+            $options = array(
+                'commands' => $commands,
                 'disable-export-to-excel' => 'true',
 //                    'filters' => array(
 //                        'productline-status-filter' => array(

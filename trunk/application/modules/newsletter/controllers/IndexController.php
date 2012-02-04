@@ -47,10 +47,10 @@ class Newsletter_IndexController extends Cible_Controller_Action
         $data = (array) $auth->getStorage()->read();
         if ($data)
         {
-            $baseDir = $this->view->baseUrl();
+           /* $baseDir = $this->view->baseUrl();
 
             $this->view->jQuery()->addJavascriptFile($baseDir . '/js/jquery/jquery.prettyPhoto.js');
-            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
+            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');*/
             $id = $this->_getParam('ID');
 
             $newsletterID = $this->_getParam('newsletterID');
@@ -114,9 +114,9 @@ class Newsletter_IndexController extends Cible_Controller_Action
         if ($data)
         {
 
-            $baseDir = $this->view->baseUrl();
+            /*$baseDir = $this->view->baseUrl();
             $this->view->jQuery()->addJavascriptFile($baseDir . '/js/jquery/jquery.prettyPhoto.js');
-            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
+            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');*/
 
             $id = $this->_request->getParam('ID');
             $blockID = $this->_getParam('BlockID');
@@ -154,7 +154,7 @@ class Newsletter_IndexController extends Cible_Controller_Action
 
             $titleParution = $newsletterData['NR_Title'];
             $dateParution = $newsletterData['NR_Date'];
-           
+
             //echo $this->view->baseUrl();
             $details_page = 'show-web-details/index';
             $this->view->assign('parution_title', $titleParution);
@@ -172,8 +172,8 @@ class Newsletter_IndexController extends Cible_Controller_Action
 
     public function detailsreleaseAction()
     {
-        $this->view->jQuery()->addJavascriptFile($this->view->locateFile('jquery.prettyPhoto.js', 'jquery'));
-        $this->view->headLink()->appendStylesheet($this->view->locateFile('prettyPhoto.css'), 'screen');
+       // $this->view->jQuery()->addJavascriptFile($this->view->locateFile('jquery.prettyPhoto.js', 'jquery'));
+      //  $this->view->headLink()->appendStylesheet($this->view->locateFile('prettyPhoto.css'), 'screen');
 
         $userId = 0;
         $id = $this->_getParam('ID');
@@ -195,12 +195,12 @@ class Newsletter_IndexController extends Cible_Controller_Action
                 $uid = explode('-', substr($url, $pos));
                 $memberId = end($uid);
                 $url = substr_replace($url, '', $pos);
-                $path = Zend_Registry::get('web_root') . '/';                
+                $path = Zend_Registry::get('web_root') . '/';
                 setcookie('uid_newsletter', (string)$memberId, 0, $path);
             }
             else if (isset($_COOKIE['uid_newsletter'])){
-                $memberId = $_COOKIE['uid_newsletter'];                
-            }  
+                $memberId = $_COOKIE['uid_newsletter'];
+            }
 
             if ($memberId == 0 && $user)
             {
@@ -479,6 +479,8 @@ class Newsletter_IndexController extends Cible_Controller_Action
                         $newMemberNewsletterCategories = implode(',', $memberNewsletterCategories);
                         $newsletterProfile->updateMember($memberID, array('newsletter_categories' => $newMemberNewsletterCategories));
                     }
+                    if (empty($newsletterID))
+                        $newsletterID = 0;
 
                     $this->_params = array(
                         'memberId'  => $memberID,
@@ -494,8 +496,8 @@ class Newsletter_IndexController extends Cible_Controller_Action
 
     public function detailsarticleAction()
     {
-        $this->view->jQuery()->addJavascriptFile($this->view->locateFile('jquery.prettyPhoto.js', 'jquery'));
-        $this->view->headLink()->appendStylesheet($this->view->locateFile('prettyPhoto.css'), 'screen');
+        //$this->view->jQuery()->addJavascriptFile($this->view->locateFile('jquery.prettyPhoto.js', 'jquery'));
+        //$this->view->headLink()->appendStylesheet($this->view->locateFile('prettyPhoto.css'), 'screen');
 
         // Article ID and Newsletter ID
         $newsletterArticlesSelect = new NewsletterArticles();
@@ -514,19 +516,19 @@ class Newsletter_IndexController extends Cible_Controller_Action
             $id = $newsletterArticlesSelect->getArticleIdByName($titleUrl);
             $newsletterID = $newsletterArticlesSelect->getNewsletterIdByName($titleUrl);
         }
-               
+
         if ($fromEmail)
         {
             $pos = strpos($url, '-uid-');
             $uid = explode('-', substr($url, $pos));
             $memberId = end($uid);
             $url = substr_replace($url, '', $pos);
-            $path = Zend_Registry::get('web_root') . '/';           
+            $path = Zend_Registry::get('web_root') . '/';
             setcookie('uid_newsletter', (string)$memberId, 0, $path);
         }
         else if (isset($_COOKIE['uid_newsletter'])){
-            $memberId = $_COOKIE['uid_newsletter'];            
-        }       
+            $memberId = $_COOKIE['uid_newsletter'];
+        }
 
         if ($memberId == 0 && $user)
         {
@@ -535,7 +537,7 @@ class Newsletter_IndexController extends Cible_Controller_Action
             $memberId = $member['member_id'];
         }
 
-        
+
 
         $back_to_newsletter = !empty($newsletterID) ? "/ID/{$newsletterID}" : '';
         $blockID = $this->_getParam('BlockID');

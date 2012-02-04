@@ -81,7 +81,7 @@
                     $i=0;
                     foreach ($PositionsArray as $Pos){
                         if($i == 0){
-                            $Form->B_Position->addMultiOption('-1', 'Premi�re position');
+                            $Form->B_Position->addMultiOption('-1', 'Première position');
                         } else {
                             $Form->B_Position->addMultiOption($Pos["B_ID"], str_replace('%TEXT%',$PositionsArray[$i-1]["BI_BlockTitle"],Cible_Translation::getCibleText("form_select_option_position_below")));
                         }
@@ -90,7 +90,7 @@
 
                  } else {
 
-                   $Form->B_Position->addMultiOption('-1', 'Premi�re position');
+                   $Form->B_Position->addMultiOption('-1', 'Première position');
 
                  }
 
@@ -101,18 +101,18 @@
                     $Cpt=0;
                     foreach ($PositionsArray as $Pos){
                         if($Cpt == 0){
-                            $Form->B_Position->addMultiOption($Pos["B_Position"], 'Premi�re position');
+                            $Form->B_Position->addMultiOption($Pos["B_Position"], 'Première position');
                             if ($Cpt == $TotalPos-1 && $Action == "add"){
-                                $Form->B_Position->addMultiOption($Pos["B_Position"]+1, 'Derni�re position');
+                                $Form->B_Position->addMultiOption($Pos["B_Position"]+1, 'Dernière position');
                             }
                         }
                         elseif($Cpt == $TotalPos-1){
                             if($Action == "add"){
                                 $Form->B_Position->addMultiOption($Pos["B_Position"], str_replace('%TEXT%',$PositionsArray[$Cpt-1]["BI_BlockTitle"],Cible_Translation::getCibleText("form_select_option_position_below")));
-                                $Form->B_Position->addMultiOption($Pos["B_Position"]+1, 'Derni�re position');
+                                $Form->B_Position->addMultiOption($Pos["B_Position"]+1, 'Dernière position');
                             }
                             else{
-                                $Form->B_Position->addMultiOption($Pos["B_Position"], 'Derni�re position');
+                                $Form->B_Position->addMultiOption($Pos["B_Position"], 'Dernière position');
                             }
                         }
                         else{
@@ -122,7 +122,7 @@
                     }
                 }
                 else{
-                   $Form->B_Position->addMultiOption('1', 'Premi�re position');
+                   $Form->B_Position->addMultiOption('1', 'Première position');
                 }
 
             }

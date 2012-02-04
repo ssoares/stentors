@@ -92,10 +92,22 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
                     <?php if ($this->hasProfile): ?>
                     <h2><?php echo $this->getCibleText('dashboard_administration_profil_list') ?></h2>
                     <ul class="list_without_style dashboard_administration_section">
-                        <li><a href="<?php echo $this->baseUrl() ?>/users/index/list/order/lastName/order-direction/ASC"><?php echo $this->getCibleText('dashboard_administration_profil_list_description') ?></a></li>
+                        <li><a href="<?php echo $this->baseUrl() ?>/users/index/general/order/lastName/order-direction/ASC"><?php echo $this->getCibleText('dashboard_administration_profil_list_description') ?></a></li>
                     </ul>
-                <?php endif; ?>
-
+                <?php endif; 
+                if($this->hasVideos){
+                ?>                
+                <h2><?php echo $this->getCibleText('dashboard_administration_video') ?></h2>
+                <ul class="list_without_style dashboard_administration_section">
+                    <li><a href="<?php echo $this->baseUrl() ?>/video/index/list/order/id/order-direction/ASC">
+                            <?php echo $this->getCibleText('dashboard_administration_video_description') ?>
+                        </a>
+                    </li>
+                </ul>
+                <?php
+                }
+                ?>
+               
             <?php endif; ?>
         </div>
     </div>

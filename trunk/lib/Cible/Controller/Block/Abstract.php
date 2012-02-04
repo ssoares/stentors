@@ -7,7 +7,7 @@
  * @subpackage Cible
  * @copyright  Copyright (c) 2009 Cible Solutions d'affaires
  *             (http://www.ciblesolutions.com)
- * @version    $Id: Abstract.php 477 2011-05-10 16:59:50Z ssoares $
+ * @version    $Id: Abstract.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**
@@ -250,6 +250,7 @@ abstract class Cible_Controller_Block_Abstract extends Cible_Extranet_Controller
                 }
             }
         }
+        $this->view->jQuery()->enable();
     }
 
     public function deleteBlockAction()

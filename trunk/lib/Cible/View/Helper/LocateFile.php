@@ -28,17 +28,31 @@ class Cible_View_Helper_LocateFile extends Zend_View_Helper_Abstract
      * @param array  $file  The name of files with extension.
      * @param string $path  <Optional> The path to speficy the location.
      *                      For specific files not in common folders
-     * 
+     *
      * @return string $filePath The path where the file is stored
      */
-    public function locateFile($file, $path = null)
+    public function locateFile($file, $path = null, $force = '')
     {
         $filePath     = $this->view->BaseUrl();
         $isBackOffice = (preg_match("/extranet/", $filePath));
+        switch ($force)
+        {
+            case 'front':
+                if ($isBackOffice)
+                    $filePath = preg_replace('/\/extranet/', '', $filePath);
+                break;
+            case 'back':
+                if (!$isBackOffice)
+                    $filePath .= '/extranet';
+                break;
+
+            default:
+                break;
+        }
         $themePath    = '/themes/default/';
 
         $imgType   = array('jpg', 'gif', 'png');
-        
+
         if ($file != null)
         {
             $type = substr($file, strrpos($file, '.') + 1);
@@ -48,7 +62,7 @@ class Cible_View_Helper_LocateFile extends Zend_View_Helper_Abstract
                 $type = "img";
                 $themePath .= "images/";
             }
-          
+
             // Select the path according type
             switch ($type)
             {
@@ -83,7 +97,7 @@ class Cible_View_Helper_LocateFile extends Zend_View_Helper_Abstract
                     break;
             }
         }
-        
+
         return $filePath;
     }
 }

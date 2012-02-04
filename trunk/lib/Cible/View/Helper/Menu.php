@@ -8,7 +8,7 @@
  * @subpackage Cible_View_Helper
  * @copyright  Copyright (c) 2009 Cible Solutions d'affaires
  *             (http://www.ciblesolutions.com)
- * @version    $Id: Menu.php 716 2011-12-02 20:03:02Z freynolds $
+ * @version    $Id: Menu.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**
@@ -247,9 +247,9 @@ class Cible_View_Helper_Menu extends Cible_View_Helper_Tree
                 }
 
 
-                if ($external)
-                    $menuContent = "<a href='{$link}' class='level-{$level}' target='_blank'>{$object['Title']}</a>\r\n";
-                elseif (isset ($object['loadImage']) && (bool)$object['loadImage'] && $this->_startLevel == 1 && !$this->_isSiteMap)
+                //if ($external)
+                //    $menuContent = "<a href='{$link}' class='level-{$level}' target='_blank'>{$object['Title']}</a>\r\n";
+                if (isset ($object['loadImage']) && (bool)$object['loadImage'] && $this->_startLevel == 1 && !$this->_isSiteMap)
                 {
                     $folder    = 'menu';
                     $config    = Zend_Registry::get('config');
@@ -268,12 +268,18 @@ class Cible_View_Helper_Menu extends Cible_View_Helper_Tree
                     $menuContent  = "<p class='imgMenuCont'>";
                     if (!empty($object['menuImage']))
                     {
+                        if ($external)
+                            $menuContent .= "<a href='{$link}' class='level-{$level}' target='_blank'>";
+                        else
                         $menuContent .= "<a href='{$link}' class='level-{$level}'>";
                         $menuContent .= $this->view->image($source, array('alt' => $object['Title']));
                         $menuContent .= "</a>\r\n";
                     }
                     else
                     {
+                        if ($external)
+                            $menuContent .= "<a href='{$link}' class='level-{$level}' target='_blank'>";
+                        else 
                         $menuContent .= "<a href='{$link}' class='level-{$level}'>";
                         $menuContent .= $this->view->clientImage('pix.gif', array('alt' => $object['Title'], 'style' =>'height:91px;'));
                         $menuContent .= "</a>\r\n";

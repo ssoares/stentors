@@ -6,7 +6,7 @@
 -- Generation Time: Jun 14, 2010 at 02:58 PM
 -- Server version: 5.0.70
 -- PHP Version: 5.2.10-pl0-gentoo
--- Version SVN: $Id: moduleOrderCreate.sql 824 2012-02-01 01:21:12Z ssoares $
+-- Version SVN: $Id: moduleOrderCreate.sql 826 2012-02-01 04:15:13Z ssoares $
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -109,6 +109,13 @@ CREATE TABLE IF NOT EXISTS `Orders_Lines` (
   PRIMARY KEY ( `OL_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+ALTER TABLE MemberProfiles
+  ADD `MP_BillingAddrId` INT(11) NULL ,
+  ADD `MP_ShippingAddrId` INT(11) NULL ,
+  ADD `MP_hasAccount` TINYINT(1) NULL ,
+  ADD `MP_AccountNumber` VARCHAR(45) NULL ,
+  ADD `MP_NoProvTax` TINYINT(1) NULL DEFAULT 1 ,
+  ADD `MP_NoFedTax` TINYINT(1) NULL DEFAULT 1 ;
 
 --
 -- Données pour activer module et les liens dans le back end
@@ -188,6 +195,17 @@ REPLACE INTO Extranet_RolesResourcesIndex (ERRI_RoleResourceID, ERRI_LanguageID,
 
 REPLACE INTO Extranet_RolesResourcesPermissions (ERRP_RoleResourceID, ERRP_PermissionID) VALUES
 (17001, 1);
+
+REPLACE INTO `NotificationManagerData` (`NM_ID`, `NM_ModuleId`, `NM_Event`, `NM_Type`, `NM_Recipient`, `NM_Active`, `NM_Message`, `NM_Title`, `NM_Email`) VALUES
+(1, 17, 'newAccount', 'email', 'client', 1, 'validate_notification_client_email_message', 'validate_notification_client_email_title', 'empty'),
+(2, 17, 'newAccount', 'email', 'admin', 1, 'account_created_admin_notification_message', 'account_created_admin_notification_title', 'empty'),
+(3, 17, 'editResend', 'email', 'client', 1, 'revalidate_notification_client_email_message', 'validate_notification_client_email_title', 'empty'),
+(4, 17, 'editAccount', 'email', 'admin', 1, 'account_modified_admin_notification_message', 'account_modified_admin_notification_title', 'empty'),
+(5, 17, 'welcome', 'email', 'client', 1, 'account_notification_client_email_message', 'account_notification_client_email_title', 'empty'),
+(6, 17, 'newOrder', 'email', 'client', 1, 'order_order_notification_client_email_message', 'order_order_notification_client_email_title', 'empty'),
+(7, 17, 'newOrder', 'email', 'admin', 1, 'order_notification_admin_email_message', 'order_order_notification_client_email_title', 'empty'),
+(8, 17, 'confirmOrder', 'email', 'client', 1, 'order_order_notification_approbation_email_message', 'order_order_notification_approbation_email_title', 'empty'),
+(9, 17, 'rejectOrder', 'email', 'client', 1, 'order_order_notification_decline_email_message', 'order_order_notification_decline_email_title', 'empty');
 
 REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
 ('Module_order', 1, 'Commande', 'cible', '', 0, 17),
@@ -463,5 +481,7 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('addto_quoterequest_label', 2, 'Add to the quote request', 'cible', '', 0, 17),
 ('inscription_authentification_long_texte', '1', 'Votre inscription...', 'cible', '', '0', '17'),
 ('inscription_authentification_long_texte', '2', 'Your subscription...', 'cible', '', '0', '17'),
+('profile_tab_title_order', '1', 'Commandes', 'cible', '', '0', '17'),
+('profile_tab_title_order', '2', 'Orders', 'cible', '', '0', '17'),
 ('add_into_option_label', 1, "Dans l'option ##X##", 'client', '', 0, 17),
 ('add_into_option_label', 2, 'To the option ##X##', 'client', '', 0, 17);

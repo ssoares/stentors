@@ -47,6 +47,16 @@ class FormBannerImage extends Cible_Form_Multilingual
             ->setAttrib('class','stdTextarea');
         $label = $textDescription->getDecorator('Label');
         $label->setOption('class', $this->_labelCSS);
+        
+        $textUrl = new Zend_Form_Element_Text('BII_Url');
+        $textUrl->setLabel($this->_view->getCibleText('form_banner_image_texturl_label'))
+            ->addFilter('StripTags')
+            ->addFilter('StringTrim')           
+            ->setAttrib('class','stdText');
+        $label = $textUrl->getDecorator('Label');
+        $label->setOption('class', $this->_labelCSS);
+        
+        
 
         $groupImage = new Zend_Form_Element_Select('BI_GroupID');
         $groupImage->setLabel($this->_view->getCibleText('form_banner_image_group'))
@@ -80,14 +90,11 @@ class FormBannerImage extends Cible_Form_Multilingual
                     ));
         $imagePicker->removeDecorator('Label');
 
-
-
-
         $this->addElement($imageView);
         $this->addElement($imagePicker);
-
         $this->addElement($groupImage);
         $this->addElement($textDescription);
+        $this->addElement($textUrl);        
 
     }
 }

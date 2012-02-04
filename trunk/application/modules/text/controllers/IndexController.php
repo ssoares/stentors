@@ -24,6 +24,10 @@
         
         public function indexAction()
         {
+            $baseDir = $this->view->baseUrl();
+            $this->view->jQuery()->addJavascriptFile($baseDir . '/js/jquery/jquery.prettyPhoto.js');
+            $this->view->headLink()->appendStylesheet($baseDir . '/themes/default/css/prettyPhoto.css', 'screen');
+            
             $BlockID = $this->_getParam( 'BlockID' ); 
             
             $Select = $this->_db->select()

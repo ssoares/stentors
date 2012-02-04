@@ -41,7 +41,7 @@
 	$mcImageManagerConfig['filesystem.include_file_pattern'] = '';
 	$mcImageManagerConfig['filesystem.exclude_file_pattern'] = '/([^a-zA-Z0-9_\-\.]|^mcic_)/i';
 	$mcImageManagerConfig['filesystem.invalid_file_name_msg'] = "";
-	$mcImageManagerConfig['filesystem.extensions'] = "gif,jpg,png,bmp,swf,dcr,mov,qt,ram,rm,avi,mpg,mpeg,asf,flv,wmv";
+	$mcImageManagerConfig['filesystem.extensions'] = "gif,jpg,png,bmp,swf,dcr,mov,qt,ram,rm,avi,mpg,mpeg,asf,flv,wmv,mp4,ogv,webm,m4v,ogg";
 	$mcImageManagerConfig['filesystem.readable'] = true;
 	$mcImageManagerConfig['filesystem.writable'] = true;
 	$mcImageManagerConfig['filesystem.delete_recursive'] = false;
@@ -65,7 +65,7 @@
 	$mcImageManagerConfig['thumbnail.max_height'] = ""; // px (will not generate thumbnail if larger than this size)
 	$mcImageManagerConfig['thumbnail.scale_mode'] = "percentage"; // percentage,resize
 	$mcImageManagerConfig['thumbnail.folder'] = "mcith"; // required, exclude this folder with file pattern '/^mcith$/i' if you don't want it to show
-	$mcImageManagerConfig['thumbnail.prefix'] = "mcith_"; // 
+	$mcImageManagerConfig['thumbnail.prefix'] = "mcith_"; //
 	$mcImageManagerConfig['thumbnail.delete'] = true; // delete th when original is deleted
 	$mcImageManagerConfig['thumbnail.jpeg_quality'] = 75; // quality of th image, note that this is not checked against when regenerating ths.
 	$mcImageManagerConfig['thumbnail.allow_export'] = "width,height,insert";
@@ -77,7 +77,7 @@
 	$mcImageManagerConfig['upload.include_file_pattern'] = '';
 	$mcImageManagerConfig['upload.exclude_file_pattern'] = '';
 	$mcImageManagerConfig['upload.invalid_file_name_msg'] = "";
-	$mcImageManagerConfig['upload.extensions'] = "gif,jpg,jpeg,png,swf,avi,mov,wmv";
+	$mcImageManagerConfig['upload.extensions'] = "gif,jpg,jpeg,png,swf,avi,mov,wmv,mp4,ogv,webm,ogg";
 	$mcImageManagerConfig['upload.create_thumbnail'] = true; // true/false, create thumbnail on upload
 	$mcImageManagerConfig['upload.autoresize'] = false; // Force max width/height, IM will rescale uploaded images.
 	$mcImageManagerConfig['upload.autoresize_jpeg_quality'] = 75; // Force max width/height, IM will rescale uploaded images.

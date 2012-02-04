@@ -9,7 +9,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FormOrderProfile.php 805 2012-01-23 20:35:15Z ssoares $id
+ * @version   $Id: FormOrderProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -21,7 +21,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FormOrderProfile.php 805 2012-01-23 20:35:15Z ssoares $id
+ * @version   $Id: FormOrderProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class FormOrderProfile extends Cible_Form
 {

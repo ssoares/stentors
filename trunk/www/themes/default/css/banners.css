@@ -12,65 +12,52 @@
 */
 
 #blockBannerImageFeatured{ 
-    padding: 0px 0 43px 0;
+    padding: 0px;
+    width: 460px;
 }
 .blockImages{
     background-color: #fff;
     padding: 0 0 0 5px;
 }
+
 .imgContainer{
-    background: transparent url('../images/common/bgImgFeaturedBanner.jpg') no-repeat 0 0;
+    /*background: transparent url('../images/common/bgImgFeaturedBanner.jpg') no-repeat 0 0;*/
     display: inline-block;
-    height: 286px;
+    /*height: 200px;*/
     margin-top: 3px;
-    padding: 1px 0 0 0px;
+    padding: 0;
     vertical-align: top;
-    width: 202px;
-}
-.topPart{
-    height: 221px;
-    padding: 0;
-    position: relative;
-    width: 186px;
-}
-.topPart img{
-    max-width: 176px;
-    max-height: 221px;
-    bottom: 0;
-    margin: auto 8%;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0;
-    vertical-align: middle;
-}
-.bottomPart{
-    font-family: BiffoMTRegular;
-    font-size: 25px;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-.bottomPart a {
-    color: white;
+    width: 108px;
 }
 
-.biffoNormal{
-    font-family: BiffoMTRegular;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
+div#blockBannerImageFeatured p.title{
+    background-color:  #65a3c2;    
 }
 
-.bluePaleText{
-    color: #94eaee !important;
+div#blockBannerImageFeatured p.text1{
+    background-color:  #65a444;
 }
-.fontSize35{
-    font-size: 35px;
+
+div#blockBannerImageFeatured p.image{
+    height: 140px;
+    width: 108px;
 }
-.fontSize20{
-    font-size: 20px;
+
+div#blockBannerImageFeatured p.text2{
+   /* display: none;*/
+    position: absolute;    
+    top:0px;
+    color: #000000;
+}
+
+div#blockBannerImageFeatured p.text2 a,
+div#blockBannerImageFeatured p.text2 a:hover{
+    color: #000000;
+}
+
+div#blockBannerImageFeatured img{
+    height: 140px;
+    width: 108px;
 }
 
 .containerBgHeader_sliding{
@@ -94,4 +81,8 @@ div#bannerContainer{
     height: 275px;
     overflow: hidden;
     margin-bottom: 5px;
+}
+
+.hiddenVideo{
+    display: none;
 }

@@ -56,7 +56,17 @@ abstract class Cible_Extranet_Controller_Action extends Cible_Controller_Action
             
             $suffix = Cible_FunctionsGeneral::getLanguageSuffix( $this->_currentInterfaceLanguage );
             $this->_registry->set('languageSuffix', $suffix);
-        }   
+        }
+        
+        $hasProfile = false;
+        $hasVideos = true;
+        $modProfile = Cible_FunctionsModules::modulesProfile();
+
+        if (count($modProfile) > 0)
+            $hasProfile = true;
+
+        $this->view->assign('hasProfile', $hasProfile);
+        $this->view->assign('hasVideos', $hasVideos);
     }
     
 }

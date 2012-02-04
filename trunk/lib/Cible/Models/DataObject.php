@@ -5,7 +5,7 @@
  * @category   Cible
  * @package    Cible_Models
  * @copyright  Copyright (c) 2010 Cible (http://www.ciblesolutions.com)
- * @version    $Id: DataObject.php 730 2011-12-09 03:45:25Z ssoares $
+ * @version    $Id: DataObject.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**
@@ -50,9 +50,22 @@ class DataObject
 
     protected $_indexSelectColumns = array();
     protected $_orderBy = "";
+    protected $_position = "";
+    protected $_query;
+    protected $_columns = array();
     protected $_colsData;
     protected $_colsIndex;
     protected $_enum;
+
+    /**
+     * Set a query instance to join with data table
+     *
+     * @param type $_query Zend_Db_Select
+     */
+    public function setQuery(Zend_Db_Select $_query)
+    {
+        $this->_query = $_query;
+    }
 
     /**
      * Getter for the data table name
@@ -223,8 +236,6 @@ class DataObject
     {
         $this->_orderBy = $orderBy;
     }
-
-
 
     /**
      * Class constructor
@@ -407,6 +418,8 @@ class DataObject
         else
             $_insertedId = $data[$this->_dataId];
 
+        
+        //var_dump($this->_indexClass);
         if (!empty($this->_indexClass))
         {
             unset($this->_indexColumns[$this->_indexId]);
@@ -1076,4 +1089,75 @@ class DataObject
         return $data;
     }
 
+    /**
+     * Fetch the last position
+     *
+     * @return int
+     */
+    public function getLastPosition()
+    {
+        if (!empty ($this->_position))
+        {
+            $select = $this->getAll(null, false);
+
+            $select->order($this->_position . ' DESC');
+            $result = $this->_db->fetchRow($select);
+
+            return $result[$this->_position];
+        }
+    }
+
+    /**
+     * Allows to simply join left a query previously set from an other object
+     * and retrieve filtered data.
+     *
+     * @param bool $array
+     *
+     * @return array | Zend_Db_Select
+     */
+    public function joinFetchData($array = false)
+    {
+        $results = null;
+        $select =  null;
+
+        if (!empty($this->_query))
+        {
+            $select = $this->_query;
+            $select->joinLeft($this->_oDataTableName, $this->_foreignKey, $this->_columns);
+
+            if ($array)
+                $results = $this->_db->fetchAll($select);
+            else
+                $results = $select;
+
+        }
+
+        return $results;
+    }
+
+    /**
+     * Fetch data according to the filters values.<br />
+     * Filters are simple orWhere, we'll have to work on that
+     *
+     * @param array $filters List of values to build filters.
+     */
+    public function findData($filters = array())
+    {
+
+        $select = $this->_db->select();
+        $select->from($this->_oDataTableName, $this->_dataColumns);
+
+        foreach ($filters as $key => $value)
+        {
+            if (isset($this->_dataColumns[$key]))
+            {
+                if (is_string($value ))
+                    $select->where("{$this->_dataColumns[$key]} like '%{$value}%'");
+                elseif (is_integer($value))
+                    $select->where($this->_dataColumns[$key] . ' = ?',$value);
+            }
+        }
+
+        return $this->_db->fetchAll($select);
+    }
 }

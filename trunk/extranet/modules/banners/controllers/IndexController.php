@@ -157,6 +157,7 @@ class Banners_IndexController extends Cible_Controller_Categorie_Action
                         'imageSrc'   => $imageSrc,
                         'imgField'   => $this->_imageSrc,
                         'dataId'     => '',
+                        'addAction'  => '1', 
                         'isNewImage' => true
                     ));
 

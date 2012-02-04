@@ -6,7 +6,7 @@
 -- Généré le : Dim 13 Juin 2010 à 21:04
 -- Version du serveur: 5.0.70
 -- Version de PHP: 5.2.10-pl0-gentoo
--- Version SVN: $Id: moduleNewsletterCreate.sql 824 2012-02-01 01:21:12Z ssoares $
+-- Version SVN: $Id: moduleNewsletterCreate.sql 826 2012-02-01 04:15:13Z ssoares $
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -590,7 +590,9 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('email_not_show_go_online1', '1', 'Si ce courriel ne s''affiche pas correctement, veuillez consulter', 'cible', '', 0, 8),
 ('email_not_show_go_online1', '2', 'If this email does not display correctly, please consult', 'cible', '', 0, 8),
 ('email_not_show_go_online2', '1', ' la parution en ligne.', 'cible', '', 0, 8),
-('email_not_show_go_online2', '2', ' the online edition.', 'cible', '', 0, 8),
+('email_not_show_go_online2', '2', ' the online edition.', 'cible', '', 0, 8);
+
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
 ('header_edit_newsletter_article_title', '1', 'Édition', 'cible', '', '0', '8'),
 ('header_edit_newsletter_article_title', '2', 'Edit', 'cible', '', '0', '8'),
 ('header_edit_newsletter_article_description', '1', 'Édition d''un article de l''infolettre', 'cible', '', '0', '8'),
@@ -695,7 +697,7 @@ Newsletter list: <br /> ", 'cible', '', '0', '8'),
 ('extranet_newsletter_return_list_newsletter', '1', 'Liste des infolettres', 'cible', '', '0', '8'),
 ('extranet_newsletter_return_list_newsletter', '2', 'Newsletters'' list', 'cible', '', '0', '8');
 
-REPLACE INTO edith.Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
 ('newsletter_statistic_latest_activity_label', 1, "Dernières activités", 'cible', '', 0 , 8),
 ('newsletter_statistic_latest_activity_label', 2, 'Latest activity', 'cible', '', 0 , 8),
 ('newsletter_statistic_subscription_label', 1, "Abonnements ", 'cible', '', 0 , 8),
@@ -763,5 +765,11 @@ REPLACE INTO edith.Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST
 ('extranet_newsletter_return_list_newsletter', '2', 'Newsletters'' list', 'cible', '', '0', '8'),
 ('form_extranet_newsletter_label_releaseDate', '1', 'Date d''affichage', 'cible', '', '0', '8'),
 ('form_extranet_newsletter_label_releaseDate', '2', 'Date of release', 'cible', '', '0', '8'),
+('form_extranet_newsletter_label_releaseDate', '1', 'Date de parution', 'cible', '', '0', '8'),
+('form_extranet_newsletter_label_releaseDate', '2', 'Release date', 'cible', '', '0', '8'),
+('profile_tab_title_newsletter', '1', 'Infolettre', 'cible', '', '0', '0'),
+('profile_tab_title_newsletter', '2', 'Newsletter', 'cible', '', '0', '0'),
+('profile_addto_newletter_label', 1, 'Cocher une case ajoute l''utilisateur dans la liste des destinataires de cette infolettre.', 'cible', '', 0, 8),
+('profile_addto_newletter_label', 2, 'Tick a checkbox will add the user the the recipents list of the newsletter.', 'cible', '', 0, 8),
 ('newsletter_statistic_diagtitle_title', 1, "Détails", 'cible', '', 0 , 8),
 ('newsletter_statistic_diagtitle_title', 2, 'Détails', 'cible', '', 0 , 8);

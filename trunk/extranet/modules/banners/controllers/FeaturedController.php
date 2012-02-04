@@ -35,6 +35,7 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
     protected $_rootFilePath;
     protected $_editMode = true;
     protected $_imgIndex = 'image';
+    protected $_imgFeatureNumber = 4;
 
     public function init()
     {
@@ -62,11 +63,26 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
         
         $this->view->cleaction = $this->_name;
         $this->_imgIndex = 'imagefeat';
+        
+        
+        $config = Zend_Registry::get('config')->toArray();      
+        //banners.imagefeat.number
+        $this->_imgFeatureNumber = $config[$this->_moduleTitle][$this->_imgIndex]['number'];
+        
+        //echo $this->_imgFeatureNumber;
+        
+        
+        
     }
 
     public function addAction()
     {
         // web page title
+        
+        $videos = new VideoObject();   
+        $listVideo = array();
+        $listVideo = $videos->getVideosList();
+        
         $this->view->title = "Mise en vedette: ajouter";
         $lang = $this->_getParam('lang');
         if (!$lang)
@@ -98,38 +114,27 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
 
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
-            $imageSrcFirst  = $this->view->baseUrl() . "/icons/image_non_ disponible.jpg";
-            $imageSrcSecond = $this->view->baseUrl() . "/icons/image_non_ disponible.jpg";
-            $imageSrcThird  = $this->view->baseUrl() . "/icons/image_non_ disponible.jpg";
-            $imageSrcFourth = $this->view->baseUrl() . "/icons/image_non_ disponible.jpg";
-
+            $imageSrc = array();            
+            $isNewImage = array();
+            for($x = 1; $x <=$this->_imgFeatureNumber; $x++){
+                $imageSrc[$x] = $this->view->baseUrl() . "/icons/image_non_ disponible.jpg";
+                $isNewImage[$x] = true;
+            }            
+            
             if ($this->_request->isPost())
             {
                 $formData = $this->_request->getPost();
-
-                if ($formData['IF_Img1'] <> "")
-                    if ($formData['IF_Img1'] <> "")
-                        $imageSrcFirst = $this->_rootImgPath
-                            . "tmp/mcith/mcith_"
-                            . $formData['IF_Img1'];
+                
+                
+                for($x = 1; $x <=$this->_imgFeatureNumber; $x++){
+                    $IF_Img = 'IF_Img' . $x;
+                    if ($formData[$IF_Img] <> "")
+                        if ($formData[$IF_Img] <> "")
+                            $imageSrc[$x] = $this->_rootImgPath
+                                . "tmp/mcith/mcith_"
+                                . $formData[$IF_Img];
                     
-                if ($formData['IF_Img2'] <> "")
-                    if ($formData['IF_Img2'] <> "")
-                        $imageSrcSecond = $this->_rootImgPath
-                            . "tmp/mcith/mcith_"
-                            . $formData['IF_Img2'];
-                    
-                if ($formData['IF_Img3'] <> "")
-                    if ($formData['IF_Img3'] <> "")
-                        $imageSrcThird = $this->_rootImgPath
-                            . "tmp/mcith/mcith_"
-                            . $formData['IF_Img3'];
-                    
-                if ($formData['IF_Img4'] <> "")
-                    if ($formData['IF_Img4'] <> "")
-                        $imageSrcFourth = $this->_rootImgPath
-                            . "tmp/mcith/mcith_"
-                            . $formData['IF_Img4'];
+                }
             }
             // generate the form
             $form = new FormBannerFeatured(
@@ -138,16 +143,12 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
                     'baseDir'     => $baseDir,
                     'cancelUrl'   => $cancelUrl,
                     'dataId'      => '',
-                    'isNewImageSt' => true,
-                    'isNewImageSec' => true,
-                    'isNewImageRd' => true,
-                    'isNewImageTh' => true,
-                    'filePath'    => $this->_rootFilePath,
-                    'imageSrcFirst'  => $imageSrcFirst,
-                    'imageSrcSecond' => $imageSrcSecond,
-                    'imageSrcThird'  => $imageSrcThird,
-                    'imageSrcFourth'   => $imageSrcFourth
-                )
+                    'isNewImage' => $isNewImage,
+                    'imageSrc' => $imageSrc,                    
+                    'filePath'    => $this->_rootFilePath,                    
+                    'numberImageFeature' => $this->_imgFeatureNumber
+                ),
+                $listVideo
             );
 
             $this->view->form = $form;
@@ -175,26 +176,15 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
                         or die("Could not make directory");
                     $this->_editMode = false;
 
-                    if ($newData['IF_Img1'] <> '')
-                    {
-                        $this->_setImage('IF_Img1', $form, $newData, $recordID);
-                    }
-
-                    if ($newData['IF_Img2'] <> '')
-                    {
-                        $this->_setImage('IF_Img2', $form, $newData, $recordID);
-                    }
                     
-                    if ($newData['IF_Img3'] <> '')
-                    {
-                        $this->_setImage('IF_Img3', $form, $newData, $recordID);
+                    
+                    for($x = 1; $x <=$this->_imgFeatureNumber; $x++){
+                        $IF_Img = 'IF_Img' . $x;
+                        if ($newData[$IF_Img] <> '')
+                        {
+                            $this->_setImage($IF_Img, $form, $newData, $recordID);
+                        }
                     }
-
-                    if ($newData['IF_Img4'] <> '')
-                    {
-                        $this->_setImage('IF_Img4', $form, $newData, $recordID);
-                    }
-
                     $this->_redirect($returnUrl);
                 }
                 else
@@ -207,16 +197,18 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
 
     public function editAction()
     {
-        // variables
+        $videos = new VideoObject(); 
+        $listVideo = array();
+        $listVideo = $videos->getVideosList();        
+        //$this->view->videos = $listVideo;        
+        
+        
         $recordID = $this->_getParam($this->_paramId);
         $page     = $this->_getParam('page');
         $returnAction = $this->_getParam('return');
         $baseDir = $this->view->baseUrl();
         
-        $lang = $this->_getParam('lang');
-        
-//        if (!$lang)
-//            $this->_registry->currentEditLanguage = $this->_defaultEditLanguage;
+        $lang = $this->_getParam('lang');        
 
         $langId = $this->_registry->currentEditLanguage;
         
@@ -247,44 +239,32 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
             $oData = new BannerFeaturedObject();
             $record = $oData->loadData($recordID, $langId);
             
-            $imageSource   = $this->_setImageSrc($record, 'IF_Img1', $recordID);
-            $imageSrcFirst = $imageSource['imageSrc'];
-            $isNewImageSt  = $imageSource['isNewImage'];
-
-            $imageSource    = $this->_setImageSrc($record, 'IF_Img2', $recordID);
-            $imageSrcSecond = $imageSource['imageSrc'];
-            $isNewImageSec  = $imageSource['isNewImage'];
+            $imageSrc = array();            
+            $isNewImage = array();
+            for($x = 1; $x <=$this->_imgFeatureNumber; $x++){ 
+                $imageSource   = $this->_setImageSrc($record, 'IF_Img' . $x, $recordID);
+                //echo $imageSource['imageSrc'];
+                $imageSrc[$x] = $imageSource['imageSrc'];
+                $isNewImage[$x]  = $imageSource['isNewImage'];
+            }            
             
-            $imageSource   = $this->_setImageSrc($record, 'IF_Img3', $recordID);
-            $imageSrcThird = $imageSource['imageSrc'];
-            $isNewImageRd  = $imageSource['isNewImage'];
-
-            $imageSource    = $this->_setImageSrc($record, 'IF_Img4', $recordID);
-            $imageSrcFourth = $imageSource['imageSrc'];
-            $isNewImageTh   = $imageSource['isNewImage'];
 
             // generate the form
             $form = new FormBannerFeatured(
                 array(
-                    'moduleName'     => $this->_moduleTitle . '/' . $this->_name,
-                    'baseDir'        => $baseDir,
-                    'cancelUrl'      => $cancelUrl,
-                    'dataId'         => $recordID,
-                    'isNewImageSt'   => $isNewImageSt,
-                    'isNewImageSec'  => $isNewImageSec,
-                    'isNewImageRd'   => $isNewImageRd,
-                    'isNewImageTh'   => $isNewImageTh,
-                    'filePath'       => $this->_rootFilePath,
-                    'imageSrcFirst'  => $imageSrcFirst,
-                    'imageSrcSecond' => $imageSrcSecond,
-                    'imageSrcThird'  => $imageSrcThird,
-                    'imageSrcFourth' => $imageSrcFourth,
-                )
+                    'moduleName'    => $this->_moduleTitle . '/' . $this->_name,
+                    'baseDir'       => $baseDir,
+                    'cancelUrl'     => $cancelUrl,
+                    'dataId'        => $recordID,
+                    'isNewImage'    => $isNewImage,
+                    'filePath'      => $this->_rootFilePath,
+                    'imageSrc'     => $imageSrc,                   
+                    'numberImageFeature' => $this->_imgFeatureNumber                  
+                ),$listVideo                 
             );
-
+            
             $this->view->form = $form;
-
-            // action
+          
             if (!$this->_request->isPost())
             {
                 $form->populate($record);
@@ -292,36 +272,21 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
             else
             {
                 $formData = $this->_request->getPost();
+                
                 if ($form->isValid($formData))
                 {
                     $newData = $formData;
-                    
+                   
                     // Save image data for this banner
-                    $this->_saveImgData($formData, $recordID, 'edit');
-                    
-                    if ($isNewImageL && $newData['IF_Img1'] <> '')
-                    {
-                        $this->_setImage('IF_Img1', $form, $newData, $recordID);
-                    }
-
-                    if ($isNewImageS && $newData['IF_Img2'] <> '')
-                    {
-                        $this->_setImage('IF_Img2', $form, $newData, $recordID);
-                    }
-                    
-                    if ($newData['IF_Img3'] <> '')
-                    {
-                        $this->_setImage('IF_Img3', $form, $newData, $recordID);
-                    }
-
-                    if ($newData['IF_Img4'] <> '')
-                    {
-                        $this->_setImage('IF_Img4', $form, $newData, $recordID);
-                    }
-
-                    $oData->save($recordID, $newData, $langId);
-
-                    // redirect
+                    $this->_saveImgData($formData, $recordID, 'edit');                    
+                                       
+                    for($x = 1; $x <=$this->_imgFeatureNumber; $x++){ 
+                        if ($newData['IF_Img' . $x ] <> '')
+                        {
+                            $this->_setImage('IF_Img' . $x , $form, $newData, $recordID);
+                        }
+                    }                  
+                    $oData->save($recordID, $newData, $langId);                   
                     if (!empty($pageID))
                         $this->_redirect(
                             $this->_moduleTitle . "/"
@@ -639,9 +604,14 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
             if (preg_match('/^IF_Img/', $key))
                 $imgId = preg_replace('/[a-zA-Z]*_[a-zA-Z]*/', '', $key);
 
-            if (preg_match('/IF_Img[0-9]*$/', $key) || preg_match('/IFI_[a-zA-Z]*[0-9]*$/', $key) || preg_match('/IF_Style[0-9]*$/', $key))
+            if (preg_match('/IF_Img[0-9]*$/', $key) 
+                    || preg_match('/IFI_[a-zA-Z]*[0-9]*$/', $key) 
+                    || preg_match('/IF_Style[0-9]*$/', $key)
+                    || preg_match('/IFI_TextA[0-9]*$/', $key)
+                    || preg_match('/IFI_TextB[0-9]*$/', $key))
             {
-                $dbField = preg_replace('/[0-9]*$/', '', $key);
+                
+                $dbField = preg_replace('/[0-9]*$/', '', $key);                
                 $imgData[$imgId]['IF_ImgID'] =  $imgId;
                 $imgData[$imgId]['IF_DataID'] =  $recordID;
                 $imgData[$imgId][$dbField] =  $value;
@@ -650,6 +620,7 @@ class Banners_FeaturedController extends Cible_Controller_Block_Abstract
             if ($tmpId != $imgId)
                 $tmpId = $imgId;
         }
+        //exit;
 
         $oBannerImgFeat = new BannerFeaturedImageObject();
         

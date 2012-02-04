@@ -1,14 +1,30 @@
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function(){       
-        
-        $("a[rel^='prettyPhoto']").prettyPhoto({                
-            show_title:true,
-            animation_speed:'normal',
-            theme:'facebook',
-            slideshow:false, 
-            autoplay_slideshow: false,
-            overlay_gallery:false
-        });
-        
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function(){
+        // Si l'image comporte la classe "add_prettyphoto"
+        $('.add_prettyphoto').each(function(index)
+        {
+            // Prend la source de l'image
+            var ImgSrc = $(this).attr("src");
+
+            // Ajoute la balise A HREF avant et après la photo avec les paramètres de PrettyPhoto
+            $(this).wrap('<a rel="prettyPhoto[pp_gal]" href="' + ImgSrc + '" />');
+
+        }
+    );
+
+        if($("a[rel^='prettyPhoto']").length > 0 )
+        {
+            $("a[rel^='prettyPhoto']").prettyPhoto({
+                show_title:true,
+                animation_speed:'normal',
+                theme:'facebook',
+                slideshow:false,
+                autoplay_slideshow: false,
+                overlay_gallery:false
+            });
+
+        }
     });
+//]]>
 </script>

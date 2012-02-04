@@ -1,13 +1,13 @@
 /* styles.css */
 /**
- * @version $Id: site.css 723 2011-12-06 16:24:19Z freynolds $
+ * @version $Id: site.css 826 2012-02-01 04:15:13Z ssoares $
  */
 html,body {
     font-size:100%;
     margin: 0;
-    font-family:Georgia;
+    font-family:serif;
     color: #6c6c6c;
-    font-size: 12px;
+    font-size: 13px;
     background-color: #FFFFFF;
 }
 
@@ -55,6 +55,9 @@ p{
 
 /**************************************************/
 /* GENERAL */
+img {
+    border: none;
+}
 a {
     color: #6c6c6c;
     text-decoration: none;
@@ -118,7 +121,7 @@ div.spacerEmpty {
 /* TOP BANNER */
 #topBanner{
     position:relative;
-    font-family: Georgia;
+    font-family: Arial;
     font-weight: bold;
     font-size: 12px;
     color: #66a8c9;
@@ -1063,11 +1066,17 @@ div#switchPanel a{
     height: 25px;
     background-color: transparent;
 }
-
+#searchAgain{
+    line-height: 25px;
+    margin: 0;
+    text-align: center;
+    width: 250px;
+}
 .search-buttons .loginButtonOver,
 #login_form_content .loginButtonOver,
 .previewButtonOver,
 .compareButtonOver,
+.blueish-button:hover,
 .blueish-button-over{
     font-family: Arial;
     font-size: 11px;
@@ -1290,7 +1299,7 @@ form label{
 #page_edit form label,
 #form_panel form label    {
     display: block;
-    font-family: Georgia;
+    font-family: Arial;
     font-size: 12px;
     line-height: 20px;
     font-weight: bold;
@@ -1311,7 +1320,11 @@ form dd{
     margin-bottom: 10px;
 }
 
+form input, form select{
+    border: 1px solid #646567;
+}
 form .label_after_checkbox input[type=checkbox]  {
+    border: none;
     float:left;
 }
 form .label_after_checkbox label  {
@@ -1339,6 +1352,7 @@ fieldset legend{
 fieldset.infoData legend{
     margin-left: auto;
 }
+
 .stdTextInput, .stdSelect{
     width: 250px;
     font-family: Arial;
@@ -1457,6 +1471,7 @@ ul#language-switcher li span.disabled-language  {
 }
 
 form ul.errors,
+#form_panel form label.error,
 form ul.errors li  {
     list-style: none;
     padding: 0;
@@ -1721,7 +1736,7 @@ th, td{
 }
 
 #form_panel ul#language-switcher {
-    font-family: Georgia;
+    font-family: Arial;
     font-size: 14px;
     font-weight: bold;
     /*padding-left: 20px;*/
@@ -1910,7 +1925,7 @@ div#all-text ul.collapsible_tree li{
 }
 
 ul.collapsible_tree > li{
-    font-family: Georgia;
+    font-family: Arial;
     font-size: 14px;
     font-weight: bold;
     color: #6c6c6c!important;
@@ -1999,7 +2014,7 @@ ul.collapsible_tree li a:hover    {
     width: 680px;
     background-color: #f0f0f0;
     border-bottom: solid 1px #c4c4c4;
-    font-family: Georgia;
+    font-family: Arial;
     font-size: 14px;
     font-weight: bold;
     padding-left: 20px;
@@ -2235,7 +2250,7 @@ div.searchable-list div.filters {
 }
 
 div.searchable-list div.filters .search-filters-label{
-    font-family: Georgia;
+    font-family: Arial;
     color: #5a9cbe;
     margin-left: 0px;
     width: 100px;
@@ -2750,6 +2765,7 @@ fieldset.fieldsetBorder{
     margin-top: -35px;
 }
 #fieldset-imageGroup dd.label_after_checkbox{
+
     width: 200px;
 }
 
@@ -3161,11 +3177,27 @@ div.floatRight p.textzone{
 
 }
 .addresseShippingClass{
-    margin-top: -479px;
+    float: left;
+    margin-top: -505px;
     margin-left: 506px;
+    width: 350px;
+}
+select#status{
+    margin-bottom: 15px;
 }
 
 fieldset .addresseBillingClass legend,
 fieldset .addresseShippingClass legend {
     margin: 0;
 }
+
+input#BII_Url{
+    width: 630px;
+}
+
+.form_title_inline_link{
+    position: relative;
+    top: -40px;
+}
+
+

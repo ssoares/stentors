@@ -342,12 +342,19 @@ class News_IndexController extends Cible_Controller_Categorie_Action
                     ->where('NewsIndex.NI_LanguageID = CategoriesIndex.CI_LanguageID')
                     ->where('C_ModuleID = ?', $this->_moduleID);
             //->order('NI_Title');
-
-
+            $commands = array();
+            if ($langId == $this->_defaultEditLanguage)
+                $commands = array(
+                    $this->view->link($this->view->url(
+                            array(
+                                'controller' => 'index',
+                                'action' => 'add'
+                            )
+                        ), $this->view->getCibleText('button_add_news'), array('class' => 'action_submit add')
+                    )
+                );
             $options = array(
-                'commands' => array(
-                    $this->view->link($this->view->url(array('controller' => 'index', 'action' => 'add')), $this->view->getCibleText('button_add_news'), array('class' => 'action_submit add'))
-                ),
+                'commands' => $commands,
                 //'disable-export-to-excel' => 'true',
                 'to-excel-action' => 'all-news-to-excel',
                 'filters' => array(

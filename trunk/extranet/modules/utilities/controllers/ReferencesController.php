@@ -102,7 +102,7 @@ class Utilities_ReferencesController extends Cible_Controller_Block_Abstract
             $choices[''] = $this->view->getCibleText('filter_empty_label');
             foreach ($data as $ref)
             {
-                $choices[$ref['R_TypeRef']] = $ref['R_TypeRef'];
+                $choices[$ref['R_TypeRef']] = $this->view->getCibleText('form_enum_' . $ref['R_TypeRef']);
             }
 
             $this->_filterParams = array(

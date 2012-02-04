@@ -16,6 +16,7 @@ class Banners_IndexController extends Cible_Controller_Action
     protected $_imageSrc = 'BI_Filename';
     protected $_imagesFolder;
     protected $_rootImgPath;
+    protected $_rootVideoPath;
     protected $_formName = '';
     protected $_joinTables = array();
     protected $_objectList = array(
@@ -59,6 +60,8 @@ class Banners_IndexController extends Cible_Controller_Action
         $this->view->headLink()->offsetSetStylesheet($this->_moduleID, $this->view->locateFile('banners.css'));
         $this->view->headLink()->appendStylesheet($this->view->locateFile('banners.css'));
 
+        
+        
         $dataImagePath = "data/images/";
 
         $this->_imagesFolder = $dataImagePath
@@ -67,12 +70,18 @@ class Banners_IndexController extends Cible_Controller_Action
         $this->_rootImgPath = Zend_Registry::get("www_root")
             . "/data/images/"
             . $this->_moduleTitle . "/";
+        
+         $this->_rootVideoPath = Zend_Registry::get("www_root") . "/data/files/videos/";
+        
+        
 
         $this->_rootFilePath = "data/files/"
             . $this->_moduleTitle . "/";
 
         $this->view->cleaction = $this->_name;
         $this->_imgIndex = 'imagefeat';
+        
+       
     }
 
     /**
@@ -91,6 +100,8 @@ class Banners_IndexController extends Cible_Controller_Action
             $this->_blockID = $blockID;
             $params = Cible_FunctionsBlocks::getBlockParameters($blockID);
 
+            //var_dump($params);
+            
             $groupId;
             $autoPlay;
             $delais;
@@ -107,9 +118,11 @@ class Banners_IndexController extends Cible_Controller_Action
             $delais = $blockParams[3];
             $transition = $blockParams[4];
             $navi = $blockParams[5];
-            $effect = $blockParams[6];
-            $this->view->bannerRenderer($groupId,$autoPlay,$delais,$transition,$navi,$effect);
-        }
+            $effect = $blockParams[6];           
+            
+           $this->view->bannerRenderer($groupId,$autoPlay,$delais,$transition,$navi,$effect);
+            
+        }    
     }
 
     /**
@@ -123,6 +136,73 @@ class Banners_IndexController extends Cible_Controller_Action
     {
         $langId  = Zend_Registry::get('languageID');
         $blockID = $this->_request->getParam('BlockID');
+
+        if ($blockID)
+        {
+            $this->_blockID = $blockID;
+            $params = Cible_FunctionsBlocks::getBlockParameters($blockID);
+
+            $groupId = 0;
+            $autoPlay = 0;
+            $delais = 0;
+            $transition = 0;
+            $navi = 0;
+            $effect = 0;
+
+            foreach ($params as $param)
+            {
+                $blockParams[$param['P_Number']] = $param['P_Value'];
+            }
+            
+            $videos = new VideoObject(); 
+            $listVideo = array();
+            $listVideo = $videos->getVideosList();   
+            
+           // var_dump($listVideo);
+
+            $groupId = str_replace('_f', '', $blockParams[1]);
+            $this->view->autoPlay = $blockParams[2];
+            $this->view->delais = $blockParams[3];
+            $this->view->transition = $blockParams[4];
+            $this->view->navi = $blockParams[5];
+            $this->view->effect = $blockParams[6];
+
+            $oBannerFeat = new BannerFeaturedObject();
+            $oImageFeat  = new BannerFeaturedImageObject();
+
+            $banner    = $oBannerFeat->populate($groupId, $langId);
+            $imgBanner = $oImageFeat->getData($langId, $groupId);
+            
+            //var_dump($imgBanner);
+            //exit;
+            
+            $config    = Zend_Registry::get('config');
+            $cfgBanner = $config->banners->imagefeat->toArray();
+
+            $this->view->imgCfg  = $cfgBanner;
+            $this->view->imgFeat = $imgBanner;
+            $this->view->imgPath = $this->_imagesFolder . 'featured/' . $groupId . '/';
+            
+            $this->view->videoPath = $this->_rootVideoPath;
+            
+           
+            
+            //$this->view->listVideos = $listVideo;
+        }
+    }
+    
+    /**
+     * Display the list
+     *
+     *
+     *
+     * @return void
+     */
+    /*
+    public function featured($request)
+    {
+        $langId  = Zend_Registry::get('languageID');
+        $blockID = $request->getParam('BlockID');
 
         if ($blockID)
         {
@@ -160,7 +240,8 @@ class Banners_IndexController extends Cible_Controller_Action
             $this->view->imgCfg  = $cfgBanner;
             $this->view->imgFeat = $imgBanner;
             $this->view->imgPath = $this->_imagesFolder . 'featured/' . $groupId . '/';
+            
         }
-    }
+    }*/
 
 }

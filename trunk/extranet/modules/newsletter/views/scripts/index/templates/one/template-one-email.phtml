@@ -7,36 +7,40 @@
 <?php
     $date_string = $this->dateString;
     $date_string_url = $this->parutionDate;
- ?>
-<?php
+ 
+    $absolute_web_root = Zend_Registry::get('absolute_web_root');    
+    
+    $sourceHeaderLeft = "";
+    if(isset($this->imageHeader)){
+        $sourceHeaderLeft = $this->imageHeader;
+    }
+    else{
+        $sourceHeaderLeft .= "/themes/default/images/common/logo-{$this->moduleId}-{$this->newsletterID}-{$this->memberId}.jpg";
+    } 
 
-    $sourceHeaderLeft = Zend_Registry::get('absolute_web_root');
-    // Logo image used to test if the mail is opened when image is displayed.
-    $sourceHeaderLeft .= "/themes/default/images/common/logo-{$this->moduleId}-{$this->newsletterID}-{$this->memberId}.jpg";
-
-    $sourceHeaderRightTop = Zend_Registry::get('www_root');
+    $sourceHeaderRightTop = $absolute_web_root;
     $sourceHeaderRightTop .= "/themes/default/images/common/newsletter_top_right3.jpg";
-    $sourceHeaderRightBottom = Zend_Registry::get('www_root');
+    $sourceHeaderRightBottom = $absolute_web_root;
     $sourceHeaderRightBottom .= "/themes/default/images/common/attraction_right_bottom.jpg";
-    $sourceHeaderJeansEn = Zend_Registry::get('www_root');
+    $sourceHeaderJeansEn = $absolute_web_root;
     $sourceHeaderJeansEn .= "/themes/default/images/common/infolettre_top_bleu_en.jpg";
-    $sourceHeaderJeansFr = Zend_Registry::get('www_root');
+    $sourceHeaderJeansFr = $absolute_web_root;
     $sourceHeaderJeansFr .= "/themes/default/images/common/infolettre_top_bleu_fr.jpg";
-    $sourceJaune = Zend_Registry::get('absolute_web_root');
+    $sourceJaune = $absolute_web_root;
     $sourceJaune .= "/themes/default/images/common/ligne_jaune_courriel.jpg";
-    $sourceJaune = Zend_Registry::get('absolute_web_root');
+    $sourceJaune = $absolute_web_root;
     $sourceJaune .= "/themes/default/images/common/ligne_jaune_courriel.jpg";
 
-    $imageFleche = Zend_Registry::get('www_root');
+    $imageFleche = $absolute_web_root;
     $imageFleche .= "/themes/default/images/common/fleche_courriel.jpg";
-    $imageFlecheCouleur = Zend_Registry::get('www_root');
+    $imageFlecheCouleur = $absolute_web_root;
     $imageFlecheCouleur .= "/themes/default/images/common/fleche_courriel_couleur.jpg";
 
     $subscribeLink = $this->subscribeLink . '/uid/' . $this->memberId. '/newsletterID/' . $this->newsletterID;
     $unsubscribeLink = $this->unsubscribeLink . '/uid/' . $this->memberId . '/newsletterID/' . $this->newsletterID;
     $archiveLink = $this->archiveLink . '/uid/' . $this->memberId;
 
-    $image20pxWhite = Zend_Registry::get('www_root');
+    $image20pxWhite = $absolute_web_root;
     $image20pxWhite .= "/themes/default/images/common/email_top_left_1X20.jpg";
  ?>
 <body>
@@ -97,12 +101,7 @@
                             <img style="border:0px;height:64px;width:701px;" src="<?php echo $sourceHeaderJeansEn;?>" alt="" />
                         <?php
                         }
-                        ?>
-                        <?php
-                        ////echo($this->newsletterTitle);
-                        // font-family:Arial;text-transform:none;font-weight:bold;letter-spacing:0.03em;font-size:18px;color:#004072;padding-bottom: 0px;padding-left:19px;background-color:#99B3C7;
-                        ?>
-
+                        ?>                       
                     </td>
                 </tr>
             </table>

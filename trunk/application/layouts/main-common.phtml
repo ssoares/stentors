@@ -26,8 +26,9 @@
     <!-- Tag to force the AddThis thumbnail image
     <link rel='image_src' href='<?php echo Zend_Registry::get('addThis') ?>' /> -->
     <?php //echo $this->partial('partials/google.analytic.phtml'); ?>
+    <?php if (Zend_Registry::isRegistered('bgStyle')) $bgStyle = Zend_Registry::get('bgStyle'); else $bgStyle = ''; ?>
 </head>
-<body>
+<body class="body_background" <?php echo $bgStyle; ?>>
 
     <!-- Start : WRAPPER -->
     <div id="wrapper">
@@ -52,6 +53,6 @@
 
    </div>
    <!-- END : WRAPPER -->
-    <?php //echo $this->partial('partials/jsPrettyPhoto.phtml') ?>
+    <?php echo $this->partial('partials/jsPrettyPhoto.phtml') ?>
 </body>
 </html>

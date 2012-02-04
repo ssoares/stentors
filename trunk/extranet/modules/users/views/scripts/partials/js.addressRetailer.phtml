@@ -15,7 +15,7 @@
                 var label = "";
                 if ($(this).children().length)
                     label = $(this).children().get(0).htmlFor;
-                
+
                 var child = $(this).children().find('input[type=radio][id^=retailerForm-isDistributeur]');
 
                 if(child.length != 2 && label != 'retailerForm-isDistributeur')
@@ -29,5 +29,6 @@
                   $(this).click();
           });
       });
+
   });
 </script>

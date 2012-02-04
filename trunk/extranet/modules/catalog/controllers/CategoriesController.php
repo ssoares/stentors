@@ -9,7 +9,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: CategoriesController.php 454 2011-04-14 17:19:52Z ssoares $id
+ * @version   $Id: CategoriesController.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -20,7 +20,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: CategoriesController.php 454 2011-04-14 17:19:52Z ssoares $id
+ * @version   $Id: CategoriesController.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class Catalog_CategoriesController extends Cible_Controller_Block_Abstract
 {
@@ -101,7 +101,7 @@ class Catalog_CategoriesController extends Cible_Controller_Block_Abstract
             );
             if (!empty($this->_imageSrc))
                 $options['imgField'] = $this->_imageSrc;
-            
+
             $form = new FormCategories($options);
 
             $this->view->form = $form;
@@ -525,18 +525,19 @@ class Catalog_CategoriesController extends Cible_Controller_Block_Abstract
             $select = $lines->getAll($langId, false);
             $select->joinLeft('BannerGroup', 'BG_ID = C_BannerGroupID');
 
-            $options = array(
-                'commands' => array(
+            $commands = array();
+            if ($langId == $this->_defaultEditLanguage)
+                $commands = array(
                     $this->view->link($this->view->url(
-                                    array(
-                                        'controller' => $this->_name,
-                                        'action' => 'add'
-                                    )
-                            ),
-                            $this->view->getCibleText('button_add_category'),
-                            array('class' => 'action_submit add')
+                            array(
+                                'controller' => $this->_name,
+                                'action' => 'add'
+                            )
+                        ), $this->view->getCibleText('button_add_news'), array('class' => 'action_submit add')
                     )
-                ),
+                );
+            $options = array(
+                'commands' => $commands,
                 'disable-export-to-excel' => 'true',
 //                    'filters' => array(
 //                        'productline-status-filter' => array(

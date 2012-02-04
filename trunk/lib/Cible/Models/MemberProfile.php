@@ -7,7 +7,7 @@
  * @category  Cible
  * @package   Cible_Models
  * @copyright Copyright (c) Cibles solutions d'affaires. (http://www.ciblesolutions.com)
- * @version   $Id: MemberProfile.php 692 2011-10-26 19:25:01Z ssoares $
+ * @version   $Id: MemberProfile.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**
@@ -26,10 +26,10 @@ class MemberProfile extends GenericProfile
         'company' => 'MP_CompanyName',
 //        'functionCompany' => 'MP_CompanyRole',
         'address' => 'MP_AddressId',
-        'addrBill'        => 'MP_BillingAddrId',
-        'addrShip'        => 'MP_ShippingAddrId',
+//        'addrBill'        => 'MP_BillingAddrId',
+ //       'addrShip'        => 'MP_ShippingAddrId',
 //        'hasAccount'      => 'MP_hasAccount',
-        'accountNum'       => 'MP_AccountNumber' ,
+ //       'accountNum'       => 'MP_AccountNumber' ,
 //        'noProvTax'       => 'MP_NoProvTax',
 //        'noFedTax'        => 'MP_NoFedTax',
         'password' => 'MP_Password',

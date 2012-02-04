@@ -1,5 +1,5 @@
 <?php
-    
+
     class FormBecomeClient extends Cible_Form
     {
         protected $_mode = 'add';
@@ -251,7 +251,7 @@
                 ->addDecorator('Label', array('class' => 'clear'));
 
             $french = array(
-                'badCaptcha'    => 'Veuillez saisir la cha�ne ci-dessus correctement.'
+                'badCaptcha'    => 'Veuillez saisir la chaîne ci-dessus correctement.'
             );
 
             $english = array(

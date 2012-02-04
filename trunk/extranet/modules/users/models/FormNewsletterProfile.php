@@ -8,7 +8,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FormNewsletterProfile.php 748 2012-01-04 22:06:29Z ssoares $id
+ * @version   $Id: FormNewsletterProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
@@ -20,7 +20,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FormNewsletterProfile.php 748 2012-01-04 22:06:29Z ssoares $id
+ * @version   $Id: FormNewsletterProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class FormNewsletterProfile extends Cible_Form
 {

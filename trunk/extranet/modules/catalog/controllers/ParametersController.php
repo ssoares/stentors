@@ -4,7 +4,7 @@
 *
 * PHP versions 5
 *
-* LICENSE: 
+* LICENSE:
 *
 * @category   Controller
 * @package    Default
@@ -585,7 +585,7 @@ class Catalog_ParametersController extends Cible_Controller_Block_Abstract
         /* If needs to add some data from other table, tests the joinTables
          * property. If not empty add tables and join clauses.
          */
-        $select = $this->_addJoinQuery($select, $params);        
+        $select = $this->_addJoinQuery($select, $params);
         // Set the the header of the list (columns name used to display the list)
         $field_list = $this->_colTitle;
         // Set the options of the list = links for actions (add, edit, delete...)
@@ -717,6 +717,10 @@ class Catalog_ParametersController extends Cible_Controller_Block_Abstract
                 switch ($action)
                 {
                     case 'add':
+                        $lang = $this->_getParam('lang');
+                        if (!empty ($lang))
+                        $langId = Cible_FunctionsGeneral::getLanguageID($lang);
+                        if ($langId == $this->_defaultEditLanguage)
                         $commands = array(
                             $this->view->link($this->view->url(
                                             array(

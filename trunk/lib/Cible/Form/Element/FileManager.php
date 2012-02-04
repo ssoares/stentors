@@ -8,7 +8,7 @@
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FileManager.php 581 2011-08-26 15:41:30Z ssoares $id
+ * @version   $Id: FileManager.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /** Zend_Form_Element_Xhtml */
@@ -22,7 +22,7 @@ require_once 'Zend/Form/Element/Text.php';
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: FileManager.php 581 2011-08-26 15:41:30Z ssoares $id
+ * @version   $Id: FileManager.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 class Cible_Form_Element_FileManager extends Zend_Form_Element_Hidden
 {
@@ -43,11 +43,18 @@ class Cible_Form_Element_FileManager extends Zend_Form_Element_Hidden
     {
         parent::__construct($spec, $options);
 
-        $this->associatedElement = $options['associatedElement'];
+        if(isset($options['associatedElement']))
+            $this->associatedElement = $options['associatedElement'] . "-";
+        else
+            $this->associatedElement = "";
         $this->displayElement    = $options['displayElement'];
         $this->pathTmp           = $options['pathTmp'];
         $this->contentID         = $options['contentID'];
         $this->setInit           = $options['setInit'];
+        
+      // var_dump($options);
+        
+        
     }
     /**
      * Render form element
@@ -68,9 +75,16 @@ class Cible_Form_Element_FileManager extends Zend_Form_Element_Hidden
             $this->setView($view);
         }
 
+        $pathV = "";
+        if($this->pathTmp!=""){
+            $pathV = "path : '{0}/videos',";
+        }
+        
         $content = '';
 
         $content .= "<script type='text/javascript'>\n";
+        
+         //'
         if ($this->setInit)
         {
             $content .= "mcFileManager.init({\n";
@@ -86,16 +100,16 @@ class Cible_Form_Element_FileManager extends Zend_Form_Element_Hidden
         }
         $content .= "function separateFile_" . $this->displayElement . "(){\n";
         $content .= "document.getElementById('" . $this->getId() . "').value = '';\n";
-        $content .= "$('#" . $this->associatedElement . "-" .$this->displayElement . "').each(function(){\n$(this).val('')\n});\n";
+        $content .= "$('#" . $this->associatedElement . $this->displayElement . "').each(function(){\n$(this).val('')\n});\n";
         $content .= "}\n";
         $content .= "function customInsert_" . $this->displayElement . " (data) {\n";
         $content .= "document.getElementById('" . $this->getId() . "').value = data.files[0].url;\n";
-        $content .= "document.getElementById('" . $this->associatedElement . "-" .$this->displayElement . "').value = data.files[0].name;\n";
+        $content .= "document.getElementById('" . $this->associatedElement . $this->displayElement . "').value = data.files[0].name;\n";
         $content .= "}\n";
         $content .= "</script>\n";
-        $content .= "<input id='" . $this->associatedElement . "-" .$this->displayElement . "' class='stdTextInput' name='" . $this->associatedElement . "[" . $this->displayElement . "]" . "' value='' />";
+        $content .= "<input id='" . $this->associatedElement . $this->displayElement . "' class='stdTextInput' name='" . $this->associatedElement . "[" . $this->displayElement . "]" . "' value='' />";
         $content .= "<a href=\"javascript:;\"
-            onclick=\"mcFileManager.browse({oninsert: customInsert_" . $this->displayElement . "});\">
+            onclick=\"mcFileManager.browse({" . $pathV . " oninsert: customInsert_" . $this->displayElement . "});\">
                         [Parcourir]
                     </a>";
         $content .=  "&nbsp;&nbsp;<img class='action_icon' alt='Supprimer' src='".$_baseUrl."/icons/del_icon_16x16.png'

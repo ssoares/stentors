@@ -239,11 +239,11 @@
                 } else if (data.type == 'audio') {
                     if (data.video.sources[0])
                         setVal('src', data.video.sources[0].src);
-                    
+
                     src = data.video.sources[1];
                     if (src)
                         setVal('audio_altsource1', src.src);
-                    
+
                     src = data.video.sources[2];
                     if (src)
                         setVal('audio_altsource2', src.src);
@@ -260,7 +260,7 @@
 				}
 			} else {
 				src = getVal("src");
-	
+
 				// YouTube
 				if (src.match(/youtube.com(.+)v=([^&]+)/)) {
 					data.width = 425;
@@ -298,13 +298,13 @@
                 } else if (data.type == 'audio') {
                     if (!data.video.sources)
                         data.video.sources = [];
-                    
+
                     data.video.sources[0] = {src : src};
-                    
+
                     src = getVal("audio_altsource1");
                     if (src)
                         data.video.sources[1] = {src : src};
-                    
+
                     src = getVal("audio_altsource2");
                     if (src)
                         data.video.sources[2] = {src : src};
@@ -367,11 +367,31 @@
 			if (typeof(tinyMCEMediaList) != "undefined" && tinyMCEMediaList.length > 0) {
 				var html = "";
 
-				html += '<select id="linklist" name="linklist" style="width: 250px" onchange="this.form.src.value=this.options[this.selectedIndex].value;Media.formToData(\'src\');">';
+                                html += '<select id="linklist" name="linklist" style="width: 250px" onchange="Media._setValues(this)">';
 				html += '<option value="">---</option>';
 
 				for (var i=0; i<tinyMCEMediaList.length; i++)
-					html += '<option value="' + tinyMCEMediaList[i][1] + '">' + tinyMCEMediaList[i][0] + '</option>';
+                                {
+                                    var value = "";
+                                    value = tinyMCEMediaList[i][1][0][0] + "||";
+                                    value += tinyMCEMediaList[i][1][0][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][1][0] + "||";
+                                    value += tinyMCEMediaList[i][1][1][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][2][0] + "||";
+                                    value += tinyMCEMediaList[i][1][2][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][3][0] + "||";
+                                    value += tinyMCEMediaList[i][1][3][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][4][0] + "||";
+                                    value += tinyMCEMediaList[i][1][4][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][5][0] + "||";
+                                    value += tinyMCEMediaList[i][1][5][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][6][0] + "||";
+                                    value += tinyMCEMediaList[i][1][6][1] + "|||";
+                                    value += tinyMCEMediaList[i][1][7][0] + "||";
+                                    value += tinyMCEMediaList[i][1][7][1];
+
+                                    html += '<option value="' + value + '">' + tinyMCEMediaList[i][0] + '</option>';
+                                }
 
 				html += '</select>';
 
@@ -379,7 +399,68 @@
 			}
 
 			return "";
-		}
+		},
+                _setValues: function(obj){
+                    var params = obj.options[obj.selectedIndex].value.split('|||');
+//                    console.log(data.video.attrs);
+
+                    for (var i=0; i<params.length; i++)
+                    {
+                        var pair = params[i].split('||');
+                        var key = pair[0];
+                        var value = pair[1];
+
+                        switch (key) {
+                            /*case 'VI_MP4':
+                                setVal('src', value);
+                                Media.formToData('src');
+                                break;*/
+                            case 'V_Width':
+                                setVal('width', value);
+//                                Media.formToData('width');
+
+                                break;
+                            case 'V_Height':
+                                setVal('height', value);
+//                                Media.formToData('height');
+
+                                break;
+                            case 'V_Autoplay':
+                                var checked = 'false';
+                                if (value == '1')
+                                    checked = 'true';
+                                setVal('video_autoplay', checked);
+                                Media.formToData();
+
+                                break;
+                            case 'VI_Name':
+//                                setVal('id', value);
+//                                setVal('name', value);
+//                                Media.formToData();
+
+                                break;
+                            case 'VI_WEBM':
+                                setVal('video_altsource1', value);
+                                Media.formToData();
+
+                                break;
+                            case 'VI_OGG':
+                                setVal('video_altsource2', value);
+                                Media.formToData();
+
+                                break;
+                            case 'VI_Poster':
+                                setVal('video_poster', value);
+                                Media.formToData();
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    setVal('video_controls', 'true');
+
+                }
 	};
 
 	tinyMCEPopup.requireLangPack();

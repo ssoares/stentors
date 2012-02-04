@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: 209.222.235.12:3306
--- Version SVN: $Id: moduleFormsCreate.sql 824 2012-02-01 01:21:12Z ssoares $
+-- Version SVN: $Id: moduleFormsCreate.sql 826 2012-02-01 04:15:13Z ssoares $
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -19,8 +19,8 @@ INSERT INTO ModuleViewsIndex (MVI_ModuleViewsID, MVI_LanguageID, MVI_ActionName)
 (11001, 1,'forms-contact'),
 (11001, 2,'forms-contact');
 
-UPDATE  `edith`.`Static_Texts` SET  `ST_Type` =  'cible'
-WHERE  `Static_Texts`.`ST_Identifier` =  'newsletter_captcha_label' LIMIT 1 ;
+REPLACE INTO `NotificationManagerData` (`NM_ID`, `NM_ModuleId`, `NM_Event`, `NM_Type`, `NM_Recipient`, `NM_Active`, `NM_Message`, `NM_Title`, `NM_Email`) VALUES
+(11, 11, 'contact', 'email', 'admin', 1, 'contact_form_notification_admin_message', 'contact_form_notification_admin_title', 'francis.raynolds@ciblesolutions.com');
 
 REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`, `ST_Desc_backend`, `ST_Editable`, `ST_ModuleID`, `ST_ModifDate`) VALUES
 ('contact_form_notification_admin_message', 1, "Un message vous a été envoyé via votre site Internet ##siteDomain##<br /><br />
@@ -39,5 +39,9 @@ REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`
 ('form_label_comments', '2', 'Comments', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
 ('message_contact_succeed', '1', 'Votre message a été envoyé! Merci de votre intérêt.', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
 ('message_contact_succeed', '2', 'Your message has been sent! Thank you for your interest.', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
+('newsletter_captcha_label', '1', '<br /><br />Pour des raisons de sécurité, veuillez entrer les caractères alphanumériques de l''image dans l''espace ci-dessous..', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
+('newsletter_captcha_label', '2', '<br /><br />For security reasons, please enter the alphanumeric <br />characters from the image into the space below.', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
+('button_captcha_refresh', '1', 'Rafraîchir', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
+('button_captcha_refresh', '2', 'Refresh', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
 ('forms_label_surname', '1', 'Prénom', 'cible', '', '0', '11', CURRENT_TIMESTAMP),
 ('forms_label_surname', '2', 'First name', 'cible', '', '0', '11', CURRENT_TIMESTAMP);

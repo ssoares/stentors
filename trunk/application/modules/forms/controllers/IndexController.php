@@ -61,7 +61,7 @@ class Forms_IndexController extends Cible_Controller_Action
                     if (!empty($mailTo))
                         $options['to'] = $mailTo;
 
-                    $oNotification = new Cible_NotificationManager($options);
+                    $oNotification = new Cible_Notifications_Email($options);
 
                     $this->view->assign('inscriptionValidate', true);
                 }

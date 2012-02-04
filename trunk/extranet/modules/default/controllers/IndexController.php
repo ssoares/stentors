@@ -6,13 +6,7 @@ class IndexController extends Cible_Extranet_Controller_Action
 {
     function indexAction()
     {
-        $hasProfile = false;
-        $modProfile = Cible_FunctionsModules::modulesProfile();
-
-        if (count($modProfile) > 0)
-            $hasProfile = true;
-
-        $this->view->assign('hasProfile', $hasProfile);
+      
 
     }
 

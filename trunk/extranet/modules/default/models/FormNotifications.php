@@ -1,76 +1,41 @@
 <?php
 
-class FormNotifications extends Cible_Form
+class FormNotifications extends Cible_Form_GenerateForm
 {
 
     public function __construct($options = null)
     {
+        if (!empty($options['object']))
+        {
+            $this->_object = $options['object'];
+            unset($options['object']);
+        }
         // variable
         parent::__construct($options);
-        $baseDir = $options['baseDir'];
-        if (array_key_exists('profile', $options))
-            $profile = $options['profile'];
-        else
-            $profile = false;
 
+        $titleEditor = new Cible_Form_Element_Editor(
+            'ST_ValueTitle', array('mode' => Cible_Form_Element_Editor::ADVANCED));
+        $titleEditor->setLabel(
+                $this->getView()->getCibleText('form_legend_blockData'))
+            ->setAttrib('class','largeEditor')
+            ->setOrder(9);
 
-        // Module id
-        $moduleId = new Zend_Form_Element_Select('NM_ModuleId');
-        $moduleId->setLabel($this->getView()->getCibleText('form_label_module'))
-            ->setRequired(true)
-            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
-            ->setAttrib('class', 'stdSelect');
-        $modules = Cible_FunctionsModules::getModulesList();
+        $label = $titleEditor->getDecorator('label');
+        $label->setOption('class',  $this->_labelCSS);
 
-        $this->addElement($moduleId);
+        $this->addElement($titleEditor);
 
-        // Trigger event
-        $event = new Zend_Form_Element_Text('NM_Event');
-        $event->setLabel($this->getView()->getCibleText('form_label_event'))
-            ->setRequired(true)
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim')
-            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
-            ->setAttrib('class', 'stdTextInput');
+        $textEditor = new Cible_Form_Element_Editor(
+            'ST_ValueText', array('mode' => Cible_Form_Element_Editor::ADVANCED));
+        $textEditor->setLabel(
+                $this->getView()->getCibleText('form_legend_blockData'))
+            ->setAttrib('class','largeEditor')
+            ->setOrder(7);
 
-        $this->addElement($event);
+        $label = $textEditor->getDecorator('label');
+        $label->setOption('class',  $this->_labelCSS);
 
-        // Recipient
+        $this->addElement($textEditor);
 
-        $recipient = new Zend_Form_Element_Text('NM_Recipient');
-        $recipient->setLabel($this->getView()->getCibleText('form_label_recipient'))
-            ->setRequired(true)
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim')
-            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
-            ->setAttrib('class', 'stdTextInput');
-
-        $this->addElement($recipient);
-
-        // Static text identifier for message
-        $identifier = new Zend_Form_Element_Text('NM_Message');
-        $identifier->setLabel($this->getView()->getCibleText('form_label_username'))
-            ->setRequired(true)
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim')
-            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
-            ->setAttrib('class', 'stdTextInput')
-            ->setAttrib('autocomplete', 'on');
-
-        $this->addElement($identifier);
-
-        // Static text identifier for the title
-        $titleId = new Zend_Form_Element_Text('NM_Title');
-        $titleId->setLabel($this->getView()->getCibleText('form_label_title'))
-            ->addFilter('StripTags')
-            ->addFilter('StringTrim')
-            ->setAttrib('class', 'stdTextInput')
-            ->setAttrib('autocomplete', 'on');
-        ;
-
-        $this->addElement($titleId);
-
-        
     }
-
 }

@@ -7,7 +7,7 @@
  * @subpackage Cible
  * @copyright  Copyright (c) 2009 Cible Solutions d'affaires
  *             (http://www.ciblesolutions.com)
- * @version    $Id: FunctionsGeneral.php 731 2011-12-09 19:43:39Z ssoares $
+ * @version    $Id: FunctionsGeneral.php 826 2012-02-01 04:15:13Z ssoares $
  */
 
 /**
@@ -654,6 +654,7 @@ abstract class Cible_FunctionsGeneral
             //echo("deleteFile : " . $file . "<br/>");
         }
         if(file_exists($dir)){
+            echo $dir;
             rmdir($dir);
         }
         //echo("deleteDir : " . $dir . "<br/>");

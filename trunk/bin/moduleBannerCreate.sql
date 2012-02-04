@@ -1,5 +1,4 @@
--- Version SVN: $Id: moduleBannerCreate.sql 824 2012-02-01 01:21:12Z ssoares $
-
+-- Version SVN: $Id: moduleBannerCreate.sql 826 2012-02-01 04:15:13Z ssoares $
 DROP TABLE IF EXISTS `BannerGroup`;
 CREATE TABLE  `BannerGroup` (
   `BG_ID` INT(5) NOT NULL AUTO_INCREMENT ,
@@ -22,12 +21,13 @@ CREATE TABLE  `BannerImageIndex` (
   `BII_BannerImageID` INT(5) NOT NULL ,
   `BII_LanguageID` INT(2) NOT NULL DEFAULT  '1',
   `BII_Text` TEXT NULL ,
+  `BII_Url` VARCHAR( 255 ) NULL,
   PRIMARY KEY (  `BII_ID` )
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `BannerFeaturedData` (
 `BF_ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`BF_Name` VARCHAR( 50 ) NOT NULL 
+`BF_Name` VARCHAR( 50 ) NOT NULL
 ) ENGINE = MYISAM ;
 
 CREATE TABLE `BannerFeaturedIndex` (
@@ -40,7 +40,7 @@ CREATE TABLE `BannerFeaturedImageData` (
 `IF_ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `IF_ImgID` INT( 11 ) NOT NULL COMMENT 'Cet id est la position de l''image dans la bannière',
 `IF_DataID` INT( 11 ) NOT NULL COMMENT 'Id de la bannière parent (BF_ID)',
-`IF_Img` VARCHAR( 255 ) NULL 
+`IF_Img` VARCHAR( 255 ) NULL
 ) ENGINE = MYISAM ;
 
 CREATE TABLE `BannerFeaturedImageIndex` (
@@ -48,6 +48,10 @@ CREATE TABLE `BannerFeaturedImageIndex` (
 `IFI_LanguageID` INT NOT NULL ,
 `IFI_Label` VARCHAR( 255 ) NULL ,
 `IFI_Url` VARCHAR( 255 ) NULL ,
+`IFI_Text1` TEXT NULL ,
+`IFI_Text2` TEXT NULL ,
+`IFI_Video` INT NOT NULL DEFAULT  '0',
+`IFI_UrlVideo` INT NOT NULL DEFAULT  '0',
 PRIMARY KEY ( `IFI_ImgDataID` , `IFI_LanguageID` )
 ) ENGINE = MYISAM ;
 
@@ -57,7 +61,7 @@ INSERT INTO `Modules` (`M_ID` ,`M_Title` ,`M_MVCModuleTitle`) VALUES
 INSERT INTO  `Modules_ControllersActionsPermissions` (`MCAP_ID` ,`MCAP_ModuleID` ,`MCAP_ControllerTitle` ,`MCAP_ControllerActionTitle` ,`MCAP_PermissionTitle` ,`MCAP_Position`) VALUES
 (NULL ,  '18',  'index',  'list-group',  'edit',  '1'),
 (NULL ,  '18',  'index',  'list-images',  'edit',  '2'),
-(NULL ,  '18',  'featured',  'list',  'edit',  '2');
+(NULL ,  '18',  'featured',  'list',  'edit',  '3');
 
 INSERT INTO `ModuleViews` (`MV_ID`, `MV_Name`, `MV_ModuleID`) VALUES
 (18001, 'index', 18),
@@ -116,7 +120,7 @@ REPLACE INTO `Static_Texts` (`ST_Identifier` ,`ST_LangID` ,`ST_Value` ,`ST_Type`
 ('header_add_list_group_text', '2', 'Add a group of banner', 'cible', '', 0, 18),
 ('header_add_list_group_description', '1', 'Cette page permet d''ajouter un groupe de bannière. ', 'cible', '', 0, 18),
 ('header_add_list_group_description', '2', 'This page allows you to add a new group banner.', 'cible', '', 0, 18),
-('header_edit_list_group_description', '1', 'Cette page permet de modifier un groupe de bannière.', 'cible', '', 0, 18), 
+('header_edit_list_group_description', '1', 'Cette page permet de modifier un groupe de bannière.', 'cible', '', 0, 18),
 ('header_edit_list_group_description', '2', 'This page allows you to modify a new group banner.', 'cible', '', 0, 18),
 ('header_edit_list_group_text', '1', 'Modifier le groupe de bannière', 'cible', '', 0, 18),
 ('header_edit_list_group_text', '2', 'Modify the group of banner', 'cible', '', 0, 18),
@@ -188,7 +192,7 @@ REPLACE INTO `Static_Texts` (`ST_Identifier` ,`ST_LangID` ,`ST_Value` ,`ST_Type`
 ('header_add_featured_text', '2', 'Add a banner', 'cible', '', 0, 18),
 ('header_add_featured_description', '1', 'Cette page permet d''ajouter une bannière pour mettre en vedette des produits ou des collections. ', 'cible', '', 0, 18),
 ('header_add_featured_description', '2', 'This page allows you to add a new banner.', 'cible', '', 0, 18),
-('header_edit_featured_description', '1', 'Cette page permet de modifier une bannière et les images qui y sont présentées.', 'cible', '', 0, 18), 
+('header_edit_featured_description', '1', 'Cette page permet de modifier une bannière et les images qui y sont présentées.', 'cible', '', 0, 18),
 ('header_edit_featured_description', '2', 'This page allows you to modify a new banner and the associated images.', 'cible', '', 0, 18),
 ('header_edit_featured_text', '1', 'Modifier la bannière', 'cible', '', 0, 18),
 ('header_edit_featured_text', '2', 'Modify the banner', 'cible', '', 0, 18),
@@ -208,5 +212,15 @@ REPLACE INTO `Static_Texts` (`ST_Identifier` ,`ST_LangID` ,`ST_Value` ,`ST_Type`
 ('delete_featured_banners_noexist', '2', 'No data for this id.', 'cible', '', 0, 18),
 ('form_select_option_view_banners_featured', '1', 'Bannière mis en vedette', 'cible', '', 0, 18),
 ('form_select_option_view_banners_featured', '2', 'Banner for featured products', 'cible', '', 0, 18),
+('form_label_text_1', '1', 'Texte 1', 'cible', '', '0', '18'),
+('form_label_text_1', '2', 'Text 1', 'cible', '', '0', '18'),
+('form_label_text_2', '1', 'Texte 2', 'cible', '', '0', '18'),
+('form_label_text_2', '2', 'Text 2', 'cible', '', '0', '18'),
+('form_label_video', '1', 'Vidéo', 'cible', '', '0', '18'),
+('form_label_video', '2', 'Video', 'cible', '', '0', '18'),
+('extranet_form_label_url', '1', 'Vers l''url', 'cible', '', '0', '18'),
+('extranet_form_label_url', '2', 'To the url', 'cible', '', '0', '18'),
+('extranet_form_label_video', '1', 'Ouvrir le video', 'cible', '', '0', '18'),
+('extranet_form_label_video', '2', 'Open the video', 'cible', '', '0', '18'),
 ('form_select_option_view_banners_index', '1', 'Bannière standard', 'cible', '', 0, 18),
 ('form_select_option_view_banners_index', '2', 'Standard banner', 'cible', '', 0, 18);
