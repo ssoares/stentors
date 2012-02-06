@@ -27,7 +27,7 @@ class ReferencesObject extends DataObject
 
     protected $_indexClass      = 'ReferencesIndex';
     protected $_indexLanguageId = 'RI_LanguageID';
-//    protected $_constraint      = '';
+    protected $_constraint      = '';
 
     function getValueById($id)
     {

@@ -116,3 +116,21 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('form_enum_section', 2, 'Section', 'cible', '', 0, 0),
 ('form_enum_diseases', 1, 'Maladies', 'cible', '', 0, 0),
 ('form_enum_diseases', 2, 'Diseases', 'cible', '', 0, 0);
+
+ALTER TABLE Modules ADD `M_HasFrontEnd` tinyint(1) NOT NULL default 1;
+
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, `ST_ModuleID`) VALUES
+('profile_tab_title_member', '1', 'Membre', 'cible', '', '0', '30'),
+('profile_tab_title_member', '2', 'Member', 'cible', '', '0', '30'),
+('parent_module_name', 1, 'Parent', 'cible', '', 0, 999),
+('parent_module_name', 2, 'Parent', 'cible', '', 0, 999),
+('member_module_name', 1, 'Membre', 'cible', '', 0, 30),
+('member_module_name', 2, 'Member', 'cible', '', 0, 30),
+('salutation_melle', 1, 'Mlle', 'cible', '', 0, 0),
+('salutation_melle', 2, 'Miss', 'cible', '', 0, 0);
+
+REPLACE INTO Modules (M_ID, M_Title, M_MVCModuleTitle, M_UseProfile) VALUES (31, 'Parents', 'parent', 1);
+
+REPLACE INTO Modules_ControllersActionsPermissions (MCAP_ModuleID, MCAP_ControllerTitle, MCAP_ControllerActionTitle, MCAP_PermissionTitle, MCAP_Position) VALUES
+(30, 'index', 'list', 'edit', 1);
+(31, 'index', 'list', 'edit', 1);

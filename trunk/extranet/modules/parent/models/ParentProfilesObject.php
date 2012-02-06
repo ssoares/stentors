@@ -21,10 +21,10 @@
  * @license   Empty
  * @version   $Id: MemberProfilesObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
-class MemberProfilesObject extends DataObject
+class ParentProfilesObject extends DataObject
 {
 
-    protected $_dataClass   = 'MemberProfilesData';
+    protected $_dataClass   = 'ParentProfilesData';
 //    protected $_dataId      = '';
 //    protected $_dataColumns = array();
 
@@ -32,8 +32,8 @@ class MemberProfilesObject extends DataObject
 //    protected $_indexId         = '';
     protected $_indexLanguageId = '';
 //    protected $_indexColumns    = array();
-    protected $_constraint      = 'GP_MemberID';
-    protected $_foreignKey      = 'MP_GenericProfileId';
+    protected $_constraint      = '';
+    protected $_foreignKey      = 'PP_GenericProfileId';
 
     public function save($id, $data, $langId)
     {
@@ -63,17 +63,6 @@ class MemberProfilesObject extends DataObject
             $data['MP_ShippingAddrId'] = $shipId;
         }
 
-//        $date = new Zend_Date();
-//        $birthDate = new Zend_Date($data['MP_BirthDate']);
-//        $dt = $birthDate->get();
-//        $test =
-//        echo "<pre>";
-//print_r($dt);
-//echo "</pre>";
-//exit;
-//        $data['MP_Age'] = $years;
-//        $years = $diff->toString();
-//        $years = $date->sub($birthDate, );
         parent::save($id, $data, $langId);
     }
 
@@ -83,33 +72,20 @@ class MemberProfilesObject extends DataObject
         $shipAddr = array();
         $oAddress = new AddressObject();
         $langId   = Zend_Registry::get('languageID');
-
         $data = parent::findData($filters);
-
         if (!empty($data))
         {
             $data = $data[0];
-//            $billId = $data['MP_BillingAddrId'];
-//            $shipId = $data['MP_ShippingAddrId'];
-//
-//            if (!empty($shipId))
-//            {
-//                $shipAddr = $oAddress->getAll($langId, true, $shipId);
-//                $shipAddr = $shipAddr[0];
-//                $shipAddr['MP_ShippingAddrId'] = $shipId;
-//            }
-//
-//            if (!empty($billId))
-//            {
-//                $billAddr = $oAddress->getAll($langId, true, $billId);
-//                $billAddr = $billAddr[0];
-//                $billAddr['MP_BillingAddrId'] = $billId;
-//            }
-//
-//            if (isset($shipAddr['A_Duplicate']) && !$shipAddr['A_Duplicate'])
-//                $shipAddr['duplicate'] = 0;
-//
-//            $data['addressFact'] = $billAddr;
+            $billId = $data['PP_AddressId'];
+
+            if (!empty($billId))
+            {
+                $billAddr = $oAddress->getAll($langId, true, $billId);
+                $billAddr = $billAddr[0];
+                $billAddr['PP_AddressId'] = $billId;
+            }
+
+            $data['addressFact'] = $billAddr;
 //            $data['addressShipping'] = $shipAddr;
         }
 

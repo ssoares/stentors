@@ -130,7 +130,11 @@ class Page_ManageController extends Cible_Extranet_Controller_Module_Action
 
             // Load the modules in the view
             $Modules = new Modules();
-            $modules = $Modules->fetchAll();
+            $select = $Modules->select()->setIntegrityCheck(false)
+                ->from('Modules')
+                ->where('M_HasFrontend = ?', 1);
+
+            $modules = $Modules->fetchAll($select);
             $this->view->assign('modules', $modules->toArray());
         }
         else{
@@ -671,7 +675,7 @@ class Page_ManageController extends Cible_Extranet_Controller_Module_Action
                     $rowPageIndex->PI_PageID = $NewPageID;
                     $rowPageIndex->PI_LanguageID = $this->_config->defaultEditLanguage;
 
-                    //Insérer seulement dans la version de la langue en cours, les données saisies par l'usager
+                    //Insï¿½rer seulement dans la version de la langue en cours, les donnï¿½es saisies par l'usager
 
                     $rowPageIndex->PI_PageIndex         = $form->getValue('PI_PageIndex');
                     $rowPageIndex->PI_PageTitle         = $form->getValue('PI_PageTitle');
@@ -815,8 +819,8 @@ class Page_ManageController extends Cible_Extranet_Controller_Module_Action
 
                         if (!empty($formData['PI_AltPremiereImage']))
                             $Page['PI_AltPremiereImage'] = $formData['PI_AltPremiereImage'];
-                        
-                        
+
+
                         $Page->save();
 
                     } else {
@@ -831,10 +835,10 @@ class Page_ManageController extends Cible_Extranet_Controller_Module_Action
                             'PI_MetaDescription' => $formData['PI_MetaDescription'],
                             'PI_MetaKeywords' => $formData['PI_MetaKeywords'],
                             'PI_MetaOther' => $formData['PI_MetaOther'],
-                            'PI_TitleImageSrc' => $formData['PI_TitleImageSrc'],                           
+                            'PI_TitleImageSrc' => $formData['PI_TitleImageSrc'],
                             'PI_AltPremiereImage' => $formData['PI_AltPremiereImage']
-                            
-                            
+
+
                         );
 
                         $this->_db->insert('PagesIndex', $data);

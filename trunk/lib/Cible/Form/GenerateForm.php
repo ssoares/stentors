@@ -4,7 +4,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
 {
     protected $_elemNameId = '';
     protected $_srcData = array();
-    
+
     public function autoGenerate()
     {
         $metaData = array();
@@ -94,10 +94,8 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     if (empty($params['src']))
                         throw new Exception ('Trying to build an element but no data source given');
 
-                    $srcName = $params['src'];
-                    $srcData = '_' . $srcName . 'Src';
-                    $this->_srcData = array();
-                    $this->$srcData($meta);
+                    $this->_defineSrc($params, $meta);
+
                     $element = new Zend_Form_Element_Select($fieldId);
                     $element->setLabel($this->getView()->getCibleText('form_label_' . $fieldId))
                         ->setAttrib('class', 'largeSelect')
@@ -113,13 +111,17 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     ));
                     break;
                 case 'radio':
+
+                    $this->_defineSrc($params, $meta);
+
                     $element = new Zend_Form_Element_Radio($fieldId);
                     $element->setLabel($this->getView()->getCibleText('form_label_' . $fieldId));
                     $element->setDecorators(array(
                         'ViewHelper',
                         array('label', array('placement' => 'append')),
-                        array(array('row' => 'HtmlTag'), array('tag' => 'dd', 'class' => 'label_after_checkbox')),
-                    ));
+                        array(array('row' => 'HtmlTag'), array('tag' => 'dd', 'class' => 'radio radioInline')),
+                        ))
+                        ->addMultiOptions($this->_srcData);
                     break;
                 case 'multi-checkbox':
 
@@ -201,7 +203,25 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
      */
     public function setElementText(Array $meta, Array $params)
     {
+        switch ($params['elem'])
+        {
+            case 'tiny':
+                $element = new Cible_Form_Element_Editor(
+                    $meta['COLUMN_NAME'],
+                    array('mode'=>Cible_Form_Element_Editor::ADVANCED));
+                $element->setLabel($this->getView()->getCibleText('form_label_' . $meta['COLUMN_NAME']))
+                    ->setAttrib('class','mediumEditor');
+                break;
 
+            default:
+                $element = new Zend_Form_Element_Textarea($meta['COLUMN_NAME']);
+                $element->setLabel($this->getView()->getCibleText('form_label_' . $meta['COLUMN_NAME']))
+                    ->setAttrib('class','mediumEditor');
+                break;
+        }
+        $label = $element->getDecorator('Label');
+        $label->setOption('class', $this->_labelCSS);
+        $this->addElement($element);
     }
 
     /**
@@ -237,7 +257,8 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                         )
                     )
                 );
-
+        
+          if (!empty($params['validate']))
           $date->addValidator('Date',
               true,
               array(
@@ -301,5 +322,18 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
         }
 
         return $validators;
+    }
+
+    private function _defineSrc($params, $meta)
+    {
+        $srcName = $params['src'];
+        $srcMethod = '_' . $srcName . 'Src';
+        $this->_srcData = array();
+        if (!in_array($srcMethod, get_class_methods($this)))
+        {
+            $this->_srcData = $this->_object->$srcMethod($meta);
+        }
+        else
+            $this->$srcData($meta);
     }
 }
