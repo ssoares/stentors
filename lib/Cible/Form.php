@@ -45,6 +45,7 @@ class Cible_Form extends Zend_Form
     public function __construct($options = null)
     {
         parent::__construct($options);
+
         //$token   = new Zend_Form_Element_Hash('token',array('salt' => srand()));
         //$this->addElement($token);
         $this->setMethod('post');
@@ -125,9 +126,9 @@ class Cible_Form extends Zend_Form
                 'fieldset',
                 array(array('outerHtmlTag' => 'HtmlTag'), array('tag' => 'dd'))
             ));
-            if (!empty($this->_object))
-                $this->autoGenerate();
         }
+        if (!empty($this->_object))
+            $this->autoGenerate();
     }
 
     /**

@@ -88,6 +88,14 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                     case 'retailers':
                         $this->_objectList[$value] = 'RetailersObject';
                         break;
+                    case 'member':
+                        $this->_objectList[$value] = 'MemberProfilesObject';
+//                        $this->_joinTables[] = $this->_objectList[$value];
+                        break;
+                    case 'parent':
+                        $this->_objectList[$value] = 'ParentProfilesObject';
+//                        $this->_joinTables[] = $this->_objectList[$value];
+                        break;
 
                     default:
                         break;
@@ -140,7 +148,9 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 'GP_Email'     => array('width' => '300px')
                 );
 
-            $this->_joinTables = array();
+//            foreach ($this->_objectList as $key => $object)
+//                if ($key != $this->_currentAction)
+//                    $this->_joinTables[] = $object;
 
             if($getParams)
             {
@@ -176,13 +186,13 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 'NP_Categories' => array('width' => '150px')
                 );
 
-            $this->_joinTables = array('GenericProfiles');
+//            $this->_joinTables = array('GenericProfiles');
 
             if($getParams)
             {
                 $params = array(
                     'columns'    => $this->_colTitle,
-                    'joinTables' => $this->_joinTables,
+//                    'joinTables' => $this->_joinTables,
                     'formName' => 'FormNewsletterProfile');
 
                 return $params;
@@ -207,15 +217,66 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
      *
      * @return void
      */
-    public function detailsAction($getParams = false)
+
+    /**
+     * Allocates action for profiles of member.<br />
+     * Prepares data utilized to activate controller actions.
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function memberAction($getParams = false)
     {
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
+
 //            $this->_disableExportToExcel = true;
             $this->_constraint = '';
             $this->_colTitle = array(
-                'MP_GenericProfileId'  => array('width' => '150px'),
-                'MP_Company' => array('width' => '150px')
+                'MP_GenericProfileId'  => array('width' => '150px')
+                );
+
+//            $this->_joinTables = array('GenericProfile');
+
+            if($getParams)
+            {
+                $params = array(
+                    'columns'    => $this->_colTitle,
+//                    'joinTables' => $this->_joinTables,
+                    'formName' => 'FormMemberProfile');
+
+                return $params;
+            }
+
+            $this->_formName = 'FormMemberProfile';
+//            $this->_oMember = new MemberProfilesObject();
+            if($this->_isXmlHttpRequest && $this->_request->isPost())
+            {
+                $_POST['MP_GenericProfileId'] = $this->_genericId;
+//                if ($this->_actionKey == 'add')
+//                    $_POST['MP_Status'] = -1;
+            }
+            $this->_redirectAction();
+        }
+    }
+    /**
+     * Allocates action for profiles of parents.<br />
+     * Prepares data utilized to activate controller actions.
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function parentAction($getParams = false)
+    {
+        if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
+        {
+
+//            $this->_disableExportToExcel = true;
+            $this->_constraint = '';
+            $this->_colTitle = array(
+                'PP_GenericProfileId'  => array('width' => '150px')
                 );
 
             $this->_joinTables = array('GenericProfile');
@@ -225,14 +286,19 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 $params = array(
                     'columns'    => $this->_colTitle,
                     'joinTables' => $this->_joinTables,
-                    'formName' => 'FormMembersProfile');
+                    'formName' => 'FormParentProfile');
 
                 return $params;
             }
 
-            $this->disableLayout();
-            $this->disableView();
-            $this->_formName = 'FormMembersProfile';
+            $this->_formName = 'FormParentProfile';
+//            $this->_oMember = new MemberProfilesObject();
+            if($this->_isXmlHttpRequest && $this->_request->isPost())
+            {
+                $_POST['PP_GenericProfileId'] = $this->_genericId;
+//                if ($this->_actionKey == 'add')
+//                    $_POST['MP_Status'] = -1;
+            }
             $this->_redirectAction();
         }
     }
@@ -363,6 +429,9 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
          * property. If not empty add tables and join clauses.
          */
         $select = $this->_addJoinQuery($select, $params);
+        echo "<pre>";
+print_r($select->assemble());
+echo "</pre>";
         // Set the the header of the list (columns name used to display the list)
         $field_list = $this->_colTitle;
         // Set the options of the list = links for actions (add, edit, delete...)
@@ -414,13 +483,27 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                                 . $formData[$this->_imageSrc];
             }
 
-            $returnUrl = $this->_moduleTitle
-                . "/" . $this->_name . "/" . $this->_currentAction . "/";
+        $cancelUrl    = $baseDir;
+        $returnModule = $this->_getParam('returnModule');
+        $returnAction = $this->_getParam('returnAction');
+        if (!empty($returnModule))
+            $cancelUrl .= $returnModule . '/';
+        else
+            $cancelUrl .= $this->_moduleTitle . "/";
+
+        $cancelUrl .= $this->_name . "/";
+
+        if (!empty($returnAction))
+            $cancelUrl .= $returnAction . '/';
+        else
+            $cancelUrl .= 'general/';
+
+        $cancelUrl .= "page/" . $page;
 
             // generate the form
             $form = new $this->_formName(array(
                         'baseDir'    => $baseDir,
-                        'cancelUrl'  => "$baseDir$returnUrl",
+                        'cancelUrl'  => $cancelUrl,
                         'moduleName' => $this->_moduleTitle . "/"
                             . $this->_objectList[$this->_currentAction],
                         'imageSrc'   => $imageSrc,
@@ -585,12 +668,23 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
         $page     = (int) $this->_getParam('page');
 
         $baseDir      = $this->view->baseUrl() . "/";
-        $returnAction = $this->_getParam('return');
-        $cancelUrl    = $baseDir
-                . $this->_moduleTitle . "/"
-                . $this->_name . "/"
-                . 'general'
-                . "/page/" . $page;
+        $cancelUrl    = $baseDir;
+        $returnModule = $this->_getParam('returnModule');
+        $returnAction = $this->_getParam('returnAction');
+        if (!empty($returnModule))
+            $cancelUrl .= $returnModule . '/';
+        else
+            $cancelUrl .= $this->_moduleTitle . "/";
+
+        $cancelUrl .= $this->_name . "/";
+
+        if (!empty($returnAction))
+            $cancelUrl .= $returnAction . '/';
+        else
+            $cancelUrl .= 'general/';
+
+        $cancelUrl .= "page/" . $page;
+
         $config = Zend_Registry::get('config');
         $current_state = $config->address->default->states;
         $currentCity = '';
@@ -733,7 +827,6 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 {
                     $obj = new $objName();
                     $isActive = $obj->findData(array($obj->getForeignKey() => $id));
-
                     $status = null;
                     if (isset ($isActive['MP_Status']))
                         $status = $isActive['MP_Status'];
@@ -913,10 +1006,13 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 else
                 {
 //                    $currentCity  = $formData['retailerForm[A_CityId]'][''];
-                    $current_state  = $data['addressFact[A_StateId]'] . $this->_separ;
-                    $current_state .= $data['addressShipping[A_StateId]'] . $this->_separ;
-                    $current_state .= $data['retailerForm[A_StateId]'] ;
-                    $this->view->assign('selectedSate', $current_state);
+                    if (isset($data['addressFact[A_StateId]']))
+                    {
+                        $current_state  = $data['addressFact[A_StateId]'] . $this->_separ;
+                        $current_state .= $data['addressShipping[A_StateId]'] . $this->_separ;
+                        $current_state .= $data['retailerForm[A_StateId]'] ;
+                        $this->view->assign('selectedSate', $current_state);
+                    }
                     $this->disableView();
                     echo json_encode(false);
                 }
@@ -938,23 +1034,28 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
         $blockId = (int) $this->_getParam('blockID');
         $id = (!empty($this->_genericId))?$this->_genericId : (int) $this->_getParam($this->_ID);
 
-        $this->view->return = $this->view->baseUrl() . "/"
-                . $this->_moduleTitle . "/"
-                . $this->_name . "/"
-                . $this->_currentAction . "/"
-                . "page/" . $page;
 
         $this->view->action = $this->_currentAction;
 
-        $returnAction = $this->_getParam('return');
-
-        if ($returnAction)
-            $returnUrl = $this->_moduleTitle . "/index/" . $returnAction;
+        $baseDir      = $this->view->baseUrl() . "/";
+        $cancelUrl    = $baseDir;
+        $returnModule = $this->_getParam('returnModule');
+        $returnAction = $this->_getParam('returnAction');
+        if (!empty($returnModule))
+            $cancelUrl .= $returnModule . '/';
         else
-            $returnUrl = $this->_moduleTitle . "/"
-                    . $this->_name . "/"
-                    . $this->_currentAction . "/"
-                    . "page/" . $page;
+            $cancelUrl .= $this->_moduleTitle . "/";
+
+        $cancelUrl .= $this->_name . "/";
+
+        if (!empty($returnAction))
+            $cancelUrl .= $returnAction . '/';
+        else
+            $cancelUrl .= 'general/';
+
+        $cancelUrl .= "page/" . $page;
+
+        $this->view->return = $cancelUrl;
 
         $editLink = $this->view->BaseUrl() . '/' . $this->_moduleTitle . "/"
                     . $this->_name . "/"
@@ -1272,7 +1373,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 $tables[$tmpIndexTable] = $tmpColumnIndex;
                 //Get the primary key of the first data object to join table
                 $tmpDataId  = $tmpObject->getDataId();
-                // If it's the first loop, join first table to the current table
+                // If it's the first loop, jo$tmpObjectin first table to the current table
                 if ($key == 0)
                 {
                     $select->joinLeft($tmpDataTable, $tmpDataId . ' = ' . $constraint);

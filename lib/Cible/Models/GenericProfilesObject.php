@@ -33,6 +33,6 @@ class GenericProfilesObject extends DataObject
     protected $_indexLanguageId = '';
 //    protected $_indexColumns    = array();
     protected $_constraint      = '';
-    protected $_foreignKey      = '';
+    protected $_foreignKey      = 'GP_MemberID';
 
 }
