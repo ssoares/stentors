@@ -120,6 +120,14 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ALTER TABLE Modules ADD `M_HasFrontEnd` tinyint(1) NOT NULL default 1;
 
 REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, `ST_ModuleID`) VALUES
+('list_column_role', '1', 'Rôle', 'cible', '', '0', '30'),
+('list_column_role', '2', 'Role', 'cible', '', '0', '30'),
+('list_column_section', '1', 'Section', 'cible', '', '0', '30'),
+('list_column_section', '2', 'Section', 'cible', '', '0', '30'),
+('management_module_member_list_members', '1', 'Liste des membres', 'cible', '', '0', '30'),
+('management_module_member_list_members', '2', 'Members list', 'cible', '', '0', '30'),
+('management_module_parent_list', '1', 'Liste des parents', 'cible', '', '0', '30'),
+('management_module_parent_list', '2', 'Parents list', 'cible', '', '0', '30'),
 ('profile_tab_title_member', '1', 'Membre', 'cible', '', '0', '30'),
 ('profile_tab_title_member', '2', 'Member', 'cible', '', '0', '30'),
 ('parent_module_name', 1, 'Parent', 'cible', '', 0, 999),

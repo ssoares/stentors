@@ -2,6 +2,8 @@
 /**
  * @version $Id: site.css 826 2012-02-01 04:15:13Z ssoares $
  */
+ @import url('stentors.css');
+ 
 html,body {
     font-size:100%;
     margin: 0;
@@ -744,7 +746,7 @@ ul.sortable_menus ul li.hasChildren {
     /*padding-top: 15px;*/
     padding-bottom: 15px;
 
-    /* Enlevé pour afficher les popup action des listes */
+    /* Enlevï¿½ pour afficher les popup action des listes */
 
 }
 

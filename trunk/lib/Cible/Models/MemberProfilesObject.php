@@ -89,6 +89,29 @@ class MemberProfilesObject extends DataObject
         if (!empty($data))
         {
             $data = $data[0];
+            $first  = $data['MP_FirstParent'];
+            $second = $data['MP_SecondParent'];
+            $oParent = new ParentProfilesObject();
+            $firstPar = $oParent->getParentDetails($first, array('PP_GenericProfileId' => $first));
+            $secPar   = $oParent->getParentDetails($second, array('PP_GenericProfileId' => $second));
+            if (!empty($firstPar))
+            {
+                $firstLink = array(
+                    $firstPar['RoleLabel'],
+                    $firstPar['GP_MemberID'],
+                    $firstPar['GP_FirstName'],
+                    $firstPar['GP_LastName']);
+                $data['firstP'] = $firstLink;
+            }
+            if (!empty($secPar))
+            {
+                $secLink = array(
+                    $secPar['RoleLabel'],
+                    $secPar['GP_MemberID'],
+                    $secPar['GP_FirstName'],
+                    $secPar['GP_LastName']);
+                $data['secP'] = $secLink;
+            }
 //            $billId = $data['MP_BillingAddrId'];
 //            $shipId = $data['MP_ShippingAddrId'];
 //

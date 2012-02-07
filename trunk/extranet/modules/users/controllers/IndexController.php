@@ -429,9 +429,6 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
          * property. If not empty add tables and join clauses.
          */
         $select = $this->_addJoinQuery($select, $params);
-        echo "<pre>";
-print_r($select->assemble());
-echo "</pre>";
         // Set the the header of the list (columns name used to display the list)
         $field_list = $this->_colTitle;
         // Set the options of the list = links for actions (add, edit, delete...)

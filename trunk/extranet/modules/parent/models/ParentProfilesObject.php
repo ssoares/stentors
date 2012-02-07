@@ -92,6 +92,24 @@ class ParentProfilesObject extends DataObject
         return $data;
     }
 
+    public function getParentDetails($id, $filters = array())
+    {
+        $data = array();
+        $parentData = $this->findData($filters);
+        if ($id > 0 && !empty($parentData))
+        {
+            $oGeneric = new GenericProfilesObject();
+            $data = $oGeneric->populate($id, 1);
+
+            $role = $this->_parentsProfileSrc();
+            $roleId = $parentData['PP_Role'];
+
+            $roleLabel = $role[$roleId];
+            $parentData['RoleLabel'] = $roleLabel;
+            $data = array_merge($parentData, $data);
+        }
+        return $data;
+    }
     public function _parentsProfileSrc($meta = array())
     {
         $src = array();
@@ -105,19 +123,7 @@ class ParentProfilesObject extends DataObject
 
         return $src;
     }
-    public function _sectionSrc($meta = array())
-    {
-        $src = array();
-        $oRef = new ReferencesObject();
-        $roles = $oRef->getRefByType('section');
 
-        foreach ($roles as $role)
-        {
-            $src[$role['R_ID']] = $role['RI_Value'];
-        }
-
-        return $src;
-    }
     public function _listRespSrc($meta = array())
     {
         $src = array();
