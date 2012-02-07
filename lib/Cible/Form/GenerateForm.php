@@ -118,9 +118,10 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     $element->setLabel($this->getView()->getCibleText('form_label_' . $fieldId));
                     $element->setDecorators(array(
                         'ViewHelper',
-                        array('label', array('placement' => 'append')),
+                        array('label', array('placement' => 'prepend')),
                         array(array('row' => 'HtmlTag'), array('tag' => 'dd', 'class' => 'radio radioInline')),
                         ))
+                        ->setSeparator('')
                         ->addMultiOptions($this->_srcData);
                     break;
                 case 'multi-checkbox':
@@ -257,7 +258,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                         )
                     )
                 );
-        
+
           if (!empty($params['validate']))
           $date->addValidator('Date',
               true,

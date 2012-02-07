@@ -1,0 +1,22 @@
+/*
+    Document   : stentors
+    Created on : 6 févr. 2012, 21:27:53
+    Author     : ssoares
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.radioInline label {
+    float: left;
+    width: auto;
+}
+.radioInline label:first-child,
+.radioInline label:last-child{
+    float: none;
+}
+
+.field_required{
+    color: #E4202C;
+    font-size: 14px;
+    font-weight: bold;
+}
