@@ -20,3 +20,40 @@
     font-size: 14px;
     font-weight: bold;
 }
+
+fieldset.infosFieldset{
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+fieldset.infosFieldset legend{
+    margin-left: 0;
+}
+#fieldset-identity dt, #fieldset-identity dd{
+    width: 40%;
+}
+
+#fieldset-identity dd.schoolYear input{
+    text-align: center;
+}
+#fieldset-identity dd.schoolYear,
+#fieldset-identity dd.left{
+    float: left;
+    width: 25%;
+}
+#fieldset-passport{
+    margin-bottom: 15px;
+}
+#fieldset-passport dt{
+    width: 30%;
+}
+#fieldset-passport dt label{
+    width: auto;
+}
+#fieldset-passport dd{
+    float: left;
+    width: 30%;
+}
+
+.clearBoth{
+    clear: both;
+}

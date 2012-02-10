@@ -32,7 +32,7 @@ class MemberProfilesObject extends DataObject
 //    protected $_indexId         = '';
     protected $_indexLanguageId = '';
 //    protected $_indexColumns    = array();
-    protected $_constraint      = 'GP_MemberID';
+    protected $_constraint      = '';
     protected $_foreignKey      = 'MP_GenericProfileId';
 
     public function save($id, $data, $langId)

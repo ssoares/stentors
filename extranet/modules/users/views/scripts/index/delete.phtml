@@ -32,7 +32,7 @@
         <?php endif; ?>
 
         <p><?php echo str_replace('%MEMBER_NAME%', "<i><b>".$genericMemberDetails['GP_FirstName']." ".$genericMemberDetails['GP_LastName']."</b></i>", $this->getCibleText('profile_delete_message_confirmation')) ?></p>
-        <form action="<?php echo $this->return; ?>" method="post">
+        <form action="" method="post">
             <div>
                 <input type="submit" name="delete" value="<?php echo $this->getCibleText('button_yes') ?>" />
                 <input type="submit" name="cancel" value="<?php echo $this->getCibleText('button_no') ?>" />

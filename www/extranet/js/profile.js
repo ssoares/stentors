@@ -204,7 +204,7 @@
                 return index;
             },
             setValidate: function(action){
-                $(':input, select').live('change keyup', function(event){
+                $(':input, select, .mceContentBody').live('change keyup', function(event){
                     var btn = $(this).parents('form:first').find('#submitSave');
                     if (btn.attr('disabled'))
                         main.setEditedTabStyle(btn);
