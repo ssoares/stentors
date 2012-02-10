@@ -123,3 +123,8 @@ input.error{
 #searchAgain{
     margin-top: 5px;
 }
+
+textarea.mediumEditor{
+    height: 130px;
+    width: 50%;
+}

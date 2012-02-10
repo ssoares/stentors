@@ -36,6 +36,42 @@ class FormMemberProfile extends Cible_Form_GenerateForm
             unset($options['object']);
         }
         parent::__construct($options);
+        $this->setAttrib('id', 'memberInfo');
+
+        $this->addDisplayGroup(
+            array('MP_BirthDate',
+                'MP_AssuSocNum',
+                'MP_Section',
+                'MP_School',
+                'MP_SchoolYear',
+                'MP_Phone'),
+            'identity');
+        $this->getDisplayGroup('identity')
+            ->setLegend('Identification')
+            ->setAttrib('class','infosFieldset')
+            ->removeDecorator('DtDdWrapper');
+
+        $this->addDisplayGroup(
+            array('MP_CountryOrig',
+                'MP_PassportNum',
+                'MP_PassportExpiracyDate',
+                'MP_PassportBirthDate',
+                'MP_PassportFirstName',
+                'MP_PassportLastName'),
+            'passport');
+        $this->getDisplayGroup('passport')
+            ->setAttrib('class','infosFieldset')
+            ->setLegend('Passeport')
+            ->removeDecorator('DtDdWrapper');
+        $this->addDisplayGroup(
+            array('MP_LiveWith',
+                'MP_AgreePhotos',
+                'MP_Notes'),
+            'other');
+
+        $this->getDisplayGroup('other')
+            ->setAttrib('class','infosFieldset')
+            ->removeDecorator('DtDdWrapper');
     }
 
     public function populate(array $values)
@@ -75,12 +111,12 @@ class FormMemberProfile extends Cible_Form_GenerateForm
                             array('row' => 'HtmlTag'),
                             array(
                                 'tag' => 'dd',
-                                'class' => 'form_title_inline left')
+                                'class' => 'left')
                         ),
                     )
             );
 //            $nextElemPos = $this->getElement('MP_AgreePhotos')->getOrder();
-            $firstP->setOrder(12);
-            $this->addElement($firstP);
+            $this->getDisplayGroup('other')->addElement($firstP);
+            $firstP->setOrder(1);
     }
 }

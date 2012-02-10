@@ -7,10 +7,9 @@
     font-family: Georgia,"Nimbus Roman No9 L",serif;
     font-size: 12px;
     color: #333333;
-
     padding: 0px !important;
     margin: 0px;
-    margin-bottom: 16px!important;
+    margin-bottom: 5px!important;
 }
 .previewText p span{
     padding: 0px !important;
@@ -253,7 +252,7 @@ hr.ligne_rose{
     border-bottom-style: dotted;
     border-top: 0;
     border-left: 0;
-    border-right: 0;    
+    border-right: 0;
 }
 
 #preview-box p.newsletter_salutation,

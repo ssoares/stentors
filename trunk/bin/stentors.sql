@@ -142,3 +142,27 @@ REPLACE INTO Modules (M_ID, M_Title, M_MVCModuleTitle, M_UseProfile) VALUES (31,
 REPLACE INTO Modules_ControllersActionsPermissions (MCAP_ModuleID, MCAP_ControllerTitle, MCAP_ControllerActionTitle, MCAP_PermissionTitle, MCAP_Position) VALUES
 (30, 'index', 'list', 'edit', 1);
 (31, 'index', 'list', 'edit', 1);
+
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
+('form_label_MP_SchoolYear', 1, 'Année',  'cible', '', 0, 30),	('form_label_MP_SchoolYear', 2, 'Year', 'cible', '', 0, 30),
+('header_list_member_text', 1, 'Liste des membres inscrits',  'cible', '', 0, 30),	('header_list_member_text', 2, 'Liste des membres inscrits', 'cible', '', 0, 30),
+('header_list_member_description', 1, 'Liste des membres inscrits',  'cible', '', 0, 30),	('header_list_member_description', 2, 'Liste des membres inscrits', 'cible', '', 0, 30),
+('form_label_MP_BirthDate', 1, 'Date de naissance',  'cible', '', 0, 30),	('form_label_MP_BirthDate', 2, 'Date de naissance', 'cible', '', 0, 30),
+('form_label_MP_Section', 1, 'Section',  'cible', '', 0, 30),	('form_label_MP_Section', 2, 'Section', 'cible', '', 0, 30),
+('form_label_MP_School', 1, 'École',  'cible', '', 0, 30),	('form_label_MP_School', 2, 'School', 'cible', '', 0, 30),
+('form_label_MP_Phone', 1, 'Téléphone perso',  'cible', '', 0, 30),	('form_label_MP_Phone', 2, 'Phone', 'cible', '', 0, 30),
+('form_label_MP_CountryOrig', 1, 'Nationalité',  'cible', '', 0, 30),	('form_label_MP_CountryOrig', 2, 'Nationality', 'cible', '', 0, 30),
+('form_label_MP_PassportNum', 1, 'Numéro de passeport',  'cible', '', 0, 30),	('form_label_MP_PassportNum', 2, 'Passport number', 'cible', '', 0, 30),
+('form_label_MP_PassportExpiracyDate', 1, 'Date d''expiration',  'cible', '', 0, 30),	('form_label_MP_PassportExpiracyDate', 2, 'Expiracy date', 'cible', '', 0, 30),
+('form_label_MP_PassportBirthDate', 1, 'Date de naissance',  'cible', '', 0, 30),	('form_label_MP_PassportBirthDate', 2, 'Birth date', 'cible', '', 0, 30),
+('form_label_MP_PassportFirstName', 1, 'Prénom',  'cible', '', 0, 30),	('form_label_MP_PassportFirstName', 2, 'Firstname', 'cible', '', 0, 30),
+('form_label_MP_PassportLastName', 1, 'Nom',  'cible', '', 0, 30),	('form_label_MP_PassportLastName', 2, 'Lastname', 'cible', '', 0, 30),
+('form_label_MP_LiveWith', 1, 'Sous la responsabilité de',  'cible', '', 0, 30),	('form_label_MP_LiveWith', 2, 'Relatives', 'cible', '', 0, 30),
+('form_label_MP_AgreePhotos', 1, 'Accord pour le droit à l''image',  'cible', '', 0, 30),	('form_label_MP_AgreePhotos', 2, 'Can use photos', 'cible', '', 0, 30),
+('form_label_MP_AssuSocNum', 1, 'Numéro d''assurance sociale',  'cible', '', 0, 30),	('form_label_MP_AssuSocNum', 2, 'Social Insurance Number', 'cible', '', 0, 30),
+('form_label_MP_Notes', 1, 'Informations complémentaires',  'cible', '', 0, 30),	('form_label_MP_Notes', 2, 'More informations', 'cible', '', 0, 30),
+('form_label_PP_EmploiTps', 1, 'Emploi du temps',  'cible', '', 0, 31),	('form_label_PP_EmploiTps', 2, 'Schedule', 'cible', '', 0, 31),
+('form_label_PP_Role', 1, 'Lien de parenté / responsabilité',  'cible', '', 0, 31),	('form_label_PP_Role', 2, 'Relatives', 'cible', '', 0, 31),
+('form_label_PP_Notes', 1, 'Informations complémentaires',  'cible', '', 0, 31),	('form_label_PP_Notes', 2, 'More informations', 'cible', '', 0, 31),
+('header_list_parents_text', 1, 'Liste des parents',  'cible', '', 0, 31),	('header_list_parents_text', 2, 'Parents list', 'cible', '', 0, 31),
+('header_list_parents_description', 1, 'Liste des parents',  'cible', '', 0, 31),	('header_list_parents_description', 2, 'Parents list', 'cible', '', 0, 31);

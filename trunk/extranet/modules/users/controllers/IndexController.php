@@ -453,6 +453,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
         $oDataName = $this->_objectList[$this->_currentAction];
         $oData     = new $oDataName();
 
+        $page = $this->_getParam('page');
         $lang = $this->_getParam('lang');
         if (!$lang)
         {
@@ -505,6 +506,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                             . $this->_objectList[$this->_currentAction],
                         'imageSrc'   => $imageSrc,
                         'imgField'   => $this->_imageSrc,
+                        'object'     => $oData,
                         'dataId'     => '',
                         'mode'       => 'add',
                         'isNewImage' => true
@@ -1036,6 +1038,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
 
         $baseDir      = $this->view->baseUrl() . "/";
         $cancelUrl    = $baseDir;
+
         $returnModule = $this->_getParam('returnModule');
         $returnAction = $this->_getParam('returnAction');
         if (!empty($returnModule))
@@ -1062,7 +1065,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
         $oDataName = $this->_objectList[$this->_currentAction];
         $oData = new $oDataName();
 
-        if (Cible_ACL::hasAccess($page))
+        if ($this->view->aclIsAllowed($this->_moduleTitle, 'manage', true))
         {
             //Find if there's other profiles linked to this user
             $profiles = $this->getRelatedProfiles($id);
@@ -1085,7 +1088,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                     {
                         $data = array();
                         // generate the form
-                        $form = new $this->_formName();
+                        $form = new $this->_formName(array('object' => $oData));
                         $data = $this->_setMemberCols($form);
                         if (!empty($data) && !is_null($this->_oMember))
                             $this->_oMember->save($id, $data, 1);
@@ -1116,7 +1119,10 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                         echo json_encode ($del);
                 }
                 if (!$this->_isXmlHttpRequest)
-                    $this->_redirect($returnUrl);
+                    $this->_redirect(
+                        $this->_moduleTitle . '/' . $this->_name . '/'
+                        . $this->_currentAction . '/page/' . $page
+                        );
             }
             elseif ($id > 0)
             {
@@ -1146,7 +1152,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
             elseif (!empty($tmpArray))
                 $profiles[$key] = $tmpArray;
 
-            if (!empty($profiles))
+            if (!empty($tmpArray))
                 $profiles[$key]['objName'] = $objName;
         }
 
