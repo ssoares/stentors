@@ -695,9 +695,23 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
 
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
+
             $this->view->id = $id;
             if ($this->_isXmlHttpRequest)
                 $this->disableLayout();
+            else
+            {
+                if (!empty($returnModule))
+                    Cible_View_Helper_LastVisited::emptyUrls();
+
+                $url = $this->view->absolute_web_root
+                 . $this->getRequest()->getPathInfo();
+                Cible_View_Helper_LastVisited::saveThis($url);
+                $urls = Cible_View_Helper_LastVisited::getLastVisited();
+                if (count($urls) > 1)
+                    $this->view->urlBack = $this->view->baseUrl() . $urls[1];
+
+            }
 
             $returnUrl = $this->_moduleTitle . "/"
                     . $this->_name . "/"
@@ -881,7 +895,8 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                     $formData = $this->_mergeFormData($formData);
                 }
 
-                $addrOne = $formData['parentForm'];
+                if (isset($formData['parentForm']))
+                    $addrOne = $formData['parentForm'];
                 if (isset($formData['parentFormTwo']['duplicate']))
                 {
                     $addrTwo = $formData['parentFormTwo'];

@@ -33,8 +33,12 @@ $hidden = '';
                         </li>
                         <?php endforeach; ?>
                     </ul>
-
                 </li>
+                <?php if (!empty($this->urlBack)): ?>
+                <li id="backToMember">
+                    <a class="action_submit" href="<?php echo $this->urlBack; ?>">Retour</a>
+                </li>
+                <?php endif;?>
             </ul>
         </div>
         <div class="required-field-message" style="margin: -35px 0 10px 0;"><span class="field_required">*</span>  <?php echo $this->getCibleText('form_field_required_label') ?></div>

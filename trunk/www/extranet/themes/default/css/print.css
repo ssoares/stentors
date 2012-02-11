@@ -11,14 +11,9 @@ table td{
     vertical-align: top;
 }
 
-.list table{
-    border: solid 1px #b6b7b8;
-}
-
 .list table thead td{
     background-color: #e9e9ea;
-    border-bottom: solid 1px #b6b7b8;
-    border-right: solid 1px #c4c4c4;
+    border: solid 1px #b6b7b8;
     color: #66a8c9;
     font-family: Arial;
     font-size: 12px;
@@ -33,10 +28,7 @@ table td{
 
 .list table td{
     /*border-bottom: solid 1px white;*/
-    border-right: solid 1px #b6b7b8;
-    border-left: solid 1px #b6b7b8;
     border-bottom: solid 1px #E9E9EA;
-    font-family: Arial;
     font-size: 12px;
     font-weight: normal;
     color: #646567;
@@ -49,10 +41,13 @@ table td{
     margin: 2px 0px;
     padding: 5px 3px;
     line-height: 16px;
+    border-right: none;
+    display:none;
 }
 
-.list table td.without_right_border {
-    display: none;
+.list table td.without_right_border div,
+.list table td.without_right_border a {
+    display: none !important;
 }
 
 .row_list_1 {
@@ -99,7 +94,7 @@ textarea{
 #patientFormLeft1_1-PostalCode{
     width: 60px;
     padding-right: 5px;
-    
+
 }
 @page { size:portrait;
         margin-top:1.7cm;
