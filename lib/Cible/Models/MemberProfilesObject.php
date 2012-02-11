@@ -63,17 +63,9 @@ class MemberProfilesObject extends DataObject
             $data['MP_ShippingAddrId'] = $shipId;
         }
 
-//        $date = new Zend_Date();
-//        $birthDate = new Zend_Date($data['MP_BirthDate']);
-//        $dt = $birthDate->get();
-//        $test =
-//        echo "<pre>";
-//print_r($dt);
-//echo "</pre>";
-//exit;
-//        $data['MP_Age'] = $years;
-//        $years = $diff->toString();
-//        $years = $date->sub($birthDate, );
+        $years = $this->calculateAge($data['MP_BirthDate']);
+        $data['MP_Age'] = $years;
+
         parent::save($id, $data, $langId);
     }
 
@@ -94,13 +86,16 @@ class MemberProfilesObject extends DataObject
             $oParent = new ParentProfilesObject();
             $firstPar = $oParent->getParentDetails($first, array('PP_GenericProfileId' => $first));
             $secPar   = $oParent->getParentDetails($second, array('PP_GenericProfileId' => $second));
+            echo "<pre>";
+
             if (!empty($firstPar))
             {
                 $firstLink = array(
                     $firstPar['RoleLabel'],
                     $firstPar['GP_MemberID'],
                     $firstPar['GP_FirstName'],
-                    $firstPar['GP_LastName']);
+                    $firstPar['GP_LastName'],
+                    $firstPar['PP_TaxReceipt']);
                 $data['firstP'] = $firstLink;
             }
             if (!empty($secPar))
@@ -109,7 +104,8 @@ class MemberProfilesObject extends DataObject
                     $secPar['RoleLabel'],
                     $secPar['GP_MemberID'],
                     $secPar['GP_FirstName'],
-                    $secPar['GP_LastName']);
+                    $secPar['GP_LastName'],
+                    $secPar['PP_TaxReceipt']);
                 $data['secP'] = $secLink;
             }
 //            $billId = $data['MP_BillingAddrId'];
@@ -177,5 +173,34 @@ class MemberProfilesObject extends DataObject
         }
 
         return $src;
+    }
+
+    public function calculateAge($birthDate)
+    {
+        Zend_Date::setOptions(array('format_type' => 'php'));
+        $today = new Zend_Date();
+        $dateOfBirth = new Zend_Date($birthDate);
+        $age = $today->toString('Y') - $dateOfBirth->toString('Y');
+        if ($today->toString('z') < $dateOfBirth->toString('z')) {
+            $age--;
+        }
+
+//        if (empty($birthDate))
+//            return null;
+//
+//        list($birthYear,$birthMonth,$birthDay) = explode("-", $birthDate);
+//        $yearDiff = date("Y") - $birthYear;
+//        $monthDiff = date("m") - $birthMonth;
+//        $dayDiff = date("d") - $birthDay;
+//
+//        // If the birthday has not occured this year
+//        if ($monthDiff == 0)
+//            if($dayDiff < 0)
+//                $yearDiff--;
+//
+//        if ($monthDiff < 0)
+//                $yearDiff--;
+
+        return $age;
     }
 }

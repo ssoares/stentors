@@ -2,58 +2,78 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-DROP SCHEMA IF EXISTS `nikel693_stentors` ;
+-- DROP SCHEMA IF EXISTS `nikel693_stentors` ;
 CREATE SCHEMA IF NOT EXISTS `nikel693_stentors` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `nikel693_stentors` ;
+-- phpMyAdmin SQL Dump
+-- version 3.4.7.1
+-- http://www.phpmyadmin.net
+--
+-- Client: localhost
+-- Généré le : Sam 11 Février 2012 à 12:37
+-- Version du serveur: 5.1.56
+-- Version de PHP: 5.2.9
 
--- -----------------------------------------------------
--- Table `nikel693_stentors`.`ParentsProfile`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `nikel693_stentors`.`ParentsProfile` ;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-CREATE  TABLE IF NOT EXISTS `nikel693_stentors`.`ParentsProfile` (
-  `PP_GenericProfileId` INT(11) NOT NULL COMMENT 'exclude:true' ,
-  `PP_ChildrenId` INT(11) NOT NULL COMMENT 'select:children' ,
-  `PP_AddressId` INT(11) NOT NULL COMMENT 'exclude:true' ,
-  `PP_EmploiTps` TEXT NULL ,
-  `PP_CreateDate` DATETIME NULL COMMENT 'exclude:true' ,
-  `PP_ModifDate` DATETIME NULL COMMENT 'exclude:true' ,
-  `PP_ModifBy` INT(11) NULL COMMENT 'exclude:true' ,
-  `PP_Role` VARCHAR(45) NULL COMMENT '	' ,
-  `PP_Notes` TEXT NULL COMMENT 'elem:tiny' ,
-  PRIMARY KEY (`PP_GenericProfileId`) ,
-  INDEX `memberId` (`PP_ChildrenId` ASC) )
-ENGINE = MyISAM;
+--
+-- Base de données: `nikel693_stentors`
+--
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `nikel693_stentors`.`MemberProfiles`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `nikel693_stentors`.`MemberProfiles` ;
+--
+-- Structure de la table `MemberProfiles`
+--
 
-CREATE  TABLE IF NOT EXISTS `nikel693_stentors`.`MemberProfiles` (
-  `MP_GenericProfileId` INT(11) NOT NULL COMMENT 'exclude:true' ,
-  `MP_BirthDate` DATE NOT NULL ,
-  `MP_Age` INT(3) NULL ,
-  `MP_Section` ENUM('clairons','drums','pit','couleurs') NULL COMMENT 'src:section' ,
-  `MP_School` VARCHAR(255) NULL ,
-  `MP_SchoolYear` INT(4) NULL ,
-  `MP_Email` VARCHAR(255) NULL COMMENT 'validate:email' ,
-  `MP_CountryOrig` VARCHAR(55) NULL ,
-  `MP_PassportNum` VARCHAR(45) NULL ,
-  `MP_PassportExpiracyDate` DATETIME NULL ,
-  `MP_PassportBirthDate` VARCHAR(45) NULL ,
-  `MP_PassportFirstName` VARCHAR(45) NULL ,
-  `MP_PassportLastName` VARCHAR(45) NULL ,
-  `MP_LiveWith` INT(1) NULL COMMENT 'elem:radio|src:listResp' ,
-  `MP_AgreePhotos` TINYINT(1) NULL COMMENT 'elem:checkbox' ,
-  `MP_AssuSocNum` VARCHAR(45) NULL ,
-  `MP_CreateDate` DATETIME NULL COMMENT 'exclude:true' ,
-  `MP_ModifDate` DATETIME NULL COMMENT 'exclude:true' ,
-  `MP_ModifBy` INT(11) NULL COMMENT 'exclude:true			' ,
-  `MP_Notes` TEXT NULL COMMENT 'elem:tiny' ,
-  PRIMARY KEY (`MP_GenericProfileId`) )
-ENGINE = MyISAM;
+DROP TABLE IF EXISTS `MemberProfiles`;
+CREATE TABLE IF NOT EXISTS `MemberProfiles` (
+  `MP_GenericProfileId` int(11) NOT NULL COMMENT 'exclude:true',
+  `MP_FirstParent` int(11) DEFAULT NULL COMMENT 'exclude:true',
+  `MP_SecondParent` int(11) DEFAULT NULL COMMENT 'exclude:true',
+  `MP_BirthDate` date NOT NULL COMMENT 'class:left',
+  `MP_Age` int(3) DEFAULT NULL,
+  `MP_Section` int(2) DEFAULT NULL COMMENT 'elem:select|src:section|class:clearBoth',
+  `MP_School` varchar(255) DEFAULT NULL COMMENT 'class:left',
+  `MP_SchoolYear` int(4) DEFAULT NULL COMMENT 'elem:int',
+  `MP_Phone` varchar(45) DEFAULT NULL,
+  `MP_CountryOrig` varchar(55) DEFAULT NULL,
+  `MP_PassportNum` varchar(45) DEFAULT NULL,
+  `MP_PassportExpiracyDate` date DEFAULT NULL,
+  `MP_PassportBirthDate` varchar(45) DEFAULT NULL,
+  `MP_PassportFirstName` varchar(45) DEFAULT NULL,
+  `MP_PassportLastName` varchar(45) DEFAULT NULL,
+  `MP_LiveWith` int(2) DEFAULT NULL COMMENT 'elem:radio|src:listResp',
+  `MP_AgreePhotos` tinyint(1) DEFAULT NULL COMMENT 'elem:checkbox',
+  `MP_AssuSocNum` varchar(45) DEFAULT NULL COMMENT 'class:left',
+  `MP_Notes` text,
+  `MP_CreateDate` datetime DEFAULT NULL COMMENT 'exclude:true',
+  `MP_ModifDate` datetime DEFAULT NULL COMMENT 'exclude:true',
+  `MP_ModifBy` int(11) DEFAULT NULL COMMENT 'exclude:true			',
+  PRIMARY KEY (`MP_GenericProfileId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ParentsProfile`
+--
+
+DROP TABLE IF EXISTS `ParentsProfile`;
+CREATE TABLE IF NOT EXISTS `ParentsProfile` (
+  `PP_GenericProfileId` int(11) NOT NULL COMMENT 'exclude:true',
+  `PP_AddressId` int(11) NOT NULL COMMENT 'elem:hidden',
+  `PP_TaxReceipt` tinyint(1) NOT NULL COMMENT 'elem:checkbox',
+  `PP_EmploiTps` text COMMENT 'class:left',
+  `PP_Role` int(11) DEFAULT NULL COMMENT 'elem:select|src:parentsProfile|class:left',
+  `PP_Notes` text COMMENT 'class:left',
+  `PP_CreateDate` datetime DEFAULT NULL COMMENT 'exclude:true',
+  `PP_ModifDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'exclude:true',
+  `PP_ModifBy` int(11) DEFAULT NULL COMMENT 'exclude:true',
+  PRIMARY KEY (`PP_GenericProfileId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 
 -- -----------------------------------------------------

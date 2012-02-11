@@ -74,3 +74,11 @@ fieldset.infosFieldsetParent{
 fieldset.infosFieldsetParent textarea.mediumEditor{
     width: 98%;
 }
+
+#default_form #action_panel ul.buttons li#backToMember{
+    display: inline;
+    float: right;
+}
+#default_form #action_panel ul.buttons li#backToMember a.action_submit{
+    background: url("../../../icons/button_back.png") no-repeat scroll 5px 50% transparent;
+}

@@ -93,6 +93,9 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
     {
         if (!empty ($params))
         {
+            if (!isset($params['elem']))
+                $params['elem'] = '';
+            
             $fieldId = $meta['COLUMN_NAME'];
             switch ($params['elem'])
             {

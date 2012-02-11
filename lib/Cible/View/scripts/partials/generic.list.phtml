@@ -7,7 +7,7 @@
     $current_module = $_request->getModuleName();
     $current_controller = $_request->getControllerName();
     $current_action = $_request->getActionName();
-    
+
     $params = array(
         'module',
         'controller',
@@ -18,55 +18,55 @@
         'perPage',
         'page'
     );
-    
+
     // Strip the filters
     foreach($this->filters as $key => $filter)
     {
         if(!in_array($key, $params))
             array_push($params, $key);
     }
-    
+
     $_params = '';
     foreach($_request->getParams() as $key=>$val)
-    {   
+    {
         if(!in_array($key, $params))
             $_params .= "$key/$val/";
     }
-    
+
     $params = array(
         'module',
         'controller',
-        'action',      
+        'action',
         'perPage',
         'page'
-    ); 
+    );
     $_perPageLink = '';
-    
+
     foreach($_request->getParams() as $key=>$val)
-    {   
+    {
         if(!in_array($key, $params))
             $_perPageLink .= "$key/$val/";
     }
-    
+
     $defaultRoute = '';
     if( $current_module != 'default' )
         $defaultRoute .= "$current_module/";
-        
+
     $defaultRoute .= "$current_controller/$current_action/";
     $list_all_link_url = $this->baseUrl();
     if(substr($list_all_link_url, -1) != '/')
         $list_all_link_url .= '/';
-     
-    $per_page_link = addslashes($list_all_link_url . $defaultRoute . $_perPageLink);   
+
+    $per_page_link = addslashes($list_all_link_url . $defaultRoute . $_perPageLink);
     $list_all_link_url .= $defaultRoute . $_params;
-   
+
     $search_url = $list_all_link_url;
     if($_request->getParam('order'))
         $search_url .= 'order/' . $_request->getParam('order') . '/';
-        
+
     if($_request->getParam('order-direction'))
-        $search_url .= 'order-direction/' . $_request->getParam('order-direction') . '/';         
-   
+        $search_url .= 'order-direction/' . $_request->getParam('order-direction') . '/';
+
 ?>
 
 <?php $this->jQuery()->onLoadcaptureStart(); ?>
@@ -76,35 +76,35 @@
             $('#filteredSearch').click();
         }
     });
-    
+
     $('a.show-actions-dialog').click(function(e){
-            
+
         var relativeParent = $(this).offsetParent();
         var offset = relativeParent.offset();
-        
+
         var offsetLeft = e.pageX - offset.left;
         var offsetTop = e.pageY - offset.top;
 
         var dialog = $(this).next('div');
-                                      
+
         if(dialog.css('display') == 'block'){
             dialog.slideUp('fast');
         } else {
             $('.searchable-list .actions-dialog').each(function(){
                 var _current_dialog = $(this);
-                
+
                 if( _current_dialog.css('diplay') != 'none')
                     _current_dialog.slideUp('fast');
             });
-            
+
             dialog.css({
                 left: offsetLeft - dialog.width() - 10,
                 top: offsetTop
             });
-            
+
             dialog.slideDown('fast');
         }
-        
+
     });
 
 <?php $this->jQuery()->onLoadcaptureEnd(); ?>
@@ -112,30 +112,29 @@
 <?php $this->headScript()->captureStart(); ?>
 
     function search(){
-        var filters_str = ''; 
-         $('div.searchable-list:first').find('div.filters select').each(function(){
+        var filters_str = '';
+         $('div.searchable-list:first').find('div.filters select, div.filters input').each(function(){
             var objFilter = $(this);
-            
+
             if( objFilter){
-            
+
                 var filter_name = objFilter.attr('id');
 
                 if(objFilter.val() != ''){
                     filters_str += filter_name + '/' + objFilter.val() + '/';
                 }
-            }    
-            
+            }
+
          });
          if( $('#search').val() != '')
             filters_str += 'searchfor/' + $('#search').val();
 
          window.location.href = '<?php echo $search_url ?>' + filters_str;
     }
-    
-    function emptySearch(){
-        $('#search').val('');
+
+    function emptySearch(elem){
+        elem.val('');
         $('#filteredSearch').click();
-        
     }
 
 <?php $this->headScript()->captureEnd(); ?>
@@ -155,7 +154,7 @@
                   id="export_to_excel"><?php echo $this->getCibleText('export_to_excel') ?>
                 </a>
             </div>
-            
+
         <?php endif; ?>
         <?php if( $this->enable_print == "true" ): ?>
 
@@ -164,21 +163,21 @@
             </div>
 
         <?php endif; ?>
-        
+
         <?php if( $this->commands): ?>
-        
+
             <ul class="buttons">
-            
+
                 <?php foreach($this->commands as $command): ?>
-            
+
                     <li><?php echo $command ?></li>
-                
+
                 <?php endforeach; ?>
-                
-            </ul>    
-        
+
+            </ul>
+
         <?php endif; ?>
-        
+
     </div>
 
 <?php endif; ?>
@@ -195,56 +194,68 @@
             </td>
             <td class="search-filters">
                 <div class="filters">
-    
+
                     <div class="search-filters-label">
                         <label for="search" style="font-size: 16px;"><?php echo $this->getCibleText('form_paginator_searchbox_label') ?></label>
                     </div>
-                    
+
                     <div class="search-filters-content">
                         <div class="search">
-                            <a href="javascript:emptySearch();"><img src="<?php echo $this->baseUrl() ?>/icons/search_cancel.gif" ailgn="middle" border="0" /></a><?php echo $this->formText('search',utf8_decode($_request->getParam('searchfor'))) ?>
+                            <a href="javascript:emptySearch($('#search'));"><img src="<?php echo $this->baseUrl() ?>/icons/search_cancel.gif" ailgn="middle" border="0" /></a><?php echo $this->formText('search',utf8_decode($_request->getParam('searchfor'))) ?>
                         </div>
                     </div>
-                    
+
                     <?php if( count($this->filters) > 0 ): ?>
                         <div class="search-filters-label">
                             <label style="font-size: 16px;"><?php echo $this->getCibleText('form_paginator_filters_label') ?></label>
                         </div>
-                        
-                        <div class="search-filters-content">                            
+
+                        <div class="search-filters-content">
                             <ul>
-                            
+
                             <?php
                             $counter = 0;
-                            foreach($this->filters as $key => $filter): 
+                            foreach($this->filters as $key => $filter):
                             ?>
-                            
+
                                 <?php
-                                                                
+
                                     $current_filter_val = $_request->getParam($key);
-                                    
+
                                     $default_value = !empty($current_filter_val) ? $current_filter_val : $filter['default_value'] ;
-                                
+
                                 ?>
                                 <li <?php echo ($counter == 1 ? "class=\"last_right\"" : "") ?>>
+                                    <label for="<?php echo $key; ?>">
+                                        <?php echo $filter['label']; ?>
+                                    </label>
+                                    <?php if (empty($filter['choices'])): ?>
+                                    <div class="search">
+                                        <a href="javascript:emptySearch($('#<?php echo $key?>'));">
+                                            <img src="<?php echo $this->baseUrl() ?>/icons/search_cancel.gif" ailgn="middle" border="0" />
+                                        </a>
+                                        <?php echo $this->formText($key,utf8_decode($_request->getParam($key))) ?>
+                                    </div>
+                                    <?php else:?>
                                     <?php echo $this->formSelect($key, $default_value, null, $filter['choices'], array('class'=>'filters')) ?>
+                                    <?php endif;?>
                                     <?php echo $this->formHidden("{$key}_associatedTo", "{$filter['associatedTo']}") ?>
                                     <?php $current_view_url[$key] = null; ?>
                                 </li>
-                                
+
                             <?php
                                 $counter++;
                                 if($counter == 2)
                                     $counter = 0;
                             endforeach;
                             ?>
-                            
-                            </ul>                                                
+
+                            </ul>
                         </div>
                     <?php endif; ?>
-                    
+
                     <div class="search-buttons">
-                        
+
                         <?php echo $this->formButton('filteredSearch',$this->getCibleText("button_search_label"), array(
                             'onclick'=> 'javascript:search()',
                             'onmouseover' => "this.setAttribute('class', 'loginButtonOver')",
@@ -252,16 +263,16 @@
                             'class' => "loginButton"
                         )) ?>
                     </div>
-                </div>                
+                </div>
             </td>
         </tr>
     </table>
-    
+
     <div class="items_per_page">
         <?php
             $langId     = Cible_Controller_Action::getDefaultEditLanguage();
             $langSuffix = $_request->getParam('lang');
-            
+
             if (!empty ($langSuffix))
                 $langId = Cible_FunctionsGeneral::getLanguageID ($langSuffix);
 
@@ -290,71 +301,71 @@
         &nbsp;&nbsp;<?php echo $this->getCibleText("form_list_items_per_page_end") ?>
         </p>
     </div>
-    <div class="list">        
+    <div class="list">
         <table cellspacing="0" cellpadding="5" border="0">
             <thead>
                 <tr>
                      <?php foreach($this->field_list as $column_key => $column_val): ?>
-                     
+
                         <?php if( !empty( $column_val['width'] ) ): ?>
                             <td width="<?php echo $column_val['width'] ?>"<?php echo ( $column_key != 'action_panel' ) ? "" : "class=\"without_right_border\"" ?>>
                         <?php else: ?>
                             <td>
                         <?php endif; ?>
-                        
+
                             <?php if( $column_key != 'action_panel' ): ?>
                                 <?php
                                     $_sort_CssClass = '';
                                     if( $this->order == $column_key && ( $this->order_direction && in_array($this->order_direction, array('ASC','DESC') ) ) ){
-                                        
+
                                         $orderlink = $this->order_direction == 'ASC' ? "{$this->url( array('order'=> $column_key, 'order-direction' => 'DESC') )}" : "{$this->url( array('order'=> $column_key, 'order-direction' => 'ASC') )}";
                                         $_sort_CssClass = $this->order_direction;
-                                        
+
                                     } else {
                                          $orderlink = "{$this->url( array('order'=> $column_key, 'order-direction' => 'ASC') )}";
                                     }
-                                    
+
                                     if(substr($orderlink, -1) != '/')
                                         $orderlink .= '/';
                                 ?>
                                 <a class="<?php echo $_sort_CssClass ?>" href="<?php echo $orderlink ?>">
-                                    
+
                                     <?php
                                         if( !empty( $column_val['label'] ) )
                                             echo $column_val['label'];
                                         else
                                             echo $this->getCibleText("list_column_$column_key");
                                     ?>
-                                    
+
                                 </a>
                             <?php else: ?>
-                            
+
                                 <?php
                                     if( !empty( $column_val['label'] ) )
                                         echo $column_val['label'];
                                     else
                                         echo $this->getCibleText("list_column_$column_key");
-                                
+
                                 ?>
-                                
-                                
+
+
                             <?php endif; ?>
                         </td>
-                     
+
                      <?php endforeach; ?>
                 </tr>
             </thead>
             <tbody>
             <?php if (count($this->paginator)): ?>
-                <?php 
+                <?php
                     $counter = 0;
                     foreach ($this->paginator as $item):
                 ?>
                     <tr class="row_list_<?php echo $counter ?>">
                         <?php foreach(array_keys( $this->field_list ) as $field): ?>
-                            
+
                                 <?php if( $field != 'action_panel' ): ?>
-                            
+
                                     <td>
                                         <?php
                                         if(!empty($this->field_list[$field]['postProcess']))
@@ -364,31 +375,31 @@
                                                 case 'dictionnary':
                                                     echo $this->getCibleText($this->field_list[$field]['postProcess']['prefix'] . $item[$field]);
                                                 break;
-                                                
+
                                                 default:;
                                             }
                                         }
                                         else
                                         {
                                             echo $item[$field];
-                                        }                                        
+                                        }
                                         ?>
                                     </td>
-                                
+
                                 <?php else: ?>
-                                    
+
                                     <td class="without_right_border">
                                         <div>
                                             <?php if( $this->action_links ): ?>
                                                 <a class="show-actions-dialog" href="javascript:void(0);"><img src="<?php echo $this->baseUrl() ?>/icons/list_actions_icon.png" border="0" /></a>
                                                 <div class="actions-dialog"><div class="hd"><div class="c"></div></div><div class="bd"><div class="c"><div class="s"><div class="actions">
-                                                    
+
                                                     <ul style="list-style: none; margin: 0px; padding: 0px;">
                                                         <?php foreach($this->action_links as $key => $value): ?>
                                                             <?php
-                                                                
+
                                                                 if( !empty($value['findReplace']) ){
-                                                                    
+
                                                                     if( isset($value['findReplace']['search']) && isset($value['findReplace']['replace']) ){
                                                                         $value['url'] = str_replace($value['findReplace']['search'], $item[ $value['findReplace']['replace'] ], $value['url']);
                                                                     }
@@ -397,11 +408,11 @@
                                                                                $value['url'] = str_replace($operation['search'], $item[ $operation['replace'] ], $value['url']);
                                                                     }
                                                                 }
-                                                                    
+
                                                             ?>
-                                                        
+
                                                             <li><a class="action_<?php echo $key ?>" href="<?php echo $value['url'] ?>"><?php echo $value['label'] ?></a></li>
-                                                        
+
                                                         <?php endforeach; ?>
                                                     </ul>
                                                 </div></div></div></div><div class="ft"><div class="c"></div></div></div>
@@ -410,12 +421,12 @@
                                             <?php endif; ?>
                                         </div>
                                     </td>
-                                    
+
                                 <?php endif; ?>
-                            
+
                          <?php endforeach; ?>
                     </tr>
-                <?php 
+                <?php
                         $counter++;
                         if($counter == 2)
                             $counter = 0;
@@ -430,7 +441,7 @@
             <?php endif; ?>
             </tbody>
         </table>
-        
+
     </div>
 
     <?php echo $this->paginationControl($this->paginator,'sliding', $_viewscript); ?>

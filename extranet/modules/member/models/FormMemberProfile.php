@@ -83,6 +83,9 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         if (!empty($values['firstP']))
         {
             $subject = '##ROLE## : ' . $this->getView()->link('##HREF##', '##FNAME## ##LNAME##');
+            if ($values['firstP'][4])
+                $subject .= " (reçu pour impôts)";
+
             $href = $baseDir . '/users/index/general/actionKey/edit/id/' . $values['firstP']['1'];
             $values['firstP']['1'] = $href;
             $content = str_replace(array('##ROLE##', '##HREF##', '##FNAME##', '##LNAME##'), $values['firstP'], $subject);
@@ -91,6 +94,8 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         if (!empty($values['secP']))
         {
             $subject = '##ROLE## : ' . $this->getView()->link('##HREF##', '##FNAME## ##LNAME##');
+            if ($values['secP'][4])
+                $subject .= " (reçu pour impôts)";
             $href = $baseDir . '/users/index/general/actionKey/edit/id/' . $values['secP']['1'];
             $values['secP']['1'] = $href;
             $content .= '<br />';

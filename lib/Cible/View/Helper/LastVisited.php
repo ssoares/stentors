@@ -23,7 +23,7 @@
  */
 class Cible_View_Helper_LastVisited extends Zend_View_Helper_Abstract
 {
-    
+
 
     /**
      * Save the url page visited
@@ -37,13 +37,24 @@ class Cible_View_Helper_LastVisited extends Zend_View_Helper_Abstract
         $_nbHist = 10;
         $urlArray = self::getLastVisited();
         $lastPg = new Zend_Session_Namespace('history');
-        
+
         if (current($urlArray) != $url)
             array_unshift ($urlArray, $url);
         if (count($urlArray) > $_nbHist)
             array_pop ($urlArray);
-        
+
         $lastPg->last = $urlArray;
+    }
+    /**
+     * Remove the urls
+     * 
+     * @param string $url The page url.
+     * @return void
+     */
+    public static function emptyUrls()
+    {
+        $lastPg = new Zend_Session_Namespace('history');
+        $lastPg->unsetAll();
     }
 
     /**
@@ -56,12 +67,11 @@ class Cible_View_Helper_LastVisited extends Zend_View_Helper_Abstract
         $path = array();
 
         $lastPg = new Zend_Session_Namespace('history');
-        
+
         if (!empty($lastPg->last))
         {
             $path = $lastPg->last;
-//            $lastPg->unsetAll();
-            
+
         }
 
         return $path;

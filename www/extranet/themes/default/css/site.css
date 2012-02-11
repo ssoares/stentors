@@ -3,7 +3,7 @@
  * @version $Id: site.css 826 2012-02-01 04:15:13Z ssoares $
  */
  @import url('stentors.css');
- 
+
 html,body {
     font-size:100%;
     margin: 0;
@@ -2274,6 +2274,7 @@ div.searchable-list div.filters .search-filters-content ul{
 
 div.searchable-list div.filters .search-filters-content ul li{
     display: inline;
+    display: inline-table;
     margin: 0px;
     padding: 0px;
     /*padding-right: 20px;*/
@@ -2284,7 +2285,9 @@ div.searchable-list div.filters .search-filters-content ul li.last_right   {
     padding-right: 0px;
     padding-left: 33px;
 }
-
+div.searchable-list div.filters .search-filters-content ul li label   {
+    width: 223px;
+}
 div.searchable-list div.filters .search-filters-content ul li select{
     width: 223px;
     border: solid 1px #8f8f8f;

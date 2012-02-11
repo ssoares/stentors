@@ -190,11 +190,12 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/themes/default/css/site-ie7.css" media="all">
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo (Zend_Registry::get('www_root') . '/themes/default/css/integration.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="print" href="<?php echo (Zend_Registry::get('www_root') . '/themes/default/css/print.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="print" href="<?php echo ($this->baseUrl() . '/themes/default/css/print.css'); ?>" />
 
     <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="<?php echo (Zend_Registry::get('www_root')) ?>/favicon.ico" />
 </head>
 <body>
+    <?php echo Zend_Registry::get('www_root'); ?>
     <div id="content">
 
         <!-- Start : Top Banner -->
