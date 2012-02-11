@@ -574,8 +574,6 @@ REPLACE INTO `Static_Texts` (`ST_Identifier`, `ST_LangID`, `ST_Value`, `ST_Type`
 ('list_column_parameters_taxe_label', 2, 'Federal tax', 'cible', '', 0, 14),
 ('management_module_catalog_items_promo', '1', 'Items en promotions', 'cible', '', 0, 14),
 ('management_module_catalog_items_promo', '2', 'Special offer', 'cible', '', 0, 14),
-('form_label_cityTxt', 1, "Ville ", 'cible', '', 0, 14),
-('form_label_cityTxt', 2, 'City ', 'cible', '', 0, 14),
 ('form_product_isnew_pro_label', 1, "Nouveauté : professionnels", 'cible', '', 0, 14),
 ('form_product_isnew_pro_label', 2, 'New : professionals', 'cible', '', 0, 14),
 ('form_item_display_label', 1, "Affiché seulement si connecté", 'cible', '', 0, 14),

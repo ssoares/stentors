@@ -37,5 +37,39 @@ class FormParentProfile extends Cible_Form_GenerateForm
         }
         parent::__construct($options);
 
+         $this->addDisplayGroup(
+            array(
+                'PP_TaxReceipt',
+                'PP_EmploiTps',
+                'PP_Role',
+                'PP_Notes'),
+            'data');
+        $this->getDisplayGroup('data')
+            ->setLegend('Infornations')
+            ->setAttrib('class','infosFieldsetParent')
+            ->removeDecorator('DtDdWrapper');
+
+        $subForm = new Cible_Form_SubForm();
+        $subForm->setName('parentForm')
+            ->removeDecorator('DtDdWrapper');
+        $subForm->setLegend('Adresse');
+
+        $address = new Cible_View_Helper_FormAddress($subForm);
+
+        $address->enableFields(
+            array(
+                'firstAddress'  => false,
+                'secondAddress' => false,
+                'cityTxt'       => false,
+                'zipCode'       => false,
+                'state'         => false,
+                'country'       => false,
+                'firstTel'      => false,
+                'secondTel'     => false
+                )
+            );
+
+        $address->formAddress();
+        $this->addSubForm($subForm, 'parentForm');
     }
 }

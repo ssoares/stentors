@@ -37,30 +37,29 @@ class ParentProfilesObject extends DataObject
 
     public function save($id, $data, $langId)
     {
-        $billId = 0;
-        $shipId = 0;
-        if (isset($data['addressFact']))
+        $addrId = 0;
+        if (isset($data['parentForm']))
         {
             $oAdress = new AddressObject();
-            $addrBill = $data['addressFact'];
-            $addrShip = $data['addressShipping'];
+            $addr = $data['parentForm'];
+//            $addrShip = $data['addressShipping'];
         }
-        if (!empty($addrBill))
+        if (!empty($addr))
         {
-            $billId = $oAdress->save($addrBill['MP_BillingAddrId'], $addrBill, $langId);
+            $addrId = $oAdress->save($data['PP_AddressId'], $addr, $langId);
 
-            if ($addrShip['duplicate'] == 1)
-            {
-                $addrBill['A_Duplicate'] = $billId;
-                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrBill, $langId);
-            }
-            else
-            {
-                $addrShip['A_Duplicate'] = 0;
-                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrShip, $langId);
-            }
-            $data['MP_BillingAddrId'] = $billId;
-            $data['MP_ShippingAddrId'] = $shipId;
+//            if ($addrShip['duplicate'] == 1)
+//            {
+//                $addrBill['A_Duplicate'] = $billId;
+//                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrBill, $langId);
+//            }
+//            else
+//            {
+//                $addrShip['A_Duplicate'] = 0;
+//                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrShip, $langId);
+//            }
+            $data['PP_AddressId'] = $addrId;
+//            $data['MP_ShippingAddrId'] = $shipId;
         }
 
         parent::save($id, $data, $langId);
@@ -68,24 +67,24 @@ class ParentProfilesObject extends DataObject
 
     public function findData($filters = array())
     {
-        $billAddr = array();
-        $shipAddr = array();
+        $addr = array();
+//        $shipAddr = array();
         $oAddress = new AddressObject();
         $langId   = Zend_Registry::get('languageID');
         $data = parent::findData($filters);
         if (!empty($data))
         {
             $data = $data[0];
-            $billId = $data['PP_AddressId'];
+            $addrId = $data['PP_AddressId'];
 
-            if (!empty($billId))
+            if (!empty($addrId))
             {
-                $billAddr = $oAddress->getAll($langId, true, $billId);
-                $billAddr = $billAddr[0];
-                $billAddr['PP_AddressId'] = $billId;
+                $addr = $oAddress->getAll($langId, true, $addrId);
+                $addr = $addr[0];
+                $addr['PP_AddressId'] = $addrId;
             }
 
-            $data['addressFact'] = $billAddr;
+            $data['parentForm'] = $addr;
 //            $data['addressShipping'] = $shipAddr;
         }
 
