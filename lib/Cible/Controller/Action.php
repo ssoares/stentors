@@ -576,7 +576,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
 
             foreach ($citiesData as $id => $data)
             {
-                $citiesData[$id]['C_Name'] = utf8_encode($data['C_Name']);
+                $citiesData[$id]['C_Name'] = $data['C_Name'];
             }
 
             echo json_encode($citiesData);
@@ -602,7 +602,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                 foreach ($states as $id => $data)
                 {
                     $statesData[$id ]['id']   = $data['id'];
-                    $statesData[$id ]['name'] = utf8_encode($data['name']);
+                    $statesData[$id ]['name'] = $data['name'];
                 }
             }
 

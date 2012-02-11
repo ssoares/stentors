@@ -123,6 +123,10 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                         ->addMultiOptions($this->_srcData);
                     $this->_decoParams['class'] .= 'radio radioInline';
                     break;
+                case 'hidden':
+                    $element = new Zend_Form_Element_Hidden($fieldId);
+                    $element->removeDecorator('DtDdWrapper');
+                    break;
                 case 'multi-checkbox':
 
                     break;

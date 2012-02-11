@@ -27,7 +27,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
     protected $_disableExportToPDF   = false;
     protected $_disableExportToCSV   = false;
     protected $_enablePrint          = false;
-    protected $_formatData            = false;
+    protected $_formatData           = false;
     protected $_constraint;
     protected $_genericId;
     protected $_oMember;
@@ -871,8 +871,8 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
             }
             else
             {
-                $addrBill = array();
-                $addrShip = array();
+                $addrOne = array();
+                $addrTwo = array();
                 $formData = $this->_request->getParams();
 
                 if ($this->_formatData && isset($formData['data']))
@@ -881,29 +881,29 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                     $formData = $this->_mergeFormData($formData);
                 }
 
-                if (isset($formData['addressShipping']['duplicate']))
+                $addrOne = $formData['parentForm'];
+                if (isset($formData['parentFormTwo']['duplicate']))
                 {
-                    $addrBill = $formData['addressFact'];
-                    $addrShip = $formData['addressShipping'];
+                    $addrTwo = $formData['parentFormTwo'];
 
-                    if ($formData['addressShipping']['duplicate'] == 1)
+                    if ($formData['parentFormTwo']['duplicate'] == 1)
                     {
-                        $subFormShip = $form->getSubForm('addressShipping');
+                        $subFormShip = $form->getSubForm('parentFormTwo');
                         foreach ($subFormShip as $key => $value)
                         {
                             $value->clearValidators()->setRequired(false);
                         }
 
-                        unset($formData['addressShipping']);
+                        unset($formData['parentFormTwo']);
                     }
                 }
 
                 if ($form->isValid($formData))
                 {
-                    if (empty($addrBill) && !$this->_formatData && !isset($formData['retailerForm']))
+                    if (empty($addrOne) && !$this->_formatData && !isset($formData['retailerForm']))
                         $formData = $this->_mergeFormData($formData);
                     else
-                        $formData['addressShipping'] = $addrShip;
+                        $formData['parentFormTwo'] = $addrTwo;
 
                     if (isset($formData['isNewImage']) && $formData['isNewImage'] == 'true' && $form->getValue($this->_imageSrc) <> '')
                     {

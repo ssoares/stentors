@@ -20,11 +20,14 @@
     font-size: 14px;
     font-weight: bold;
 }
-
+#fieldset-parentForm,
+fieldset.infosFieldsetParent,
 fieldset.infosFieldset{
     border: 1px solid #ccc;
     margin-bottom: 10px;
 }
+#fieldset-parentForm legend,
+fieldset.infosFieldsetParent legend,
 fieldset.infosFieldset legend{
     margin-left: 0;
 }
@@ -56,4 +59,18 @@ fieldset.infosFieldset legend{
 
 .clearBoth{
     clear: both;
+}
+
+#fieldset-parentForm,
+fieldset.infosFieldsetParent{
+    width: 45%;
+    float: left;
+    margin-right: 10px;
+}
+#fieldset-parentForm{
+    float: left;
+}
+
+fieldset.infosFieldsetParent textarea.mediumEditor{
+    width: 98%;
 }
