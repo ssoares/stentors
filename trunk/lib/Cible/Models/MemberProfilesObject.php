@@ -63,8 +63,10 @@ class MemberProfilesObject extends DataObject
             $data['MP_ShippingAddrId'] = $shipId;
         }
 
+        $data['MP_BirthDate'] = $data['MP_BirthDateDt'];
         $years = $this->calculateAge($data['MP_BirthDate']);
         $data['MP_Age'] = $years;
+        $data['MP_PassportExpiracyDate'] = $data['MP_PassportExpiracyDateDt'];
 
         parent::save($id, $data, $langId);
     }

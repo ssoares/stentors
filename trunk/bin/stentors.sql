@@ -184,5 +184,6 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('form_label_PP_EmploiTps', 1, 'Emploi du temps',  'cible', '', 0, 31),	('form_label_PP_EmploiTps', 2, 'Schedule', 'cible', '', 0, 31),
 ('form_label_PP_Role', 1, 'Lien de parenté / responsabilité',  'cible', '', 0, 31),	('form_label_PP_Role', 2, 'Relatives', 'cible', '', 0, 31),
 ('form_label_PP_Notes', 1, 'Informations complémentaires',  'cible', '', 0, 31),	('form_label_PP_Notes', 2, 'More informations', 'cible', '', 0, 31),
+('form_label_MP_Age', 1, 'Age',  'cible', '', 0, 30),	('form_label_MP_Age', 2, 'Age', 'cible', '', 0, 30),
 ('header_list_parents_text', 1, 'Liste des parents',  'cible', '', 0, 31),	('header_list_parents_text', 2, 'Parents list', 'cible', '', 0, 31),
 ('header_list_parents_description', 1, 'Liste des parents',  'cible', '', 0, 31),	('header_list_parents_description', 2, 'Parents list', 'cible', '', 0, 31);
