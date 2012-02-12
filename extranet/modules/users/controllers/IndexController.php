@@ -106,6 +106,18 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
 
         }
 
+        switch( Zend_Registry::get('languageID'))
+        {
+            case '1':
+                $this->view->jQuery()->addJavascriptFile("{$this->view->baseUrl()}/js/jquery/localizations/ui.datepicker-fr.js");
+                break;
+            case '2':
+                $this->view->jQuery()->addJavascriptFile("{$this->view->baseUrl()}/js/jquery/localizations/ui.datepicker-en.js");
+                break;
+            default:
+                $this->view->jQuery()->addJavascriptFile("{$this->view->baseUrl()}/js/jquery/localizations/ui.datepicker-fr.js");
+                break;
+        }
         $this->view->headScript()->appendFile($this->view->locateFile('jquery.validate.min.js', 'jquery'));
         $this->view->headScript()->appendFile($this->view->locateFile('additional-methods.min.js', 'jquery'));
         $this->view->headLink()->appendStylesheet($this->view->locateFile('profile.css'));

@@ -39,12 +39,16 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         $this->setAttrib('id', 'memberInfo');
 
         $this->addDisplayGroup(
-            array('MP_BirthDate',
-                'MP_AssuSocNum',
-                'MP_Section',
+            array(
+                'MP_BirthDateDt',
+                'MP_BirthDate',
+                'MP_Age',
                 'MP_School',
                 'MP_SchoolYear',
-                'MP_Phone'),
+                'MP_AssuSocNum',
+                'MP_Phone',
+                'MP_Section'
+                ),
             'identity');
         $this->getDisplayGroup('identity')
             ->setLegend('Identification')
@@ -54,6 +58,7 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         $this->addDisplayGroup(
             array('MP_CountryOrig',
                 'MP_PassportNum',
+                'MP_PassportExpiracyDateDt',
                 'MP_PassportExpiracyDate',
                 'MP_PassportBirthDate',
                 'MP_PassportFirstName',

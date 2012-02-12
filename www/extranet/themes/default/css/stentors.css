@@ -60,6 +60,9 @@ fieldset.infosFieldset legend{
 .clearBoth{
     clear: both;
 }
+.clearLeft{
+    clear: left;
+}
 
 #fieldset-parentForm,
 fieldset.infosFieldsetParent{

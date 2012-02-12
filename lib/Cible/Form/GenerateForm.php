@@ -95,7 +95,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
         {
             if (!isset($params['elem']))
                 $params['elem'] = '';
-            
+
             $fieldId = $meta['COLUMN_NAME'];
             switch ($params['elem'])
             {
@@ -109,12 +109,14 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     $element->setLabel($this->getView()->getCibleText('form_label_' . $fieldId))
                         ->setAttrib('class', 'largeSelect')
                         ->addMultiOptions($this->_srcData);
+                    $element = $this->_setBasicDecorator($element);
                     break;
                 case 'checkbox':
                     $element = new Zend_Form_Element_Checkbox($fieldId);
                     $element->setLabel($this->getView()->getCibleText('form_label_' . $fieldId));
                     $this->_decoParams['class'] .= 'label_after_checkbox';
                     $this->_decoParams['labelPos'] = 'append';
+                    $element = $this->_setBasicDecorator($element);
                     break;
                 case 'radio':
 
@@ -125,9 +127,11 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     $element->setSeparator('')
                         ->addMultiOptions($this->_srcData);
                     $this->_decoParams['class'] .= 'radio radioInline';
+                    $element = $this->_setBasicDecorator($element);
                     break;
                 case 'hidden':
                     $element = new Zend_Form_Element_Hidden($fieldId);
+                    $element->removeDecorator('Label');
                     $element->removeDecorator('DtDdWrapper');
                     break;
                 case 'multi-checkbox':
@@ -143,10 +147,12 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                             $this->getView()->getCibleText('form_label_' . $fieldId))
                         ->addFilter('StringTrim')
                         ->setAttrib('class', 'smallTextInput');
+                    $element = $this->_setBasicDecorator($element);
                     break;
             }
+            if (!empty($params['disabled']))
+                $element->setAttrib('disabled', (bool)$params['disabled']);
 
-            $element = $this->_setBasicDecorator($element);
             $this->addElement($element);
         }
     }
@@ -228,6 +234,11 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     array('mode'=>Cible_Form_Element_Editor::ADVANCED));
                 $element->setLabel($this->getView()->getCibleText('form_label_' . $meta['COLUMN_NAME']))
                     ->setAttrib('class','mediumEditor');
+                $element->setDecorators(array(
+                'ViewHelper',
+                array('Errors', array('placement' => 'prepend')),
+                array('label', array('placement' => 'prepend')),
+            ));
                 break;
 
             default:
@@ -238,7 +249,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
         }
         $label = $element->getDecorator('Label');
         $label->setOption('class', $this->_labelCSS);
-        $element = $this->_setBasicDecorator($element);
+//        $element = $this->_setBasicDecorator($element);
         $this->addElement($element);
     }
 
@@ -260,15 +271,18 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
      */
     public function setElementDatepicker(Array $meta, Array $params)
     {
+
         $date = new Cible_Form_Element_DatePicker(
             $this->_elemNameId,
             array(
                 'jquery.params'=> array(
                     'changeYear' => true,
                     'changeMonth' => true,
-                    'yearRange' => 'c-100:c',
+                    'yearRange' => 'c-10:c+20',
+                    'altField' => '#' . $this->_elemNameId . 'Dt',
+                    'altFormat' => 'yy-mm-dd',
                     'dateFormat' => 'dd-mm-yy',
-                    'defaultDate' => '-50y',
+                    'defaultDate' => '-12y',
                     'YearOrdering' => 'desc'
                     )
                 )
@@ -299,7 +313,12 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
               )
           );
 
+        $params['elem'] = 'hidden';
+        $params['class'] = '';
+        $meta['COLUMN_NAME'] = $meta['COLUMN_NAME'] . 'Dt';
+        $this->setElementInput($meta, $params);
         $date = $this->_setBasicDecorator($date);
+
         $this->addElement($date);
     }
 
@@ -360,9 +379,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
         $class = '' ;
         if (!empty($this->_decoParams['class']))
             $class = $this->_decoParams['class'];
-
-        $element->setDecorators(
-            array(
+        $opt = array(
                 'ViewHelper',
                 array('label', array('placement' => $this->_decoParams['labelPos'])),
                 array(
@@ -371,8 +388,21 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                         'tag' => 'dd',
                         'class' => $class)
                 ),
-            )
-        );
+            );
+        if ($element instanceof Cible_Form_Element_DatePicker)
+            $opt = array(
+                "UiWidgetElement",
+                "Errors",
+                array('label', array('placement' => $this->_decoParams['labelPos'])),
+                array(
+                    array('row' => 'HtmlTag'),
+                    array(
+                        'tag' => 'dd',
+                        'class' => $class)
+                ),
+            );
+
+        $element->setDecorators($opt);
         return $element;
     }
 

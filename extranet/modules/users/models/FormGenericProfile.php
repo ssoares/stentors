@@ -31,7 +31,7 @@ class FormGenericProfile extends Cible_Form
     {
 //        $this->_disabledDefaultActions = true;
 //        $this->_object = $options['object'];
-//        unset($options['object']);
+        unset($options['object']);
         parent::__construct($options);
         $langId = 1;
         if (!empty($options['mode']) && $options['mode'] == 'edit')
