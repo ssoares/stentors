@@ -111,6 +111,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                 $this->_registry->set('languageID', $session->languageID);
 
             $this->_isXmlHttpRequest = true;
+            Zend_Registry::set('isXmlHttpRequest', $this->_isXmlHttpRequest);
             $this->disableLayout();
 
             if($_request->isPost()){
@@ -283,7 +284,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                     $label = $field_value;
                 }
 
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, 1, utf8_encode($label));
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, 1, ($label));
                 $column++;
 
             }
@@ -293,7 +294,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
 
                 foreach(array_keys($this->fields) as $i => $field_value){
                     if( isset($value[$field_value]) )
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $key, utf8_encode($value[$field_value] ));
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $key, ($value[$field_value] ));
 
                 }
                 $key++;
@@ -399,7 +400,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
 
 
             foreach(array_keys($this->fields) as $i => $field_value){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, 1, utf8_encode($field_value));
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, 1, ($field_value));
             }
 
             $key = 2;
@@ -407,7 +408,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
 
                 foreach(array_keys($this->fields) as $i => $field_value){
                     if( !empty($value[$field_value]) )
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $key, utf8_encode($value[$field_value] ));
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $key, ($value[$field_value] ));
                 }
                 $key++;
             }
@@ -510,7 +511,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                         $label = trim($field_value);
                     }
 
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, 1, utf8_encode($label));
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, 1, ($label));
                     $column++;
 
                 }
@@ -520,7 +521,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
 
                 foreach(array_keys($this->fields) as $i => $field_value){
                     if( isset($value[$field_value]) )
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $key, utf8_encode(trim($value[$field_value]) ));
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($i, $key, (trim($value[$field_value]) ));
 
                 }
                 $key++;

@@ -88,7 +88,6 @@ class MemberProfilesObject extends DataObject
             $oParent = new ParentProfilesObject();
             $firstPar = $oParent->getParentDetails($first, array('PP_GenericProfileId' => $first));
             $secPar   = $oParent->getParentDetails($second, array('PP_GenericProfileId' => $second));
-            echo "<pre>";
 
             if (!empty($firstPar))
             {

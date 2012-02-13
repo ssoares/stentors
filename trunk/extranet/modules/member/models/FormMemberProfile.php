@@ -107,26 +107,34 @@ class FormMemberProfile extends Cible_Form_GenerateForm
             $content .= str_replace(array('##ROLE##', '##HREF##', '##FNAME##', '##LNAME##'), $values['secP'], $subject);
 
         }
-            $firstP = new Cible_Form_Element_Html(
-                        'parents',
-                        array(
-                            'value' => $content
-                        )
-            );
-            $firstP->setDecorators(
+        if (empty($values['firstP']) || empty($values['secP']))
+        {
+//            $img = <img title="Supprimer" alt="" src="">
+            $img = $this->getView()->image('/extranet/icons/button_add.png', array('title' => 'Ajouter'));
+            $href = $this->getView()->BaseUrl() . '/parent/index/list/actionKey/add/child/' . $values['MP_GenericProfileId'];
+            $link = $this->getView()->link($href, $img . 'Ajouter les parents / représentants légaux', array('class' => 'addParents'));
+            if (!empty($content)) $content .= '<br />';
+            $content .= $link;
+        }
+        $firstP = new Cible_Form_Element_Html(
+            'parents',
+            array(
+                'value' => $content
+            )
+        );
+        $firstP->setDecorators(
+                array(
+                    'ViewHelper',
+                    array('label', array('placement' => 'prepend')),
                     array(
-                        'ViewHelper',
-                        array('label', array('placement' => 'prepend')),
+                        array('row' => 'HtmlTag'),
                         array(
-                            array('row' => 'HtmlTag'),
-                            array(
-                                'tag' => 'dd',
-                                'class' => 'left')
-                        ),
-                    )
-            );
-//            $nextElemPos = $this->getElement('MP_AgreePhotos')->getOrder();
-            $this->getDisplayGroup('other')->addElement($firstP);
-            $firstP->setOrder(1);
+                            'tag' => 'dd',
+                            'class' => 'left')
+                    ),
+                )
+        );
+        $this->getDisplayGroup('other')->addElement($firstP);
+        $firstP->setOrder(1);
     }
 }

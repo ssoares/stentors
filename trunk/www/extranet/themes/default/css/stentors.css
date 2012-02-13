@@ -5,7 +5,9 @@
     Description:
         Purpose of the stylesheet follows.
 */
-
+form {
+    text-align: left;
+}
 .radioInline label {
     float: left;
     width: auto;
@@ -84,4 +86,17 @@ fieldset.infosFieldsetParent textarea.mediumEditor{
 }
 #default_form #action_panel ul.buttons li#backToMember a.action_submit{
     background: url("../../../icons/button_back.png") no-repeat scroll 5px 50% transparent;
+}
+
+#container a.addParents{
+    padding-left: 20px;
+}
+#container a.addParents img{
+    width: 1.264285714em;
+    height: 1.264285714em;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.ui-button .ui-button-text{
+    line-height: 0.9em !important;
 }

@@ -282,7 +282,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     'altField' => '#' . $this->_elemNameId . 'Dt',
                     'altFormat' => 'yy-mm-dd',
                     'dateFormat' => 'dd-mm-yy',
-                    'defaultDate' => '-12y',
+                    'defaultDate' => "$('".$this->_elemNameId."').val())",
                     'YearOrdering' => 'desc'
                     )
                 )

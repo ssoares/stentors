@@ -544,22 +544,21 @@ div.content_management  {
 .topInfo {
     background-image: url("../images/bg_dashboard_middle_line.jpg");
     background-position:60%;
-    width: 960px;
+    width:100%;
     padding: 10px 0px 10px 0px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 .topInfo table{
-    width: 960px;
+    width: 100%;
     border: none;
 }
 
 .topInfo td.title_column {
-    width: 490px;
+    width: 50%;
 }
 
 .topInfo td.title_column h1 {
-    width: 490px;
     font-size: 27px;
     color: #000000;
     padding: 0px;

@@ -35,4 +35,70 @@
             }
         }
     });
+    $("#memberInfo").validate({
+        rules: {
+            MP_BirthDate: {
+                required: true
+            }
+        },
+        messages: {
+            MP_BirthDate: {
+                required: 'Champs requis'
+            }
+        }
+    });
+
+    $('#MP_BirthDate').live('change', function(){
+
+         var now=new Date();
+         var dateArray = $(this).val().split('-').reverse();
+
+        if((now.getMonth()+1)>=dateArray[1])
+        {
+            if((now.getMonth()+1)==dateArray[1])
+            {
+                if(now.getDate()>=dateArray[2])
+                {
+                    var mois=(now.getMonth()+1)-dateArray[1];
+                    var ans=now.getFullYear()-dateArray[0];
+                }
+                else
+                {
+                    mois=(12-dateArray[1])+(now.getMonth()+1);
+                    ans=now.getFullYear()-dateArray[0]-1;
+                }
+            }
+            else
+            {
+                mois=(now.getMonth()+1)-dateArray[1];
+                ans=now.getFullYear()-dateArray[0];
+            }
+        }
+        else
+        {
+            mois=(12-dateArray[1])+(now.getMonth()+1);
+            ans=now.getFullYear()-dateArray[0]-1;
+        }
+            if(now.getDate()>dateArray[2])
+        {
+            var jours=now.getDate()-dateArray[2];
+        }
+        else
+        {
+            jours=(30-dateArray[2])+(now.getDate());
+        }
+        while(jours>30)
+        {
+            jours-=30;
+            mois+=1;
+        }
+        while(mois>12)
+        {
+            mois-=12;
+            ans+=1;
+        }
+        $('#MP_Age').val(ans);
+
+    });
+
 </script>

@@ -28,7 +28,9 @@ class FormParentProfile extends Cible_Form_GenerateForm
 
     public function __construct($options = null)
     {
-        $this->_disabledDefaultActions = false;
+        if ($options['isXmlHttpRequest'])
+            $this->_disabledDefaultActions = true;
+        
         $this->_disabledLangSwitcher = true;
         if (!empty($options['object']))
         {
