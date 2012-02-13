@@ -35,6 +35,25 @@ class ParentProfilesObject extends DataObject
     protected $_constraint      = '';
     protected $_foreignKey      = 'PP_GenericProfileId';
 
+    public function insert($data, $langId)
+    {
+        $oProfile = new GenericProfilesObject();
+
+        if (!empty($data['parentForm']))
+        {
+            $oAddress = new AddressObject();
+            $parentAddrId = $oAddress->insert($data['parentForm'], $langId);
+            unset($data['parentForm']);
+        }
+        $data['PP_AddressId'] = $parentAddrId;
+
+        $pId = $oProfile->insert(array('GP_Email' => 'test'), $langId);
+        $data['PP_GenericProfileId'] = $pId;
+        $id = parent::insert($data, $langId);
+
+        return $id;
+    }
+
     public function save($id, $data, $langId)
     {
         $addrId = 0;

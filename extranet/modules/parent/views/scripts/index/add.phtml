@@ -1,0 +1,24 @@
+<?php $form = $this->form;?>
+<?php $this->headLink()->appendStylesheet($this->locateFile('profile.css')); ?>
+<?php
+echo $this->partial('partials/header.pageDetails.phtml', array(
+    'pageTitle' => $this->getCibleText('header_add_profile_text'),
+    'pageDescription' => $this->getCibleText('header_add_profile_description'),
+    'breadcrumb' => ''
+));
+?>
+
+<div id="default_form">
+    <div id="form_panel">
+        <?php echo $form; ?>
+    </div>
+
+</div>
+<?php if (!empty($this->script)): ?>
+<script type="text/javascript">
+//<![CDATA[
+    <?php echo $this->script; ?>
+//]]>
+</script>
+<?php endif;?>
+<?php echo $this->partial("partials/autocomplete.phtml"); ?>

@@ -54,8 +54,6 @@ $hidden = '';
 
         echo $this->tabContainer("profilesTab", array(), array('class' => 'tabContain'));
         ?>
-        <input id="selectedState" name="selectedState" type="hidden" value="<?php echo($this->selectedState); ?>"/>
-        <input id="selectedCity" name="selectedCity" type="hidden" value="<?php echo($this->selectedCity); ?>"/>
     </div>
 </div>
 <div id="dialog-confirm" title="Confirmer la suppression?" class="hidden">
@@ -64,6 +62,7 @@ $hidden = '';
         <?php echo $this->getCibleText('profile_delete_alert'); ?>
     </p>
 </div>
+<div id="dialogForm" title="" style="display:none"></div>
 <script type="text/javascript">
     $(window).load(function(){
         $('input[name=submitSave]').attr('disabled', 'disabled');
@@ -89,7 +88,6 @@ $hidden = '';
         )
         ); ?>
 
-<?php echo $this->partial(
-    'partials/js.addressRetailer.phtml'
-    ); ?>
+<?php // echo $this->partial('partials/js.addParents.phtml'); ?>
+<?php echo $this->partial('partials/js.addressRetailer.phtml'); ?>
 <?php echo $this->partial("partials/autocomplete.phtml"); ?>

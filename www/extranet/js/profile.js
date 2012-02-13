@@ -9,6 +9,7 @@
             profilesLst : $('.profiles'),
             addTrigger : $('.addProfile'),
             delTrigger : $('.deleteTab'),
+            addParent : '.addParents',
             infos : $('.emptyModel'),
             zoneWidth: 510,
             easingEffect: 'easeInExpo',
@@ -385,6 +386,69 @@
                 }
 
                 return obj;
+            },
+            addParent: function (){
+                var loading = $('<img src="/extranet/themes/default/images/loading.gif" alt="loading" class="loading">');
+                    var dialog = $('#dialogForm').append(loading.clone());
+                    var $link = $(o.addParent).live('click', function(e) {
+                        e.preventDefault();
+                        $.get($link.attr('href'), function(data){
+                            dialog.html(data);
+                            dialog.dialog({
+                                title: $link.attr('title'),
+                                width: 850,
+                                height: 750,
+                                buttons : {
+                                    Annuler : function(){
+                                        dialog.dialog('close');
+                                        dialog.dialog('destroy');
+                                    },
+                                    Ajouter : function(){
+                                        var form = dialog.find('form:first');
+                                        var data = main._serialize(form);
+                                        var url = o.baseUrl + '/parent/index/list/actionKey/add';// + '?' + data;
+                                        o.params = {
+                                            data: data,
+                                            genericId: o.id
+                                        };
+                                        var isValid = form.valid();
+                                        if (isValid)
+                                        {
+                                            e.preventDefault();
+                                            $.post(
+                                                url,
+                                                o.params,
+                                                function(data){
+                                                    if (data)
+                                                    {
+                                                        if (data)
+                                                        {
+                                                            if ($('#MP_FirstParent').val() < 1)
+                                                                $('#MP_FirstParent').val(data).change();
+                                                            else if ($('#MP_FirstParent').val() > 0 && $('#MP_SecondParent').val() < 1)
+                                                                $('#MP_SecondParent').val(data).change();
+
+                                                            if ($('#MP_FirstParent').val() > 0 && $('#MP_SecondParent').val() > 0)
+                                                                $('.addParents').fadeOut();
+                                                        }
+                                                        dialog.dialog('close');
+                                                        dialog.dialog('destroy');
+                                                    }
+                                                },
+                                                'json'
+                                            );
+                                        }
+                                    }
+                                },
+                                create: function(){
+                                    $.getScript(o.baseUrl + '/js/jquery/jquery.autocomplete.pack.js');
+                                    $.getScript(o.baseUrl + '/js/jquery/jquery.maskedinput-1.2.2.min.js');
+                                    $.getScript('/themes/default/css/jquery.autocomplete.css');
+                                }
+                            });
+
+                        });
+                    });
             }
         }
 
@@ -395,6 +459,7 @@
         main.setValidate();
         main.changeTab();
         main.save();
+        main.addParent();
     }
 
 })(jQuery);

@@ -8,7 +8,7 @@
  */
 
 /**
- * Class FormObject - 
+ * Class FormObject -
  *
  * @package    Form
  * @copyright  Copyright (c) Cible solutions d'affaires (http://www.ciblesolutions.com)
@@ -55,12 +55,6 @@ class FormObject extends DataObject
         $oRespondent  = new FormRespondent();
         $oSections    = new FormSectionObject();
         $sectionsData = $oSections->getSections($id, $langId);
-        /*
-        echo "<pre>";
-        print_r($sectionsData);
-        echo "</pre>";
-        exit;
-        */
         $respondentData = $oRespondent->loadAll($id);
 
         $formData['sections']   = $sectionsData;
@@ -68,22 +62,22 @@ class FormObject extends DataObject
 
         return $formData;
     }
-    
+
     public function show($id, $langId)
     {
         $sectionSelect = new FormSection();
         $select = $sectionSelect->select()
                                 ->where('FS_FormID = ?', $id)
                                 ->order('FS_Seq');
-        
-        
+
+
         $sections = $sectionSelect->fetchAll($select);
         $cptSection = count($sections);
-        
-        
-        
-        
+
+
+
+
         return($cptSection);
-        
+
     }
 }

@@ -108,6 +108,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
     protected $_addScriptState = true;
     protected $_script;
     protected $_form;
+    protected $_isXmlHttpRequest = false;
 
     /**
      * Class cosntructor. Set the form if defined and other properties.
@@ -119,6 +120,8 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
      */
     public function  __construct(Zend_Form $form = null, array $options = array())
     {
+        if (Zend_Registry::isRegistered('isXmlHttpRequest'))
+            $this->_isXmlHttpRequest = Zend_Registry::get('isXmlHttpRequest');
 
         $this->_propertiesList = get_class_vars(get_class());
 
@@ -288,7 +291,11 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
         }
 
         if (!empty($this->_script))
-            $this->view->jQuery()->addOnLoad($this->_script);
+            if (!$this->_isXmlHttpRequest)
+                $this->view->jQuery()->addOnLoad($this->_script);
+            else
+                $this->view->script = ($this->_script);
+
 
     }
 
@@ -321,7 +328,9 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
                 $field->setAttrib('class', 'stdTextInput ' . $req);
                 $this->_addRequiredValidator ($field);
             }
+            $hiddenSrc = new Zend_Form_Element_Hidden('selectedCity');
 
+            $this->_form->addElement($hiddenSrc);
             $this->_form->addElement($field);
         }
 
@@ -354,7 +363,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
                 $field->setAttrib('class', 'stdTextInput ' . $req);
                 $this->_addRequiredValidator ($field);
             }
-
+            $this->_addScriptState = false;
             $this->_form->addElement($field);
         }
 
@@ -388,7 +397,11 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
                 $field->setAttrib('class', 'stdSelect ' . $req);
                 $this->_addRequiredValidator ($field);
             }
-
+            $config = Zend_Registry::get('config');
+            $defaultStates = $config->address->default->states;
+            $hiddenSrc = new Zend_Form_Element_Hidden('selectedState');
+            $hiddenSrc->setValue($defaultStates);
+            $this->_form->addElement($hiddenSrc);
             $this->_form->addElement($field);
         }
 
@@ -762,10 +775,12 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
         }
         if (!$index)
         {
-            $tmp  = "if($('#selectedState').length)\r\n";
-            $tmp .= "var selectedState = ($('#selectedState').val()).split('||');\r\n";
-            $tmp .= "if($('#selectedCity').length)\r\n";
-            $tmp .= "var selectedCity  = ($('#selectedCity').val()).split('||');\r\n";
+            $tmp  = "var selectedState = 0;\r\n";
+            $tmp .= "var selectedCity  = 0;\r\n";
+            $tmp .= "if($('input[id$=selectedState]').length)\r\n";
+            $tmp .= "    selectedState = ($('input[id$=selectedState]').val()).split('||');\r\n";
+            $tmp .= "if($('input[id$=selectedCity]').length)\r\n";
+            $tmp .= "    selectedCity  = ($('input[id$=selectedCity]').val()).split('||');\r\n";
         }
         $langId = Zend_Registry::get('languageID');
 
