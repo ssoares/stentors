@@ -47,7 +47,7 @@ class ParentProfilesObject extends DataObject
         }
         $data['PP_AddressId'] = $parentAddrId;
 
-        $pId = $oProfile->insert(array('GP_Email' => 'test'), $langId);
+        $pId = $oProfile->insert($data, $langId);
         $data['PP_GenericProfileId'] = $pId;
         $id = parent::insert($data, $langId);
 

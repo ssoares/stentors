@@ -217,16 +217,39 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
 
             $this->view->form = $form;
 
+            $options = array(
+                'disabledDefaultActions' => true,
+                'mode' => 'edit'
+                );
+            $profile = new FormGenericProfile($options);
+            $elems = $profile->getElements();
+            foreach ($elems as $key => $elem)
+                $names[] = $key;
+
+            $profile->setDecorators(array('FormElements','Form'));
+            $profile->addDisplayGroup($names, 'genericForm');
+            $profile->getDisplayGroup('genericForm')->removeDecorator('DtDdWrapper');
+            $profile->getDisplayGroup('genericForm')->setLegend('Infos générales');
+            $form->addSubForm($profile, 'genericForm');
+            $form->getSubForm('genericForm')->setOrder(0);
+            $form->getSubForm('parentForm')->getElement('selectedState')->removeDecorator('DtDdWrapper');
+            $form->getDisplayGroup('data')->setAttrib('style', 'width:93%');
+            $form->getElement('PP_EmploiTps')->getDecorator('row')
+                ->setOption('style', 'width: 45%; display: inline-block; margin-right: 25px;');
+            $form->getElement('PP_Notes')->getDecorator('row')
+                ->setOption('style', 'width: 45%; display: inline-block; margin-left: 25px;');
+
+            //width: 45%; display: inline-block; margin-right: 25px;
             // action
             if ($this->_request->isPost())
             {
                 $formData = $this->_request->getPost();
+                $formData = ($formData['data']);
+                $formData = $this->_rebuildData($formData);
                 if ($form->isValid($formData))
                 {
 //                    $formData = $this->_mergeFormData($formData);
 
-                    $formData = ($formData['data']);
-                    $formData = $this->_rebuildData($formData);
                     $recordID = $oData->insert($formData, $langId);
                     /* IMAGES */
                     if (!empty($this->_imageSrc))
@@ -237,82 +260,82 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
                                 or die("Could not make directory");
                     }
 
-                    if ($form->getValue($this->_imageSrc) <> '')
-                    {
-                        //Get config data
-                        $config = Zend_Registry::get('config')->toArray();
-                        //Set sizes for the image
-                        $srcOriginal       = $this->_imageFolder . "tmp/" . $form->getValue($this->_imageSrc);
-                        $originalMaxHeight = $config[$this->_moduleTitle]['image']['original']['maxHeight'];
-                        $originalMaxWidth  = $config[$this->_moduleTitle]['image']['original']['maxWidth'];
-
-                        $originalName = str_replace(
-                                        $form->getValue($this->_imageSrc),
-                                        $originalMaxWidth
-                                        . 'x'
-                                        . $originalMaxHeight
-                                        . '_'
-                                        . $form->getValue($this->_imageSrc),
-                                        $form->getValue($this->_imageSrc)
-                        );
-
-
-                        $srcMedium = $this->_imageFolder
-                                . "tmp/medium_"
-                                . $form->getValue($this->_imageSrc);
-                        $mediumMaxHeight = $config[$this->_moduleTitle]['image']['medium']['maxHeight'];
-                        $mediumMaxWidth = $config[$this->_moduleTitle]['image']['medium']['maxWidth'];
-                        $mediumName = str_replace(
-                                        $form->getValue($this->_imageSrc),
-                                        $mediumMaxWidth
-                                        . 'x'
-                                        . $mediumMaxHeight
-                                        . '_'
-                                        . $form->getValue($this->_imageSrc),
-                                        $form->getValue($this->_imageSrc)
-                        );
-
-                        $srcThumb = $this->_imageFolder
-                                . "tmp/thumb_"
-                                . $form->getValue($this->_imageSrc);
-                        $thumbMaxHeight = $config[$this->_moduleTitle]['image']['thumb']['maxHeight'];
-                        $thumbMaxWidth = $config[$this->_moduleTitle]['image']['thumb']['maxWidth'];
-                        $thumbName = str_replace(
-                                        $form->getValue($this->_imageSrc),
-                                        $thumbMaxWidth
-                                        . 'x'
-                                        . $thumbMaxHeight
-                                        . '_'
-                                        . $form->getValue($this->_imageSrc),
-                                        $form->getValue($this->_imageSrc)
-                        );
-
-                        copy($srcOriginal, $srcMedium);
-                        copy($srcOriginal, $srcThumb);
-
-                        Cible_FunctionsImageResampler::resampled(
-                                        array(
-                                            'src' => $srcOriginal,
-                                            'maxWidth' => $originalMaxWidth,
-                                            'maxHeight' => $originalMaxHeight)
-                        );
-                        Cible_FunctionsImageResampler::resampled(
-                                        array(
-                                            'src' => $srcMedium,
-                                            'maxWidth' => $mediumMaxWidth,
-                                            'maxHeight' => $mediumMaxHeight)
-                        );
-                        Cible_FunctionsImageResampler::resampled(
-                                        array(
-                                            'src' => $srcThumb,
-                                            'maxWidth' => $thumbMaxWidth,
-                                            'maxHeight' => $thumbMaxHeight)
-                        );
-
-                        rename($srcOriginal, $this->_imageFolder . $recordID . "/" . $originalName);
-                        rename($srcMedium, $this->_imageFolder . $recordID . "/" . $mediumName);
-                        rename($srcThumb, $this->_imageFolder . $recordID . "/" . $thumbName);
-                    }
+//                    if ($form->getValue($this->_imageSrc) <> '')
+//                    {
+//                        //Get config data
+//                        $config = Zend_Registry::get('config')->toArray();
+//                        //Set sizes for the image
+//                        $srcOriginal       = $this->_imageFolder . "tmp/" . $form->getValue($this->_imageSrc);
+//                        $originalMaxHeight = $config[$this->_moduleTitle]['image']['original']['maxHeight'];
+//                        $originalMaxWidth  = $config[$this->_moduleTitle]['image']['original']['maxWidth'];
+//
+//                        $originalName = str_replace(
+//                                        $form->getValue($this->_imageSrc),
+//                                        $originalMaxWidth
+//                                        . 'x'
+//                                        . $originalMaxHeight
+//                                        . '_'
+//                                        . $form->getValue($this->_imageSrc),
+//                                        $form->getValue($this->_imageSrc)
+//                        );
+//
+//
+//                        $srcMedium = $this->_imageFolder
+//                                . "tmp/medium_"
+//                                . $form->getValue($this->_imageSrc);
+//                        $mediumMaxHeight = $config[$this->_moduleTitle]['image']['medium']['maxHeight'];
+//                        $mediumMaxWidth = $config[$this->_moduleTitle]['image']['medium']['maxWidth'];
+//                        $mediumName = str_replace(
+//                                        $form->getValue($this->_imageSrc),
+//                                        $mediumMaxWidth
+//                                        . 'x'
+//                                        . $mediumMaxHeight
+//                                        . '_'
+//                                        . $form->getValue($this->_imageSrc),
+//                                        $form->getValue($this->_imageSrc)
+//                        );
+//
+//                        $srcThumb = $this->_imageFolder
+//                                . "tmp/thumb_"
+//                                . $form->getValue($this->_imageSrc);
+//                        $thumbMaxHeight = $config[$this->_moduleTitle]['image']['thumb']['maxHeight'];
+//                        $thumbMaxWidth = $config[$this->_moduleTitle]['image']['thumb']['maxWidth'];
+//                        $thumbName = str_replace(
+//                                        $form->getValue($this->_imageSrc),
+//                                        $thumbMaxWidth
+//                                        . 'x'
+//                                        . $thumbMaxHeight
+//                                        . '_'
+//                                        . $form->getValue($this->_imageSrc),
+//                                        $form->getValue($this->_imageSrc)
+//                        );
+//
+//                        copy($srcOriginal, $srcMedium);
+//                        copy($srcOriginal, $srcThumb);
+//
+//                        Cible_FunctionsImageResampler::resampled(
+//                                        array(
+//                                            'src' => $srcOriginal,
+//                                            'maxWidth' => $originalMaxWidth,
+//                                            'maxHeight' => $originalMaxHeight)
+//                        );
+//                        Cible_FunctionsImageResampler::resampled(
+//                                        array(
+//                                            'src' => $srcMedium,
+//                                            'maxWidth' => $mediumMaxWidth,
+//                                            'maxHeight' => $mediumMaxHeight)
+//                        );
+//                        Cible_FunctionsImageResampler::resampled(
+//                                        array(
+//                                            'src' => $srcThumb,
+//                                            'maxWidth' => $thumbMaxWidth,
+//                                            'maxHeight' => $thumbMaxHeight)
+//                        );
+//
+//                        rename($srcOriginal, $this->_imageFolder . $recordID . "/" . $originalName);
+//                        rename($srcMedium, $this->_imageFolder . $recordID . "/" . $mediumName);
+//                        rename($srcThumb, $this->_imageFolder . $recordID . "/" . $thumbName);
+//                    }
 
                     if (!$this->_isXmlHttpRequest)
                         // redirect
@@ -913,13 +936,13 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
             foreach ($data as $key => $tmp)
             {
                 $key = urldecode($key);
+                $tmp = urldecode($tmp);
 //                $tmp = explode('=', $tmp);
                 $group = preg_match('/^parentForm/', $key);
-                $$tmp = str_replace('+', ' ', $tmp);
+                $tmp = str_replace('+', ' ', $tmp);
                 if ($group)
                 {
                     $tmpVal = explode('[', $key);
-
                     $arrayName = $tmpVal[0];
                     $newKey = str_replace(']', '', $tmpVal[1]);
                     $build[$arrayName][$newKey] = $tmp;
@@ -928,6 +951,7 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
                 else
                     $build[$key] = $tmp;
 
+                $group = false;
             }
 //        }
 

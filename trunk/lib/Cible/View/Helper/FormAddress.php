@@ -401,6 +401,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
             $defaultStates = $config->address->default->states;
             $hiddenSrc = new Zend_Form_Element_Hidden('selectedState');
             $hiddenSrc->setValue($defaultStates);
+            $hiddenSrc->removeDecorator('Label');
             $this->_form->addElement($hiddenSrc);
             $this->_form->addElement($field);
         }
@@ -461,7 +462,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
 
             if ($this->$req)
             {
-                $field->setAttrib('class', 'stdTextInput zipCode_format ' . $req);
+                $field->setAttrib('class', 'zipCode_format stdTextInput ' . $req);
                 $this->_addRequiredValidator ($field);
             }
 

@@ -30,7 +30,7 @@ class FormParentProfile extends Cible_Form_GenerateForm
     {
         if ($options['isXmlHttpRequest'])
             $this->_disabledDefaultActions = true;
-        
+
         $this->_disabledLangSwitcher = true;
         if (!empty($options['object']))
         {
@@ -39,17 +39,6 @@ class FormParentProfile extends Cible_Form_GenerateForm
         }
         parent::__construct($options);
 
-         $this->addDisplayGroup(
-            array(
-                'PP_TaxReceipt',
-                'PP_EmploiTps',
-                'PP_Role',
-                'PP_Notes'),
-            'data');
-        $this->getDisplayGroup('data')
-            ->setLegend('Infornations')
-            ->setAttrib('class','infosFieldsetParent')
-            ->removeDecorator('DtDdWrapper');
 
         $subForm = new Cible_Form_SubForm();
         $subForm->setName('parentForm')
@@ -73,5 +62,19 @@ class FormParentProfile extends Cible_Form_GenerateForm
 
         $address->formAddress();
         $this->addSubForm($subForm, 'parentForm');
+       $test = $this->getSubForm('parentForm')->getElement('selectedState')->getDecorator('HtmlTag')
+                ->setOption('style', 'margin: 0px;');
+
+        $this->addDisplayGroup(
+            array(
+                'PP_Role',
+                'PP_TaxReceipt',
+                'PP_EmploiTps',
+                'PP_Notes'),
+            'data');
+        $this->getDisplayGroup('data')
+            ->setLegend('Infornations')
+            ->setAttrib('class','infosFieldsetParent')
+            ->removeDecorator('DtDdWrapper');
     }
 }

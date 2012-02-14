@@ -245,11 +245,11 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                 $element = new Zend_Form_Element_Textarea($meta['COLUMN_NAME']);
                 $element->setLabel($this->getView()->getCibleText('form_label_' . $meta['COLUMN_NAME']))
                     ->setAttrib('class','mediumEditor');
+                $element = $this->_setBasicDecorator($element);
                 break;
         }
         $label = $element->getDecorator('Label');
         $label->setOption('class', $this->_labelCSS);
-//        $element = $this->_setBasicDecorator($element);
         $this->addElement($element);
     }
 
