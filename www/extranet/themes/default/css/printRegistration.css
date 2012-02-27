@@ -1,0 +1,113 @@
+@page {width: 780px;}
+table { border-collapse:collapse; border-spacing:0; empty-cells:show }
+td, th { vertical-align:top; font-size:12pt;}
+h1, h2, h3, h4, h5, h6 { clear:both }
+ol, ul { margin:0; padding:0;}
+li { list-style: none; margin:0; padding:0;}
+/*li span.odfLiEnd - IE 7 issue*/
+/*li span. { clear: both; line-height:0; width:0; height:0; margin:0; padding:0; }*/
+span.footnodeNumber { padding-right:1em; }
+span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-color:#fff000;  margin:0; border:0; padding:0;  }
+* {
+    font-family:Times New Roman;
+    font-size:14px;
+    margin:0;
+    writing-mode:lr-tb;
+}
+#page {
+    line-height: 1.5em;
+    margin: 0 auto;
+    padding-top: 10px;
+    width: 780px;
+}
+.gr1 {  padding-top:0.229cm; padding-bottom:0.229cm; padding-left:0.441cm; padding-right:0.441cm; margin-left:0.319cm; margin-right:0.319cm; vertical-align:top; }
+.P1 {writing-mode:lr-tb;}
+.P10 { margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P11 {margin-left:0.318cm; margin-right:0cm; text-align:justify ! important; text-indent:0.635cm; font-style:italic; }
+.P12 {padding-left:0.141cm; padding-right:0.141cm; }
+.P13 {padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P14 {text-align:justify ! important; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P15 {padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P16 {line-height:150%; padding-left:0.141cm; padding-right:0.141cm;  }
+.P17 {line-height:200%; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P18 {margin-left:0.751cm; margin-right:0cm; text-indent:-0.751cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P19 { font-size:20pt; font-weight:bold; text-align:left ! important;  margin-left:0.953cm; margin-right:0cm; text-indent:0cm; }
+.P2 { margin-right:0cm; text-indent:0cm; width: 55%; float:right;clear:right; text-align: center;}
+.P20 {}
+.P3 {margin-left:0.953cm; margin-right:0cm; text-indent:0cm; font-weight:bold; }
+.P4 { font-size:6pt;  margin-left:0.953cm; margin-right:0cm; text-align:justify ! important; text-indent:0cm; }
+.P5 {margin-left:0.953cm; margin-right:0cm;text-indent:0cm; }
+.P6 { font-size:6pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P7 {margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; }
+.P8 { font-size:2pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P9 { font-size:11pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; }
+.Sect1 {margin: 5px auto; text-align: center;width: 100%}
+.Sect2 { writing-mode:lr-tb; margin-left:1.549cm; margin-right:0cm; }
+.T1 { font-size:16pt; }
+.T10 { font-size:11pt; text-decoration:underline; }
+.T11 { font-size:11pt; text-decoration:underline; }
+.T12 { font-size:11pt; background-color:#00ff00; }
+.T13 { font-size:11pt; font-weight:bold; }
+.T14 { font-size:8pt; }
+.T15 { font-size:13pt; font-weight:bold; }
+.T16 { font-size:13pt; font-weight:bold; }
+.T17 { font-size:13pt; }
+.T18 { font-size:9pt; font-style:italic; font-weight:bold; }
+.T3 { font-size:16pt; font-weight:bold; }
+.T4 { font-size:16pt; font-weight:bold; background-color:#00ff00; }
+.T9 { font-weight:bold; }
+.WW8Num1z0 { font-family:Wingdings; font-size:12pt; }
+.WW8Num1z1 { font-family:Courier New; }
+.WW8Num1z2 { font-family:Wingdings; }
+.WW8Num1z3 { font-family:Symbol; }
+/*ODF styles with no properties representable as CSS*/
+.T5 { }
+
+.memberInfos{
+    border: 3px solid #000;
+    margin-top: 20px;
+    padding: 5px;
+}
+.colLeft {
+    display: inline-block;
+    width: 60%;
+}
+.colRight {
+    display: inline-block;
+    vertical-align: top;
+    width: 35%;
+}
+.sectionTitle{
+    float: left;
+    width: 30%;
+}
+.sectionList{
+    float: left;
+    width: 70%;
+}
+.Sect1 .colLeft{
+    border: 3px solid #000;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    text-align: left;
+    width: 35%;
+}
+.Sect1 .colRight{
+    border: 3px solid #000;
+    margin: 0 auto 0 15px;;
+    padding-bottom: 5px;
+    text-align: left;
+    width: 35%;
+}
+.garde,
+.passport{
+    border: 3px solid #000;
+    margin: 10px auto;
+    width: 100%;
+}
+.Sect2 .colLeft,
+.Sect2 .colRight{
+    width: 50%;
+}
+.Sect2 .colRight{
+}

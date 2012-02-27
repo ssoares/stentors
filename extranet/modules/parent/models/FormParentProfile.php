@@ -69,6 +69,7 @@ class FormParentProfile extends Cible_Form_GenerateForm
             array(
                 'PP_Role',
                 'PP_TaxReceipt',
+                'PP_AssuSocNum',
                 'PP_EmploiTps',
                 'PP_Notes'),
             'data');

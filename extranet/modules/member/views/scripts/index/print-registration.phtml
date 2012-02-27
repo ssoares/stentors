@@ -1,0 +1,102 @@
+<?php $this->headLink()->appendStylesheet($this->locateFile('printRegistration.css'), array('media'=>"all" )); ?>
+<div id="page">
+    <div class="P19">
+        <?php
+        // Affichage du logo de la compagnie
+        $config = Zend_Registry::get('config');
+        echo $this->image($this->baseUrl() . $config->clientLogo->src, array(
+            'height' => $config->clientLogo->height,
+            'width' => $config->clientLogo->width,
+            'alt' => $config->clientLogoAlt,
+            'border' => '0'
+        ));
+        ?>
+        <p class="P2">
+            <span class="T1">FORMULAIRE D'INSCRIPTION</span><br />
+            <span class="T1"><?php echo date('Y'); ?></span><br />
+            <span> <a href="http://www.stentors.net/">www.stentors.net</a></span>
+        </p>
+    </div>
+    <div class="memberInfos">
+        <div class="colLeft">
+            <p class="P7">
+                <span >Nom du membre : </span>
+                <span>_______________________</span>
+            </p>
+            <p class="P7"><span >Date de naissance : ___/___/______                Âge : </span><span class="T11">                        </span>
+            <p class="P7"><span >                               </span><span class="T14">Jour / Mois / Année</span></p>
+            <p class="P9">École : _________________________<span> Année Scolaire : ____________</span></p>
+            <p class="P9">Adresse courriel du membre : ________________________________________________ </p>
+        </div>
+        <div class="colRight">
+            <p class="sectionTitle">
+                <span >Section : </span>
+            </p>
+            <p class="sectionList">
+                <span >Clairons <br /> Pit <br /> ...</span>
+            </p>
+
+        </div>
+    </div>
+    <p class="P11"> </p><!--Next 'div' was a 'text:section'.-->
+    <div class="Sect1" id="Section1">
+        <div class="colLeft">
+            <p class="P12"><span >Nom du père : ________________________
+            </p>
+            <p class="P12">
+                <span>Adresse : ____________________________</span>
+            </p>
+            <p class="P12">Ville :<span> ______________________________</span></p>
+            <p class="P12">Code Postal : _________________________</p>
+            <p class="P12">Emploi du temps : _____________________</p>
+            <p class="P12">Téléphone. : (____)____________________</p>
+            <p class="P12"><span >Cellulaire : </span><span class="T11">(        )</span><span > ____________________</span></p>
+            <p class="P12"><span >Tel au travail : </span><span class="T11">(       )</span><span > __________________</span></p>
+            <p class="P12"><span >Courriel : ____________________________ </span></p>
+        </div>
+        <div class="colRight">
+            <p class="P12"><span >Nom de la mère : ______________________ </span></p>
+            <p class="P12">
+                <span>Adresse : ____________________________</span>
+            </p>
+            <p class="P12">Ville :<span> ______________________________</span></p>
+            <p class="P12">Code Postal : _________________________</p>
+            <p class="P12">Emploi du temps : _____________________</p>
+            <p class="P12">Téléphone. : (____)____________________</p>
+            <p class="P12"><span >Cellulaire : </span><span>(        )</span><span > ____________________</span></p>
+            <p class="P12"><span >Tel au travail : </span><span>(       )</span><span >___________________</span></p>
+            <p class="P12"><span >Courriel : ___________________________</span><span> </span></p>
+        </div>
+    </div><!--Next 'div' was a 'text:section'.-->
+    <div class="Sect2" id="Section2">
+        <div class="garde">
+            <p class="P12"><span class="T12">Le membre</span><span > habite avec:     _____ 2 parents        _____ Père         _____ Mère         _____ Tuteur                                                                Nom : __________________________________</span></p>
+            <p class="P12"><span >Adresse : ________________________________</span></p>
+            <p class="P12"><span >_____ Garde Partagée   Expliquer : _______________________________</span></p>
+            <p class="P12"><span >Nom du parent demandeur du reçu aux fins d’impôt </span><span class="T12">(membre moins de 16 ans) :</span><span > </span><span class="T11">                        </span></p>
+            <p class="P17_borderEnd"><span >No d’assurance sociale de celui-ci : </span><span class="T11">                                        </span><span >                </span></p>
+            <ul>
+                <li>
+                    <p class="P18" style="margin-left:0,751cm;"><span class="WW8Num1z0" style="display:block;float:left;min-width:0cm">.</span><span class="T8">Autorisez-vous l’organisation des Stentors à utiliser les photos de votre enfant pour des fins de publicité (Site Web, dépliant…) </span><span class="T8">   </span><span class="T15">***</span><span class="T17"> </span><span class="T16">Initiales du parent si consentant</span><span class="T9"> : </span><span class="T10">                </span><span class="odfLiEnd"/></p>
+                </li>
+            </ul>
+        </div>
+        <div class="passport">
+            <p class=""><span class="T13">INFORMATIONS SUR LE PASSEPORT</span><span > :</span></p>
+            <div class="colLeft">
+                <p class="P12"><span >Nationalité :   ___________________________</span></p>
+                <p class="P12"><span >Date d’expiration :   ______________________</span></p>
+                <p class="P12"><span >Nom : _________________________________ </span></p>
+                <p class="P12"><span class="T18">(Tel qu’il parait sur votre passeport)</span></p>
+            </div>
+            <div class="colRight">
+                <p class="P12"><span ># de passeport :   _____________________________</span></p>
+                <p class="P12"><span >Date de naissance : ___________________________</span></p>
+                <p class="P12"><span >Prénom : ______________________________</span></p>
+            </div>
+        </div>
+        <p class="P12"><span class="T5">        ____________</span><span class="T5">________________________                         _______________</span></p>
+        <p class="P12_borderEnd"><span class="T8"> </span><span class="T8">                        Signature du parent                                                Date</span>
+        </p>
+    </div>
+</div>

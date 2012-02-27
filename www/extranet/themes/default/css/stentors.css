@@ -33,6 +33,9 @@ fieldset.infosFieldset{
     border: 1px solid #ccc;
     margin-bottom: 10px;
 }
+fieldset.infosFieldset dd input[type="checkbox"]{
+    vertical-align: bottom;
+}
 #fieldset-genericForm legend,
 #fieldset-parentForm legend,
 fieldset.infosFieldsetParent legend,
@@ -60,9 +63,27 @@ fieldset.infosFieldset legend{
 #fieldset-passport dt label{
     width: auto;
 }
+#fieldset-assu dd,
+#fieldset-travel dd,
+#fieldset-emergency dd,
 #fieldset-passport dd{
     float: left;
     width: 30%;
+}
+#fieldset-travel dd.label_after_checkbox{
+    clear: both;
+}
+#fieldset-allergy dd label{
+    width: 30%;
+}
+#fieldset-diseases dd label,
+#fieldset-allergy dd.allergyList label{
+    width: 20%;
+    float: left;
+}
+#fieldset-diseases dd label:first-child,
+#fieldset-allergy dd.allergyList label:first-child{
+    width: 100%;
 }
 
 .clearBoth{
@@ -106,4 +127,9 @@ fieldset.infosFieldsetParent textarea.mediumEditor{
 }
 .ui-button .ui-button-text{
     line-height: 0.9em !important;
+}
+
+.allergy dd input.multicheckbox{
+    display: inline-block;
+    width: auto;
 }

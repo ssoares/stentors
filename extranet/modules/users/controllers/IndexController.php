@@ -96,6 +96,10 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                         $this->_objectList[$value] = 'ParentProfilesObject';
 //                        $this->_joinTables[] = $this->_objectList[$value];
                         break;
+                    case 'medical':
+                        $this->_objectList[$value] = 'MedicalProfilesObject';
+//                        $this->_joinTables[] = $this->_objectList[$value];
+                        break;
 
                     default:
                         break;
@@ -308,6 +312,48 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
             if($this->_isXmlHttpRequest && $this->_request->isPost())
             {
                 $_POST['PP_GenericProfileId'] = $this->_genericId;
+//                if ($this->_actionKey == 'add')
+//                    $_POST['MP_Status'] = -1;
+            }
+            $this->_redirectAction();
+        }
+    }
+    /**
+     * Allocates action for profiles of parents.<br />
+     * Prepares data utilized to activate controller actions.
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function medicalAction($getParams = false)
+    {
+        if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
+        {
+
+//            $this->_disableExportToExcel = true;
+            $this->_constraint = '';
+            $this->_colTitle = array(
+                'MR_GenericProfileId'  => array('width' => '150px')
+                );
+
+            $this->_joinTables = array('GenericProfile');
+
+            if($getParams)
+            {
+                $params = array(
+                    'columns'    => $this->_colTitle,
+                    'joinTables' => $this->_joinTables,
+                    'formName' => 'FormMedicalProfile');
+
+                return $params;
+            }
+
+            $this->_formName = 'FormMedicalProfile';
+//            $this->_oMember = new MemberProfilesObject();
+            if($this->_isXmlHttpRequest && $this->_request->isPost())
+            {
+                $_POST['MR_GenericProfileId'] = $this->_genericId;
 //                if ($this->_actionKey == 'add')
 //                    $_POST['MP_Status'] = -1;
             }
@@ -1359,7 +1405,17 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
         {
             if(is_array($data))
             {
-                $tmpArray = array_merge($tmpArray,$data);
+                switch (key($data))
+                {
+                    case 'MR_Allergy':
+                    case 'MR_Diseases':
+                        $tmpArray[$key] = implode(',', $data);
+                        break;
+
+                    default:
+                        $tmpArray = array_merge($tmpArray,$data);
+                        break;
+                }
             }
             else
                 $tmpArray[$key] = $data;

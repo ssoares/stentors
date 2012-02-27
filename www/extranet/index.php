@@ -33,6 +33,7 @@
         . PATH_SEPARATOR . "$extranet_path/modules/forms/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/gallery/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/member/models/"
+        . PATH_SEPARATOR . "$extranet_path/modules/medical/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/news/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/newsletter/models/"
         . PATH_SEPARATOR . "$extranet_path/modules/order/models/"
