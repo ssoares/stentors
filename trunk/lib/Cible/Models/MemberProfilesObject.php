@@ -85,6 +85,7 @@ class MemberProfilesObject extends DataObject
             $data = $data[0];
             $first  = $data['MP_FirstParent'];
             $second = $data['MP_SecondParent'];
+            $data['MP_BirthDateDt'] = $data['MP_BirthDate'];
             $oParent = new ParentProfilesObject();
             $firstPar = $oParent->getParentDetails($first, array('PP_GenericProfileId' => $first));
             $secPar   = $oParent->getParentDetails($second, array('PP_GenericProfileId' => $second));

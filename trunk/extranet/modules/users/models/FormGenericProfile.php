@@ -49,11 +49,11 @@ class FormGenericProfile extends Cible_Form
 
         $email = new Zend_Form_Element_Text('GP_Email');
         $email->setLabel($this->getView()->getCibleText('form_label_email'))
-            ->setRequired(true)
+//            ->setRequired(true)
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addFilter('StringToLower')
-            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
+//            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
             ->addValidator($regexValidate)
             ->setAttribs(array('maxlength' => 50, 'class' => 'required email stdTextInput'));
 
@@ -77,6 +77,17 @@ class FormGenericProfile extends Cible_Form
 
             $this->addElement($salutation);
 
+            //FirstName
+            $firstname = new Zend_Form_Element_Text('GP_FirstName');
+            $firstname->setLabel($this->getView()->getCibleText('form_label_fName'))
+                ->setRequired(true)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
+                ->setAttribs(array('maxlength' => 20, 'class' => 'required stdTextInput'));
+
+            $this->addElement($firstname);
+
             // LastName
             $lastname = new Zend_Form_Element_Text('GP_LastName');
             $lastname->setLabel($this->getView()->getCibleText('form_label_lName'))
@@ -88,16 +99,6 @@ class FormGenericProfile extends Cible_Form
 
             $this->addElement($lastname);
 
-            //FirstName
-            $firstname = new Zend_Form_Element_Text('GP_FirstName');
-            $firstname->setLabel($this->getView()->getCibleText('form_label_fName'))
-                ->setRequired(true)
-                ->addFilter('StripTags')
-                ->addFilter('StringTrim')
-                ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
-                ->setAttribs(array('maxlength' => 20, 'class' => 'required stdTextInput'));
-
-            $this->addElement($firstname);
 
             $languages = new Zend_Form_Element_Select('GP_Language');
             $languages->setLabel($this->getView()->getCibleText('form_label_language'));

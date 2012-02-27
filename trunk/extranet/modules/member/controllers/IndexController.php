@@ -85,7 +85,7 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
                             )
                 ),
 //                'excludedColums' => array('Nom'), // columns to exclude from search
-                'enable-print' => true,
+                'enable-print' => false,
                 'disable-export-to-excel' => '',
 //                'to-excel-action' => 'clients-to-excel',
                 'filters' => array(
@@ -112,12 +112,27 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
                 'action_panel' => array(
                     'width' => '50',
                     'actions' => array(
-                            'edit' => array(
+                        'edit' => array(
                             'label' => $this->view->getCibleText('menu_submenu_action_edit'),
                             'url' => $this->view->url(
                                     array('module'=>'users',
                                         'action' => 'general',
                                         'actionKey'=> 'edit',
+                                        $this->_ID  => "-ID-",
+                                        'returnModule'=>$this->_moduleTitle,
+                                        'returnAction'=>'list-members'
+                                        )
+                                    ),
+                            'findReplace' => array(
+                                'search' => '-ID-',
+                                'replace' => 'member_id'
+                            )
+                        ),
+                        'print' => array(
+                            'label' => $this->view->getCibleText('share_print_text'),
+                            'url' => $this->view->url(
+                                    array('module'=>$this->_moduleTitle,
+                                        'action' => 'print-registration',
                                         $this->_ID  => "-ID-",
                                         'returnModule'=>$this->_moduleTitle,
                                         'returnAction'=>'list-members'
@@ -159,6 +174,31 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
         }
     }
 
+    public function printRegistrationAction()
+    {
+        $id = $this->_getParam('id');
+        $page = $this->_getParam('page');
+
+        $lang = $this->_getParam('lang');
+        if (!$lang)
+        {
+            $this->_registry->currentEditLanguage = $this->_defaultEditLanguage;
+            $langId = $this->_defaultEditLanguage;
+        }
+        else
+        {
+            $langId = Cible_FunctionsGeneral::getLanguageID($lang);
+            $this->_registry->currentEditLanguage = $langId;
+        }
+
+        if ($this->view->aclIsAllowed($this->_moduleTitle,'edit',true))
+        {
+            $oMember = new MemberProfilesObject();
+            $memberData = $oMember->populate($id, $langId);
+
+            $this->view->data = $memberData;
+        }
+    }
     public function addAction(){
         throw new Exception('Not implemented');
     }

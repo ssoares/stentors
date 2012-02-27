@@ -134,10 +134,18 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                     $element->removeDecorator('Label');
                     $element->removeDecorator('DtDdWrapper');
                     break;
-                case 'multi-checkbox':
+                case 'multiCheckbox':
+                    if (empty($params['src']))
+                        throw new Exception ('Trying to build an element but no data source given');
 
+                    $this->_defineSrc($params, $meta);
+
+                    $element = new Zend_Form_Element_MultiCheckbox($fieldId);
+                    $element->addMultiOptions($this->_srcData);
+                    $element->setAttrib('class', 'multicheckbox');
+                    $element->setSeparator(' ');
                     break;
-                case 'multi-select':
+                case 'multiSelect':
 
                     break;
 
@@ -177,20 +185,33 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
     {
         $isUnique = '';
         $validators = array();
+        $isTextField = true;
 
         if (!empty ($params))
         {
-            if (isset($params['validate']))
+            if (isset($params['elem'])
+                && in_array($params['elem'], array('multiCheckbox', 'multiSelect')))
             {
-                $validateName = '_' . $params['validate'] . 'Validate';
-                if (isset($params['unique']))
-                    $isUnique = $meta['COLUMN_NAME'];
+                $this->setElementInput($meta, $params);
+                $element = $this->getElement($meta['COLUMN_NAME']);
+                $isTextField = false;
+            }
+            else
+            {
+                if (isset($params['validate']))
+                {
+                    $validateName = '_' . $params['validate'] . 'Validate';
+                    if (isset($params['unique']))
+                        $isUnique = $meta['COLUMN_NAME'];
 
-                $validators = $this->$validateName($isUnique);
+                    $validators = $this->$validateName($isUnique);
+                }
             }
         }
 
-        $element = new Zend_Form_Element_Text($meta['COLUMN_NAME']);
+        if($isTextField)
+            $element = new Zend_Form_Element_Text($meta['COLUMN_NAME']);
+
         $element->setLabel($this->getView()->getCibleText('form_label_' . $meta['COLUMN_NAME']));
 
         if (!$meta['NULLABLE'])
@@ -203,6 +224,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
 
         $this->_setBasicDecorator($element);
         $this->addElement($element);
+
     }
 
     /**
@@ -278,11 +300,11 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                 'jquery.params'=> array(
                     'changeYear' => true,
                     'changeMonth' => true,
-                    'yearRange' => 'c-10:c+20',
+                    'yearRange' => '-25:+10',
                     'altField' => '#' . $this->_elemNameId . 'Dt',
                     'altFormat' => 'yy-mm-dd',
                     'dateFormat' => 'dd-mm-yy',
-                    'defaultDate' => "$('".$this->_elemNameId."').val())",
+                    'defaultDate' => "$('#".$this->_elemNameId."').val()",
                     'YearOrdering' => 'desc'
                     )
                 )
@@ -322,6 +344,11 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
         $this->addElement($date);
     }
 
+    protected function _yesNoSrc(Array $meta = array())
+    {
+            $this->_srcData[1] = 'oui';
+            $this->_srcData[-1] = 'non';
+    }
     protected function _enumSrc(Array $meta = array())
     {
         $values = explode(',',str_replace(array('enum(', ')', "'"), '', $meta['DATA_TYPE']));
@@ -416,6 +443,6 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
             $this->_srcData = $this->_object->$srcMethod($meta);
         }
         else
-            $this->$srcData($meta);
+            $this->$srcMethod($meta);
     }
 }
