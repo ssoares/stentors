@@ -1,4 +1,6 @@
-@page {width: 780px;}
+@page {
+    width: 640px;
+}
 table { border-collapse:collapse; border-spacing:0; empty-cells:show }
 td, th { vertical-align:top; font-size:12pt;}
 h1, h2, h3, h4, h5, h6 { clear:both }
@@ -15,67 +17,62 @@ span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-c
     writing-mode:lr-tb;
 }
 #page {
-    line-height: 1.5em;
     margin: 0 auto;
-    padding-top: 10px;
-    width: 780px;
+    width: 640px;
 }
+p {line-height: 1.8em;}
 .gr1 {  padding-top:0.229cm; padding-bottom:0.229cm; padding-left:0.441cm; padding-right:0.441cm; margin-left:0.319cm; margin-right:0.319cm; vertical-align:top; }
 .P1 {writing-mode:lr-tb;}
-.P10 { margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P10 { margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; }
 .P11 {margin-left:0.318cm; margin-right:0cm; text-align:justify ! important; text-indent:0.635cm; font-style:italic; }
 .P12 {padding-left:0.141cm; padding-right:0.141cm; }
-.P13 {padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
-.P14 {text-align:justify ! important; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
-.P15 {padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P13 {padding-left:0.141cm; padding-right:0.141cm; }
+.P14 {text-align:justify ! important; padding-left:0.141cm; padding-right:0.141cm; }
+.P15 {padding-left:0.141cm; padding-right:0.141cm;  }
 .P16 {line-height:150%; padding-left:0.141cm; padding-right:0.141cm;  }
-.P17 {line-height:200%; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
-.P18 {margin-left:0.751cm; margin-right:0cm; text-indent:-0.751cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
+.P17 {line-height:200%; padding-left:0.141cm; padding-right:0.141cm; }
+.P18 {margin-left:0.751cm; margin-right:0cm; text-indent:-0.751cm; padding-left:0.141cm; padding-right:0.141cm; }
 .P19 { font-size:20pt; font-weight:bold; text-align:left ! important;  margin-left:0.953cm; margin-right:0cm; text-indent:0cm; }
-.P2 { margin-right:0cm; text-indent:0cm; width: 55%; float:right;clear:right; text-align: center;}
+.P2 { line-height:25px;width: 55%; float:right;clear:right; text-align: center; padding-top: 30px;}
 .P20 {}
 .P3 {margin-left:0.953cm; margin-right:0cm; text-indent:0cm; font-weight:bold; }
 .P4 { font-size:6pt;  margin-left:0.953cm; margin-right:0cm; text-align:justify ! important; text-indent:0cm; }
 .P5 {margin-left:0.953cm; margin-right:0cm;text-indent:0cm; }
-.P6 { font-size:6pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
-.P7 {margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; }
-.P8 { font-size:2pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; border-width:0,018cm; border-style:solid; border-color:#000000;  border-top-style:none; border-bottom-style:none; }
-.P9 { font-size:11pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm; }
-.Sect1 {margin: 5px auto; text-align: center;width: 100%}
-.Sect2 { writing-mode:lr-tb; margin-left:1.549cm; margin-right:0cm; }
+.P6 { font-size:6pt;  margin-left:0.953cm; margin-right:0cm;text-indent:0cm; padding-left:0.141cm; padding-right:0.141cm;  }
+.P7 {}
+.P8 { }
+.P9 { }
+.Sect1 {margin: 10px auto; text-align: center;width: 100%}
+.Sect2 {  }
 .T1 { font-size:16pt; }
-.T10 { font-size:11pt; text-decoration:underline; }
-.T11 { font-size:11pt; text-decoration:underline; }
-.T12 { font-size:11pt; background-color:#00ff00; }
-.T13 { font-size:11pt; font-weight:bold; }
-.T14 { font-size:8pt; }
-.T15 { font-size:13pt; font-weight:bold; }
-.T16 { font-size:13pt; font-weight:bold; }
-.T17 { font-size:13pt; }
-.T18 { font-size:9pt; font-style:italic; font-weight:bold; }
+.T10 { text-decoration:underline; }
+.T11 { text-decoration:underline; }
+.T12 { background-color:#00ff00; }
+.T13 { font-weight:bold; }
+.T14 {}
+.T15 { font-weight:bold; }
+.T16 { font-weight:bold; }
+.T17 { }
+.T18 { font-style:italic; font-weight:bold; }
 .T3 { font-size:16pt; font-weight:bold; }
 .T4 { font-size:16pt; font-weight:bold; background-color:#00ff00; }
 .T9 { font-weight:bold; }
-.WW8Num1z0 { font-family:Wingdings; font-size:12pt; }
-.WW8Num1z1 { font-family:Courier New; }
-.WW8Num1z2 { font-family:Wingdings; }
-.WW8Num1z3 { font-family:Symbol; }
 /*ODF styles with no properties representable as CSS*/
 .T5 { }
 
 .memberInfos{
     border: 3px solid #000;
-    margin-top: 20px;
+    margin-top: 0px;
     padding: 5px;
 }
 .colLeft {
     display: inline-block;
-    width: 60%;
+    width: 70%;
 }
 .colRight {
     display: inline-block;
     vertical-align: top;
-    width: 35%;
+    width: 28%;
 }
 .sectionTitle{
     float: left;
@@ -83,21 +80,24 @@ span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-c
 }
 .sectionList{
     float: left;
-    width: 70%;
+    line-height: 1em;
+    margin-left: 15px;
+    padding-top: 8px;
+    width: 50%;
 }
 .Sect1 .colLeft{
     border: 3px solid #000;
     margin: 0 auto;
     padding-bottom: 5px;
     text-align: left;
-    width: 35%;
+    width: 46%;
 }
 .Sect1 .colRight{
     border: 3px solid #000;
-    margin: 0 auto 0 15px;;
+    margin: 0 auto 0 35px;;
     padding-bottom: 5px;
     text-align: left;
-    width: 35%;
+    width: 46%;
 }
 .garde,
 .passport{
@@ -105,9 +105,11 @@ span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-c
     margin: 10px auto;
     width: 100%;
 }
-.Sect2 .colLeft,
-.Sect2 .colRight{
-    width: 50%;
+.Sect2 .passport .colLeft{
+    width: 45%;
+    display: inline-block;
 }
-.Sect2 .colRight{
+.Sect2 .passport .colRight{
+    display: inline-block;
+    width: 50%
 }
