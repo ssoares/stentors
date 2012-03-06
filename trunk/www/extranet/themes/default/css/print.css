@@ -31,9 +31,10 @@ textarea{
     display: none;
 }
 hr{display: none;}
+#Section2, div#Section4M, #Section7M{page-break-after: always}
 @page { size:portrait;
-        margin-top:1.2cm;
-        margin-bottom:1cm;
-        margin-left:0.8cm;
-        margin-right:0.8cm
+        margin-top:1cm;
+        margin-bottom:0.5cm;
+        margin-left:0.5cm;
+        margin-right:0.5cm
 }

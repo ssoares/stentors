@@ -6,6 +6,12 @@
         Style for the statistics of the newsletter
     $Id: profile.css 826 2012-02-01 04:15:13Z ssoares $
 */
+form fieldset{
+    padding: 5px 8px 10px;
+}
+form fieldset legend{
+    margin-left: 10px;
+}
 #default_form #action_panel,
 #profilesTab #fieldset-actions{
     background-color: inherit;

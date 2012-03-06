@@ -1324,6 +1324,11 @@ form dd{
 form input, form select{
     border: 1px solid #646567;
 }
+form input[type=radio],
+form input[type=checkbox]  {
+    border: none;
+
+}
 form .label_after_checkbox input[type=checkbox]  {
     border: none;
     float:left;
@@ -2282,7 +2287,7 @@ div.searchable-list div.filters .search-filters-content ul li{
 }
 div.searchable-list div.filters .search-filters-content ul li.last_right   {
     padding-right: 0px;
-    padding-left: 33px;
+    padding-left: 25px;
 }
 div.searchable-list div.filters .search-filters-content ul li label   {
     width: 223px;

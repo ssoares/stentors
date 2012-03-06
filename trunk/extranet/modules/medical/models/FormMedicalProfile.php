@@ -96,8 +96,16 @@ class FormMedicalProfile extends Cible_Form_GenerateForm
             ->setLegend("Maladies")
             ->setAttrib('class','infosFieldset diseases')
             ->removeDecorator('DtDdWrapper');
-
-        $this->addDisplayGroup(array('MR_Notes'),'others');
+        $this->addDisplayGroup(
+            array(
+                'MR_HasGlasses',
+                'MR_HasLens',
+                'MR_Fracture',
+                'MR_Chirurgie',
+                'MR_Specific',
+                'MR_Notes',
+                ),
+            'others');
         $this->getDisplayGroup('others')
             ->setLegend("Informations complémentaires")
             ->setAttrib('class','infosFieldset others')

@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="Content-Language" content="fr"/>
     <?php $config = Zend_Registry::get('config');?>
-    <title>Cible Solutions d'Affaires - EDITH <?php echo $config->edith->version ?> - <?php echo $this->escape($this->title); ?></title>
+    <title><?php echo $this->escape($this->title); ?> - Cible - EDITH <?php echo $config->edith->version ?></title>
     <?php $this->jQuery()->enable() ?>
 
     <?php $this->headScript()->captureStart() ?>
