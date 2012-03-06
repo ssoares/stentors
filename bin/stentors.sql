@@ -166,6 +166,15 @@ REPLACE INTO Modules_ControllersActionsPermissions (MCAP_ModuleID, MCAP_Controll
 (31, 'index', 'list', 'edit', 1);
 
 REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
+('form_label_MR_HasGlasses', 1, 'Porte des lunettes',  'cible', '', 0, 0),	('form_label_MR_HasGlasses', 2, '', 'cible', '', 0, 0),
+('form_label_MR_HasLens', 1, 'Porte des verres de contact',  'cible', '', 0, 0),	('form_label_MR_HasLens', 2, '', 'cible', '', 0, 0),
+('form_label_MR_Fracture', 1, 'A déjà une une fracture du crâne',  'cible', '', 0, 0),	('form_label_MR_Fracture', 2, '', 'cible', '', 0, 0),
+('form_label_MR_Chirurgie', 1, 'A déjà eu une intervention chirurgicale',  'cible', '', 0, 0),	('form_label_MR_Chirurgie', 2, '', 'cible', '', 0, 0),
+('form_label_MR_Specific', 1, 'Précisions',  'cible', '', 0, 0),	('form_label_MR_Specific', 2, '', 'cible', '', 0, 0),
+('button_add_profile', 1, 'Ajouter une personne',  'cible', '', 0, 0),	('button_add_profile', 2, '', 'cible', '', 0, 0),
+('share_print_text', 1, 'Imprimer',  'cible', '', 0, 0),	('share_print_text', 2, 'Print', 'cible', '', 0, 0),
+
+
 ('form_label_MP_SchoolYear', 1, 'Année',  'cible', '', 0, 30),	('form_label_MP_SchoolYear', 2, 'Year', 'cible', '', 0, 30),
 ('header_list_member_text', 1, 'Liste des membres inscrits',  'cible', '', 0, 30),	('header_list_member_text', 2, 'Liste des membres inscrits', 'cible', '', 0, 30),
 ('header_list_member_description', 1, 'Liste des membres inscrits',  'cible', '', 0, 30),	('header_list_member_description', 2, 'Liste des membres inscrits', 'cible', '', 0, 30),
@@ -232,3 +241,8 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('medical_module_name', 1, 'Fiche médicale',  'cible', '', 0, 0),
 ('medical_module_name', 2, 'Fiche médicale', 'cible', '', 0, 0);
 
+ALTER TABLE `MedicalRecord` ADD `MR_HasGlasses` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_Diseases` ,
+ADD `MR_HasLens` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_HasGlasses` ,
+ADD `MR_Fracture` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_HasLens` ,
+ADD `MR_Chirurgie` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_Fracture` ,
+ADD `MR_Specific` VARCHAR( 255 ) NULL AFTER `MR_Chirurgie`

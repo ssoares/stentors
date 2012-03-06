@@ -130,7 +130,7 @@ class FormMemberProfile extends Cible_Form_GenerateForm
                         array('row' => 'HtmlTag'),
                         array(
                             'tag' => 'dd',
-                            'class' => 'left')
+                            'class' => 'left clearLeft')
                     ),
                 )
         );

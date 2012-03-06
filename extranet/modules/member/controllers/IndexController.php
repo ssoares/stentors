@@ -193,10 +193,47 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
 
         if ($this->view->aclIsAllowed($this->_moduleTitle,'edit',true))
         {
+            $firstPData = array();
+            $secPData = array();
             $oMember = new MemberProfilesObject();
+            $oGeneric = new GenericProfilesObject();
+            $oMedic = new MedicalProfilesObject();
+            $oParent = new ParentProfilesObject();
+            $oAddress = new AddressObject();
+            $sections = $oMember->_sectionSrc();
             $memberData = $oMember->populate($id, $langId);
+            $data = $oGeneric->populate($memberData['MP_GenericProfileId'], $langId);
+            $medicData = $oMedic->populate($memberData['MP_GenericProfileId'], $langId);
+            $allergies = $oMedic->_allergySrc();
+            $diseases = $oMedic->_diseasesSrc();
+            $memberData = array_merge($memberData, $data, $medicData);
+            $this->view->title = 'Membre : ' . $memberData['GP_LastName'] . ' ' . $memberData['GP_FirstName'];
+            $resp = $oParent->_listRespSrc();
+            $roles = $oParent->_parentsProfileSrc();
+            $firstPData = $oParent->populate($memberData['MP_FirstParent'], $langId);
+            if (empty($firstPData))
+                $firstPData = $oParent->populate($memberData['MP_GenericProfileId'], $langId);
 
-            $this->view->data = $memberData;
+            $data = $oGeneric->populate($firstPData['PP_GenericProfileId'], $langId);
+            $firstPData = array_merge($firstPData, $data);
+            $address = $oAddress->populate($firstPData['PP_AddressId'], $langId);
+            $firstPData['address'] = $address;
+
+            if ($memberData['MP_SecondParent'])
+            {
+                $secPData = $oParent->populate($memberData['MP_SecondParent'], $langId);
+                $data = $oGeneric->populate($secPData['PP_GenericProfileId'], $langId);
+                $secPData = array_merge($secPData, $data);
+                $address = $oAddress->populate($secPData['PP_AddressId'], $langId);
+                $secPData['address'] = $address;
+            }
+            $this->view->dataMember = $memberData;
+            $this->view->parents = array($firstPData, $secPData);
+            $this->view->sections = $sections;
+            $this->view->resp = $resp;
+            $this->view->roles = $roles;
+            $this->view->allergies = $allergies;
+            $this->view->diseases = $diseases;
         }
     }
     public function addAction(){

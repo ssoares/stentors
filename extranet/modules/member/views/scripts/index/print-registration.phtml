@@ -1,4 +1,18 @@
-<?php $this->headLink()->appendStylesheet($this->locateFile('printRegistration.css'), array('media'=>"all" )); ?>
+<?php $this->headLink()->appendStylesheet($this->locateFile('printRegistration.css'), array('media' => "all")); ?>
+<?php
+$data = $this->dataMember;
+$parents = $this->parents;
+$sections = $this->sections;
+$resp = $this->resp;
+$roles = $this->roles;
+$allergies = $this->allergies;
+$diseases = $this->diseases;
+$imgBox = $this->image($this->locateFile('box.png'), array('class' => 'checkboxPrint'));
+$imgChecked = $this->image($this->locateFile('checkmark.png'), array('class' => 'checkboxPrint'));
+$other = array();
+$yes = $imgChecked . ' OUI ' . $imgBox . ' NON';
+$no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
+?>
 <div id="page">
     <div class="P19">
         <?php
@@ -19,82 +33,505 @@
         <div class="colLeft">
             <p class="P7">
                 <span >Nom du membre : </span>
-                <span>_______________________</span>
+                <span><?php echo $data['GP_FirstName']; ?> <?php echo $data['GP_LastName']; ?></span>
             </p>
-            <p class="P7"><span >Date de naissance : ___/___/______                Âge : </span><span class="T11">                        </span>
+            <p class="P7"><span >Date de naissance : <?php echo!empty($data['MP_BirthDate']) ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?>                Âge : </span><span class="T11">  <?php echo $data['MP_Age']; ?> ans               </span>
             <p class="P7" style="padding-left: 114px;line-height: 0.8em;"><span class="T14" style="font-size: 10px; letter-spacing: 2px;">JJ/MM/AAAA</span></p>
-            <p class="P9">École : _________________________<span> Année Scolaire : ____________</span></p>
+            <p class="P9">École : <?php echo!empty($data['MP_School']) ? $data['MP_School'] : "_________________________"; ?>            <span> Année Scolaire : <?php echo!empty($data['MP_SchoolYear']) ? $data['MP_SchoolYear'] : "____________"; ?></span></p>
+            <p class="P9">Adresse courriel du membre : <?php echo!empty($data['GP_Email']) ? $data['GP_Email'] : "________________________________________________"; ?> </p>
         </div>
         <div class="colRight">
             <p class="sectionTitle">
                 <span >Section : </span>
             </p>
             <p class="sectionList">
-                <span >Clairons <br /> Pit <br /> ...</span>
+                <?php foreach ($sections as $key => $section): ?>
+                    <?php if ($key == $data['MP_Section']): ?>
+                        <?php echo ($key == $data['MP_Section']) ? $imgChecked : $imgBox; ?>
+                        <span ><?php echo $section; ?> </span>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </p>
 
         </div>
-            <p class="P9">Adresse courriel du membre : ________________________________________________ </p>
     </div>
     <div class="Sect1" id="Section1">
-        <div class="colLeft">
-            <p class="P12"><span >Nom du père : ________________________
-            </p>
-            <p class="P12">
-                <span>Adresse : ____________________________</span>
-            </p>
-            <p class="P12">Ville :<span> ______________________________</span></p>
-            <p class="P12">Code Postal : _________________________</p>
-            <p class="P12">Emploi du temps : _____________________</p>
-            <p class="P12">Téléphone. : (____)____________________</p>
-            <p class="P12"><span >Cellulaire : </span><span class="T11">(        )</span><span > ____________________</span></p>
-            <p class="P12"><span >Tel au travail : </span><span class="T11">(       )</span><span > __________________</span></p>
-            <p class="P12"><span >Courriel : ____________________________ </span></p>
+        <?php foreach ($parents as $index => $parent): ?>
+            <?php if ($index > 0): ?>
+            </div>
+            <div class="colRight">
+            <?php else: ?>
+            <div class="colLeft">
+            <?php endif;?>
+            <?php if (!empty($parent) && $parent['PP_Role'] < 27): ?>
+                <?php
+                switch ($parent['PP_Role'])
+                {
+                    case 25:
+                        $mother = $parent;
+                        break;
+                    case 26:
+                        $father = $parent;
+                        break;
+                }
+                ?>
+
+                <p class="P12"><span ><?php echo $roles[$parent['PP_Role']]; ?> - Nom : <?php echo!empty($parent['GP_FirstName']) ? $parent['GP_FirstName'] . " " . $parent['GP_LastName'] : "_________________________"; ?></span>
+                </p>
+                <p class="P12">
+                    <span>Adresse : <?php echo!empty($parent['address']['AI_FirstAddress']) ? $parent['address']['AI_FirstAddress'] : "_________________________"; ?></span>
+                    <span> <?php echo!empty($parent['address']['AI_SecondAddress']) ? $parent['address']['AI_SecondAddress'] : ""; ?></span>
+                </p>
+                <p class="P12">Ville :<span> <?php echo!empty($parent['address']['A_CityTextValue']) ? $parent['address']['A_CityTextValue'] : "_________________________"; ?></span></p>
+                <p class="P12">Code Postal : <?php echo!empty($parent['address']['A_ZipCode']) ? $parent['address']['A_ZipCode'] : "_________________________"; ?></p>
+                <p class="P12">Emploi du temps : <?php echo!empty($parent['address']['PP_EmploiTemps']) ? $parent['address']['PP_EmploiTemps'] : "_____________________"; ?></p>
+                <p class="P12">Téléphone. : <?php echo!empty($parent['address']['AI_FirstTel']) ? $parent['address']['AI_FirstTel'] : "(____)____________________"; ?></p>
+                <p class="P12"><span >Cellulaire : </span><span class="T11"><?php echo!empty($parent['address']['AI_SecondTel']) ? $parent['address']['AI_SecondTel'] : "(____)____________________"; ?></span></p>
+                <p class="P12"><span >Tel au travail : </span><span class="T11">(____)__________________</span></p>
+                <p class="P12"><span >Courriel : <?php echo!empty($parent['GP_Email']) ? $parent['GP_Email'] : "_________________________"; ?> </span></p>
+            <?php elseif (!empty($parent)): ?>
+                <?php $other = $parent; ?>
+            <?php endif; ?>
+            <?php endforeach;?>
         </div>
-        <div class="colRight">
-            <p class="P12"><span >Nom de la mère : ______________________ </span></p>
-            <p class="P12">
-                <span>Adresse : ____________________________</span>
-            </p>
-            <p class="P12">Ville :<span> ______________________________</span></p>
-            <p class="P12">Code Postal : _________________________</p>
-            <p class="P12">Emploi du temps : _____________________</p>
-            <p class="P12">Téléphone. : (____)____________________</p>
-            <p class="P12"><span >Cellulaire : </span><span>(        )</span><span > ____________________</span></p>
-            <p class="P12"><span >Tel au travail : </span><span>(       )</span><span >___________________</span></p>
-            <p class="P12"><span >Courriel : ___________________________</span><span> </span></p>
-        </div>
-    </div><!--Next 'div' was a 'text:section'.-->
+    </div>
     <div class="Sect2" id="Section2">
         <div class="garde">
-            <p class="P12"><span class="">Le membre</span><span > habite avec:     _____ 2 parents        _____ Père         _____ Mère         _____ Tuteur </span></p>
-            <p class="P12"><span >Nom du tuteur : <span class="T11">                                                         </span></span></p>
-            <p class="P12"><span >Adresse du tuteur: <span class="T11">                                                                            </span></span></p>
-            <p class="P12"><span >_____ Garde Partagée   Expliquer : <span class="T11">                                        </span></span></p>
-            <p class="P12"><span > Nom du parent demandeur du reçu aux fins d’impôt </span><span class="">(membre moins de 16 ans) :</span><span > </span><span class="T11">                        </span></p>
-            <p class="P17_borderEnd"><span class=""> No d’assurance sociale de celui-ci : </span><span class="T11">                                        </span><span >                </span></p>
+            <p class="P12 respList">
+                <span class="">Le membre habite avec: </span>     
+                <?php foreach ($resp as $index => $val): ?>
+                    <?php echo ($index == $data['MP_LiveWith']) ? $imgChecked : $imgBox; ?>
+                    <span><?php echo $val; ?></span>
+                <?php endforeach; ?>
+            </p>
+            <?php if ($data['MP_LiveWith'] == 13): ?>
+                <p class="P12"><span >Nom du tuteur : </span><span class="T11"><?php echo!empty($other['GP_FirstName']) ? $other['GP_FirstName'] . " " . $other['GP_LastName'] : "_________________________"; ?></span></p>
+                <p class="P12"><span >Adresse du tuteur: <?php echo!empty($other['address']['AI_FirstAddress']) ? $other['address']['AI_FirstAddress'] . " " . $other['address']['AI_SecondAddress'] . " - " . $other['address']['A_CityTextValue'] . ", " . $other['address']['A_ZipCode'] : "_________________________"; ?><span class="T11">                                                                            </span></span></p>
+            <?php elseif ($data['MP_LiveWith'] == 0): ?>
+                <p class="P12"><span ><?php echo $roles[$other['PP_Role']]; ?> - Nom: </span><span class="T11"><?php echo!empty($other['GP_FirstName']) ? $other['GP_FirstName'] . " " . $other['GP_LastName'] : "_________________________"; ?></span></p>
+                <p class="P12"><span >Adresse : <?php echo!empty($other['address']['AI_FirstAddress']) ? $other['address']['AI_FirstAddress'] . " " . $other['address']['AI_SecondAddress'] . " - " . $other['address']['A_CityTextValue'] . ", " . $other['address']['A_ZipCode'] : "_________________________"; ?><span class="T11">                                                                            </span></span></p>
+            <?php endif; ?>
+            <?php if ($data['MP_LiveWith'] > 9 && $data['MP_LiveWith'] < 12): ?>
+                <p class="P12"><span >_____ Garde Partagée   Expliquer : <span class="T11">______________________________________</span></span></p>
+            <?php endif; ?>
+            <?php if ($data['MP_Age'] < 16): ?>
+                <p class="P12"><span > Nom du parent demandeur du reçu aux fins d’impôt </span><span class="">(membre moins de 16 ans) :</span><span > </span><span class="T11">                        </span></p>
+                <p class="P17_borderEnd"><span class=""> No d’assurance sociale de celui-ci : </span><span class="T11">                                        </span><span >                </span></p>
+            <?php endif; ?>
             <ul>
                 <li>
-                    <p class="P18" style="margin-left:0,751cm;"><span class="T8"><span style="font-size: 21px">&square;</span> Autorisez-vous l’organisation des Stentors à utiliser les photos de votre enfant pour des fins de publicité (Site Web, dépliant…) </span><span class="T8">   </span><span class="T15">***</span><span class="T17"> </span><span class="T16">Initiales du parent si consentant</span><span class="T9"> : </span><span class="T10">                </span><span class="odfLiEnd"/></p>
+                    <p class="P18" style="margin-left:0,751cm;"><span class="T8"><span style="font-size: 21px">&diams;</span> Autorisez-vous l’organisation des Stentors à utiliser les photos de votre enfant pour des fins de publicité (Site Web, dépliant…) </span><span class="T8">   </span><span class="T15">***</span><span class="T17"> </span><span class="T16">Initiales du parent si consentant</span><span class="T9"> : </span><span class="T10">                </span><span class="odfLiEnd"/></p>
                 </li>
             </ul>
         </div>
         <div class="passport">
             <p class=""><span class="T13">INFORMATIONS SUR LE PASSEPORT</span><span > :</span></p>
             <div class="colLeft">
-                <p class="P12"><span >Nationalité :   ___________________________</span></p>
-                <p class="P12"><span >Date d’expiration :   ______________________</span></p>
-                <p class="P12"><span >Nom : _________________________________ </span></p>
+                <p class="P12"><span >Nationalité : <?php echo!empty($data['MP_CountryOrig']) ? $data['MP_CountryOrig'] : "_________________________"; ?></span></p>
+                <p class="P12"><span >Date d’expiration : <?php echo!empty($data['MP_PassportExpiracyDate']) ? date('d / m / Y', strtotime($data['MP_PassportExpiracyDate'])) : "_________________________"; ?></span></p>
+                <p class="P12"><span >Nom : <?php echo!empty($data['MP_PassportLastName']) ? $data['MP_PassportLastName'] : "_________________________"; ?> </span></p>
                 <p class="P12"><span class="T18">(Tel qu’il parait sur votre passeport)</span></p>
             </div>
             <div class="colRight">
-                <p class="P12"><span ># de passeport :   _____________________________</span></p>
-                <p class="P12"><span >Date de naissance : ___________________________</span></p>
-                <p class="P12"><span >Prénom : ______________________________</span></p>
+                <p class="P12"><span ># de passeport : <?php echo!empty($data['MP_PassportNum']) ? $data['MP_PassportNum'] : "_________________________"; ?></span></p>
+                <p class="P12"><span >Date de naissance : <?php echo!empty($data['MP_PassportBirthDate']) ? $data['MP_PassportBirthDate'] : "_________________________"; ?></span></p>
+                <p class="P12"><span >Prénom : <?php echo!empty($data['MP_PassportFirstName']) ? $data['MP_PassportFirstName'] : "_________________________"; ?></span></p>
             </div>
         </div>
         <p class="P12"><span class="T5">        ____________</span><span class="T5">________________________                         _______________</span></p>
         <p class="P12_borderEnd"><span class="T8"> </span><span class="T8">                        Signature du parent                                                Date</span>
         </p>
+    </div>
+    <div class="medical">
+        <div class="P19" style="width: 640px">
+            <?php
+            // Affichage du logo de la compagnie
+            $config = Zend_Registry::get('config');
+            echo $this->image($this->locateFile('logoStentorPrint.jpg'), array(
+                'class' => 'printLogo',
+                'width' => '250',
+                'border' => '0'
+            ));
+            ?>
+            <p class="P2">
+                <span class="T1">Fiche Médicale</span><br />
+                <span class="T1"><?php echo date('Y'); ?></span><br />
+            </p>
+            <p class="photo">
+                    <?php
+                    echo $this->image($this->locateFile('zonePhoto.png'), array(
+                'class' => 'printPhoto',
+                'width' => '128',
+                'border' => '0'
+            )); ?>
+            </p>
+        </div>
+        <div style="clear: both;line-height: 1px;width: 640px;">&nbsp;</div>
+        <div id="Section1M" class="Sect1">
+            <div class="colLeft">
+                <p class="P12">
+                    <span class="T2">NOM : </span><span class="T13 capital"><?php echo $data['GP_LastName']; ?></span>
+                </p>
+                <p class="P12">
+                    <span class="T2">PRÉNOM : </span><span class="T13 capital"><?php echo $data['GP_FirstName']; ?> </span>
+                </p>
+                <p class="P12">
+                    <span class="T2"># de tél.&nbsp;:</span>
+                    <span class="T13 capital"></span>
+                </p>
+                <p class="P12"><span class="T2">DATE DE NAISSANCE&nbsp;: </span><span class="T13 capital"><?php echo!empty($data['MP_BirthDate']) ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?></span></p>
+                <p class="P12"><span <span class="T14">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;JJ / MM / AAAA</span></p>
+            </div>
+            <div class="colRight">
+                <p class="P12"><span>ASS MALADIE&nbsp;: <?php echo!empty($data['MR_AssuMaladie']) ? $data['MR_AssuMaladie'] : "__ __ __ __ __ __ __ __ __ __"; ?></span></p>
+                <p class="P12"><span>EXPIRATION&nbsp;: <?php echo!empty($data['MR_ExpiracyDate']) ? $data['MR_ExpiracyDate'] : "___________________"; ?></span></p>
+            </div>
+        </div>
+        <div id="Section2M" class="Sect2">
+            <p class="P12"><span class="T4">ASSURANCE MÉDICALE HORS QUÉBEC</span>
+            <p class="P12">Les Stentors se rendent généralement aux USA de 4 à 5 reprises chaque été.
+                <span class="T13 T2 T10">Une assurance hors Québec est indispensable</span>.
+                Si vous ne possédez une telle assurance, vous devrez vous en procurer une et nous fournir ces informations
+                <span class="T10">avant</span> notre première sortie aux Etats-Unis.
+            </p>
+            <p class="P12"><span class="T18">Je possède une assurance hors-Québec :
+                    <?php echo (!empty($data['MR_HasTravelInsur']) && $data['MR_HasTravelInsur'] == 1) ? $imgChecked : $imgBox; ?>Oui
+                    <?php echo (!empty($data['MR_HasTravelInsur']) && $data['MR_HasTravelInsur'] == 0) ? $imgChecked : $imgBox; ?>Non</span></p>
+
+            <p class="P12"><span class="T18">Si oui, complétez l’information suivante :</span></p>
+            <table>
+                <tr>
+                    <td>
+                        COMPAGNIE&nbsp;:
+                        <?php echo!empty($data['MR_TravelInduranceName']) ? $data['MR_TravelInduranceName'] : "______________________"; ?>
+                    </td>
+                    <td>
+                        DATE D’EXPIRATION&nbsp;: <?php echo!empty($data['MR_TravelInduranceExpiracy']) ? date('d / m / Y', strtotime($data['MR_TravelInduranceExpiracy'])) : "___/___/______"; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td class="modelDate T14">
+                        JJ / MM / AAAA
+                    </td>
+                </tr>
+            </table>
+            <p class="P12"><span >NUMÉRO DE POLICE&nbsp;: <?php echo!empty($data['MR_TravelInduranceNum']) ? $data['MR_TravelInduranceNum'] : "___ ___ ___ ___ ___ ___ ___ ___ ___"; ?></span></p>
+            <p class="P12"><span>NUMÉRO DE TÉLÉPHONE DE LA COMPAGNIE&nbsp;: <?php echo!empty($data['MR_TravelIndurancePhone']) ? $data['MR_TravelIndurancePhone'] : "(____) _____________________"; ?></span><span class="T25">&nbsp; &nbsp; &nbsp; &nbsp; </span></p>
+        </div>
+        <div id="Section3M" class="Sect2">
+            <p class="P12"><span class="T4">TÉLÉPHONES D’URGENCES</span></p>
+            <table>
+                <thead>
+                <th></th>
+                <th>Père</th>
+                <th>Mère</th>
+                <th>Autres <span class="T14">(que vos parents)</span></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td colspan="2" style="text-align: right;padding-right: 50px;">Précisez : <?php echo!empty($data['MR_EmergyPhone']) ? $data['MR_EmergyPhone'] : "_________________"; ?></td>
+                    </tr>
+                    <tr>
+                        <td>MAISON :</td>
+                        <td>
+                            <?php if (!empty($father)): ?>
+                                <?php echo!empty($father['address']['AI_FirstTel']) ? $father['address']['AI_FirstTel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <?php if (!empty($mother)): ?>
+                                <?php echo!empty($mother['address']['AI_FirstTel']) ? $mother['address']['AI_FirstTel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <?php if (!empty($other)): ?>
+                                <?php echo!empty($other['address']['AI_FirstTel']) ? $other['address']['AI_FirstTel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>TRAVAIL :</td>
+                        <td>
+                            <?php if (!empty($father)): ?>
+                                <?php echo!empty($father['address']['AI_Tel']) ? $father['address']['AI_Tel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                        <td><?php if (!empty($mother)): ?>
+                                <?php echo!empty($mother['address']['AI_Tel']) ? $mother['address']['AI_Tel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?></td>
+                        <td>
+                            <?php if (!empty($other)): ?>
+                                <?php echo!empty($other['address']['AI_Tel']) ? $other['address']['AI_Tel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CELL :</td>
+                        <td>
+                            <?php if (!empty($father)): ?>
+                                <?php echo!empty($father['address']['AI_SecondTel']) ? $father['address']['AI_SecondTel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                        <td><?php if (!empty($mother)): ?>
+                                <?php echo!empty($mother['address']['AI_SecondTel']) ? $mother['address']['AI_SecondTel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?></td>
+                        <td>
+                            <?php if (!empty($other)): ?>
+                                <?php echo!empty($other['address']['AI_SecondTel']) ? $other['address']['AI_SecondTel'] : "(____) _________________"; ?>
+                            <?php else: ?>
+                                (____) _________________
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Section4M" class="Sect2">
+            <p class="P12"><span class="T4">ALLERGIES</span></p>
+            <p class="P12">
+                <?php foreach ($allergies as $index => $val): ?>
+                <?php $tmp = (!empty($data['MR_Allergy'])?explode(',',$data['MR_Allergy']):array())?>
+                    <?php echo (in_array($index, $tmp)) ? $imgChecked : $imgBox; ?>
+                    <span><?php echo $val; ?></span>
+                <?php endforeach;?>
+            </p>
+            <p class="P12">Autres (précisez svp) _____________________</p>
+            <p class="P12">Prend-il de la médication pour traiter cette allergie?
+                 <?php echo (!empty($data['MR_AllergyMedic']) && $data['MR_AllergyMedic'] == 1) ? $yes : $no; ?>
+           </p>
+
+            </p>
+            <p class="P12">
+                Nom du médicament : <?php echo!empty($data['MR_AllergyMedicName']) ? $data['MR_AllergyMedicName'] : "_________________"; ?> &nbsp;&nbsp;&nbsp;
+                Concentration : <?php echo!empty($data['MR_AllergyMedicQty']) ? $data['MR_AllergyMedicQty'] : "_________________"; ?></p>
+            <p class="P12"><span class="T18">Si votre enfant faisait une crise d’allergie et qu’il était dans l’impossibilité de s’administrer
+                    lui-même sa médication, autorisez-vous les Stentors à lui administrer les premiers soins et
+                    les traitements nécessaires à votre enfant?
+                    </span>
+                    <?php echo (!empty($data['MR_AllowEmergencyCares']) && $data['MR_AllowEmergencyCares'] == 1) ? $yes : $no; ?>                </p>
+            </p>
+        </div>
+        <div id="Section5M" class="Sect2">
+            VOTRE ENFANT SOUFFRE-T-IL D’UNE OU DE PLUSIEURS DE CES MALADIES:
+            <?php $i=0; ?>
+            <table>
+                <tr>
+                    <td>
+                    <?php foreach ($diseases as $index => $val): ?>
+                        <span><?php echo $val; ?></span>
+                    </td>
+                    <td>
+                    <?php $tmp = (!empty($data['MR_Diseases'])?explode(',',$data['MR_Diseases']):array())?>
+                        <?php echo (in_array($index, $tmp)) ? $yes : $no; ?>
+                    </td>
+                    <td>
+                    <?php $i++;?>
+                    <?php if($i % 2 == 0):?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                <?php endif;?>
+                    <?php endforeach;?>
+                    </td>
+                </tr>
+            </table>
+            </p>
+        </div>
+        <div id="Section6M" class="Sect1">
+            <div class="colLeft">
+                <p class="P12">
+                    Maladie/Trouble  _________________________________
+                </p>
+                <p class="P12">
+                    Votre enfant prend t-il de la médication pour ce problème?     OUI     NON
+                </p>
+                <p class="P12">
+                    Est-ce une médication par;
+                    comprimé       sirop         par  injection
+                </p>
+                <p class="P12">
+                    Nom du médicament : _____________________________
+                </p>
+                <p class="P12">
+                    Concentration de la dose : __________________________
+                </p>
+                <p class="P12">
+                    Fréquence par jour : _______________________________
+                </p>
+                <p class="P12">
+                    Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?         OUI     NON
+                </p>
+                <p class="P12">
+                    Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?         OUI     NON
+                </p>
+            </div>
+            <div class="colRight">
+                <p class="P12">
+                    Maladie/Trouble  _________________________________
+                </p>
+                <p class="P12">
+                    Votre enfant prend t-il de la médication pour ce problème?     OUI     NON
+                </p>
+                <p class="P12">
+                    Est-ce une médication par;
+                    comprimé       sirop         par  injection
+                </p>
+                <p class="P12">
+                    Nom du médicament : _____________________________
+                </p>
+                <p class="P12">
+                    Concentration de la dose : __________________________
+                </p>
+                <p class="P12">
+                    Fréquence par jour : _______________________________
+                </p>
+                <p class="P12">
+                    Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?         OUI     NON
+                </p>
+                <p class="P12">
+                    Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?         OUI     NON
+                </p>
+            </div>
+        </div>
+        <div id="Section7M" class="Sect2">
+            <table>
+                <tr>
+                    <td class="tdLeft">
+                        Votre enfant porte-t-il des lunettes ?
+                    </td>
+                    <td class="tdRight">
+                        <?php echo (!empty($data['MR_HasGlasses']) && $data['MR_HasGlasses'] == 1) ? $imgChecked : $imgBox; ?>Oui
+                        <?php echo (!empty($data['MR_HasGlasses']) && $data['MR_HasGlasses'] == 0) ? $imgChecked : $imgBox; ?>Non
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLeft">
+                        Votre enfant porte-t-il des verres de contact ?
+                    </td>
+                    <td class="tdRight">
+                        <?php echo (!empty($data['MR_HasLens']) && $data['MR_HasLens'] == 1) ? $imgChecked : $imgBox; ?>Oui
+                        <?php echo (!empty($data['MR_HasLens']) && $data['MR_HasLens'] == 0) ? $imgChecked : $imgBox; ?>Non
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLeft">
+                        Votre enfant a-t-il déjà eu une fracture du crâne ?
+                    </td>
+                    <td class="tdRight">
+                        <?php echo (!empty($data['MR_Fracture']) && $data['MR_Fracture'] == 1) ? $imgChecked : $imgBox; ?>Oui
+                        <?php echo (!empty($data['MR_Fracture']) && $data['MR_Fracture'] == 0) ? $imgChecked : $imgBox; ?>Non
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLeft">
+                        Votre enfant a-t-il déjà subi une intervention chirurgicale?
+                    </td>
+                    <td class="tdRight">
+                        <?php echo (!empty($data['MR_Chirurgie']) && $data['MR_Chirurgie'] == 1) ? $imgChecked : $imgBox; ?>Oui
+                        <?php echo (!empty($data['MR_Chirurgie']) && $data['MR_Chirurgie'] == 0) ? $imgChecked : $imgBox; ?>Non
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdLeft" colspan="2">
+                        Si oui, spécifiez :
+                        <?php echo!empty($data['MR_Specific']) ? $data['MR_Specific'] : "_________________________________________________"; ?>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div id="Section8M" class="Sect2">
+            <p class="P12">
+                Veuillez inscrire dans cette section toutes autres informations médicales
+                que vous jugez nécessaires et qui pourraient s’avérer utiles
+                lorsque nous serons sur la route avec votre enfant :
+            </p>
+            <?php if(!empty($data['MR_Specific'])):
+                echo $data['MR_Notes'];
+                else: ?>
+            <p class="P12">
+                _________________________________________________________________________________________
+            </p>
+            <p class="P12">
+                _________________________________________________________________________________________
+            </p>
+            <p class="P12">
+                _________________________________________________________________________________________
+            </p>
+            <p class="P12">
+                _________________________________________________________________________________________
+            </p>
+            <p class="P12" style="padding-bottom: 20px;">
+                _________________________________________________________________________________________
+            </p>
+
+            <?php endif; ?>
+        </div>
+        <div id="Section9M" class="">
+            <p class="P12 T13 T10" style="text-align: center;">
+                PERMISSION DES PARENTS OU DU TUTEUR LÉGAL :
+            </p>
+            <p class="P12 T13">
+                En cas d’urgence, j’accorde aux responsables des Stentors mon consentement et toute autorisation nécessaire pour l’hospitalisation et les traitements médicaux qui pourraient s’imposer pour mon enfant.  De plus, je m’engage à ne pas tenir les organisateurs des Stentors responsables en cas d’accident.  J’autorise mon enfant à voyager avec le groupe.
+            </p>
+            <table class="signature">
+                <tbody>
+                    <tr>
+                        <td>Père &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                        <td>Mère &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;_________________</td>
+                        <td>Tuteur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                    </tr>
+                    <tr>
+                        <td>Signature _________________</td>
+                        <td>Signature _________________</td>
+                        <td>Signature _________________</td>
+                    </tr>
+                    <tr>
+                        <td>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                        <td>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                        <td>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul class="requiredDocs">
+                <li>
+                    Fournir une photocopie de la carte d’assurance maladie.
+                </li>
+                <li>
+                    Fournir une photocopie de votre assurance hors Québec personnelle.
+                </li>
+                <li>
+                    Fournir une photocopie de la première page de votre passeport ou du certificat de naissance.
+                </li>
+                <li>
+                    Fournir deux photos du visage du membre.
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

@@ -1,8 +1,8 @@
 @page {
-    width: 640px;
+    width: 680px;
 }
-table { border-collapse:collapse; border-spacing:0; empty-cells:show }
-td, th { vertical-align:top; font-size:12pt;}
+table { border-collapse:collapse; border-spacing:0; empty-cells:show; width: 100% }
+td, th { vertical-align:top; font-size:15px;}
 h1, h2, h3, h4, h5, h6 { clear:both }
 ol, ul { margin:0; padding:0;}
 li { list-style: none; margin:0; padding:0;}
@@ -43,25 +43,17 @@ p {line-height: 1.8em;}
 .P8 { }
 .P9 { }
 .Sect1 {margin: 10px auto; text-align: center;width: 100%}
-.Sect2 {  }
 .T1 { font-size:16pt; }
+.T2 { font-size:14px; }
 .T10 { text-decoration:underline; }
-.T11 { text-decoration:underline; }
-.T12 { background-color:#00ff00; }
 .T13 { font-weight:bold; }
-.T14 {}
-.T15 { font-weight:bold; }
-.T16 { font-weight:bold; }
-.T17 { }
+.T14 { font-size: 10px; letter-spacing: 2px; }
 .T18 { font-style:italic; font-weight:bold; }
-.T3 { font-size:16pt; font-weight:bold; }
-.T4 { font-size:16pt; font-weight:bold; background-color:#00ff00; }
-.T9 { font-weight:bold; }
-/*ODF styles with no properties representable as CSS*/
-.T5 { }
-
+.T4 { font-size:16px; font-weight:bold;}
+.capital{
+    text-transform: uppercase;
+}
 .memberInfos{
-    border: 3px solid #000;
     margin-top: 0px;
     padding: 5px;
 }
@@ -82,26 +74,29 @@ p {line-height: 1.8em;}
     float: left;
     line-height: 1em;
     margin-left: 15px;
-    padding-top: 8px;
+/*    padding-top: 8px;*/
     width: 50%;
 }
+.respList{
+    line-height: 1em;
+}
 .Sect1 .colLeft{
-    border: 3px solid #000;
     margin: 0 auto;
     padding-bottom: 5px;
     text-align: left;
     width: 46%;
+    min-height: 235px;
 }
 .Sect1 .colRight{
-    border: 3px solid #000;
     margin: 0 auto 0 35px;;
     padding-bottom: 5px;
     text-align: left;
     width: 46%;
+    min-height: 225px;
 }
+#Section1M.Sect1 .colLeft{min-height: 100px;}
 .garde,
 .passport{
-    border: 3px solid #000;
     margin: 10px auto;
     width: 100%;
 }
@@ -112,4 +107,74 @@ p {line-height: 1.8em;}
 .Sect2 .passport .colRight{
     display: inline-block;
     width: 50%
+}
+.medical .printLogo{
+    float: left;
+}
+.medical .P2{
+    clear: none;
+    float: left;
+    width: 200px;
+}
+.photo{
+    background: transparent url('../images/zonePhoto.png') no-repeat;
+    float: left;
+    height: 133px;
+    line-height: 133px;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 129px;
+}
+.medical .Sect1{
+    clear: both;
+}
+.medical .Sect1 .colRight{
+    min-height: 70px;
+    padding-top: 56px;
+}
+.medical .modelDate{
+    padding-left: 152px;
+
+}
+.medical .Sect2{
+    margin: 10px auto;
+}
+
+.Sect1 .colLeft,
+.Sect1 .colRight,
+.garde,
+.passport,
+.medical .Sect2,
+.memberInfos{
+    border: 3px solid #000;
+}
+.requiredDocs{
+    font-weight: bold;
+    margin: 25px 0;
+}
+.signature{
+    margin-top: 25px;
+}
+.requiredDocs li{
+    padding-left: 15px;
+    list-style: none;
+    font-size: 16px;
+    background: transparent url('../images/treeview-open.gif') no-repeat left 50%;
+}
+.checkboxPrint{
+    width: 18px;
+}
+#Section6M .colRight{
+    padding-top: 0;
+}
+#Section7M table  {
+table-layout:fixed;
+width:634px;
+}
+#Section7M table td.tdLeft{
+    width: 65%;
+}
+#Section7M table td.tdRight{
+    width: 35%;
+
 }
