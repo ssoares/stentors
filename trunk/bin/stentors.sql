@@ -127,6 +127,53 @@ update MemberProfiles SET MP_Section = 22 Where MP_Section = "Soprano";
 update MemberProfiles SET MP_Section = 23 Where MP_Section = "Toms";
 update MemberProfiles SET MP_Section = 24 Where MP_Section = "Drums";
 
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (9, 'garde');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (10, 'garde');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (11, 'garde');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (12, 'garde');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (13, 'garde');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (14, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (15, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (16, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (17, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (18, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (19, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (20, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (21, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (22, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (23, 'section');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (24, 'section');
+
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (25, 'role');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (26, 'role');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (27, 'role');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (28, 'role');
+INSERT INTO `nikel693_stentors`.`References` (`R_ID`, `R_TypeRef`) VALUES (29, 'role');
+
+
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (9, 1, 'Parents', 1);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (10, 1, 'Père', 2);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (11, 1, 'Mère', 3);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (12, 1, 'Garde partagée', 4);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (13, 1, 'Tuteur / responsable légal', 5);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (14, 1, 'Couleurs', 1);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (15, 1, 'Baryton', 2);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (16, 1, 'Bass Drum', 3);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (17, 1, 'Clairons', 4);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (18, 1, 'Mellophone', 5);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (19, 1, 'Contrebasse', 6);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (20, 1, 'Pit', 7);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (21, 1, 'Snare', 8);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (22, 1, 'Soprano', 9);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (23, 1, 'Toms', 10);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (24, 1, 'Drums', 11);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (26, 1, 'Père', 2);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (25, 1, 'Mère', 3);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (27, 1, 'Tuteur', 4);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (28, 1, 'Grands parents', 5);
+INSERT INTO `nikel693_stentors`.`ReferencesIndex` (`RI_RefId`, `RI_LanguageID`, `RI_Value`, `RI_Seq`) VALUES (29, 1, 'Majeur', 6);
+
+
 REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, `ST_ModuleID`) VALUES
 ('form_enum_allergy', 1, 'Allergie', 'cible', '', 0, 0),
 ('form_enum_allergy', 2, 'Allergy', 'cible', '', 0, 0),
@@ -138,6 +185,11 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('form_enum_section', 2, 'Section', 'cible', '', 0, 0),
 ('form_enum_diseases', 1, 'Maladies', 'cible', '', 0, 0),
 ('form_enum_diseases', 2, 'Diseases', 'cible', '', 0, 0);
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, `ST_ModuleID`) VALUES
+('form_profile_delete_dialog_text', 1, 'Êtes-vous sûr de vouloir supprimer ce profil définitivement?', 'cible', '', 0, 20),
+('form_profile_delete_dialog_text', 2, 'Are you sure you want to permanently delete this profile?', 'cible', '', 0, 20),
+('form_profile_delete_dialog_title', 1, 'Confirmer la suppression?', 'cible', '', 0, 20),
+('form_profile_delete_dialog_title', 2, 'Confirm delete action', 'cible', '', 0, 20);
 
 ALTER TABLE Modules ADD `M_HasFrontEnd` tinyint(1) NOT NULL default 1;
 
@@ -152,8 +204,8 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('management_module_parent_list', '2', 'Parents list', 'cible', '', '0', '30'),
 ('profile_tab_title_member', '1', 'Membre', 'cible', '', '0', '30'),
 ('profile_tab_title_member', '2', 'Member', 'cible', '', '0', '30'),
-('parent_module_name', 1, 'Parent', 'cible', '', 0, 999),
-('parent_module_name', 2, 'Parent', 'cible', '', 0, 999),
+('parent_module_name', 1, 'Parent, responsalbes', 'cible', '', 0, 999),
+('parent_module_name', 2, 'Parent, responsalbes', 'cible', '', 0, 999),
 ('member_module_name', 1, 'Membre', 'cible', '', 0, 30),
 ('member_module_name', 2, 'Member', 'cible', '', 0, 30),
 ('salutation_melle', 1, 'Mlle', 'cible', '', 0, 0),
@@ -165,6 +217,13 @@ REPLACE INTO Modules_ControllersActionsPermissions (MCAP_ModuleID, MCAP_Controll
 (30, 'index', 'list', 'edit', 1);
 (31, 'index', 'list', 'edit', 1);
 
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
+('form_label_PP_TaxReceipt', 1, 'Envoyé le relevé pour les impôts',  'cible', '', 0, 31),
+('profile_tab_title_parent', '1', 'Responsables', 'cible', '', '0', '31'),
+('profile_tab_title_parent', '2', 'Responsables', 'cible', '', '0', '31'),
+('button_add_list', 1, 'Ajouter une personne',  'cible', '', 0, 0),
+('button_add_list', 2, 'Add a person', 'cible', '', 0, 0),
+('form_label_PP_AssuSocNum', 1, 'Numéro d''assurance sociale', 'cible', '', 0, 0);
 REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
 ('form_label_MR_HasGlasses', 1, 'Porte des lunettes',  'cible', '', 0, 0),	('form_label_MR_HasGlasses', 2, '', 'cible', '', 0, 0),
 ('form_label_MR_HasLens', 1, 'Porte des verres de contact',  'cible', '', 0, 0),	('form_label_MR_HasLens', 2, '', 'cible', '', 0, 0),
