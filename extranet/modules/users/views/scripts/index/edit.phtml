@@ -56,10 +56,10 @@ $hidden = '';
         ?>
     </div>
 </div>
-<div id="dialog-confirm" title="Confirmer la suppression?" class="hidden">
+<div id="dialog-confirm" title="<?php echo $this->getCibleText('form_profile_delete_dialog_title')?>" class="hidden">
 	<p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-        <?php echo $this->getCibleText('profile_delete_alert'); ?>
+        <?php echo $this->getCibleText('form_profile_delete_dialog_text')?>
     </p>
 </div>
 <div id="dialogForm" title="" style="display:none"></div>

@@ -585,7 +585,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                         $recordID = $oData->insert($formData, $langId);
                     $data = array(
                         'success' => true,
-                        'tabTitle' => utf8_encode($this->view->getCibleText('profile_tab_title_' . $this->_currentAction))
+                        'tabTitle' => $this->view->getCibleText('profile_tab_title_' . $this->_currentAction)
                     );
                     echo json_encode ($data);
                 }

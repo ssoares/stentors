@@ -4,7 +4,7 @@ class Medical_IndexController extends Cible_Controller_Block_Abstract
 {
     protected $_labelSuffix;
     protected $_colTitle      = array();
-    protected $_moduleID      = 30;
+    protected $_moduleID      = 32;
     protected $_defaultAction = '';
     protected $_moduleTitle   = 'medical';
     protected $_name          = 'index';
