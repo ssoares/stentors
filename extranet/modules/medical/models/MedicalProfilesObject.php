@@ -37,7 +37,7 @@ class MedicalProfilesObject extends DataObject
 
     public function insert($data, $langId)
     {
-        $oProfile = new GenericProfilesObject();
+//        $oProfile = new GenericProfilesObject();
 
 //        if (!empty($data['parentForm']))
 //        {
@@ -57,6 +57,47 @@ class MedicalProfilesObject extends DataObject
 
     public function save($id, $data, $langId)
     {
+        $tmpVal = explode(',', $data['MR_Diseases']);
+        $oDiseaseD = new DiseasesDetailsObject();
+        foreach ($data as $field => $dd)
+        {
+            if (preg_match('/dd_[0-9]*/', $field))
+            {
+                $diseaseData = array();
+                $value = '';
+                foreach ($dd as $key => $value)
+                {
+                    $dId = explode('_', $field);
+                    if (is_array($value))
+                    {
+                        $value = implode(',', $value);
+                    }
+
+                        $diseaseData[$oDiseaseD->getForeignKey()] = $data['genericId'];
+                        $diseaseData['DD_MedicalRecordId'] = $dId[1];
+                        $diseaseData[$key] = $value;
+
+                }
+                if (in_array($dId[1], $tmpVal))
+                {
+                    $oDiseaseD->setFilters(
+                        array(
+                            $oDiseaseD->getForeignKey() => $data['genericId'],
+                            'DD_MedicalRecordId' => $dId[1]
+                            )
+                        );
+                    $exist = $oDiseaseD->getAll();
+                    if (count($exist) > 0)
+                        $oDiseaseD->save($exist[0][$oDiseaseD->getDataId()], $diseaseData, 1);
+                    else
+                        $oDiseaseD->insert($diseaseData, 1);
+                }
+            }
+        }
+        
+        if (empty($data['MR_Diseases']))
+            $data['MR_Diseases'] = 0;
+
         parent::save($id, $data, $langId);
     }
 

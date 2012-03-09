@@ -1056,7 +1056,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                                 $this->_imageFolder
                                 . $id . "/" . $thumbName);
                     }
-
+                    
                     $oData->save($id, $formData, $this->getCurrentEditLanguage());
                     if (!empty($this->_oMember))
                     {
@@ -1403,7 +1403,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
 
         foreach($formData as $key => $data)
         {
-            if(is_array($data))
+            if(is_array($data) && !preg_match('/dd_[0-9]*/', $key))
             {
                 switch (key($data))
                 {

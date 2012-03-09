@@ -64,7 +64,8 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
                 default:
                     if (preg_match('/^enum/', $meta['DATA_TYPE']))
                     {
-                        $params['elem'] = 'select';
+                        if (empty($params['elem']))
+                            $params['elem'] = 'select';
                         $params['src'] = 'enum';
                         $this->setElementInput($meta, $params);
                     }
@@ -142,8 +143,10 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
 
                     $element = new Zend_Form_Element_MultiCheckbox($fieldId);
                     $element->addMultiOptions($this->_srcData);
+                    $element->setLabel($this->getView()->getCibleText('form_label_' . $fieldId));
                     $element->setAttrib('class', 'multicheckbox');
                     $element->setSeparator(' ');
+                    $element = $this->_setBasicDecorator($element);
                     break;
                 case 'multiSelect':
 
