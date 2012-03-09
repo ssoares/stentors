@@ -56,6 +56,7 @@ class DataObject
     protected $_colsData;
     protected $_colsIndex;
     protected $_enum;
+    protected $_filters;
 
     /**
      * Set a query instance to join with data table
@@ -65,6 +66,15 @@ class DataObject
     public function setQuery(Zend_Db_Select $_query)
     {
         $this->_query = $_query;
+    }
+    /**
+     * Set filers to get data.
+     *
+     * @param array $filters
+     */
+    public function setFilters($filters)
+    {
+        $this->_filters = $filters;
     }
 
     /**
@@ -418,7 +428,7 @@ class DataObject
         else
             $_insertedId = $data[$this->_dataId];
 
-        
+
         //var_dump($this->_indexClass);
         if (!empty($this->_indexClass))
         {
@@ -644,6 +654,20 @@ class DataObject
             }
         }
 
+        if (!empty($this->_filters))
+        {
+            foreach ($this->_filters as $key => $value)
+            {
+                if (isset($this->_dataColumns[$key]))
+                {
+                    if (is_string($value ))
+                        $select->where("{$this->_dataColumns[$key]} like '%{$value}%'");
+                    elseif (is_integer($value))
+                        $select->where($this->_dataColumns[$key] . ' = ?',$value);
+                }
+            }
+        }
+
         if (!empty($this->_orderBy))
             $select->order($this->_orderBy);
 
@@ -774,7 +798,7 @@ class DataObject
         else
         {
             /**
-             * @todo: Prévoir le cas d'un chargement de données particulier
+             * @todo: Prï¿½voir le cas d'un chargement de donnï¿½es particulier
              *        avec une table index incluse.
              */
             if (!empty($this->_indexClass))

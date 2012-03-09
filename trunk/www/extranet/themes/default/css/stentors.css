@@ -92,13 +92,20 @@ fieldset.infosFieldset legend{
 .clearLeft{
     clear: left;
 }
-
+fieldset.fieldsetDiseaseDetails,
 #fieldset-genericForm,
 #fieldset-parentForm,
 fieldset.infosFieldsetParent{
     width: 45%;
     float: left;
     margin-right: 10px;
+}
+fieldset.fieldsetDiseaseDetails{
+    width: 30%;
+    display: none;
+}
+fieldset.fieldsetDiseaseDetails legend{
+    font-size: 12px;
 }
 #fieldset-parentForm{
     float: left;
@@ -132,4 +139,13 @@ fieldset.infosFieldsetParent textarea.mediumEditor{
 .allergy dd input.multicheckbox{
     display: inline-block;
     width: auto;
+}
+#form_panel form dd.typeMedic label{
+    display: inline-block;
+    width: 32%;
+}
+#form_panel form dd.typeMedic label:first-child{
+    display: block;
+}
+.typeMedic .multicheckbox{
 }

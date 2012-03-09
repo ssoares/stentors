@@ -321,7 +321,7 @@
             save: function(){
 
                 o.saveBtn.live('click', function(e){
-//                    e.preventDefault();
+                    e.preventDefault();
                     var button = $(this);
                     var form = $(this).parents('form:first');
                     var data = form.serialize();
@@ -449,6 +449,29 @@
 
                         });
                     });
+            },
+            showDiseasesDetails: function(){
+                var checkbox = $('input[id^=MR_Diseases-]');
+                checkbox.live('click', function(){
+                    var id = $(this).attr('id').split('-')[1];
+                    var fieldset = $(this).parents('fieldset:first').parent('dl').find('#fieldset-dd_' + id);
+                    var isHidden = fieldset.is(':hidden');
+                    fieldset.toggle();
+//                    if (!isHidden)
+//                        fieldset.hide();
+//                    else
+//                        fieldset.show();
+                });
+                $(window).load(function(){
+                    checkbox.each(function(){
+                        var id = $(this).attr('id').split('-')[1];
+                        if ($(this).is(':checked'))
+                        {
+                            var fieldset = $(this).parents('fieldset:first').parent('dl').find('#fieldset-dd_' + id);
+                            fieldset.toggle();
+                        }
+                    });
+                });
             }
         }
 
@@ -460,6 +483,9 @@
         main.changeTab();
         main.save();
         main.addParent();
+
+        // Specific methods
+        main.showDiseasesDetails();
     }
 
 })(jQuery);

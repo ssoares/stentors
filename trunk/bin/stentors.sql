@@ -298,7 +298,22 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('profile_tab_title_medical', 1, 'Fiche médicale',  'cible', '', 0, 0),
 ('profile_tab_title_medical', 2, 'Fiche médicale', 'cible', '', 0, 0),
 ('medical_module_name', 1, 'Fiche médicale',  'cible', '', 0, 0),
-('medical_module_name', 2, 'Fiche médicale', 'cible', '', 0, 0);
+('medical_module_name', 2, 'Fiche médicale', 'cible', '', 0, 0),
+('form_label_DD_HasMedic', 1, 'Prend des médicaments',  'cible', '', 0, 32),
+('form_label_DD_HasMedic', 2, '', 'cible', '', 0, 32),
+('form_label_DD_TypeMedic', 1, 'Sous forme de',  'cible', '', 0, 32),
+('form_label_DD_TypeMedic', 2, '', 'cible', '', 0, 32),
+('form_label_DD_MedicName', 1, 'Nom du médicament',  'cible', '', 0, 32),
+('form_label_DD_MedicName', 2, '', 'cible', '', 0, 32),
+('form_label_DD_Dose', 1, 'Concentration',  'cible', '', 0, 32),
+('form_label_DD_Dose', 2, '', 'cible', '', 0, 32),
+('form_label_DD_Frequence', 1, 'Fréquence par jour',  'cible', '', 0, 32),
+('form_label_DD_Frequence', 2, '', 'cible', '', 0, 32),
+('form_label_DD_KnowsHowto', 1, 'Connaît la procédure pour se l''administrer',  'cible', '', 0, 32),
+('form_label_DD_KnowsHowto', 2, '', 'cible', '', 0, 32),
+('form_label_DD_NeedHelp', 1, 'Besoin de supervision par un responsable',  'cible', '', 0, 32),
+('form_label_DD_NeedHelp', 2, '', 'cible', '', 0, 32);
+
 
 ALTER TABLE `MedicalRecord` ADD `MR_HasGlasses` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_Diseases` ,
 ADD `MR_HasLens` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_HasGlasses` ,
