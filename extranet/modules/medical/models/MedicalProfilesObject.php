@@ -57,7 +57,12 @@ class MedicalProfilesObject extends DataObject
 
     public function save($id, $data, $langId)
     {
+        $tmpVal = array();
+        if (empty($data['MR_Diseases']))
+            $data['MR_Diseases'] = 0;
+
         $tmpVal = explode(',', $data['MR_Diseases']);
+
         $oDiseaseD = new DiseasesDetailsObject();
         foreach ($data as $field => $dd)
         {
@@ -74,7 +79,7 @@ class MedicalProfilesObject extends DataObject
                     }
 
                         $diseaseData[$oDiseaseD->getForeignKey()] = $data['genericId'];
-                        $diseaseData['DD_MedicalRecordId'] = $dId[1];
+                        $diseaseData['DD_DiseaseId'] = $dId[1];
                         $diseaseData[$key] = $value;
 
                 }
@@ -83,7 +88,7 @@ class MedicalProfilesObject extends DataObject
                     $oDiseaseD->setFilters(
                         array(
                             $oDiseaseD->getForeignKey() => $data['genericId'],
-                            'DD_MedicalRecordId' => $dId[1]
+                            'DD_DiseaseId' => $dId[1]
                             )
                         );
                     $exist = $oDiseaseD->getAll();
@@ -94,9 +99,7 @@ class MedicalProfilesObject extends DataObject
                 }
             }
         }
-        
-        if (empty($data['MR_Diseases']))
-            $data['MR_Diseases'] = 0;
+
 
         parent::save($id, $data, $langId);
     }

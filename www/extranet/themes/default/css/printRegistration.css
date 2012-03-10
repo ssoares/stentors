@@ -164,6 +164,7 @@ p {line-height: 1.8em;}
 .checkboxPrint{
     width: 18px;
 }
+#Section10M .colRight,
 #Section6M .colRight{
     padding-top: 0;
 }
@@ -177,4 +178,12 @@ width:634px;
 #Section7M table td.tdRight{
     width: 35%;
 
+}
+.Sect1 .colLeft.lastBlockOnLeft{
+    display: block !important;
+    margin: 10px 0 0 !important;
+}
+#Section10M .colLeft,
+#Section10M .colRight{
+    margin-top: 10px;
 }

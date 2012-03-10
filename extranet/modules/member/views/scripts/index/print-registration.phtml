@@ -35,7 +35,7 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                 <span >Nom du membre : </span>
                 <span><?php echo $data['GP_FirstName']; ?> <?php echo $data['GP_LastName']; ?></span>
             </p>
-            <p class="P7"><span >Date de naissance : <?php echo!empty($data['MP_BirthDate']) ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?>                Âge : </span><span class="T11">  <?php echo $data['MP_Age']; ?> ans               </span>
+            <p class="P7"><span >Date de naissance : <?php echo!empty($data['MP_BirthDate']) && $data['MP_BirthDate'] != "0000-00-00"  ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?>                Âge : </span><span class="T11">  <?php echo $data['MP_Age']; ?> ans               </span>
             <p class="P7" style="padding-left: 114px;line-height: 0.8em;"><span class="T14" style="font-size: 10px; letter-spacing: 2px;">JJ/MM/AAAA</span></p>
             <p class="P9">École : <?php echo!empty($data['MP_School']) ? $data['MP_School'] : "_________________________"; ?>            <span> Année Scolaire : <?php echo!empty($data['MP_SchoolYear']) ? $data['MP_SchoolYear'] : "____________"; ?></span></p>
             <p class="P9">Adresse courriel du membre : <?php echo!empty($data['GP_Email']) ? $data['GP_Email'] : "________________________________________________"; ?> </p>
@@ -75,8 +75,18 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                         break;
                 }
                 ?>
+                <?php elseif (!empty($parent)): ?>
+                    <?php $other = $parent; ?>
+                <?php endif; ?>
 
-                <p class="P12"><span ><?php echo $roles[$parent['PP_Role']]; ?> - Nom : <?php echo!empty($parent['GP_FirstName']) ? $parent['GP_FirstName'] . " " . $parent['GP_LastName'] : "_________________________"; ?></span>
+                <p class="P12">
+                    <?php
+                    $roleTmp = 'Mère';
+                    if ($index > 0):
+                        $roleTmp = 'Père';
+                    endif;?>
+                    <span ><?php echo!empty($parent['PP_Role']) ? $parent['PP_Role'] : $roleTmp; ?>
+                        - Nom : <?php echo!empty($parent['GP_FirstName']) ? $parent['GP_FirstName'] . " " . $parent['GP_LastName'] : "_________________________"; ?></span>
                 </p>
                 <p class="P12">
                     <span>Adresse : <?php echo!empty($parent['address']['AI_FirstAddress']) ? $parent['address']['AI_FirstAddress'] : "_________________________"; ?></span>
@@ -89,9 +99,6 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                 <p class="P12"><span >Cellulaire : </span><span class="T11"><?php echo!empty($parent['address']['AI_SecondTel']) ? $parent['address']['AI_SecondTel'] : "(____)____________________"; ?></span></p>
                 <p class="P12"><span >Tel au travail : </span><span class="T11">(____)__________________</span></p>
                 <p class="P12"><span >Courriel : <?php echo!empty($parent['GP_Email']) ? $parent['GP_Email'] : "_________________________"; ?> </span></p>
-            <?php elseif (!empty($parent)): ?>
-                <?php $other = $parent; ?>
-            <?php endif; ?>
             <?php endforeach;?>
         </div>
     </div>
@@ -100,18 +107,18 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
             <p class="P12 respList">
                 <span class="">Le membre habite avec: </span>     
                 <?php foreach ($resp as $index => $val): ?>
-                    <?php echo ($index == $data['MP_LiveWith']) ? $imgChecked : $imgBox; ?>
+                    <?php echo (!empty ($data['MP_LiveWith']) && $index == $data['MP_LiveWith']) ? $imgChecked : $imgBox; ?>
                     <span><?php echo $val; ?></span>
                 <?php endforeach; ?>
             </p>
-            <?php if ($data['MP_LiveWith'] == 13): ?>
+            <?php if (!empty ($data['MP_LiveWith']) && $data['MP_LiveWith'] == 13): ?>
                 <p class="P12"><span >Nom du tuteur : </span><span class="T11"><?php echo!empty($other['GP_FirstName']) ? $other['GP_FirstName'] . " " . $other['GP_LastName'] : "_________________________"; ?></span></p>
                 <p class="P12"><span >Adresse du tuteur: <?php echo!empty($other['address']['AI_FirstAddress']) ? $other['address']['AI_FirstAddress'] . " " . $other['address']['AI_SecondAddress'] . " - " . $other['address']['A_CityTextValue'] . ", " . $other['address']['A_ZipCode'] : "_________________________"; ?><span class="T11">                                                                            </span></span></p>
-            <?php elseif ($data['MP_LiveWith'] == 0): ?>
+            <?php elseif (!empty ($data['MP_LiveWith']) && $data['MP_LiveWith'] == 0): ?>
                 <p class="P12"><span ><?php echo $roles[$other['PP_Role']]; ?> - Nom: </span><span class="T11"><?php echo!empty($other['GP_FirstName']) ? $other['GP_FirstName'] . " " . $other['GP_LastName'] : "_________________________"; ?></span></p>
                 <p class="P12"><span >Adresse : <?php echo!empty($other['address']['AI_FirstAddress']) ? $other['address']['AI_FirstAddress'] . " " . $other['address']['AI_SecondAddress'] . " - " . $other['address']['A_CityTextValue'] . ", " . $other['address']['A_ZipCode'] : "_________________________"; ?><span class="T11">                                                                            </span></span></p>
             <?php endif; ?>
-            <?php if ($data['MP_LiveWith'] > 9 && $data['MP_LiveWith'] < 12): ?>
+            <?php if (!empty ($data['MP_LiveWith']) && $data['MP_LiveWith'] > 9 && $data['MP_LiveWith'] < 12): ?>
                 <p class="P12"><span >_____ Garde Partagée   Expliquer : <span class="T11">______________________________________</span></span></p>
             <?php endif; ?>
             <?php if ($data['MP_Age'] < 16): ?>
@@ -128,13 +135,13 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
             <p class=""><span class="T13">INFORMATIONS SUR LE PASSEPORT</span><span > :</span></p>
             <div class="colLeft">
                 <p class="P12"><span >Nationalité : <?php echo!empty($data['MP_CountryOrig']) ? $data['MP_CountryOrig'] : "_________________________"; ?></span></p>
-                <p class="P12"><span >Date d’expiration : <?php echo!empty($data['MP_PassportExpiracyDate']) ? date('d / m / Y', strtotime($data['MP_PassportExpiracyDate'])) : "_________________________"; ?></span></p>
+                <p class="P12"><span >Date d’expiration : <?php echo!empty($data['MP_PassportExpiracyDate']) && $data['MP_PassportExpiracyDate'] != "0000-00-00" ? date('d / m / Y', strtotime($data['MP_PassportExpiracyDate'])) : "___/____/_______"; ?></span></p>
                 <p class="P12"><span >Nom : <?php echo!empty($data['MP_PassportLastName']) ? $data['MP_PassportLastName'] : "_________________________"; ?> </span></p>
                 <p class="P12"><span class="T18">(Tel qu’il parait sur votre passeport)</span></p>
             </div>
             <div class="colRight">
                 <p class="P12"><span ># de passeport : <?php echo!empty($data['MP_PassportNum']) ? $data['MP_PassportNum'] : "_________________________"; ?></span></p>
-                <p class="P12"><span >Date de naissance : <?php echo!empty($data['MP_PassportBirthDate']) ? $data['MP_PassportBirthDate'] : "_________________________"; ?></span></p>
+                <p class="P12"><span >Date de naissance : <?php echo!empty($data['MP_PassportBirthDate']) && $data['MP_PassportBirthDate'] != "0000-00-00" ? $data['MP_PassportBirthDate'] : "___/____/_______"; ?></span></p>
                 <p class="P12"><span >Prénom : <?php echo!empty($data['MP_PassportFirstName']) ? $data['MP_PassportFirstName'] : "_________________________"; ?></span></p>
             </div>
         </div>
@@ -179,12 +186,12 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                     <span class="T2"># de tél.&nbsp;:</span>
                     <span class="T13 capital"></span>
                 </p>
-                <p class="P12"><span class="T2">DATE DE NAISSANCE&nbsp;: </span><span class="T13 capital"><?php echo!empty($data['MP_BirthDate']) ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?></span></p>
+                <p class="P12"><span class="T2">DATE DE NAISSANCE&nbsp;: </span><span class="T13 capital"><?php echo!empty($data['MP_BirthDate']) && $data['MP_BirthDate'] != "0000-00-00" ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?></span></p>
                 <p class="P12"><span <span class="T14">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;JJ / MM / AAAA</span></p>
             </div>
             <div class="colRight">
                 <p class="P12"><span>ASS MALADIE&nbsp;: <?php echo!empty($data['MR_AssuMaladie']) ? $data['MR_AssuMaladie'] : "__ __ __ __ __ __ __ __ __ __"; ?></span></p>
-                <p class="P12"><span>EXPIRATION&nbsp;: <?php echo!empty($data['MR_ExpiracyDate']) ? $data['MR_ExpiracyDate'] : "___________________"; ?></span></p>
+                <p class="P12"><span>EXPIRATION&nbsp;: <?php echo!empty($data['MR_ExpiracyDate']) ? $data['MR_ExpiracyDate'] && $data['MR_ExpiracyDate'] != "0000-00-00" : "___________________"; ?></span></p>
             </div>
         </div>
         <div id="Section2M" class="Sect2">
@@ -206,7 +213,7 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                         <?php echo!empty($data['MR_TravelInduranceName']) ? $data['MR_TravelInduranceName'] : "______________________"; ?>
                     </td>
                     <td>
-                        DATE D’EXPIRATION&nbsp;: <?php echo!empty($data['MR_TravelInduranceExpiracy']) ? date('d / m / Y', strtotime($data['MR_TravelInduranceExpiracy'])) : "___/___/______"; ?>
+                        DATE D’EXPIRATION&nbsp;: <?php echo!empty($data['MR_TravelInduranceExpiracy']) && $data['MR_TravelInduranceExpiracy'] != "0000-00-00" ? date('d / m / Y', strtotime($data['MR_TravelInduranceExpiracy'])) : "___/___/______"; ?>
                     </td>
                 </tr>
                 <tr>
@@ -361,61 +368,60 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
             </p>
         </div>
         <div id="Section6M" class="Sect1">
-            <div class="colLeft">
-                <p class="P12">
-                    Maladie/Trouble  _________________________________
-                </p>
-                <p class="P12">
-                    Votre enfant prend t-il de la médication pour ce problème?     OUI     NON
-                </p>
-                <p class="P12">
-                    Est-ce une médication par;
-                    comprimé       sirop         par  injection
-                </p>
-                <p class="P12">
-                    Nom du médicament : _____________________________
-                </p>
-                <p class="P12">
-                    Concentration de la dose : __________________________
-                </p>
-                <p class="P12">
-                    Fréquence par jour : _______________________________
-                </p>
-                <p class="P12">
-                    Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?         OUI     NON
-                </p>
-                <p class="P12">
-                    Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?         OUI     NON
-                </p>
+            <?php
+             $thisDiseases = array();
+            if (!empty ($data['MR_Diseases']))
+             $thisDiseases = explode(',',$data['MR_Diseases']);
+            foreach ($this->diseasesDetails as $index => $vals): ?>
+                <?php if (in_array($vals['DD_DiseaseId'],$thisDiseases) && $index < 2): ?>
+                    <?php if ($index % 2 != 0): ?>
+                    <div class="colRight">
+                    <?php else: ?>
+                    <?php $clearLeft = ''; ?>
+                    <?php if ($index % 2 == 0 && $index+1 == count($this->diseasesDetails))  $clearLeft = ' lastBlockOnLeft';?>
+                    <div class="colLeft <?php echo $clearLeft; ?>">
+                    <?php endif;?>
+                    <p class="P12">
+                        Maladie/Trouble : <?php echo !empty($vals['DD_DiseaseId']) ? $diseases[$vals['DD_DiseaseId']] : "_________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Votre enfant prend t-il de la médication pour ce problème?
+                            <?php echo !empty($vals['DD_HasMedic']) ? $yes : $no; ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce une médication par :
+                    </p>
+                    <p class="P12">
+                        <?php $values = explode(',', $vals['DD_TypeMedic']); ?>
+                        <?php foreach ($this->typeMedic as $index => $val): ?>
+                        <?php echo (in_array($index, $values)) ? $imgChecked : $imgBox; ?>
+                        <span><?php echo $val; ?></span>
+                        <?php endforeach;?>
+                    </p>
+                    <p class="P12">
+                        Nom du médicament : <?php echo !empty($vals['DD_MedicName']) ? $vals['DD_MedicName'] : "__________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Concentration de la dose : <?php echo !empty($vals['DD_Dose']) ? $vals['DD_Dose'] : "_______________"; ?>
+                    </p>
+                    <p class="P12">
+                        Fréquence par jour : <?php echo !empty($vals['DD_Frequence']) ? $vals['DD_Frequence'] : "___________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?<br />
+                        <?php echo !empty($vals['DD_KnowsHowto']) ? $yes : $no; ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?
+                        <?php echo !empty($vals['DD_NeedHelp']) ? $yes : $no; ?>
+                    </p>
             </div>
-            <div class="colRight">
-                <p class="P12">
-                    Maladie/Trouble  _________________________________
-                </p>
-                <p class="P12">
-                    Votre enfant prend t-il de la médication pour ce problème?     OUI     NON
-                </p>
-                <p class="P12">
-                    Est-ce une médication par;
-                    comprimé       sirop         par  injection
-                </p>
-                <p class="P12">
-                    Nom du médicament : _____________________________
-                </p>
-                <p class="P12">
-                    Concentration de la dose : __________________________
-                </p>
-                <p class="P12">
-                    Fréquence par jour : _______________________________
-                </p>
-                <p class="P12">
-                    Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?         OUI     NON
-                </p>
-                <p class="P12">
-                    Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?         OUI     NON
-                </p>
-            </div>
+                <?php else:?>
+                    <?php $lastPart[] = $vals; ?>
+                <?php endif;?>
+            <?php endforeach;?>
         </div>
+
         <div id="Section7M" class="Sect2">
             <table>
                 <tr>
@@ -462,7 +468,6 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                     </td>
                 </tr>
             </table>
-
         </div>
         <div id="Section8M" class="Sect2">
             <p class="P12">
@@ -503,17 +508,23 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                     <tr>
                         <td>Père &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
                         <td>Mère &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;_________________</td>
+                        <?php if (!empty ($data['MP_LiveWith']) && $data['MP_LiveWith'] == 13): ?>
                         <td>Tuteur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                        <?php endif; ?>
                     </tr>
                     <tr>
                         <td>Signature _________________</td>
                         <td>Signature _________________</td>
+                        <?php if (!empty ($data['MP_LiveWith']) && $data['MP_LiveWith'] == 13): ?>
                         <td>Signature _________________</td>
+                        <?php endif; ?>
                     </tr>
                     <tr>
                         <td>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
                         <td>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                        <?php if (!empty ($data['MP_LiveWith']) && $data['MP_LiveWith'] == 13): ?>
                         <td>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________</td>
+                        <?php endif; ?>
                     </tr>
                 </tbody>
             </table>
@@ -532,6 +543,64 @@ $no  = $imgBox . ' OUI ' . $imgChecked . ' NON';
                     Fournir deux photos du visage du membre.
                 </li>
             </ul>
+        </div>
+        <div id="Section10M" class="Sect1">
+            <?php
+             if (!empty ($lastPart) )
+             {
+             $thisDiseases = explode(',',$data['MR_Diseases']);
+            foreach ($lastPart as $index => $vals): ?>
+                <?php if (in_array($vals['DD_DiseaseId'],$thisDiseases)): ?>
+                    <?php if ($index % 2 != 0): ?>
+                        <?php if (($index + 1) % 4 == 0)  $pageBreak = 'style="page-break-after: always"';?>
+                        <div class="colRight" <?php echo $pageBreak; ?>>
+                    <?php else: ?>
+                        <?php $clearLeft = ''; ?>
+                        <?php $pageBreak = ''; ?>
+                        <?php if ($index % 2 == 0 && $index+1 == count($lastPart))  $clearLeft = ' lastBlockOnLeft';?>
+                        <div class="colLeft <?php echo $clearLeft; ?>">
+                    <?php endif;?>
+                    <p class="P12">
+                        Maladie/Trouble : <?php echo !empty($vals['DD_DiseaseId']) ? $diseases[$vals['DD_DiseaseId']] : "_________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Votre enfant prend t-il de la médication pour ce problème?
+                            <?php echo !empty($vals['DD_HasMedic']) ? $yes : $no; ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce une médication par :
+                    </p>
+                    <p class="P12">
+                        <?php $values = explode(',', $vals['DD_TypeMedic']); ?>
+                        <?php foreach ($this->typeMedic as $index => $val): ?>
+                        <?php echo (in_array($index, $values)) ? $imgChecked : $imgBox; ?>
+                        <span><?php echo $val; ?></span>
+                        <?php endforeach;?>
+                    </p>
+                    <p class="P12">
+                        Nom du médicament : <?php echo !empty($vals['DD_MedicName']) ? $vals['DD_MedicName'] : "__________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Concentration de la dose : <?php echo !empty($vals['DD_Dose']) ? $vals['DD_Dose'] : "_______________"; ?>
+                    </p>
+                    <p class="P12">
+                        Fréquence par jour : <?php echo !empty($vals['DD_Frequence']) ? $vals['DD_Frequence'] : "___________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?<br />
+                        <?php echo !empty($vals['DD_KnowsHowto']) ? $yes : $no; ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?
+                        <?php echo !empty($vals['DD_NeedHelp']) ? $yes : $no; ?>
+                    </p>
+                <?php endif;?>
+            </div>
+            <?php
+            endforeach;
+             }
+            ?>
+
         </div>
     </div>
 </div>

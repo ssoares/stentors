@@ -132,12 +132,12 @@ class FormMedicalProfile extends Cible_Form_GenerateForm
                     'isXmlHttpRequest' => true
                     )
                 );
-            if (in_array($id, $values['MR_Diseases']))
+            if (!empty($values['MR_Diseases']) && in_array($id, $values['MR_Diseases']))
             {
                 $oDiseases->setFilters(
                     array(
                         $oDiseases->getForeignKey() => $values[$this->_object->getForeignKey()],
-                        'DD_MedicalRecordId' => $id
+                        'DD_DiseaseId' => $id
                     )
                 );
                 $data = $oDiseases->getAll();

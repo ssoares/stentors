@@ -176,7 +176,7 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
 
     public function printRegistrationAction()
     {
-        $id = $this->_getParam('id');
+        $id = (int)$this->_getParam('id');
         $page = $this->_getParam('page');
 
         $lang = $this->_getParam('lang');
@@ -198,6 +198,7 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
             $oMember = new MemberProfilesObject();
             $oGeneric = new GenericProfilesObject();
             $oMedic = new MedicalProfilesObject();
+            $oDiseasesD = new DiseasesDetailsObject();
             $oParent = new ParentProfilesObject();
             $oAddress = new AddressObject();
             $sections = $oMember->_sectionSrc();
@@ -206,19 +207,23 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
             $medicData = $oMedic->populate($memberData['MP_GenericProfileId'], $langId);
             $allergies = $oMedic->_allergySrc();
             $diseases = $oMedic->_diseasesSrc();
+            $diseasesDetails = $oDiseasesD->setFilters(array($oDiseasesD->getForeignKey() => $id));
+            $diseasesDetails = $oDiseasesD->getAll();
             $memberData = array_merge($memberData, $data, $medicData);
             $this->view->title = 'Membre : ' . $memberData['GP_LastName'] . ' ' . $memberData['GP_FirstName'];
             $resp = $oParent->_listRespSrc();
             $roles = $oParent->_parentsProfileSrc();
-            $firstPData = $oParent->populate($memberData['MP_FirstParent'], $langId);
-            if (empty($firstPData))
-                $firstPData = $oParent->populate($memberData['MP_GenericProfileId'], $langId);
+            if ($memberData['MP_FirstParent'])
+            {
+                $firstPData = $oParent->populate($memberData['MP_FirstParent'], $langId);
+                if (empty($firstPData))
+                    $firstPData = $oParent->populate($memberData['MP_GenericProfileId'], $langId);
 
-            $data = $oGeneric->populate($firstPData['PP_GenericProfileId'], $langId);
-            $firstPData = array_merge($firstPData, $data);
-            $address = $oAddress->populate($firstPData['PP_AddressId'], $langId);
-            $firstPData['address'] = $address;
-
+                $data = $oGeneric->populate($firstPData['PP_GenericProfileId'], $langId);
+                $firstPData = array_merge($firstPData, $data);
+                $address = $oAddress->populate($firstPData['PP_AddressId'], $langId);
+                $firstPData['address'] = $address;
+            }
             if ($memberData['MP_SecondParent'])
             {
                 $secPData = $oParent->populate($memberData['MP_SecondParent'], $langId);
@@ -234,6 +239,8 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
             $this->view->roles = $roles;
             $this->view->allergies = $allergies;
             $this->view->diseases = $diseases;
+            $this->view->diseasesDetails = $diseasesDetails;
+            $this->view->typeMedic = $oDiseasesD->_typeMedicSrc();
         }
     }
     public function addAction(){
