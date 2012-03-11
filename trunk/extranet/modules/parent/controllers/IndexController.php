@@ -28,6 +28,7 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
     protected $_disableExportToCSV   = false;
     protected $_enablePrint          = false;
     protected $_constraint;
+    protected $_orderBy;
 
     /**
      * Set some properties to redirect and process actions.
@@ -77,6 +78,7 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
 //            $this->_disableExportToExcel = true;
+            $this->_orderBy = 'GP_LastName';
             $this->_constraint = 'PP_Role';
             $this->_colTitle = array(
                 'GP_FirstName' => array('width' => '250px'),
@@ -232,7 +234,9 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
             $profile->getDisplayGroup('genericForm')->setLegend('Infos générales');
             $form->addSubForm($profile, 'genericForm');
             $form->getSubForm('genericForm')->setOrder(0);
+            $form->getSubForm('parentForm')->setOrder(1);
             $form->getSubForm('parentForm')->getElement('selectedState')->removeDecorator('DtDdWrapper');
+            $form->getDisplayGroup('data')->setOrder(3);
             $form->getDisplayGroup('data')->setAttrib('style', 'width:93%');
             $form->getElement('PP_EmploiTps')->getDecorator('row')
                 ->setOption('style', 'width: 45%; display: inline-block; margin-right: 25px;');
@@ -378,7 +382,6 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
         $oDataName = $this->_objectList[$this->_currentAction];
 
         $oData = new $oDataName();
-
 
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
@@ -656,7 +659,8 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
             $page = 1;
         // Create the object from parameter
         $oData = new $objectName();
-
+        if (!empty($this->_orderBy))
+            $oData->setOrderBy($this->_orderBy);
         // get needed data to create the list
         $columnData  = $oData->getDataColumns();
         $dataTable   = $oData->getDataTableName();

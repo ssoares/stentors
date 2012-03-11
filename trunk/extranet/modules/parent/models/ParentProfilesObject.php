@@ -63,6 +63,7 @@ class ParentProfilesObject extends DataObject
             $addr = $data['parentForm'];
 //            $addrShip = $data['addressShipping'];
         }
+
         if (!empty($addr))
         {
             $addrId = $oAdress->save($data['PP_AddressId'], $addr, $langId);
@@ -77,7 +78,8 @@ class ParentProfilesObject extends DataObject
 //                $addrShip['A_Duplicate'] = 0;
 //                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrShip, $langId);
 //            }
-            $data['PP_AddressId'] = $addrId;
+            if (empty($data['PP_AddressId']))
+                $data['PP_AddressId'] = $addrId;
 //            $data['MP_ShippingAddrId'] = $shipId;
         }
 

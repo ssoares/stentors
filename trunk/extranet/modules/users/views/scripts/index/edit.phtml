@@ -11,7 +11,8 @@ $hidden = '';
         <div id="action_panel" class="list_action_panel">
             <input id="general" type="hidden" value="0" />
             <ul class="buttons">
-                <li id="addTab"><a class="action_submit add" href="#">Ajouter un profil</a>
+                <li id="addTab">
+                    <a class="action_submit add" href="#">Ajouter un profil</a>
                     <ul class="profiles closed">
                         <?php foreach ($this->profilesList as $key => $value): ?>
                             <?php foreach ( $this->tabsList as $tab): ?>
@@ -34,6 +35,11 @@ $hidden = '';
                         <?php endforeach; ?>
                     </ul>
                 </li>
+                <?php if (!empty($this->printPage)): ?>
+                <li id="print">
+                    <a class="action_submit print" href="<?php echo $this->printPage ?>"><?php echo $this->getCibleText('share_print_text'); ?></a>
+                </li>
+                <?php endif;?>
                 <?php if (!empty($this->urlBack)): ?>
                 <li id="backToMember">
                     <a class="action_submit" href="<?php echo $this->urlBack; ?>">Retour</a>

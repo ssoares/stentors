@@ -77,6 +77,10 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         $this->getDisplayGroup('other')
             ->setAttrib('class','infosFieldset')
             ->removeDecorator('DtDdWrapper');
+        $url = $options['baseDir']
+            . 'member/index/print-registration/id/'
+            . $options['dataId'] . '/';
+        $this->getView()->assign('printPage', $url);
     }
 
     public function populate(array $values)

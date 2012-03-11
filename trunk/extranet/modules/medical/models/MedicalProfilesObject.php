@@ -99,8 +99,10 @@ class MedicalProfilesObject extends DataObject
                 }
             }
         }
-
-
+        if (!empty($data['MR_ExpiracyDate']))
+        $data['MR_ExpiracyDate'] = date('Y-m-d', strtotime($data['MR_ExpiracyDate']));
+        if (!empty($data['MR_TravelInduranceExpiracy']))
+        $data['MR_TravelInduranceExpiracy'] = date('Y-m-d', strtotime($data['MR_TravelInduranceExpiracy']));
         parent::save($id, $data, $langId);
     }
 

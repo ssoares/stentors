@@ -4,19 +4,13 @@ body {
     font-size: 12pt;
 }
 
-#topBanner{
-    display: none;
-}
-#topMenu{
-    display: none;
-}
-
-#topInfo{
-    display: none;
-}
-#superGreyLine{
-    display: none;
-}
+#topBanner,
+#topMenu,
+#topInfo,
+#superGreyLine,
+#footer,
+div#action_panel,
+li#backToMember,
 form dl fieldset#fieldset-actions{
     display: none;
 }
@@ -27,11 +21,11 @@ textarea{
     border: none;
 }
 
-#footer{
-    display: none;
-}
 hr{display: none;}
-#Section2, div#Section4M, #Section7M, #Section9M{page-break-after: always}
+#Section2, div#Section4M{page-break-after: always}
+.pageBreak{
+    page-break-after: always
+}
 @page { size:portrait;
         margin-top:1cm;
         margin-bottom:0.5cm;

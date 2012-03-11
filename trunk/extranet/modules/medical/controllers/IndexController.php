@@ -28,6 +28,7 @@ class Medical_IndexController extends Cible_Controller_Block_Abstract
     protected $_disableExportToCSV   = false;
     protected $_enablePrint          = false;
     protected $_constraint;
+    protected $_orderBy;
 
     /**
      * Set some properties to redirect and process actions.
@@ -84,6 +85,7 @@ class Medical_IndexController extends Cible_Controller_Block_Abstract
                 'GP_Email'  => array('width' => '250px'),
                 'RI_Value'  => array('width' => '250px'),
                 );
+            $this->_orderBy = 'GP_LastName';
 
             $this->_actionsList = array(
                 array(
@@ -656,6 +658,8 @@ class Medical_IndexController extends Cible_Controller_Block_Abstract
             $page = 1;
         // Create the object from parameter
         $oData = new $objectName();
+        if (!empty($this->_orderBy))
+            $oData->setOrderBy($this->_orderBy);
 
         // get needed data to create the list
         $columnData  = $oData->getDataColumns();

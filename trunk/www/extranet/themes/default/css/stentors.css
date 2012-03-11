@@ -114,11 +114,18 @@ fieldset.fieldsetDiseaseDetails legend{
 fieldset.infosFieldsetParent textarea.mediumEditor{
     width: 98%;
 }
-
+div#action_panel.list_action_panel ul.buttons li#backToMember,
 #default_form #action_panel ul.buttons li#backToMember{
     display: inline;
     float: right;
 }
+div#action_panel.list_action_panel ul.buttons a.action_submit{
+    padding: 9px 5px 9px 35px;
+}
+div#action_panel.list_action_panel ul.buttons li#backToMember a.action_submit:hover{
+    border: none; background-color: #d4e2e8;
+}
+div#action_panel.list_action_panel ul.buttons li#backToMember a.action_submit,
 #default_form #action_panel ul.buttons li#backToMember a.action_submit{
     background: url("../../../icons/button_back.png") no-repeat scroll 5px 50% transparent;
 }

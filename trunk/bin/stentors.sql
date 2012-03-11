@@ -314,6 +314,9 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('form_label_DD_NeedHelp', 1, 'Besoin de supervision par un responsable',  'cible', '', 0, 32),
 ('form_label_DD_NeedHelp', 2, '', 'cible', '', 0, 32);
 
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
+('form_label_PP_PhoneWork', 1, 'Téléphone au travail',  'cible', '', 0, 0),
+('form_label_PP_PhoneWork', 2, 'Phone at work',  'cible', '', 0, 0);
 
 ALTER TABLE `MedicalRecord` ADD `MR_HasGlasses` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_Diseases` ,
 ADD `MR_HasLens` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_HasGlasses` ,
