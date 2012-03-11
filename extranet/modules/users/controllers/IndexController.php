@@ -954,7 +954,13 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                 }
 
                 if (isset($formData['parentForm']))
+                {
                     $addrOne = $formData['parentForm'];
+                    if (!empty($data['PP_AddressId']))
+                        $formData['PP_AddressId'] = $data['PP_AddressId'];
+                    else
+                        $formData['PP_AddressId'] = '';
+                }
                 if (isset($formData['parentFormTwo']['duplicate']))
                 {
                     $addrTwo = $formData['parentFormTwo'];
@@ -973,7 +979,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
 
                 if ($form->isValid($formData))
                 {
-                    if (empty($addrOne) && !$this->_formatData && !isset($formData['retailerForm']))
+                    if (empty($addrOne) && !$this->_formatData && !isset($formData['parentForm']))
                         $formData = $this->_mergeFormData($formData);
                     else
                         $formData['parentFormTwo'] = $addrTwo;
@@ -1056,7 +1062,7 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                                 $this->_imageFolder
                                 . $id . "/" . $thumbName);
                     }
-                    
+
                     $oData->save($id, $formData, $this->getCurrentEditLanguage());
                     if (!empty($this->_oMember))
                     {

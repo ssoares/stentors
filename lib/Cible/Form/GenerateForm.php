@@ -350,7 +350,7 @@ class Cible_Form_GenerateForm extends Cible_Form_Multilingual
     protected function _yesNoSrc(Array $meta = array())
     {
             $this->_srcData[1] = 'oui';
-            $this->_srcData[-1] = 'non';
+            $this->_srcData[2] = 'non';
     }
     protected function _enumSrc(Array $meta = array())
     {

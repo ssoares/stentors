@@ -28,7 +28,7 @@ class FormParentProfile extends Cible_Form_GenerateForm
 
     public function __construct($options = null)
     {
-        if ($options['isXmlHttpRequest'])
+        if (!empty($options['isXmlHttpRequest']))
             $this->_disabledDefaultActions = true;
 
         $this->_disabledLangSwitcher = true;
@@ -70,6 +70,7 @@ class FormParentProfile extends Cible_Form_GenerateForm
                 'PP_Role',
                 'PP_TaxReceipt',
                 'PP_AssuSocNum',
+                'PP_PhoneWork',
                 'PP_EmploiTps',
                 'PP_Notes'),
             'data');

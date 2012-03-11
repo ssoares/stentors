@@ -20,6 +20,8 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
         if ($this->view->aclIsAllowed($this->_moduleTitle,'edit',true))
         {
             $profile = new GenericProfilesObject();
+            $profile->setOrderBy('GP_LastName');
+
             $member  = new MemberProfilesObject();
             $oRef  = new ReferencesObject();
             $select = $profile->getAll(null, false);
