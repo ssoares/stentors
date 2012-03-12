@@ -663,7 +663,14 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
             $oData->setOrderBy($this->_orderBy);
         // get needed data to create the list
         $columnData  = $oData->getDataColumns();
-        $dataTable   = $oData->getDataTableName();
+        $dataTable   = $oData->getDataTableName();if (!empty($this->_joinTables))
+            foreach ($this->_joinTables as $key => $obj)
+            {
+                $oTmpObj = new $obj();
+                $tables[$oTmpObj->getDataTableName()] = $oTmpObj->getDataColumns();
+                $tables[$oTmpObj->getIndexTableName()] = $oTmpObj->getIndexColumns();
+
+            }
         $indexTable  = $oData->getIndexTableName();
         $columnIndex = $oData->getIndexColumns();
         $tabId = $oData->getDataId();
@@ -672,6 +679,14 @@ class Parent_IndexController extends Cible_Controller_Block_Abstract
             $dataTable => $columnData,
             $indexTable => $columnIndex
         );
+        if (!empty($this->_joinTables))
+            foreach ($this->_joinTables as $key => $obj)
+            {
+                $oTmpObj = new $obj();
+                $tables[$oTmpObj->getDataTableName()] = $oTmpObj->getDataColumns();
+                $tables[$oTmpObj->getIndexTableName()] = $oTmpObj->getIndexColumns();
+
+            }
         // Set the select query to create the paginator and the list.
         $select = $oData->getAll($langId, false);
         $params = array('constraint' => $oData->getForeignKey());
