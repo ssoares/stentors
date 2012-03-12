@@ -42,7 +42,7 @@ $hidden = '';
                 <?php endif;?>
                 <?php if (!empty($this->urlBack)): ?>
                 <li id="backToMember">
-                    <a class="action_submit" href="<?php echo $this->urlBack; ?>">Retour</a>
+                    <a class="action_submit" href="javascript:history.go(-1)">Retour</a>
                 </li>
                 <?php endif;?>
             </ul>

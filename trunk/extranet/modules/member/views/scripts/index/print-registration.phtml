@@ -142,7 +142,7 @@ $lastPart = array();
             </ul>
         </div>
         <div class="passport">
-            <p class=""><span class="T13">INFORMATIONS SUR LE PASSEPORT</span><span > :</span></p>
+            <p class="P12"><span class="T13">INFORMATIONS SUR LE PASSEPORT</span><span > :</span></p>
             <div class="colLeft">
                 <p class="P12"><span >Nationalité : <?php echo!empty($data['MP_CountryOrig']) ? $data['MP_CountryOrig'] : "_________________________"; ?></span></p>
                 <p class="P12"><span >Date d’expiration : <?php echo!empty($data['MP_PassportExpiracyDate']) && $data['MP_PassportExpiracyDate'] != "0000-00-00" ? date('d / m / Y', strtotime($data['MP_PassportExpiracyDate'])) : "___/____/_______"; ?></span></p>
@@ -358,9 +358,8 @@ $lastPart = array();
                 ?>
             </p>
         </div>
-        <div id="Section5M" class="Sect2">
-            VOTRE ENFANT SOUFFRE-T-IL D’UNE OU DE PLUSIEURS DE CES MALADIES:
-                        <?php $i = 0; ?>
+        <div id="Section5M" class="Sect2">&nbsp;VOTRE ENFANT SOUFFRE-T-IL D’UNE OU DE PLUSIEURS DE CES MALADIES:
+        <?php $i = 0; ?>
             <table>
                 <tr>
                     <td>
@@ -387,75 +386,121 @@ $lastPart = array();
             </p>
         </div>
         <div id="Section6M" class="Sect1">
+            <p class="P12" style="text-align: left;">
+                Si vous avez coché OUI à l’une des questions précédentes, remplissez la section suivante :
+            </p>
             <?php
             $thisDiseases = array();
             if (!empty($data['MR_Diseases']))
                 $thisDiseases = explode(',', $data['MR_Diseases']);
-            foreach ($this->diseasesDetails as $index => $vals):
-                ?>
-                    <?php if (in_array($vals['DD_DiseaseId'], $thisDiseases) && $index < 2): ?>
-                        <?php if ($index % 2 != 0): ?>
+            foreach ($this->diseasesDetails as $index => $vals): ?>
+                <?php if (in_array($vals['DD_DiseaseId'], $thisDiseases) && $index < 2): ?>
+                    <?php if ($index % 2 != 0): ?>
                         <div class="colRight">
-                            <?php else: ?>
-                                <?php $clearLeft = ''; ?>
-            <?php if ($index % 2 == 0 && $index + 1 == count($this->diseasesDetails)) $clearLeft = ' lastBlockOnLeft'; ?>
-                            <div class="colLeft <?php echo $clearLeft; ?>">
-        <?php endif; ?>
-                            <p class="P12">
-                                Maladie/Trouble : <?php echo!empty($vals['DD_DiseaseId']) ? $diseases[$vals['DD_DiseaseId']] : "_________________"; ?>
-                            </p>
-                            <p class="P12">
-                                Votre enfant prend t-il de la médication pour ce problème?
-        <?php
-        $fieldValue = (isset($vals['DD_HasMedic'])) ? $vals['DD_HasMedic'] : null;
-        echo $this->RenderYesNo($fieldValue)
-        ?>
-                            </p>
-                            <p class="P12">
-                                Est-ce une médication par :
-                            </p>
-                            <p class="P12">
-                                <?php $values = explode(',', $vals['DD_TypeMedic']); ?>
-        <?php foreach ($this->typeMedic as $index => $val): ?>
-            <?php echo (in_array($index, $values)) ? $imgChecked : $imgBox; ?>
-                                    <span><?php echo $val; ?></span>
-        <?php endforeach; ?>
-                            </p>
-                            <p class="P12">
-                                Nom du médicament : <?php echo!empty($vals['DD_MedicName']) ? $vals['DD_MedicName'] : "__________________"; ?>
-                            </p>
-                            <p class="P12">
-                                Concentration de la dose : <?php echo!empty($vals['DD_Dose']) ? $vals['DD_Dose'] : "_______________"; ?>
-                            </p>
-                            <p class="P12">
-                                Fréquence par jour : <?php echo!empty($vals['DD_Frequence']) ? $vals['DD_Frequence'] : "___________________"; ?>
-                            </p>
-                            <p class="P12">
-                                Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?<br />
-        <?php
-        $fieldValue = (isset($vals['DD_KnowsHowto'])) ? $vals['DD_KnowsHowto'] : null;
-        echo $this->RenderYesNo($fieldValue)
-        ?>
-                            </p>
-                            <p class="P12">
-                                Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?
+                    <?php else: ?>
+                        <?php $clearLeft = ''; ?>
+                        <?php // if ($index % 2 == 0 && $index + 1 == count($this->diseasesDetails)) $clearLeft = ' lastBlockOnLeft'; ?>
+                        <div class="colLeft <?php echo $clearLeft; ?>">
+                    <?php endif; ?>
+                    <p class="P12">
+                        Maladie/Trouble : <?php echo!empty($vals['DD_DiseaseId']) ? $diseases[$vals['DD_DiseaseId']] : "_________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Votre enfant prend t-il de la médication pour ce problème?
+                    <?php
+                    $fieldValue = (isset($vals['DD_HasMedic'])) ? $vals['DD_HasMedic'] : null;
+                    echo $this->RenderYesNo($fieldValue)
+                    ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce une médication par :
+                    </p>
+                    <p class="P12">
+                        <?php $values = explode(',', $vals['DD_TypeMedic']); ?>
+                    <?php foreach ($this->typeMedic as $index => $val): ?>
+                        <?php echo (in_array($index, $values)) ? $imgChecked : $imgBox; ?>
+                                <span><?php echo $val; ?></span>
+                        <?php endforeach; ?>
+                    </p>
+                    <p class="P12">
+                        Nom du médicament : <?php echo!empty($vals['DD_MedicName']) ? $vals['DD_MedicName'] : "__________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Concentration de la dose : <?php echo!empty($vals['DD_Dose']) ? $vals['DD_Dose'] : "_______________"; ?>
+                    </p>
+                    <p class="P12">
+                        Fréquence par jour : <?php echo!empty($vals['DD_Frequence']) ? $vals['DD_Frequence'] : "___________________"; ?>
+                    </p>
+                    <p class="P12">
+                        Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?<br />
+                        <?php
+                        $fieldValue = (isset($vals['DD_KnowsHowto'])) ? $vals['DD_KnowsHowto'] : null;
+                        echo $this->RenderYesNo($fieldValue)
+                        ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?
                         <?php
                         $fieldValue = (isset($vals['DD_NeedHelp'])) ? $vals['DD_NeedHelp'] : null;
                         echo $this->RenderYesNo($fieldValue)
                         ?>
-                            </p>
-                        </div>
+                    </p>
+                </div>
                 <?php elseif (in_array($vals['DD_DiseaseId'], $thisDiseases)): ?>
                     <?php $lastPart[] = $vals; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
+<!--            boucle pour afficher des zones vides si on n'a pas au moins 2 maladies -->
+                <?php
+                 $nbDiseases = count($thisDiseases);
+                 $nbLoop = 2 - $nbDiseases;
+                 while ($nbLoop > 0):?>
+                     <?php if ($nbLoop % 2 != 0): ?>
+                        <div class="colRight">
+                    <?php else: ?>
+                        <div class="colLeft">
+                    <?php endif; ?>
+                    <p class="P12">
+                        Maladie/Trouble : _________________
+                    </p>
+                    <p class="P12">
+                        Votre enfant prend t-il de la médication pour ce problème?
+                    <?php
+                        echo $this->RenderYesNo(0)
+                    ?>
+                    </p>
+                    <p class="P12">
+                        Est-ce une médication par :
+                    </p>
+                    <p class="P12">
+                    <?php foreach ($this->typeMedic as $index => $val): ?>
+                        <?php echo $imgBox; ?>
+                                <span><?php echo $val; ?></span>
+                        <?php endforeach; ?>
+                    </p>
+                    <p class="P12">
+                        Nom du médicament : __________________
+                    </p>
+                    <p class="P12">
+                        Concentration de la dose : _______________
+                    </p>
+                    <p class="P12">
+                        Fréquence par jour : ___________________
+                    </p>
+                    <p class="P12">
+                        Votre enfant connait-il la procédure pour s’administrer lui-même sa médication?<br />
+                        <?php echo $this->RenderYesNo(0)?>
+                    </p>
+                    <p class="P12">
+                        Est-ce qu’une supervision de la part des Stentors est nécessaire à ce sujet?
+                        <?php echo $this->RenderYesNo(0)?>
+                    </p>
+                </div>
+                <?php $nbLoop--?>
+                <?php endwhile;?>
             </div>
-<?php
-$class = '';
-if (!empty($thisDiseases))
-    $class = ' pageBreak';
-?>
-            <div id="Section7M" class="Sect2 <?php echo $class; ?>">
+            <?php $class = ' pageBreak';?>
+            <div id="Section7M" class="Sect2">
                 <table>
                     <tr>
                         <td class="tdLeft">
@@ -509,7 +554,7 @@ echo $this->RenderYesNo($fieldValue)
                     </tr>
                 </table>
             </div>
-            <div id="Section8M" class="Sect2">
+            <div id="Section8M" class="Sect2 <?php echo $class; ?>">
                 <p class="P12">
                     Veuillez inscrire dans cette section toutes autres informations médicales
                     que vous jugez nécessaires et qui pourraient s’avérer utiles
