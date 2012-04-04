@@ -163,6 +163,7 @@ class MemberProfilesObject extends DataObject
 
         return $src;
     }
+
     public function _listRespSrc($meta = array())
     {
         $src = array();
@@ -172,6 +173,20 @@ class MemberProfilesObject extends DataObject
         foreach ($roles as $role)
         {
             $src[$role['R_ID']] = $role['RI_Value'];
+        }
+
+        return $src;
+    }
+
+    public function _memberCategorySrc($meta = array())
+    {
+        $src = array();
+        $oRef = new ReferencesObject();
+        $values = $oRef->getRefByType('memberCategory');
+
+        foreach ($values as $value)
+        {
+            $src[$value['R_ID']] = $value['RI_Value'];
         }
 
         return $src;

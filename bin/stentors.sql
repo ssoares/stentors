@@ -315,6 +315,11 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('form_label_DD_NeedHelp', 2, '', 'cible', '', 0, 32);
 
 REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, ST_ModuleID) VALUES
+('form_enum_memberCategory', 1, 'Catégorie de membre',  'cible', '', 0, 32),	('form_enum_memberCategory', 2, '', 'cible', '', 0, 32),
+('form_enum_adultCategory', 1, 'Fonction de la personne',  'cible', '', 0, 32),	('form_enum_adultCategory', 2, '', 'cible', '', 0, 32),
+('form_label_MP_Category', 1, 'Catégorie',  'cible', '', 0, 32),	('form_label_MP_Category', 2, 'Category', 'cible', '', 0, 32),
+('form_label_MP_YearsParticipate', 1, 'Année(s) de participation',  'cible', '', 0, 32),	('form_label_MP_YearsParticipate', 2, 'Year(s) of participation', 'cible', '', 0, 32),
+('form_label_MP_IsStaff', 1, 'est un instructeur',  'cible', '', 0, 32),	('form_label_DD_IsStaff', 2, 'is a staff', 'cible', '', 0, 32),
 ('form_label_PP_PhoneWork', 1, 'Téléphone au travail',  'cible', '', 0, 0),
 ('form_label_PP_PhoneWork', 2, 'Phone at work',  'cible', '', 0, 0);
 
@@ -322,4 +327,9 @@ ALTER TABLE `MedicalRecord` ADD `MR_HasGlasses` TINYINT( 1 ) NULL COMMENT 'elem:
 ADD `MR_HasLens` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_HasGlasses` ,
 ADD `MR_Fracture` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_HasLens` ,
 ADD `MR_Chirurgie` TINYINT( 1 ) NULL COMMENT 'elem:checkbox' AFTER `MR_Fracture` ,
-ADD `MR_Specific` VARCHAR( 255 ) NULL AFTER `MR_Chirurgie`
+ADD `MR_Specific` VARCHAR( 255 ) NULL AFTER `MR_Chirurgie`;
+
+ALTER TABLE `MemberProfiles` ADD `MP_Category` INT( 2 ) NOT NULL COMMENT 'elem:select|src:memberCategory' AFTER `MP_Notes` ;
+ALTER TABLE `MemberProfiles` ADD `MP_YearsParticipate` VARCHAR( 255 ) NULL AFTER `MP_Category` ;
+ALTER TABLE `MemberProfiles` ADD `MP_IsStaff` INT( 2 ) NOT NULL COMMENT 'elem:checkbox' AFTER `MP_YearsParticipate` ;
+ALTER TABLE `References` CHANGE `R_TypeRef` `R_TypeRef` ENUM( 'subscrArg', 'unsubscrArg', 'allergy', 'role', 'garde', 'section', 'diseases', 'medic', 'memberCategory', 'adultCategory' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;

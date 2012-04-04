@@ -77,6 +77,17 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         $this->getDisplayGroup('other')
             ->setAttrib('class','infosFieldset')
             ->removeDecorator('DtDdWrapper');
+
+        $this->addDisplayGroup(
+            array('MP_Category',
+                'MP_YearsParticipate',
+                'MP_IsStaff'),
+            'otherRight');
+
+        $this->getDisplayGroup('otherRight')
+            ->setAttrib('class','infosFieldset')
+            ->removeDecorator('DtDdWrapper');
+
         $url = $options['baseDir']
             . 'member/index/print-registration/id/'
             . $options['dataId'] . '/';
@@ -87,6 +98,20 @@ class FormMemberProfile extends Cible_Form_GenerateForm
     {
         $baseDir = $this->getView()->BaseUrl();
         $content = '';
+
+        $currentYear = date('Y', time());
+        $isSaved = preg_match('/'.$currentYear.'/', $values['MP_YearsParticipate']);
+        if (empty($values['MP_YearsParticipate']))
+            $values['MP_YearsParticipate'] = $currentYear . ',';
+
+        if (!$isSaved)
+        {
+            $lastChar = strrpos($values['MP_YearsParticipate'], ',', -1);
+            if (!$lastChar)
+                $values['MP_YearsParticipate'] .= ',';
+
+            $values['MP_YearsParticipate'] .= $currentYear . ',';
+        }
         parent::populate($values);
 
         if (!empty($values['firstP']))
