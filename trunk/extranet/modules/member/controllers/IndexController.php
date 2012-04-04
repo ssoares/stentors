@@ -256,4 +256,59 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
     public function deleteAction(){
         throw new Exception('Not implemented');
     }
+
+    public function toExcelAction()
+    {
+        $this->filename = 'membersList.xls';
+        $this->type = 'Excel5';
+        $profile = new GenericProfilesObject();
+            $profile->setOrderBy('GP_LastName');
+
+            $member  = new MemberProfilesObject();
+            $oRef  = new ReferencesObject();
+            $this->select = $profile->getAll(null, false);
+            $this->select->columns(
+                array(
+                    'lastName'  => 'GP_LastName',
+                    'firstName' => 'GP_FirstName',
+                    'email'     => 'GP_Email',
+                    'member_id' => 'GP_MemberID'
+                    )
+                );
+            $this->select->joinRight(
+                    $member->getDataTableName(),
+                    $member->getDataId() . ' = ' . $profile->getDataId()
+                    );
+            $this->select->joinLeft(
+                    $oRef->getDataTableName(),
+                    $oRef->getDataId() . ' = MP_Section',
+                    array('R_TypeRef')
+                );
+            $this->select->joinLeft(
+                    $oRef->getIndexTableName(),
+                    $oRef->getIndexId() . ' = ' . $oRef->getDataId(),
+                    array('section' => 'RI_Value')
+                );
+
+            $this->tables = array(
+                'GenericProfiles' => array('GP_LastName', 'GP_FirstName', 'GP_Email'),
+                'MemberProfiles' => array('MP_GenericProfileId', 'MP_Section'),
+                $oRef->getDataTableName() => array('R_TypeRef'),
+                $oRef->getIndexTableName() => array('RI_Value')
+            );
+
+            $this->fields = array(
+                'MP_GenericProfileId' => array('width' => '250px'),
+                'firstName' => array('width' => '250px'),
+                'lastName'  => array('width' => '250px'),
+                'email'  => array('width' => '250px'),
+//                'section'  => array('width' => '250px'),
+            );
+
+        $this->filters = array(
+
+        );
+
+        parent::toExcelAction();
+    }
 }

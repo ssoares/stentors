@@ -33,6 +33,16 @@ fieldset.infosFieldset{
     border: 1px solid #ccc;
     margin-bottom: 10px;
 }
+fieldset#fieldset-other{
+    width: 50%;
+    float: left;
+}
+fieldset#fieldset-otherRight{
+    width: 44%;
+    float: left;
+    margin-left: 13px;
+
+}
 fieldset.infosFieldset dd input[type="checkbox"]{
     vertical-align: bottom;
 }
