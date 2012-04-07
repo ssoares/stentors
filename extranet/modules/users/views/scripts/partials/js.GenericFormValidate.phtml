@@ -9,7 +9,6 @@
                 required: true
             },
             GP_Email: {
-                required: true,
                 email: true,
                 remote: {
                     url: "<?php echo $this->baseUrl?>/users/index/user-exists/id/" + id,
@@ -25,7 +24,6 @@
         },
         messages: {
             GP_Email: {
-                required: 'Obligatoire',
                 email: "Adresse invalide",
                 remote:"<?php echo $this->getCibleText('profile_message_email_already_exists') ?>"
 //                remote:'Test'
@@ -99,6 +97,19 @@
         }
         $('#MP_Age').val(ans);
 
+    });
+
+    $('#MP_CountryOrig').blur(function(){
+        if ($('#MP_PassportBirthDate').val() == '')
+            $('#MP_PassportBirthDate').val($('#MP_BirthDate').val());
+        if ($('#MP_PassportFirstName').val() == '')
+            $('#MP_PassportFirstName').val($('#GP_FirstName').val());
+        if ($('#MP_PassportLastName').val() == '')
+            $('#MP_PassportLastName').val($('#GP_LastName').val());
+    });
+    $('#MP_BirthDate').blur(function(){
+        if ($('#MP_PassportBirthDate').val() != '' && $('#MP_PassportBirthDate').val() != $('#MP_BirthDate').val())
+            $('#MP_PassportBirthDate').val($('#MP_BirthDate').val());
     });
 
 </script>

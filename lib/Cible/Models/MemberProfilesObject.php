@@ -67,7 +67,9 @@ class MemberProfilesObject extends DataObject
         $years = $this->calculateAge($data['MP_BirthDate']);
         $data['MP_Age'] = $years;
         $data['MP_PassportExpiracyDate'] = $data['MP_PassportExpiracyDateDt'];
-
+        if ($data['MP_BirthDate'] != $data['MP_PassportBirthDate'])
+            $data['MP_PassportBirthDate'] = $data['MP_BirthDate'];
+        
         parent::save($id, $data, $langId);
     }
 
@@ -132,8 +134,12 @@ class MemberProfilesObject extends DataObject
 //
 //            $data['addressFact'] = $billAddr;
 //            $data['addressShipping'] = $shipAddr;
-        }
+            $years = 0;
+            if(isset($data['MP_BirthDate']))
+                $years = $this->calculateAge($data['MP_BirthDate']);
 
+            $data['MP_Age'] = $years;
+        }
         return $data;
     }
 

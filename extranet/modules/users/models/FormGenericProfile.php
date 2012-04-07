@@ -55,7 +55,7 @@ class FormGenericProfile extends Cible_Form
             ->addFilter('StringToLower')
 //            ->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => $this->getView()->getCibleText('validation_message_empty_field'))))
             ->addValidator($regexValidate)
-            ->setAttribs(array('maxlength' => 50, 'class' => 'required email stdTextInput'));
+            ->setAttribs(array('maxlength' => 50, 'class' => ' email stdTextInput'));
 
         if ($this->_mode == 'add')
             $email->addValidator($emailNotFoundInDBValidator);

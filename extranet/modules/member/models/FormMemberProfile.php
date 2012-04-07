@@ -87,22 +87,26 @@ class FormMemberProfile extends Cible_Form_GenerateForm
         $this->getDisplayGroup('otherRight')
             ->setAttrib('class','infosFieldset')
             ->removeDecorator('DtDdWrapper');
-
-        $url = $options['baseDir']
-            . 'member/index/print-registration/id/'
-            . $options['dataId'] . '/';
-        $this->getView()->assign('printPage', $url);
+        if (isset($options['baseDir']))
+        {
+            $url = $options['baseDir']
+                . 'member/index/print-registration/id/'
+                . $options['dataId'] . '/';
+            $this->getView()->assign('printPage', $url);
+        }
     }
 
     public function populate(array $values)
     {
         $baseDir = $this->getView()->BaseUrl();
         $content = '';
+        $isSaved = false;
 
         $currentYear = date('Y', time());
-        $isSaved = preg_match('/'.$currentYear.'/', $values['MP_YearsParticipate']);
         if (empty($values['MP_YearsParticipate']))
             $values['MP_YearsParticipate'] = $currentYear . ',';
+
+        $isSaved = preg_match('/'.$currentYear.'/', $values['MP_YearsParticipate']);
 
         if (!$isSaved)
         {
