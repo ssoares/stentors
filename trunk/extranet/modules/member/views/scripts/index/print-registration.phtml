@@ -42,7 +42,7 @@ $lastPart = array();
                 <span >Nom du membre : </span>
                 <span><?php echo $data['GP_FirstName']; ?> <?php echo $data['GP_LastName']; ?></span>
             </p>
-            <p class="P7"><span >Date de naissance : <?php echo!empty($data['MP_BirthDate']) && $data['MP_BirthDate'] != "0000-00-00" ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?>                Âge : </span><span class="T11">  <?php echo $data['MP_Age']; ?> ans               </span>
+            <p class="P7"><span >Date de naissance : <?php echo !empty($data['MP_BirthDate']) && $data['MP_BirthDate'] != "0000-00-00" ? date('d / m / Y', strtotime($data['MP_BirthDate'])) : "___/___/______"; ?>                Âge : </span><span class="T11">  <?php if (!empty ($data['MP_Age'])) echo $data['MP_Age']; ?> ans               </span>
             <p class="P7" style="padding-left: 114px;line-height: 0.8em;"><span class="T14" style="font-size: 10px; letter-spacing: 2px;">JJ/MM/AAAA</span></p>
             <p class="P9">École : <?php echo!empty($data['MP_School']) ? $data['MP_School'] : "_________________________"; ?>            <span> Année Scolaire : <?php echo!empty($data['MP_SchoolYear']) ? $data['MP_SchoolYear'] : "____________"; ?></span></p>
             <p class="P9">Adresse courriel du membre : <?php echo!empty($data['GP_Email']) ? $data['GP_Email'] : "________________________________________________"; ?> </p>
@@ -53,7 +53,7 @@ $lastPart = array();
             </p>
             <p class="sectionList">
                 <?php foreach ($sections as $key => $section): ?>
-                    <?php if ($key == $data['MP_Section']): ?>
+                    <?php if (!empty ($data['MP_Section']) && $key == $data['MP_Section']): ?>
                         <?php echo ($key == $data['MP_Section']) ? $imgChecked : $imgBox; ?>
                         <span ><?php echo $section; ?> </span>
                     <?php endif; ?>
@@ -131,7 +131,7 @@ $lastPart = array();
             <?php if (!empty($data['MP_LiveWith']) && $data['MP_LiveWith'] > 9 && $data['MP_LiveWith'] < 12): ?>
                 <p class="P12"><span >_____ Garde Partagée   Expliquer : <span class="T11">______________________________________</span></span></p>
             <?php endif; ?>
-            <?php if ($data['MP_Age'] < 16): ?>
+            <?php if (!empty ($data['MP_Age']) && $data['MP_Age'] < 16): ?>
                 <p class="P12"><span > Nom du parent demandeur du reçu aux fins d’impôt </span><span class="">(membre moins de 16 ans) :</span><span > </span><span class="T11">                        </span></p>
                 <p class="P17_borderEnd"><span class=""> No d’assurance sociale de celui-ci : </span><span class="T11">                                        </span><span >                </span></p>
             <?php endif; ?>
@@ -239,7 +239,7 @@ $lastPart = array();
                         </tr>
                     </table>
                     <p class="P12"><span >NUMÉRO DE POLICE&nbsp;: <?php echo!empty($data['MR_TravelInduranceNum']) ? $data['MR_TravelInduranceNum'] : "___ ___ ___ ___ ___ ___ ___ ___ ___"; ?></span></p>
-                    <p class="P12"><span>NUMÉRO DE TÉLÉPHONE DE LA COMPAGNIE&nbsp;: <?php echo!empty($data['MR_TravelIndurancePhone']) ? $data['MR_TravelIndurancePhone'] : "(____) _____________________"; ?></span><span class="T25">&nbsp; &nbsp; &nbsp; &nbsp; </span></p>
+                    <p class="P12"><span>NUMÉRO DE TÉLÉPHONE DE LA COMPAGNIE&nbsp;: <?php echo!empty($data['MR_TravelIndurancePhone']) ? $data['MR_TravelIndurancePhone'] : "(____) ___________________"; ?></span><span class="T25">&nbsp; &nbsp; &nbsp; &nbsp; </span></p>
         </div>
         <div id="Section3M" class="Sect2">
             <p class="P12"><span class="T4">TÉLÉPHONES D’URGENCES</span></p>
@@ -260,23 +260,23 @@ $lastPart = array();
                         <td>MAISON :</td>
                         <td>
                             <?php if (!empty($father)): ?>
-                                <?php echo!empty($father['address']['AI_FirstTel']) ? $father['address']['AI_FirstTel'] : "(____) _________________"; ?>
+                                <?php echo!empty($father['address']['AI_FirstTel']) ? $father['address']['AI_FirstTel'] : "(____) _______________"; ?>
                             <?php else: ?>
-                                (____) _________________
+                                (____) _______________
 <?php endif; ?>
                         </td>
                         <td>
                             <?php if (!empty($mother)): ?>
-                                <?php echo!empty($mother['address']['AI_FirstTel']) ? $mother['address']['AI_FirstTel'] : "(____) _________________"; ?>
+                                <?php echo!empty($mother['address']['AI_FirstTel']) ? $mother['address']['AI_FirstTel'] : "(____) _______________"; ?>
                             <?php else: ?>
-                                (____) _________________
+                                (____) _______________
 <?php endif; ?>
                         </td>
                         <td>
                             <?php // if (!empty($other)): ?>
-                            <?php echo!empty($data['MR_OtherHouse']) ? $data['MR_OtherHouse'] : "(____) _________________"; ?>
+                            <?php echo!empty($data['MR_OtherHouse']) ? $data['MR_OtherHouse'] : "(____) _______________"; ?>
                             <?php // else:   ?>
-                            <!--                                (____) _________________-->
+                            <!--                                (____) _______________-->
 <?php // endif;   ?>
                         </td>
                     </tr>
@@ -284,21 +284,21 @@ $lastPart = array();
                         <td>TRAVAIL :</td>
                         <td>
                             <?php if (!empty($father)): ?>
-                                <?php echo!empty($father['PP_PhoneWork']) ? $father['PP_PhoneWork'] : "(____) _________________"; ?>
+                                <?php echo!empty($father['PP_PhoneWork']) ? $father['PP_PhoneWork'] : "(____) _______________"; ?>
                             <?php else: ?>
-                                (____) _________________
+                                (____) _______________
 <?php endif; ?>
                         </td>
                         <td><?php if (!empty($mother)): ?>
-                                <?php echo!empty($mother['PP_PhoneWork']) ? $mother['PP_PhoneWork'] : "(____) _________________"; ?>
+                                <?php echo!empty($mother['PP_PhoneWork']) ? $mother['PP_PhoneWork'] : "(____) _______________"; ?>
                             <?php else: ?>
-                                (____) _________________
+                                (____) _______________
                             <?php endif; ?></td>
                         <td>
                             <?php // if (!empty($other)): ?>
-                            <?php echo!empty($data['MR_OtherWork']) ? $data['MR_OtherWork'] : "(____) _________________"; ?>
+                            <?php echo!empty($data['MR_OtherWork']) ? $data['MR_OtherWork'] : "(____) _______________"; ?>
                             <?php // else:   ?>
-                            <!--                                (____) _________________-->
+                            <!--                                (____) _______________-->
 <?php // endif;   ?>
                         </td>
                     </tr>
@@ -306,21 +306,21 @@ $lastPart = array();
                         <td>CELL :</td>
                         <td>
                             <?php if (!empty($father)): ?>
-                                <?php echo!empty($father['address']['AI_SecondTel']) ? $father['address']['AI_SecondTel'] : "(____) _________________"; ?>
+                                <?php echo!empty($father['address']['AI_SecondTel']) ? $father['address']['AI_SecondTel'] : "(____) _______________"; ?>
                             <?php else: ?>
-                                (____) _________________
+                                (____) _______________
 <?php endif; ?>
                         </td>
                         <td><?php if (!empty($mother)): ?>
-                                <?php echo!empty($mother['address']['AI_SecondTel']) ? $mother['address']['AI_SecondTel'] : "(____) _________________"; ?>
+                                <?php echo!empty($mother['address']['AI_SecondTel']) ? $mother['address']['AI_SecondTel'] : "(____) _______________"; ?>
                             <?php else: ?>
-                                (____) _________________
+                                (____) _______________
                             <?php endif; ?></td>
                         <td>
                             <?php // if (!empty($other)): ?>
-                            <?php echo!empty($data['MR_OtherCell']) ? $data['MR_OtherCell'] : "(____) _________________"; ?>
+                            <?php echo!empty($data['MR_OtherCell']) ? $data['MR_OtherCell'] : "(____) _______________"; ?>
                             <?php // else:   ?>
-                            <!--                                (____) _________________-->
+                            <!--                                (____) _______________-->
 <?php // endif;   ?>
                         </td>
                     </tr>

@@ -215,7 +215,7 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
             $this->view->title = 'Membre : ' . $memberData['GP_LastName'] . ' ' . $memberData['GP_FirstName'];
             $resp = $oParent->_listRespSrc();
             $roles = $oParent->_parentsProfileSrc();
-            if ($memberData['MP_FirstParent'])
+            if (!empty ($data['MP_FirstParent']))
             {
                 $firstPData = $oParent->populate($memberData['MP_FirstParent'], $langId);
                 if (empty($firstPData))
@@ -226,7 +226,7 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
                 $address = $oAddress->populate($firstPData['PP_AddressId'], $langId);
                 $firstPData['address'] = $address;
             }
-            if ($memberData['MP_SecondParent'])
+            if (!empty ($data['MP_SecondParent']))
             {
                 $secPData = $oParent->populate($memberData['MP_SecondParent'], $langId);
                 $data = $oGeneric->populate($secPData['PP_GenericProfileId'], $langId);
