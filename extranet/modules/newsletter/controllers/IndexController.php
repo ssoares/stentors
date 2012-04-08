@@ -703,8 +703,8 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
     public function listRecipientsAction()
     {
 
-        $searchfor = utf8_decode($this->_request->getParam('searchfor'));
-        $filters['newsletter_categories'] = utf8_decode($this->_request->getParam('filter_1'));
+        $searchfor = $this->_request->getParam('searchfor');
+        $filters['newsletter_categories'] = $this->_request->getParam('filter_1');
         if ($filters['newsletter_categories'] == '')
             $filters = '';
 
@@ -1049,8 +1049,8 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
                 $this->view->assign('languageRelease', $releaseLanguage);
                 $this->view->newsletter = $newsletterData->toArray();
                 $this->view->template = $newsletterData['NM_DirectoryEmail'];
-                
-                
+
+
                 $absolute_web_root = Zend_Registry::get('absolute_web_root');
                 $sourceHeaderLeft = $absolute_web_root;
                 if($releaseLanguage==1){
@@ -1101,8 +1101,8 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
 
 
         //$fromEmail  = $_REQUEST['fromEmail'];
-        //$fromName   = utf8_decode($_REQUEST['fromName']);
-        //$subject    = utf8_decode($_REQUEST['subject']);
+        //$fromName   = $_REQUEST['fromName'];
+        //$subject    = $_REQUEST['subject'];
 
         /*
           $newsletterSelect = new NewsletterReleases();
@@ -1162,7 +1162,7 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
         $this->view->assign('details_release', "/" . Cible_FunctionsCategories::getPagePerCategoryView($newsletterCategoryID, 'details_release', $this->_moduleID, $releaseLanguage) . "/"  . $date_string_url . "/" . $newsletterData['NR_Title']);
         $this->view->assign('details_page', Cible_FunctionsCategories::getPagePerCategoryView($newsletterCategoryID, 'details_article', $this->_moduleID, $releaseLanguage));
 
-      
+
         $newsletterAfficherTitre = "";
         $newsletterTextIntro = $newsletterData['NR_TextIntro'];
         $newsletterTextIntro = str_replace('##prenom##', 'Prénom Test', $newsletterTextIntro);
@@ -1522,9 +1522,9 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
                             if (!$mail->send())
                             {
                                 array_push($failedEmailAddress, array(
-                                    'fname' => utf8_encode($members[$k]['GP_FirstName']),
-                                    'lname' => utf8_encode($members[$k]['GP_LastName']),
-                                    'email' => utf8_encode($members[$k]['GP_Email'])
+                                    'fname' => $members[$k]['GP_FirstName'],
+                                    'lname' => $members[$k]['GP_LastName'],
+                                    'email' => $members[$k]['GP_Email']
                                 ));
                             }
                             $sentToCount++;
@@ -1541,9 +1541,9 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
                         else
                         {
                             array_push($failedEmailAddress, array(
-                                'fname' => utf8_encode($members[$k]['GP_FirstName']),
-                                'lname' => utf8_encode($members[$k]['GP_LastName']),
-                                'email' => utf8_encode($members[$k]['GP_Email'])
+                                'fname' => $members[$k]['GP_FirstName'],
+                                'lname' => $members[$k]['GP_LastName'],
+                                'email' => $members[$k]['GP_Email']
                             ));
                         }
                     }
@@ -1582,7 +1582,7 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
             }
 
             $stats['sentTo'] = $sentToCount;
-            
+
             $dateTimeEnd = date('Y-m-d H:i:s');
             $release['NR_MailingDateTimeStart'] = $dateTimeStart;
             $release['NR_MailingDateTimeEnd'] = $dateTimeEnd;
@@ -1997,7 +1997,7 @@ class Newsletter_IndexController extends Cible_Controller_Categorie_Action
     {
         $this->filename = 'Newsletter.xlsx';
 
-        $searchfor = utf8_decode($this->_request->getParam('searchfor'));
+        $searchfor = $this->_request->getParam('searchfor');
 
         $profile = new NewsletterProfile();
 

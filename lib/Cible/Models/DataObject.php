@@ -764,7 +764,7 @@ class DataObject
                     //Order data from the line to be compliant with the db table columns
                     foreach ($tmpData['positions'] as $langSuffix => $value)
                     {
-                        $val = utf8_decode($splitArray2[$value]);
+                        $val = $splitArray2[$value];
                         $key = array_search($val, $tmpArrayIndex);
                         unset($tmpArrayIndex[$key]);
                         $tmpArrayIndex[$langSuffix] = trim($val);

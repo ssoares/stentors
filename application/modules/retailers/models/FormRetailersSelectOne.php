@@ -125,7 +125,7 @@ EOS;
                     ->setAttrib('class', 'stdTextInput');
 
             foreach($countries as $_country)
-                $country->addMultiOption($_country['ID'], utf8_decode($_country['name']));
+                $country->addMultiOption($_country['ID'], $_country['name']);
 
             $this->addElement($country);
 

@@ -12,7 +12,7 @@ class Profile_IndexController extends Cible_Extranet_Controller_Module_Action
     public function listAction()
     {
 
-        $searchfor = utf8_decode($this->_request->getParam('searchfor'));
+        $searchfor = $this->_request->getParam('searchfor');
         $filters = '';
 
         $profile = new GenericProfile();
@@ -213,14 +213,14 @@ class Profile_IndexController extends Cible_Extranet_Controller_Module_Action
 //                        {
 //                            $states = Cible_FunctionsGeneral::getStatesByCountry($post['A_CountryId']);
 //                            foreach ($states as $_state)
-//                                $state->addMultiOption($_state['ID'], utf8_decode($_state['Name']));
+//                                $state->addMultiOption($_state['ID'], $_state['Name']);
 //                        }
 //
 //                        if (isset($post['A_StateId']) && !empty($post['A_StateId']))
 //                        {
 //                            $cities = Cible_FunctionsGeneral::getCities(null, null, $post['A_StateId']);
 //                            foreach ($cities as $_city)
-//                                $city->addMultiOption($_city['id'], utf8_decode($_city['name']));
+//                                $city->addMultiOption($_city['id'], $_city['name']);
 //                        }
 //                    }
 //                }
@@ -787,7 +787,7 @@ class Profile_IndexController extends Cible_Extranet_Controller_Module_Action
 //        $this->type = 'Excel5';
 //        $this->type = 'CSV';
 
-        $searchfor = utf8_decode($this->_request->getParam('searchfor'));
+        $searchfor = $this->_request->getParam('searchfor');
 
         $profile = new GenericProfile();
 

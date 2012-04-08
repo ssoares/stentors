@@ -91,24 +91,32 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
                 'disable-export-to-excel' => '',
 //                'to-excel-action' => 'clients-to-excel',
                 'filters' => array(
-                    'filter_2' => array(
+                    'filter_1' => array(
                         'label' => 'École',
+                        'kindOfFilter' => 'list',
                         'default_value' => null,
                         'associatedTo' => 'MP_School',
                         'choices' => ''
                     ),
-                    'filter_3' => array(
+                    'filter_2' => array(
                         'label' => 'Age',
                         'default_value' => null,
                         'associatedTo' => 'MP_Age',
                         'choices' => ''
                     ),
-                    'filter_1' => array(
+                    'filter_3' => array(
                         'label' => 'Section',
                         'default_value' => null,
                         'associatedTo' => 'MP_Section',
 //                        'equalTo' => 'R_GenericProfileId',
                         'choices' => $filtersList
+                    ),
+                    'filter_4' => array(
+                        'label' => 'Année de participation',
+                        'kindOfFilter' => 'list',
+                        'default_value' => null,
+                        'associatedTo' => 'MP_YearsParticipate',
+                        'choices' => ''
                     ),
                 ),
                 'action_panel' => array(

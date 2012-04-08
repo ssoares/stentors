@@ -104,7 +104,7 @@ class Retailers_IndexController extends Cible_Controller_Action
 
             foreach ($citiesData as $id => $data)
             {
-                $citiesData[$id]['C_Name'] = utf8_encode($data['C_Name']);
+                $citiesData[$id]['C_Name'] = $data['C_Name'];
             }
 
             echo json_encode($citiesData);
@@ -131,7 +131,7 @@ class Retailers_IndexController extends Cible_Controller_Action
                 foreach ($states as $id => $data)
                 {
                     $statesData[$id]['id'] = $data['id'];
-                    $statesData[$id]['name'] = utf8_encode($data['name']);
+                    $statesData[$id]['name'] = $data['name'];
                 }
             }
 
@@ -174,7 +174,7 @@ class Retailers_IndexController extends Cible_Controller_Action
                 {
                     foreach ($data as $key => $value)
                     {
-                        $data[$key] = utf8_encode($value);
+                        $data[$key] =  $value;
                     }
                     $dataForJson[] = $data;
                 }
@@ -207,34 +207,34 @@ class Retailers_IndexController extends Cible_Controller_Action
 
                 // Retailer info
                 $tmp .= '<span class="greenParagraph">'
-                    . utf8_encode($retailer['Name'])
+                    . $retailer['Name']
                     . '</span><br />';
                 if (!empty($retailer['FirstAddress']))
-                    $tmp .= utf8_encode($retailer['FirstAddress']) . '<br />';
+                    $tmp .=  $retailer['FirstAddress'] . '<br />';
                 if (!empty($retailer['SecondAddress']))
-                    $tmp .= utf8_encode($retailer['SecondAddress']) . '<br />';
+                    $tmp .=  $retailer['SecondAddress'] . '<br />';
                 if (!empty($retailer['cityName']))
-                    $tmp .= utf8_encode($retailer['cityName']);
+                    $tmp .=  $retailer['cityName'];
                 if (!empty($retailer['stateName']))
-                    $tmp .= ', ' . utf8_encode($retailer['stateName']) . '<br />';
+                    $tmp .= ', ' .  $retailer['stateName'] . '<br />';
                 if (!empty($retailer['ZipCode']))
-                    $tmp .= '<span class="zipCode_format">' . utf8_encode($retailer['ZipCode']) . '</span><br />';
+                    $tmp .= '<span class="zipCode_format">' .  $retailer['ZipCode'] . '</span><br />';
                 if (!empty($retailer['FirstTel']))
-                    $tmp .= utf8_encode($telLabel) . ": " . utf8_encode($retailer['FirstTel']);
+                    $tmp .=  $telLabel . ": " .  $retailer['FirstTel'];
                 if (!empty($retailer['FirstExt']))
-                    $tmp .= '  ext: ' . utf8_encode($retailer['FirstExt']);
+                    $tmp .= '  ext: ' .  $retailer['FirstExt'];
                 $tmp .= '<br />';
                 if (!empty($retailer['SecondTel']))
-                    $tmp .= utf8_encode($telLabel) . ": " . utf8_encode($retailer['SecondTel']);
+                    $tmp .=  $telLabel . ": " .  $retailer['SecondTel'];
                 if (!empty($retailer['SecondExt']))
-                    $tmp .= '  ext: ' . utf8_encode($retailer['SecondExt']);
+                    $tmp .= '  ext: ' .  $retailer['SecondExt'];
                 $tmp .= '<br />';
                 if (!empty($retailer['Fax']))
-                    $tmp .= utf8_encode($faxLabel) . ": " . utf8_encode($retailer['Fax']) . '<br />';
+                    $tmp .=  $faxLabel . ": " .  $retailer['Fax'] . '<br />';
                 if (!empty($retailer['Email']))
-                    $tmp .= utf8_encode($retailer['Email']) . '<br />';
+                    $tmp .=  $retailer['Email'] . '<br />';
                 if (!empty($retailer['Website']))
-                    $tmp .= utf8_encode($retailer['Website']) . '<br />';
+                    $tmp .=  $retailer['Website'] . '<br />';
                 if ($modulo == $columns - 1)
                     $tmp .= '</td>' . chr(13) . '</tr>';
                 else

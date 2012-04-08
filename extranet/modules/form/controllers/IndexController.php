@@ -322,7 +322,7 @@ class Form_IndexController extends Cible_Controller_Categorie_Action
                 'disableAction' => true,
                 'recipients'    => $recipients
             ));
-            
+
             $this->view->form = $form;
 
             //Add question type data
@@ -371,7 +371,7 @@ class Form_IndexController extends Cible_Controller_Categorie_Action
 
         foreach ($data as $key => $value)
         {
-            $data[$key] = utf8_decode(urldecode($data[$key]));
+            $data[$key] = urldecode($data[$key]);
         }
 
         if ($data['model'] != 'Form')
@@ -425,7 +425,7 @@ class Form_IndexController extends Cible_Controller_Categorie_Action
         {
         	foreach ($lang as $_key => $data)
         	{
-                $tmpData[$_key] = utf8_encode($data);
+                $tmpData[$_key] = $data;
         	}
 
         	$tmp[$arg] = $tmpData;
@@ -455,7 +455,7 @@ class Form_IndexController extends Cible_Controller_Categorie_Action
             if (count($row))
             {
                 $data  = $row->toArray();
-                $tmp   = utf8_encode($data['FI_Title']);
+                $tmp   = $data['FI_Title'];
 
             }
 

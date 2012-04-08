@@ -78,7 +78,7 @@ class Newsletter_StatisticController extends Cible_Extranet_Controller_Module_Ac
         {
             case 'articles':
                 $html = $this->getArticles($params['releaseId']);
-                echo json_encode(utf8_encode($html));
+                echo json_encode($html);
                 break;
             case 'releases':
                 $html = $this->indexAction();

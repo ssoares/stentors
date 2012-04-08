@@ -720,7 +720,7 @@ class Catalog_ProductsController extends Cible_Controller_Block_Abstract
                 $newElement .= "</select>";
             }
 
-            echo(Zend_Json::encode(array('newElement' => utf8_encode($newElement))));
+            echo(Zend_Json::encode(array('newElement' => $newElement)));
         }
     }
 
