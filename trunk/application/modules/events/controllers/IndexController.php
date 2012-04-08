@@ -1,14 +1,14 @@
 <?php
-    
+
     class Events_IndexController extends Cible_Controller_Action
     {
         protected $_showBlockTitle = false;
-        
+
         /**
         * Overwrite the function define in the SiteMapInterface implement in Cible_Controller_Action
-        * 
+        *
         * This function return the sitemap specific for this module
-        * 
+        *
         * @access public
         *
         * @return a string containing xml sitemap
@@ -21,25 +21,25 @@
             $dataXml = $newsRob->getXMLFile($this->_registry->absolute_web_root,$this->_request->getParam('lang'));
 
             parent::siteMapAction($dataXml);
-        }      
-               
+        }
+
         public function detailssidelistAction(){
-            
+
             $_blockID = $this->_request->getParam('BlockID');
             $id = $this->_request->getParam('ID');
-            
+
             $events = new EventsCollection($_blockID);
-            
+
             $listall_page = Cible_FunctionsCategories::getPagePerCategoryView( $events->getBlockParam('1'), 'listall' );
             $details_page = Cible_FunctionsCategories::getPagePerCategoryView( $events->getBlockParam('1'), 'details' );
-            
+
             $this->view->assign('listall_page', $listall_page);
-             
+
             $this->view->assign('details_page', $details_page);
-            
+
             $this->view->assign('events', $events->getOtherEvents($events->getBlockParam('2'), $id) );
         }
-        
+
         public function detailsAction(){
 
             if(!empty($_SERVER['HTTP_REFERER'])){
@@ -57,38 +57,38 @@
             }
             $this->view->assign('events', $events->getDetails($id));
         }
-        
+
         public function homepagelistAction(){
             $_blockID = $this->_request->getParam('BlockID');
-            
+
             $events = new EventsCollection($_blockID);
-            
+
             $listall_page = Cible_FunctionsCategories::getPagePerCategoryView( $events->getBlockParam('1'), 'listall' );
             $details_page = Cible_FunctionsCategories::getPagePerCategoryView( $events->getBlockParam('1'), 'details' );
-            
+
             $this->view->assign('listall_page', $listall_page);
-             
+
             $this->view->assign('details_page', $details_page);
-            
+
             $this->view->assign('events', $events->getList($events->getBlockParam('2')) );
         }
-        
+
         public function listallAction(){
-            
+
             $_blockID = $this->_request->getParam('BlockID');
-            
+
             $eventsObject = new EventsCollection($_blockID);
-            
+
             $details_page = Cible_FunctionsCategories::getPagePerCategoryView( $eventsObject->getBlockParam('1'), 'details' );
-            
+
             $this->view->assign('details_page', $details_page);
-            
+
             $events = $eventsObject->getList();
-            
+
             $paginator = new Zend_Paginator( new Zend_Paginator_Adapter_Array( $events ) );
             $paginator->setItemCountPerPage( $eventsObject->getBlockParam('2') );
             $paginator->setCurrentPageNumber($this->_request->getParam('page'));
-            
+
             $this->view->assign('paginator', $paginator);
         }
 
@@ -98,15 +98,15 @@
             $_blockID = $this->_request->getParam('BlockID');
             $this->view->BlockID = $_blockID;
 
-            
-           
+
+
 
             if($this->_isXmlHttpRequest)
             {
                 $_year = $this->_request->getParam('Year');
                 $_month = $this->_request->getParam('Month');
 
-                
+
                 $eventsObject = new EventsCollection($_blockID);
 
                 $events = $eventsObject->getListYearMonth($_year, $_month, null);
@@ -143,12 +143,12 @@
 
                         if( $startDate->get(Zend_Date::MONTH) == $endDate->get(Zend_Date::MONTH) && $startDate->get(Zend_Date::YEAR) == $endDate->get(Zend_Date::YEAR) ){
                             if( $startDate->get(Zend_Date::DAY) != $endDate->get(Zend_Date::DAY) )
-                                $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                                $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), $startDate->get(Zend_Date::MONTH_NAME), $startDate->get(Zend_Date::YEAR));
                             else
-                                $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                                $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), $startDate->get(Zend_Date::MONTH_NAME), $startDate->get(Zend_Date::YEAR));
                         }
                         else
-                            $date_string .= sprintf("%d %s %d au %d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), utf8_decode($endDate->get(Zend_Date::MONTH_NAME)), $endDate->get(Zend_Date::YEAR));
+                            $date_string .= sprintf("%d %s %d au %d %s %d", $startDate->get(Zend_Date::DAY), $startDate->get(Zend_Date::MONTH_NAME), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::MONTH_NAME), $endDate->get(Zend_Date::YEAR));
 
                         //list($a, $m, $j) = explode("-", $row['EDR_StartDate']);
                         //$resultObject['CellId'] = $m . $j . $a;
@@ -182,17 +182,17 @@
 
         public function calendrierAction(){
             $_blockID = $this->_request->getParam('BlockID');
-            $this->view->BlockID = $_blockID;            
+            $this->view->BlockID = $_blockID;
             $events1 = new EventsCollection($_blockID);
             $details_page = Cible_FunctionsCategories::getPagePerCategoryView( $events1->getBlockParam('1'), 'details' );
             $detail_page = $this->view->baseUrl() . '/' . $details_page . "/";
-           
+
             if($this->_isXmlHttpRequest)
             {
                 $_year = $this->_request->getParam('Year');
                 $_month = $this->_request->getParam('Month');
                 $eventsObject = new EventsCollection($_blockID);
-                $events = $eventsObject->getListYearMonth($_year, $_month, null);               
+                $events = $eventsObject->getListYearMonth($_year, $_month, null);
                 $responseObject = array();
                 $resultObject = array();
                 foreach ($events as $key => $result)
@@ -201,7 +201,7 @@
                     {
                         $date_string = '';
                         $date_stringURL = '';
-                        
+
                         $resultObject['EventID'] = $result['ED_ID'];
                         $resultObject['Title'] = strip_tags(utf8_encode($result['EI_Title']));
                         $resultObject['Description'] = strip_tags($result['EI_Brief']);
@@ -219,16 +219,16 @@
 
                             if( $startDate->get(Zend_Date::MONTH) == $endDate->get(Zend_Date::MONTH) && $startDate->get(Zend_Date::YEAR) == $endDate->get(Zend_Date::YEAR) ){
                                 if( $startDate->get(Zend_Date::DAY) != $endDate->get(Zend_Date::DAY) )
-                                    $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                                    $date_string .= sprintf("%d-%d %s %d", $startDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::DAY), $startDate->get(Zend_Date::MONTH_NAME), $startDate->get(Zend_Date::YEAR));
                                 else
-                                    $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR));
+                                    $date_string .= sprintf("%d %s %d", $startDate->get(Zend_Date::DAY), $startDate->get(Zend_Date::MONTH_NAME), $startDate->get(Zend_Date::YEAR));
                             }
                             else
-                                $date_string .= sprintf("%d %s %d au %d %s %d", $startDate->get(Zend_Date::DAY), utf8_decode($startDate->get(Zend_Date::MONTH_NAME)), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), utf8_decode($endDate->get(Zend_Date::MONTH_NAME)), $endDate->get(Zend_Date::YEAR));
+                                $date_string .= sprintf("%d %s %d au %d %s %d", $startDate->get(Zend_Date::DAY), $startDate->get(Zend_Date::MONTH_NAME), $startDate->get(Zend_Date::YEAR), $endDate->get(Zend_Date::DAY), $endDate->get(Zend_Date::MONTH_NAME), $endDate->get(Zend_Date::YEAR));
                         }
                         $resultObject['URL'] = $detail_page . $date_stringURL . "/" . $result['EI_ValUrl'];
                         $resultObject['DateComplete'] = utf8_encode($date_string);
-                        $resultObject['CellsIds'] = "";                       
+                        $resultObject['CellsIds'] = "";
 
                         array_push($responseObject, $resultObject);
                     }

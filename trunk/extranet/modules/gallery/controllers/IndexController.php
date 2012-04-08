@@ -97,8 +97,8 @@ class Gallery_IndexController extends Cible_Controller_Block_Abstract {
         if (count($imagesData) > 0) {
             $i = 0;
             foreach ($imagesData as $image) {
-                $imagesData[$i]['II_Title'] = utf8_encode($image['II_Title']);
-                $imagesData[$i]['II_Description'] = utf8_encode($image['II_Description']);
+                $imagesData[$i]['II_Title'] = $image['II_Title'];
+                $imagesData[$i]['II_Description'] = $image['II_Description'];
                 $imagesData[$i]['I_OriginalLink'] = str_replace($image['I_OriginalLink'], $originalMaxWidth . 'x' . $originalMaxHeight . '_' . $image['I_OriginalLink'], $image['I_OriginalLink']);
                 $imagesData[$i]['I_ThumbLink'] = str_replace($image['I_OriginalLink'], $thumbMaxWidth . 'x' . $thumbMaxHeight . '_' . $image['I_OriginalLink'], $image['I_OriginalLink']);
 

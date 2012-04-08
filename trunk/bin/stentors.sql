@@ -333,3 +333,7 @@ ALTER TABLE `MemberProfiles` ADD `MP_Category` INT( 2 ) NOT NULL COMMENT 'elem:s
 ALTER TABLE `MemberProfiles` ADD `MP_YearsParticipate` VARCHAR( 255 ) NULL AFTER `MP_Category` ;
 ALTER TABLE `MemberProfiles` ADD `MP_IsStaff` INT( 2 ) NOT NULL COMMENT 'elem:checkbox' AFTER `MP_YearsParticipate` ;
 ALTER TABLE `References` CHANGE `R_TypeRef` `R_TypeRef` ENUM( 'subscrArg', 'unsubscrArg', 'allergy', 'role', 'garde', 'section', 'diseases', 'medic', 'memberCategory', 'adultCategory' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+
+REPLACE INTO `nikel693_stentors`.`Modules` (`M_ID`, `M_Title`, `M_MVCModuleTitle`, `M_UseProfile`, `M_NeedAuth`, `M_HasFrontEnd`) VALUES (33, 'Bénévoles', 'volunteers', 1, 0, 0);
+REPLACE INTO `nikel693_stentors`.`Modules` (`M_ID`, `M_Title`, `M_MVCModuleTitle`, `M_UseProfile`, `M_NeedAuth`, `M_HasFrontEnd`) VALUES (34, 'Instructeurs', 'staff', 1, 0, 0);
+REPLACE INTO `nikel693_stentors`.`Modules` (`M_ID`, `M_Title`, `M_MVCModuleTitle`, `M_UseProfile`, `M_NeedAuth`, `M_HasFrontEnd`) VALUES (35, 'Partenaires', 'partners', 1, 0, 0);

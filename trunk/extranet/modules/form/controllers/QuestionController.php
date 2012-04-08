@@ -212,7 +212,7 @@ class Form_QuestionController extends Cible_Extranet_Controller_Module_Action
                 $data['FRO_Type'],
                 $data['FRO_Seq']);
 
-            $line = array('html' => utf8_encode($newTr));
+            $line = array('html' => $newTr);
             echo json_encode($line);
             exit;
         }

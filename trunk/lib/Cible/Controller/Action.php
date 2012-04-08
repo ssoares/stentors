@@ -117,12 +117,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
             if($_request->isPost()){
 
                 foreach($_request->getPost() as $key => $value)
-                {
-                    if (is_array($value))
-                        $_request->setPost($key, $value);
-                    else
-                    $_request->setPost($key, utf8_decode($value) );
-                }
+                    $_request->setPost($key, $value);
 
                 $this->setRequest($_request);
 
@@ -246,7 +241,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                 }
             }
 
-            $searchfor = utf8_decode($this->_getParam('searchfor'));
+            $searchfor = $this->_getParam('searchfor');
 
             if( $searchfor ){
 
@@ -373,7 +368,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                 }
             }
 
-            $searchfor = utf8_decode($this->_getParam('searchfor'));
+            $searchfor = $this->_getParam('searchfor');
 
             if( $searchfor ){
 
@@ -470,7 +465,7 @@ abstract class Cible_Controller_Action extends Zend_Controller_Action implements
                 }
             }
 
-            $searchfor = utf8_decode($this->_getParam('searchfor'));
+            $searchfor = $this->_getParam('searchfor');
 
             if( $searchfor ){
 

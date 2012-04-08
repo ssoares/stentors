@@ -130,7 +130,7 @@ class Form_SectionController extends Cible_Extranet_Controller_Module_Action
         $section = new FormSectionObject();
         $html    = $section->show($formId, $langId, true);
 
-        $data = array('html'=>utf8_encode($html));
+        $data = array('html'=>$html);
         echo(json_encode($data));
         exit;
     }

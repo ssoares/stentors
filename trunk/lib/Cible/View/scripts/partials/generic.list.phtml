@@ -201,7 +201,7 @@
 
                     <div class="search-filters-content">
                         <div class="search">
-                            <a href="javascript:emptySearch($('#search'));"><img src="<?php echo $this->baseUrl() ?>/icons/search_cancel.gif" ailgn="middle" border="0" /></a><?php echo $this->formText('search',utf8_decode($_request->getParam('searchfor'))) ?>
+                            <a href="javascript:emptySearch($('#search'));"><img src="<?php echo $this->baseUrl() ?>/icons/search_cancel.gif" ailgn="middle" border="0" /></a><?php echo $this->formText('search',$_request->getParam('searchfor')) ?>
                         </div>
                     </div>
 
@@ -234,7 +234,7 @@
                                         <a href="javascript:emptySearch($('#<?php echo $key?>'));">
                                             <img src="<?php echo $this->baseUrl() ?>/icons/search_cancel.gif" ailgn="middle" border="0" />
                                         </a>
-                                        <?php echo $this->formText($key,utf8_decode($_request->getParam($key))) ?>
+                                        <?php echo $this->formText($key,$_request->getParam($key)) ?>
                                     </div>
                                     <?php else:?>
                                     <?php echo $this->formSelect($key, $default_value, null, $filter['choices'], array('class'=>'filters')) ?>

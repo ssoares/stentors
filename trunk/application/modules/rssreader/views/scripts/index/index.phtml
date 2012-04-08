@@ -20,12 +20,12 @@ margin-bottom: 20px;
     {
         if ($searchCount == 1)
         {
-    ?>          <div id='message'><?php echo($this->getCibleText('search_single_result_text')); ?> "<?php echo(utf8_decode($words)) ?>"</div>
+    ?>          <div id='message'><?php echo($this->getCibleText('search_single_result_text')); ?> "<?php echo($words) ?>"</div>
     <?
         }
         else
         {
-    ?>          <div id='message'><?php echo($searchCount) ?><?php echo($this->getCibleText('search_multiple_results_text')); ?>"<?php echo(utf8_decode($words)) ?>"</div>
+    ?>          <div id='message'><?php echo($searchCount) ?><?php echo($this->getCibleText('search_multiple_results_text')); ?>"<?php echo($words) ?>"</div>
 <? } ?>      <div id='search-result'>
 <? if (count($searchPage) > 0)
         {
@@ -34,7 +34,7 @@ margin-bottom: 20px;
             <ul>
 <?php foreach ($searchPage as $page)
                 {
-?>              <li><a href="<?php echo("$webRoot/{$page['pageIndex']}"); ?>"><?php echo(($page['pageTitle'])); ?></a></li>                    
+?>              <li><a href="<?php echo("$webRoot/{$page['pageIndex']}"); ?>"><?php echo(($page['pageTitle'])); ?></a></li>
         <?php } ?>      </ul>
                 </div>
 <?
@@ -45,7 +45,7 @@ margin-bottom: 20px;
             <div class="title"><?php echo($this->getCibleText('news_module_name')); ?> (<?php echo(count($searchNews)); ?>)</div>
             <ul>
         <?php foreach ($searchNews as $news)
-                { ?>              <li><a href="<?php echo("$webRoot/{$news['link']}/ID/{$news['contentID']}"); ?>"><?php echo(utf8_decode($news['title'])); ?></a></li>
+                { ?>              <li><a href="<?php echo("$webRoot/{$news['link']}/ID/{$news['contentID']}"); ?>"><?php echo($news['title']); ?></a></li>
 <?php } ?>      </ul>
                 </div>
                 <?
@@ -56,7 +56,7 @@ margin-bottom: 20px;
             <div class="title"><?php echo($this->getCibleText('events_module_name')); ?> (<?php echo(count($searchEvents)); ?>)</div>
                     <ul>
         <?php foreach ($searchEvents as $event)
-                { ?>              <li><a href="<?php echo("$webRoot/{$event['link']}/ID/{$event['contentID']}"); ?>"><?php echo(utf8_decode($event['title'])); ?></a></li>
+                { ?>              <li><a href="<?php echo("$webRoot/{$event['link']}/ID/{$event['contentID']}"); ?>"><?php echo($event['title']); ?></a></li>
 <?php }
 ?>      </ul>
         </div>
@@ -69,7 +69,7 @@ margin-bottom: 20px;
                     <ul>
 <?php foreach ($searchNewsletters as $newsletter)
                 {
-?>              <li><a href="<?php echo("$webRoot/{$newsletter['link']}/ID/{$newsletter['contentID']}"); ?>"><?php echo(utf8_decode($newsletter['title'])); ?></a></li>                    
+?>              <li><a href="<?php echo("$webRoot/{$newsletter['link']}/ID/{$newsletter['contentID']}"); ?>"><?php echo($newsletter['title']); ?></a></li>
                 <?php }
                 ?>      </ul>
         </div>
@@ -81,7 +81,7 @@ margin-bottom: 20px;
                     <div class="title"><?php echo($this->getCibleText('gallery_module_name')); ?> (<?php echo(count($searchGalleries)); ?>)</div>
                         <ul>
 <?php foreach ($searchGalleries as $gallery)
-                { ?>              <li><a href="<?php echo("$webRoot/{$gallery['link']}"); ?>"><?php echo(utf8_decode($gallery['title'])); ?></a></li>
+                { ?>              <li><a href="<?php echo("$webRoot/{$gallery['link']}"); ?>"><?php echo($gallery['title']); ?></a></li>
 <?php } ?>      </ul>
                     </div>
 <? } ?>  </div>
@@ -89,7 +89,7 @@ margin-bottom: 20px;
         }
         else
         {
-?>      <div id='message'><?php echo($this->getClientText('search_no_result_text')); ?> "<?php echo(utf8_decode($words)) ?>"</div>
+?>      <div id='message'><?php echo($this->getClientText('search_no_result_text')); ?> "<?php echo($words) ?>"</div>
 <? } ?>
     </div>
 

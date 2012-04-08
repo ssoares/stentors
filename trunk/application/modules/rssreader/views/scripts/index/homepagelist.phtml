@@ -4,37 +4,37 @@
     <?php  echo $this->link($data['link'], $data['block_title'], array('class'=>'rss-feed','target'=>'_BLANK')); ?>
 </div>
 
-<div class="block-rss-reader-home">       
-    
+<div class="block-rss-reader-home">
+
     <?php
     $cpt = 0;
     if(count($this->data) > 0)
-    {                
+    {
         foreach($data['entries'] as $content)
         {
             if($cpt < $data['linkMax'])
             {
-            
+
             ?>
             <div class="rss-reader">
 
                 <div class="rss-reader-text-container-without-photo-home">
 
-                    <?php  
+                    <?php
 //                        $date = new Zend_Date($content['dateModified'],null, (Zend_Registry::get('languageSuffix') == 'fr' ? 'fr_CA' : 'en_CA'));
                         $date_string = Cible_FunctionsGeneral::dateToString($content['dateModified'],Cible_FunctionsGeneral::DATE_NUM,'.');
                         ?>
                     <div class="date-home"><?php echo $date_string ?></div>
 
                     <div class="title-home-rss-reader">
-                        <?php echo utf8_decode($content['title']) ?>
+                        <?php echo $content['title'] ?>
                     </div>
                      <?php
-                            // Show brief blue                            
-                            $text = utf8_decode($content['description']);
+                            // Show brief blue
+                            $text = $content['description'];
 
                             // Show brief
-                            //$text = utf8_decode($content['content']);
+                            //$text = $content['content'];
 
 
                    ?>
@@ -50,7 +50,7 @@
             <?php
             $cpt++;
             }
-               
+
         }
         ?>
         <div class="view-all-home">
@@ -59,13 +59,13 @@
                 &nbsp;<span class="closingQuote">&#155;</span>
             </a>
         </div>
-        
+
     <?php
     }
     else
     {
         ?><div><p><?php echo $this->getCibleText('rss_reader_no_rss_feed') ?></p></div><?php
     }
-        
+
     ?>
 </div>

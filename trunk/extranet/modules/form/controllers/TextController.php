@@ -51,7 +51,7 @@ class Form_TextController extends Cible_Extranet_Controller_Module_Action
         if( $this->view->aclIsAllowed($this->view->current_module, 'edit') )
         {
             $data   = $this->_getAllParams();
-            $data['FTI_Text'] = utf8_decode($data['FTI_Text']);
+            $data['FTI_Text'] = $data['FTI_Text'];
 
             if ($data['model'] != 'Form')
                 $dataObject = 'Form' . ucfirst($data['model']) . 'Object';

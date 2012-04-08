@@ -437,7 +437,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
 
             foreach ($countries as $key => $country)
             {
-                $field->addMultiOption($country['ID'], utf8_decode($country['name']));
+                $field->addMultiOption($country['ID'], $country['name']);
             }
 
             $this->_form->addElement($field);
