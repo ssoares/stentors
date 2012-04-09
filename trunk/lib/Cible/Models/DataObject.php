@@ -57,7 +57,18 @@ class DataObject
     protected $_colsIndex;
     protected $_enum;
     protected $_filters;
+    protected $_formDataName;
+    protected $_addressField;
 
+    public function getFormDataName()
+    {
+        return $this->_formDataName;
+    }
+
+    public function getAddressField()
+    {
+        return $this->_addressField;
+    }
     /**
      * Set a query instance to join with data table
      *

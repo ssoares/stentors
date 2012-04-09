@@ -28,6 +28,8 @@ form {
 }
 #fieldset-genericForm,
 #fieldset-parentForm,
+#fieldset-staffForm,
+#fieldset-partnersForm,
 fieldset.infosFieldsetParent,
 fieldset.infosFieldset{
     border: 1px solid #ccc;
@@ -105,6 +107,8 @@ fieldset.infosFieldset legend{
 fieldset.fieldsetDiseaseDetails,
 #fieldset-genericForm,
 #fieldset-parentForm,
+#fieldset-staffForm,
+#fieldset-partnersForm,
 fieldset.infosFieldsetParent{
     width: 45%;
     float: left;

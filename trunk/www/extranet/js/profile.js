@@ -55,6 +55,14 @@
                                 elem.hide();
                                 addTab.displayTab(profile, data.tabTitle);
                                 main.changeTab();
+                                var stateHidden = $('input[id$=-selectedState]');
+                                if (stateHidden.length > 0)
+                                {
+//                                    var id = stateHidden.attr('id').split('-')[0];
+//                                    id = "#" + id + "-A_CountryId";
+//                                    $(id).change();
+                                      location.reload();
+                                }
                             }
                         },
                         'json'

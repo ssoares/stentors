@@ -23,14 +23,13 @@
  * @license   Empty
  * @version   $Id: FormMembersProfile.php 826 2012-02-01 04:15:13Z ssoares $id
  */
-class FormParentProfile extends Cible_Form_GenerateForm
+class FormStaffProfile extends Cible_Form_GenerateForm
 {
 
     public function __construct($options = null)
     {
-        if (!empty($options['isXmlHttpRequest']))
-            $this->_disabledDefaultActions = true;
-
+        $formDataName = 'staffForm';
+        $this->_disabledDefaultActions = false;
         $this->_disabledLangSwitcher = true;
         if (!empty($options['object']))
         {
@@ -38,10 +37,10 @@ class FormParentProfile extends Cible_Form_GenerateForm
             unset($options['object']);
         }
         parent::__construct($options);
-
+        $this->setAttrib('id', 'staffInfo');
 
         $subForm = new Cible_Form_SubForm();
-        $subForm->setName('parentForm')
+        $subForm->setName($formDataName)
             ->removeDecorator('DtDdWrapper');
         $subForm->setLegend('Adresse');
 
@@ -61,22 +60,27 @@ class FormParentProfile extends Cible_Form_GenerateForm
             );
 
         $address->formAddress();
-        $this->addSubForm($subForm, 'parentForm');
-        $this->getSubForm('parentForm')->getElement('selectedState')->getDecorator('HtmlTag')
+        $this->addSubForm($subForm, $formDataName);
+        $this->getSubForm($formDataName)->getElement('selectedState')->getDecorator('HtmlTag')
                 ->setOption('style', 'margin: 0px;');
 
         $this->addDisplayGroup(
             array(
-                'PP_Role',
-                'PP_TaxReceipt',
-                'PP_AssuSocNum',
-                'PP_PhoneWork',
-                'PP_EmploiTps',
-                'PP_Notes'),
-            'data');
-        $this->getDisplayGroup('data')
-            ->setLegend('Infornations')
-            ->setAttrib('class','infosFieldsetParent')
+                'SP_Notes'
+                ),
+            'staffData');
+        $this->getDisplayGroup('staffData')
+            ->setLegend('Informations')
+            ->setAttrib('class','infosFieldset')
             ->removeDecorator('DtDdWrapper');
+
     }
+
+//    public function populate(array $values)
+//    {
+//        $baseDir = $this->getView()->BaseUrl();
+//        $content = '';
+//        $isSaved = false;
+//
+//    }
 }
