@@ -108,7 +108,7 @@ class FormMemberProfile extends Cible_Form_GenerateForm
 
         $isSaved = preg_match('/'.$currentYear.'/', $values['MP_YearsParticipate']);
 
-        if (!$isSaved)
+        if (!$isSaved && $values['MP_Category'] == 46)
         {
             $lastChar = strrpos($values['MP_YearsParticipate'], ',', -1);
             if (!$lastChar)

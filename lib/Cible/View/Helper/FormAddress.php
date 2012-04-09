@@ -294,9 +294,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
             if (!$this->_isXmlHttpRequest)
                 $this->view->jQuery()->addOnLoad($this->_script);
             else
-                $this->view->script = ($this->_script);
-
-
+                $this->view->inlineScript()->appendScript($this->_script);
     }
 
     /**
@@ -792,7 +790,7 @@ class Cible_View_Helper_FormAddress extends Zend_View_Helper_FormElement
 //        var countries = {$json_countries};
         var langId = {$langId};
         {$tmp}
-        $('#{$idPrefix}{$this->_country}').change(function()
+        $('#{$idPrefix}{$this->_country}').live('change',function()
         {
             var ctl_states = $('#{$idPrefix}{$this->_state}')
             var ctl_cities = $('#{$idPrefix}{$this->_city}')
@@ -832,7 +830,7 @@ EOS;
         if ($this->_addScriptState)
         {
             $script .=<<<EOS
-            $('#{$idPrefix}{$this->_state}').change(function()
+            $('#{$idPrefix}{$this->_state}').live('change', function()
             {
                 var ctl_cities = $('#{$idPrefix}{$this->_city}');
                 ctl_cities.empty();

@@ -1,30 +1,30 @@
 <?php
 /**
- * Member Profile data
+ * Staff Profile data
  * Management of the Items.
  *
  * @category  Cible
- * @package   Cible_MemberProfilesObject
+ * @package   Cible_StaffProfilesObject
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: MemberProfilesObject.php 826 2012-02-01 04:15:13Z ssoares $id
+ * @version   $Id: StaffProfilesObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
 
 /**
- * Manages Member Profile data.
+ * Manages Staff Profile data.
  *
  * @category  Cible
- * @package   Cible_MemberProfiles
+ * @package   Cible_StaffProfiles
  * @copyright Copyright (c)2010 Cibles solutions d'affaires
  *            http://www.ciblesolutions.com
  * @license   Empty
- * @version   $Id: MemberProfilesObject.php 826 2012-02-01 04:15:13Z ssoares $id
+ * @version   $Id: StaffProfilesObject.php 826 2012-02-01 04:15:13Z ssoares $id
  */
-class ParentProfilesObject extends DataObject
+class StaffProfilesObject extends DataObject
 {
 
-    protected $_dataClass   = 'ParentProfilesData';
+    protected $_dataClass   = 'StaffProfilesData';
 //    protected $_dataId      = '';
 //    protected $_dataColumns = array();
 
@@ -33,9 +33,9 @@ class ParentProfilesObject extends DataObject
     protected $_indexLanguageId = '';
 //    protected $_indexColumns    = array();
     protected $_constraint      = '';
-    protected $_foreignKey      = 'PP_GenericProfileId';
-    protected $_formDataName    = 'parentForm';
-    protected $_addressField    = 'PP_AddressId';
+    protected $_foreignKey      = 'SP_GenericProfileId';
+    protected $_formDataName    = 'staffForm';
+    protected $_addressField    = 'SP_AddressId';
 
     public function getFormDataName()
     {
@@ -45,25 +45,6 @@ class ParentProfilesObject extends DataObject
     public function getAddressField()
     {
         return $this->_addressField;
-    }
-    
-    public function insert($data, $langId)
-    {
-        $oProfile = new GenericProfilesObject();
-
-        if (!empty($data[$this->_formDataName]))
-        {
-            $oAddress = new AddressObject();
-            $parentAddrId = $oAddress->insert($data[$this->_formDataName], $langId);
-            unset($data[$this->_formDataName]);
-        }
-        $data[$this->_addressField] = $parentAddrId;
-
-        $pId = $oProfile->insert($data, $langId);
-        $data['PP_GenericProfileId'] = $pId;
-        $id = parent::insert($data, $langId);
-
-        return $id;
     }
 
     public function save($id, $data, $langId)
@@ -79,21 +60,13 @@ class ParentProfilesObject extends DataObject
         if (!empty($addr))
         {
             $addrId = $oAdress->save($data[$this->_addressField], $addr, $langId);
-
-//            if ($addrShip['duplicate'] == 1)
-//            {
-//                $addrBill['A_Duplicate'] = $billId;
-//                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrBill, $langId);
-//            }
-//            else
-//            {
-//                $addrShip['A_Duplicate'] = 0;
-//                $shipId = $oAdress->save($addrShip['MP_ShippingAddrId'], $addrShip, $langId);
-//            }
-            if (empty($data[$this->_addressField]))
-                $data[$this->_addressField] = $addrId;
-//            $data['MP_ShippingAddrId'] = $shipId;
         }
+        else
+        {
+            $addrId = $oAdress->insert($data[$this->_formDataName], $langId);
+        }
+        if (empty($data[$this->_addressField]))
+            $data[$this->_addressField] = $addrId;
 
         parent::save($id, $data, $langId);
     }
@@ -142,31 +115,5 @@ class ParentProfilesObject extends DataObject
         }
         return $data;
     }
-    public function _parentsProfileSrc($meta = array())
-    {
-        $src = array();
-        $oRef = new ReferencesObject();
-        $roles = $oRef->getRefByType('role');
 
-        foreach ($roles as $role)
-        {
-            $src[$role['R_ID']] = $role['RI_Value'];
-        }
-
-        return $src;
-    }
-
-    public function _listRespSrc($meta = array())
-    {
-        $src = array();
-        $oRef = new ReferencesObject();
-        $roles = $oRef->getRefByType('garde');
-
-        foreach ($roles as $role)
-        {
-            $src[$role['R_ID']] = $role['RI_Value'];
-        }
-
-        return $src;
-    }
 }

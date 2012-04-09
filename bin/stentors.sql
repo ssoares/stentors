@@ -337,3 +337,42 @@ ALTER TABLE `References` CHANGE `R_TypeRef` `R_TypeRef` ENUM( 'subscrArg', 'unsu
 REPLACE INTO `nikel693_stentors`.`Modules` (`M_ID`, `M_Title`, `M_MVCModuleTitle`, `M_UseProfile`, `M_NeedAuth`, `M_HasFrontEnd`) VALUES (33, 'Bénévoles', 'volunteers', 1, 0, 0);
 REPLACE INTO `nikel693_stentors`.`Modules` (`M_ID`, `M_Title`, `M_MVCModuleTitle`, `M_UseProfile`, `M_NeedAuth`, `M_HasFrontEnd`) VALUES (34, 'Instructeurs', 'staff', 1, 0, 0);
 REPLACE INTO `nikel693_stentors`.`Modules` (`M_ID`, `M_Title`, `M_MVCModuleTitle`, `M_UseProfile`, `M_NeedAuth`, `M_HasFrontEnd`) VALUES (35, 'Partenaires', 'partners', 1, 0, 0);
+
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, `ST_ModuleID`) VALUES
+('volunteers_module_name', 1, 'Bénévoles', 'cible', '', 0, 30),
+('volunteers_module_name', 2, 'Volunteers', 'cible', '', 0, 30),
+('staff_module_name', 1, 'Encadrement', 'cible', '', 0, 30),
+('staff_module_name', 2, 'Staff', 'cible', '', 0, 30),
+('partners_module_name', 1, 'Partenaires', 'cible', '', 0, 30),
+('partners_module_name', 2, 'Partners', 'cible', '', 0, 30),
+('form_enum_jobs', 1, 'Postes',  'cible', '', 0, 0),
+('form_enum_jobs', 2, 'Functions',  'cible', '', 0, 0),
+('management_module_volunteers_list', 1, 'Liste des bénévoles',  'cible', '', 0, 33),	('management_module_volunteers_list', 2, 'Volunteers List', 'cible', '', 0, 33),
+('management_module_staff_list', 1, 'Liste des responsables',  'cible', '', 0, 34),	('management_module_staff_list', 2, 'Staff members', 'cible', '', 0, 34),
+('management_module_partners_list', 1, 'Liste des partenaires',  'cible', '', 0, 35),	('management_module_partners_list', 2, 'Partners list', 'cible', '', 0, 35);
+
+CREATE  TABLE `nikel693_stentors`.`VolunteersProfile` (
+  `VP_GenericProfileId` INT(11) NOT NULL ,
+  `VP_Job` INT(5) NULL COMMENT 'elem:select|src:jobsList' ,
+  `VP_Notes` TEXT NULL ,
+  PRIMARY KEY (`VP_GenericProfileId`) );
+
+CREATE  TABLE `nikel693_stentors`.`StaffProfile` (
+  `SP_GenericProfileId` INT(11) NOT NULL ,
+  `SP_AddressId` INT(11) NOT NULL COMMENT 'exclude:true' ,
+  `SP_Notes` TEXT NULL ,
+  PRIMARY KEY (`SP_GenericProfileId`) );
+
+CREATE  TABLE `nikel693_stentors`.`PartnersProfile` (
+  `PP_GenericProfileId` INT(11) NOT NULL ,
+  `PP_AddressId` INT(11) NOT NULL COMMENT 'exclude:true',
+  `PP_Function` VARCHAR(255) NULL ,
+  `PP_Company` VARCHAR(255) NULL ,
+  `PP_Notes` TEXT NULL ,
+  PRIMARY KEY (`PP_GenericProfileId`) );
+
+ALTER TABLE `nikel693_stentors`.`References` CHANGE COLUMN `R_TypeRef` `R_TypeRef` ENUM('subscrArg','unsubscrArg','allergy','role','garde','section','diseases','medic','memberCategory','adultCategory', 'jobs') NOT NULL  ;
+
+INSERT INTO `nikel693_stentors`.`Modules_ControllersActionsPermissions` (`MCAP_ModuleID`, `MCAP_ControllerTitle`, `MCAP_ControllerActionTitle`, `MCAP_PermissionTitle`, `MCAP_Position`) VALUES (33, 'index', 'list', 'edit', 1);
+INSERT INTO `nikel693_stentors`.`Modules_ControllersActionsPermissions` (`MCAP_ModuleID`, `MCAP_ControllerTitle`, `MCAP_ControllerActionTitle`, `MCAP_PermissionTitle`, `MCAP_Position`) VALUES (34, 'index', 'list', 'edit', 1);
+INSERT INTO `nikel693_stentors`.`Modules_ControllersActionsPermissions` ( `MCAP_ModuleID`, `MCAP_ControllerTitle`, `MCAP_ControllerActionTitle`, `MCAP_PermissionTitle`) VALUES (35, 'index', 'list', 'edit');

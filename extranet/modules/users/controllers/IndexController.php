@@ -79,29 +79,30 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
             {
                 switch ($value)
                 {
-                    case 'newsletter':
-                        $this->_objectList[$value] = 'NewsletterProfilesObject';
-                        break;
+//                    case 'newsletter':
+//                        $this->_objectList[$value] = 'NewsletterProfilesObject';
+//                        break;
                     case 'order':
                         $this->_objectList[$value] = 'MemberProfilesObject';
                         break;
                     case 'retailers':
                         $this->_objectList[$value] = 'RetailersObject';
                         break;
-                    case 'member':
-                        $this->_objectList[$value] = 'MemberProfilesObject';
-//                        $this->_joinTables[] = $this->_objectList[$value];
-                        break;
-                    case 'parent':
-                        $this->_objectList[$value] = 'ParentProfilesObject';
-//                        $this->_joinTables[] = $this->_objectList[$value];
-                        break;
-                    case 'medical':
-                        $this->_objectList[$value] = 'MedicalProfilesObject';
-//                        $this->_joinTables[] = $this->_objectList[$value];
-                        break;
+//                    case 'member':
+//                        $this->_objectList[$value] = 'MemberProfilesObject';
+////                        $this->_joinTables[] = $this->_objectList[$value];
+//                        break;
+//                    case 'parent':
+//                        $this->_objectList[$value] = 'ParentProfilesObject';
+////                        $this->_joinTables[] = $this->_objectList[$value];
+//                        break;
+//                    case 'medical':
+//                        $this->_objectList[$value] = 'MedicalProfilesObject';
+////                        $this->_joinTables[] = $this->_objectList[$value];
+//                        break;
 
                     default:
+                        $this->_objectList[$value] = ucfirst($value) . 'ProfilesObject';
                         break;
                 }
             }
@@ -277,13 +278,128 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
         }
     }
     /**
-     * Allocates action for profiles of parents.<br />
+     * Allocates action for profiles of staff.<br />
      * Prepares data utilized to activate controller actions.
      *
      * @access public
      *
      * @return void
      */
+    public function partnersAction($getParams = false)
+    {
+        if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
+        {
+
+//            $this->_disableExportToExcel = true;
+            $this->_constraint = '';
+            $this->_colTitle = array(
+                'PP_GenericProfileId'  => array('width' => '150px')
+                );
+
+            $this->_joinTables = array('GenericProfile');
+
+            if($getParams)
+            {
+                $params = array(
+                    'columns'    => $this->_colTitle,
+                    'joinTables' => $this->_joinTables,
+                    'formName' => 'FormPartnersProfile');
+
+                return $params;
+            }
+
+            $this->_formName = 'FormPartnersProfile';
+            if($this->_isXmlHttpRequest && $this->_request->isPost())
+            {
+                $_POST['PP_GenericProfileId'] = $this->_genericId;
+//                if ($this->_actionKey == 'add')
+//                    $_POST['MP_Status'] = -1;
+            }
+            $this->_redirectAction();
+        }
+    }
+    /**
+     * Allocates action for profiles of staff.<br />
+     * Prepares data utilized to activate controller actions.
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function staffAction($getParams = false)
+    {
+        if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
+        {
+
+//            $this->_disableExportToExcel = true;
+            $this->_constraint = '';
+            $this->_colTitle = array(
+                'SP_GenericProfileId'  => array('width' => '150px')
+                );
+
+            $this->_joinTables = array('GenericProfile');
+
+            if($getParams)
+            {
+                $params = array(
+                    'columns'    => $this->_colTitle,
+                    'joinTables' => $this->_joinTables,
+                    'formName' => 'FormStaffProfile');
+
+                return $params;
+            }
+
+            $this->_formName = 'FormStaffProfile';
+            if($this->_isXmlHttpRequest && $this->_request->isPost())
+            {
+                $_POST['SP_GenericProfileId'] = $this->_genericId;
+//                if ($this->_actionKey == 'add')
+//                    $_POST['MP_Status'] = -1;
+            }
+            $this->_redirectAction();
+        }
+    }
+    /**
+     * Allocates action for profiles of volunteers.<br />
+     * Prepares data utilized to activate controller actions.
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function volunteersAction($getParams = false)
+    {
+        if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
+        {
+
+//            $this->_disableExportToExcel = true;
+            $this->_constraint = '';
+            $this->_colTitle = array(
+                'VP_GenericProfileId'  => array('width' => '150px')
+                );
+
+            $this->_joinTables = array('GenericProfile');
+
+            if($getParams)
+            {
+                $params = array(
+                    'columns'    => $this->_colTitle,
+                    'joinTables' => $this->_joinTables,
+                    'formName' => 'FormVolunteersProfile');
+
+                return $params;
+            }
+
+            $this->_formName = 'FormVolunteersProfile';
+            if($this->_isXmlHttpRequest && $this->_request->isPost())
+            {
+                $_POST['VP_GenericProfileId'] = $this->_genericId;
+//                if ($this->_actionKey == 'add')
+//                    $_POST['MP_Status'] = -1;
+            }
+            $this->_redirectAction();
+        }
+    }
     public function parentAction($getParams = false)
     {
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
@@ -953,13 +1069,13 @@ class Users_IndexController extends Cible_Extranet_Controller_Module_Action
                     $formData = $this->_mergeFormData($formData);
                 }
 
-                if (isset($formData['parentForm']))
+                if (isset($formData[$oData->getFormDataName()]))
                 {
-                    $addrOne = $formData['parentForm'];
-                    if (!empty($data['PP_AddressId']))
-                        $formData['PP_AddressId'] = $data['PP_AddressId'];
+                    $addrOne = $formData[$oData->getFormDataName()];
+                    if (!empty($data[$oData->getAddressField()]))
+                        $formData[$oData->getAddressField()] = $data[$oData->getAddressField()];
                     else
-                        $formData['PP_AddressId'] = '';
+                        $formData[$oData->getAddressField()] = '';
                 }
                 if (isset($formData['parentFormTwo']['duplicate']))
                 {
