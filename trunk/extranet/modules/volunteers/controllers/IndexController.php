@@ -19,13 +19,15 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
         $this->view->title = "Bénévoles";
         if ($this->view->aclIsAllowed($this->_moduleTitle,'edit',true))
         {
-            $profile = new GenericProfilesObject();
-            $profile->setOrderBy('GP_LastName');
+            $generic = new GenericProfilesObject();
+            $generic->setOrderBy('GP_LastName');
 
-            $member  = new VolunteersProfilesObject();
+            $profile  = new VolunteersProfilesObject();
             $oRef  = new ReferencesObject();
             $select = $profile->getAll(null, false);
-            $select->columns(
+            $select->joinLeft(
+                $generic->getDataTableName(),
+                $profile->getDataId() . ' = ' . $generic->getDataId(),
                 array(
                     'lastName'  => 'GP_LastName',
                     'firstName' => 'GP_FirstName',
@@ -33,10 +35,6 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
                     'member_id' => 'GP_MemberID'
                     )
                 );
-            $select->joinRight(
-                    $member->getDataTableName(),
-                    $member->getDataId() . ' = ' . $profile->getDataId()
-                    );
             $select->joinLeft(
                     $oRef->getDataTableName(),
                     $oRef->getDataId() . ' = VP_Job',
@@ -62,8 +60,8 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
                 'VP_Job'  => array('width' => '250px'),
             );
 
-            $filtersList = $member->_jobsListSrc();
-            $filtersList[0] = 'Poste';
+            $filtersList = $profile->_jobsListSrc();
+            $filtersList[0] =$this->view->getCibleText('form_select_default_label');
             ksort($filtersList);
             $this->view->params = $this->_getAllParams();
 
@@ -92,7 +90,7 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
 //                'to-excel-action' => 'clients-to-excel',
                 'filters' => array(
                     'filter_1' => array(
-                        'label' => 'Section',
+                        'label' => 'Poste',
                         'default_value' => null,
                         'associatedTo' => 'VP_Job',
 //                        'equalTo' => 'R_GenericProfileId',
@@ -163,15 +161,17 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
 
     public function toExcelAction()
     {
-        $this->filename = 'membersList.xls';
+        $this->filename = 'benevolesList.xls';
         $this->type = 'Excel5';
-        $profile = new GenericProfilesObject();
-            $profile->setOrderBy('GP_LastName');
+        $generic = new GenericProfilesObject();
+            $generic->setOrderBy('GP_LastName');
 
-            $member  = new MemberProfilesObject();
+            $profile  = new VolunteersProfilesObject();
             $oRef  = new ReferencesObject();
             $this->select = $profile->getAll(null, false);
-            $this->select->columns(
+            $this->select->joinLeft(
+                $generic->getDataTableName(),
+                $profile->getDataId() . ' = ' . $generic->getDataId(),
                 array(
                     'lastName'  => 'GP_LastName',
                     'firstName' => 'GP_FirstName',
@@ -179,34 +179,29 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
                     'member_id' => 'GP_MemberID'
                     )
                 );
-            $this->select->joinRight(
-                    $member->getDataTableName(),
-                    $member->getDataId() . ' = ' . $profile->getDataId()
-                    );
             $this->select->joinLeft(
                     $oRef->getDataTableName(),
-                    $oRef->getDataId() . ' = MP_Section',
+                    $oRef->getDataId() . ' = VP_Job',
                     array('R_TypeRef')
                 );
             $this->select->joinLeft(
                     $oRef->getIndexTableName(),
                     $oRef->getIndexId() . ' = ' . $oRef->getDataId(),
-                    array('section' => 'RI_Value')
+                    array('VP_Job' => 'RI_Value')
                 );
 
             $this->tables = array(
                 'GenericProfiles' => array('GP_LastName', 'GP_FirstName', 'GP_Email'),
-                'MemberProfiles' => array('MP_GenericProfileId', 'MP_Section'),
+                'VolunteersProfile' => array('VP_GenericProfileId', 'VP_Job'),
                 $oRef->getDataTableName() => array('R_TypeRef'),
                 $oRef->getIndexTableName() => array('RI_Value')
             );
 
             $this->fields = array(
-                'MP_GenericProfileId' => array('width' => '250px'),
                 'firstName' => array('width' => '250px'),
                 'lastName'  => array('width' => '250px'),
-                'email'  => array('width' => '250px'),
-//                'section'  => array('width' => '250px'),
+                'email'   => array('width' => '250px'),
+                'VP_Job'  => array('width' => '250px'),
             );
 
         $this->filters = array(
