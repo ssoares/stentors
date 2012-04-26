@@ -68,6 +68,8 @@ class PartnersProfilesObject extends DataObject
         if (empty($data[$this->_addressField]))
             $data[$this->_addressField] = $addrId;
 
+        $oYears = new YearsParticipateObject();
+        $oYears->manageData($id, $data['YP_Year']);
         parent::save($id, $data, $langId);
     }
 
@@ -92,6 +94,8 @@ class PartnersProfilesObject extends DataObject
 
             $data[$this->_formDataName] = $addr;
 //            $data['addressShipping'] = $shipAddr;
+            $oYears = new YearsParticipateObject();
+            $data['YP_Year'] = $oYears->findData(array($oYears->getForeignKey() => $data[$this->_foreignKey]));
         }
 
         return $data;

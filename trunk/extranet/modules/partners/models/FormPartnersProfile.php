@@ -63,12 +63,38 @@ class FormPartnersProfile extends Cible_Form_GenerateForm
         $this->getSubForm('partnersForm')->getElement('selectedState')->getDecorator('HtmlTag')
                 ->setOption('style', 'margin: 0px;');
 
+        $years = new Zend_Form_Element_Text('YP_Year');
+        $years->setLabel(
+                $this->getView()->getCibleText('form_label_YP_Year'))
+            ->addFilter('StripTags')
+            ->addFilter('StringTrim')
+        ->setDecorators(
+                array(
+                    'ViewHelper',
+                    array('label', array('placement' => 'prepend')),
+                    array(
+                        'Errors',
+                        array('placement' => 'append')
+                    ),
+                    array(
+                        array('row' => 'HtmlTag'),
+                        array(
+                            'tag'   => 'dd',
+                            'class' => 'form_title_inline',
+                            )
+                        ),
+                    )
+                )
+        ->setAttrib('class','stdTextInput');
+
+        $this->addElement($years);
 
         $this->addDisplayGroup(
             array(
                 'PP_Function',
                 'PP_Company',
-                'PP_Notes'
+                'PP_Notes',
+                'YP_Year'
                 ),
             'partData');
         $this->getDisplayGroup('partData')

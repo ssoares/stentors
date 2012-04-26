@@ -349,7 +349,9 @@ REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_
 ('form_enum_jobs', 2, 'Functions',  'cible', '', 0, 0),
 ('management_module_volunteers_list', 1, 'Liste des bénévoles',  'cible', '', 0, 33),	('management_module_volunteers_list', 2, 'Volunteers List', 'cible', '', 0, 33),
 ('management_module_staff_list', 1, 'Liste des responsables',  'cible', '', 0, 34),	('management_module_staff_list', 2, 'Staff members', 'cible', '', 0, 34),
-('management_module_partners_list', 1, 'Liste des partenaires',  'cible', '', 0, 35),	('management_module_partners_list', 2, 'Partners list', 'cible', '', 0, 35);
+('management_module_partners_list', 1, 'Liste des partenaires',  'cible', '', 0, 35),	('management_module_partners_list', 2, 'Partners list', 'cible', '', 0, 35),
+('form_label_YP_Year', 1, 'Année de participation (séparées par des ,)',  'cible', '', 0, 35),
+('form_label_YP_Year', 2, 'Years of participation (separated with ,)',  'cible', '', 0, 35);
 
 CREATE  TABLE `nikel693_stentors`.`VolunteersProfile` (
   `VP_GenericProfileId` INT(11) NOT NULL ,
@@ -370,6 +372,12 @@ CREATE  TABLE `nikel693_stentors`.`PartnersProfile` (
   `PP_Company` VARCHAR(255) NULL ,
   `PP_Notes` TEXT NULL ,
   PRIMARY KEY (`PP_GenericProfileId`) );
+
+CREATE  TABLE `nikel693_stentors`.`YearsParticipate` (
+  `YP_ID` INT(11) NOT NULL AUTO_INCREMENT  ,
+  `YP_GenericProfileId` INT(11) NULL COMMENT 'exclude:true' ,
+  `YP_Year` INT(4) NULL ,
+  PRIMARY KEY (`YP_ID`) );
 
 ALTER TABLE `nikel693_stentors`.`References` CHANGE COLUMN `R_TypeRef` `R_TypeRef` ENUM('subscrArg','unsubscrArg','allergy','role','garde','section','diseases','medic','memberCategory','adultCategory', 'jobs') NOT NULL  ;
 
