@@ -38,10 +38,37 @@ class FormVolunteersProfile extends Cible_Form_GenerateForm
         parent::__construct($options);
         $this->setAttrib('id', 'volunteersInfo');
 
+        $years = new Zend_Form_Element_Text('YP_Year');
+        $years->setLabel(
+                $this->getView()->getCibleText('form_label_YP_Year'))
+            ->addFilter('StripTags')
+            ->addFilter('StringTrim')
+        ->setDecorators(
+                array(
+                    'ViewHelper',
+                    array('label', array('placement' => 'prepend')),
+                    array(
+                        'Errors',
+                        array('placement' => 'append')
+                    ),
+                    array(
+                        array('row' => 'HtmlTag'),
+                        array(
+                            'tag'   => 'dd',
+                            'class' => 'form_title_inline',
+                            )
+                        ),
+                    )
+                )
+        ->setAttrib('class','stdTextInput');
+
+        $this->addElement($years);
+
         $this->addDisplayGroup(
             array(
                 'VP_Job',
-                'VP_Notes'
+                'VP_Notes',
+                'YP_Year'
                 ),
             'vData');
         $this->getDisplayGroup('vData')

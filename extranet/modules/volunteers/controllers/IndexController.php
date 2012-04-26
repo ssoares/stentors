@@ -23,7 +23,8 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
             $generic->setOrderBy('GP_LastName');
 
             $profile  = new VolunteersProfilesObject();
-            $oRef  = new ReferencesObject();
+            $oRef   = new ReferencesObject();
+            $oYears = new YearsParticipateObject();
             $select = $profile->getAll(null, false);
             $select->joinLeft(
                 $generic->getDataTableName(),
@@ -34,6 +35,11 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
                     'email'     => 'GP_Email',
                     'member_id' => 'GP_MemberID'
                     )
+                );
+            $select->joinLeft(
+                    $oYears->getDataTableName(),
+                    $oYears->getForeignKey() . ' = ' . $profile->getDataId(),
+                    array('YP_Year')
                 );
             $select->joinLeft(
                     $oRef->getDataTableName(),
@@ -63,6 +69,11 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
             $filtersList = $profile->_jobsListSrc();
             $filtersList[0] =$this->view->getCibleText('form_select_default_label');
             ksort($filtersList);
+
+            $filterYears = $oYears->getListForFilter();
+            sort($filtersList);
+
+
             $this->view->params = $this->_getAllParams();
 
             $pageID = $this->_getParam( 'pageID' );
@@ -95,6 +106,12 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
                         'associatedTo' => 'VP_Job',
 //                        'equalTo' => 'R_GenericProfileId',
                         'choices' => $filtersList
+                    ),
+                    'filter_2' => array(
+                        'label' => 'Année',
+                        'default_value' => null,
+                        'associatedTo' => 'YP_Year',
+                        'choices' => $filterYears
                     ),
                 ),
                 'action_panel' => array(

@@ -37,6 +37,8 @@ class VolunteersProfilesObject extends DataObject
 
     public function save($id, $data, $langId)
     {
+        $oYears = new YearsParticipateObject();
+        $oYears->manageData($id, $data['YP_Year']);
         parent::save($id, $data, $langId);
     }
 
@@ -61,6 +63,8 @@ class VolunteersProfilesObject extends DataObject
 //
 //            $data['parentForm'] = $addr;
 //            $data['addressShipping'] = $shipAddr;
+            $oYears = new YearsParticipateObject();
+            $data['YP_Year'] = $oYears->findData(array($oYears->getForeignKey() => $data[$this->_foreignKey]));
         }
 
         return $data;

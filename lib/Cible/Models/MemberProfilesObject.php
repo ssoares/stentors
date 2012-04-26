@@ -62,14 +62,15 @@ class MemberProfilesObject extends DataObject
             $data['MP_BillingAddrId'] = $billId;
             $data['MP_ShippingAddrId'] = $shipId;
         }
-
+        $oYears = new YearsParticipateObject();
+        $oYears->manageData($id, $data['MP_YearsParticipate']);
         $data['MP_BirthDate'] = $data['MP_BirthDateDt'];
         $years = $this->calculateAge($data['MP_BirthDate']);
         $data['MP_Age'] = $years;
         $data['MP_PassportExpiracyDate'] = $data['MP_PassportExpiracyDateDt'];
         if ($data['MP_BirthDate'] != $data['MP_PassportBirthDate'])
             $data['MP_PassportBirthDate'] = $data['MP_BirthDate'];
-        
+
         parent::save($id, $data, $langId);
     }
 
