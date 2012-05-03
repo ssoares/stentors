@@ -34,6 +34,12 @@ class YearsParticipateObject extends DataObject
 //    protected $_indexColumns    = array();
     protected $_constraint      = '';
     protected $_foreignKey      = 'YP_GenericProfileId';
+    protected $_distinct;
+
+    public function setDistinct($distinct)
+    {
+        $this->_distinct = $distinct;
+    }
 
     public function manageData($id, $data)
     {

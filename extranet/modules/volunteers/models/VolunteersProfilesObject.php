@@ -34,7 +34,14 @@ class VolunteersProfilesObject extends DataObject
 //    protected $_indexColumns    = array();
     protected $_constraint      = '';
     protected $_foreignKey      = 'VP_GenericProfileId';
+    protected $_distinct;
 
+    public function setDistinct($distinct)
+    {
+        $this->_distinct = $distinct;
+    }
+
+    
     public function save($id, $data, $langId)
     {
         $oYears = new YearsParticipateObject();

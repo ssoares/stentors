@@ -59,6 +59,7 @@ class DataObject
     protected $_filters;
     protected $_formDataName;
     protected $_addressField;
+    protected $_distinct;
 
     public function getFormDataName()
     {
@@ -624,8 +625,11 @@ class DataObject
         $dataTableName = $this->_oDataTableName;
 
         $select = $this->_oData->select()
-                        ->from($dataTableName)
                         ->setIntegrityCheck(false);
+        if (!empty($this->_distinct))
+            $select->from($dataTableName, $this->_distinct);
+        else
+            $select->from($dataTableName);
 
         if (!empty($this->_indexClass))
         {
