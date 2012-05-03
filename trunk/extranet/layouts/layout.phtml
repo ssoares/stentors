@@ -348,9 +348,12 @@
                         <ul id="ext_administration">
                             <li><a class="handle"><?php echo $this->getCibleText('dashboard_administration_title') ?></a>
                                 <div class="tree_view administration_management" style="display: none">
-
+                                    <div id="administration_management_module_link">
+                                        <a href="<?php echo $this->baseUrl() ?>/utilities/reports/reports/"><?php echo $this->getCibleText('dashboard_administration_reports_management') ?></a>
+                                    </div>
                                     <div id="administration_management_module_title"><?php echo $this->getCibleText('dashboard_administration_website_title') ?></div>
                                     <div id="administration_management_module_link">
+                                        <a href="<?php echo $this->baseUrl() ?>/page/manage/structure/"><?php echo $this->getCibleText('dashboard_administration_website_sitemap_management') ?></a>
                                         <a href="<?php echo $this->baseUrl() ?>/page/manage/structure/"><?php echo $this->getCibleText('dashboard_administration_website_sitemap_management') ?></a>
                                         <a href="<?php echo $this->baseUrl() ?>/page/manage/menu/"><?php echo $this->getCibleText('dashboard_administration_website_menu_structure') ?></a>
                                         <?php if( $this->isAdministrator() ): ?>
