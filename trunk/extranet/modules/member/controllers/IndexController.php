@@ -274,6 +274,9 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
 
             $member  = new MemberProfilesObject();
             $oRef  = new ReferencesObject();
+            $oAddr = new AddressObject();
+            $oParent = new ParentProfilesObject();
+            $oParent = new ParentProfilesObject();
             $this->select = $profile->getAll(null, false);
             $this->select->columns(
                 array(
@@ -284,19 +287,47 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
                     )
                 );
             $this->select->joinRight(
-                    $member->getDataTableName(),
-                    $member->getDataId() . ' = ' . $profile->getDataId()
-                    );
+                $member->getDataTableName(),
+                $member->getDataId() . ' = ' . $profile->getDataId()
+            );
             $this->select->joinLeft(
-                    $oRef->getDataTableName(),
-                    $oRef->getDataId() . ' = MP_Section',
-                    array('R_TypeRef')
-                );
+                $oRef->getDataTableName(),
+                $oRef->getDataId() . ' = MP_Section' ,
+                array('R_TypeRef')
+            );
             $this->select->joinLeft(
-                    $oRef->getIndexTableName(),
-                    $oRef->getIndexId() . ' = ' . $oRef->getDataId(),
-                    array('section' => 'RI_Value')
-                );
+                $oRef->getIndexTableName(),
+                $oRef->getIndexId() . ' = ' . $oRef->getDataId(),
+                array('section' => 'RI_Value')
+            );
+            $this->select->joinLeft(
+                $oParent->getDataTableName(),
+                $oParent->getDataId() . ' = MP_FirstParent OR ' .$oParent->getDataId() . ' = MP_SecondParent'
+            );
+//            $this->select->joinLeft(
+//                    $oParent->getDataTableName(),
+//                    $oParent->getDataId() . ' = MP_SecondParent'
+//                );
+            $this->select->joinLeft(
+                $oAddr->getDataTableName(),
+                $oAddr->getDataId() . ' = PP_AddressId'
+            );
+            $this->select->joinLeft(
+                $oAddr->getIndexTableName(),
+                $oAddr->getIndexId() . ' = ' . $oAddr->getDataId()
+            );
+            $this->select->joinLeft(
+                'CountriesIndex',
+                'CountriesIndex.CI_CountryID = A_CountryId',
+                'CI_Name'
+            );
+            $this->select->joinLeft(
+                'StatesIndex',
+                'SI_StateID = A_StateId',
+                'SI_Name'
+            );
+            $this->select->where('MP_Category in (45,46)');
+            $this->select->where('MP_YearsParticipate like "%'.date('Y', time()).'%"');
 
             $this->tables = array(
                 'GenericProfiles' => array('GP_LastName', 'GP_FirstName', 'GP_Email'),
@@ -306,13 +337,23 @@ class Member_IndexController extends Cible_Extranet_Controller_Import_Action imp
             );
 
             $this->fields = array(
-                'MP_GenericProfileId' => array('width' => '250px'),
-                'firstName' => array('width' => '250px'),
-                'lastName'  => array('width' => '250px'),
-                'email'  => array('width' => '250px'),
-//                'section'  => array('width' => '250px'),
+                'section' => array('width' => '250px'),
+                'CI_Name' => 'CI_Name',
+                'SI_Name' => 'SI_Name',
             );
-
+            $this->fields = array_merge(
+                $this->fields,
+                $profile->getDataColumns(),
+                $member->getDataColumns(),
+                $oAddr->getDataColumns(),
+                $oAddr->getIndexColumns(),
+                $oParent->getDataColumns(),
+                $oRef->getIndexColumns()
+                );
+            unset($this->fields[$oRef->getDataId()]);
+            unset($this->fields[$member->getDataId()]);
+            unset($this->fields[$profile->getDataId()]);
+            unset($this->fields['PP_AssuSocNum']);
         $this->filters = array(
 
         );

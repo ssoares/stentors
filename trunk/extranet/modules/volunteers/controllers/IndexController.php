@@ -25,6 +25,7 @@ class Volunteers_IndexController extends Cible_Extranet_Controller_Import_Action
             $profile  = new VolunteersProfilesObject();
             $oRef   = new ReferencesObject();
             $oYears = new YearsParticipateObject();
+//            $select = $oYears->getAll(null, false);
             $select = $profile->getAll(null, false);
             $select->joinLeft(
                 $generic->getDataTableName(),
