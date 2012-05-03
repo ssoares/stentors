@@ -149,4 +149,30 @@ abstract class Cible_FunctionsModules
 
         return $modules;
     }
+    /**
+     * Fetch modules to build filters.
+     *
+     * @return array
+     */
+    public static function modulesFilters()
+    {
+        $modules = array();
+        $db = Zend_Registry::get('db');
+
+        $select = $db->select()
+            ->from('Modules', array('M_ID', 'M_Title', 'M_MVCModuleTitle'))
+            ->where('M_AllowFilters = ?', 1);
+
+        $data = $db->fetchAll($select);
+
+        foreach ($data as $module)
+        {
+            $modules[$module['M_ID']] = array(
+                'M_Title' => $module['M_Title'],
+                'M_ID' => $module['M_ID'],
+                'M_MVCModuleTitle' => $module['M_MVCModuleTitle']);
+        }
+
+        return $modules;
+    }
 }

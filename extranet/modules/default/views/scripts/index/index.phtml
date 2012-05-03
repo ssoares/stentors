@@ -2,7 +2,7 @@
 <?php
 echo $this->partial('partials/header.pageDetails.phtml', array(
     //'pageTitle' => 'Gestion de la structure des pages',
-    //'pageDescription' => 'Sur cette page, vous pouvez gérer la structure des pages en y ajoutant les blocs désirés. Pour ajouter un bloc, faites glisser l\'icône vers l\'endroit désiré.'
+    //'pageDescription' => 'Sur cette page, vous pouvez gÃ©rer la structure des pages en y ajoutant les blocs dÃ©sirÃ©s. Pour ajouter un bloc, faites glisser l\'icÃ´ne vers l\'endroit dÃ©sirÃ©.'
     'pageTitle' => $this->getCibleText('dashboard_page_title'),
     'pageDescription' => $this->getCibleText('dashboard_page_description')
 ));
@@ -57,9 +57,9 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
         <!--<div id="dashboardMain_right_inside">
             <h1><?php echo $this->getCibleText('dashboard_reminder_title') ?></h1>
             <ul class="list_without_style dashboard_new_activities">
-                <li><a href="#">Nouvelles réponses au sondage</a> (3)</li>
+                <li><a href="#">Nouvelles rï¿½ponses au sondage</a> (3)</li>
                 <li><a href="#">Nouveaux billets sur le blogue</a> (5)</li>
-                <li><a href="#">Nouveaux événements ajoutés</a> (2)</li>
+                <li><a href="#">Nouveaux ï¿½vï¿½nements ajoutï¿½s</a> (2)</li>
             </ul>
         </div>-->
 
@@ -69,6 +69,9 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
 
                 <h1><?php echo $this->getCibleText('dashboard_administration_title') ?></h1>
 
+                <ul class="list_without_style dashboard_administration_section">
+                    <li><a href="<?php echo $this->baseUrl() ?>/utilities/reports/reports/"><?php echo $this->getCibleText('dashboard_administration_reports_management') ?></a></li>
+                </ul>
                 <h2><?php echo $this->getCibleText('dashboard_administration_website_title') ?></h2>
                 <ul class="list_without_style dashboard_administration_section">
                     <li><a href="<?php echo $this->baseUrl() ?>/page/manage/structure/"><?php echo $this->getCibleText('dashboard_administration_website_sitemap_management') ?></a></li>
@@ -94,9 +97,9 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
                     <ul class="list_without_style dashboard_administration_section">
                         <li><a href="<?php echo $this->baseUrl() ?>/users/index/general/order/lastName/order-direction/ASC"><?php echo $this->getCibleText('dashboard_administration_profil_list_description') ?></a></li>
                     </ul>
-                <?php endif; 
+                <?php endif;
                 if($this->hasVideos){
-                ?>                
+                ?>
                 <h2><?php echo $this->getCibleText('dashboard_administration_video') ?></h2>
                 <ul class="list_without_style dashboard_administration_section">
                     <li><a href="<?php echo $this->baseUrl() ?>/video/index/list/order/id/order-direction/ASC">
@@ -107,7 +110,7 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
                 <?php
                 }
                 ?>
-               
+
             <?php endif; ?>
         </div>
     </div>

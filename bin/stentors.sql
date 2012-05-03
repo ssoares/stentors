@@ -104,6 +104,15 @@ CREATE  TABLE IF NOT EXISTS `nikel693_stentors`.`MedicalRecord` (
   PRIMARY KEY (`MR_GenericProfileId`) )
 ENGINE = MyISAM;
 
+CREATE  TABLE `nikel693_stentors`.`ReportsData` (
+  `RE_ID` INT(11) NOT NULL AUTO_INCREMENT ,
+  `RE_TablesList` VARCHAR(255) NULL COMMENT 'exclude:true',
+  `RE_FieldsList` VARCHAR(255) NULL COMMENT 'exclude:true',
+  `RE_Label` VARCHAR(255) NULL ,
+  `RE_DateCrea` DATETIME NULL COMMENT 'exclude:true\n' ,
+  `RE_DateModif` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'exclude:true' ,
+  `RE_ModifBy` INT(11) NULL COMMENT 'exclude:true',
+  PRIMARY KEY (`RE_ID`) );
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -383,4 +392,12 @@ ALTER TABLE `nikel693_stentors`.`References` CHANGE COLUMN `R_TypeRef` `R_TypeRe
 
 INSERT INTO `nikel693_stentors`.`Modules_ControllersActionsPermissions` (`MCAP_ModuleID`, `MCAP_ControllerTitle`, `MCAP_ControllerActionTitle`, `MCAP_PermissionTitle`, `MCAP_Position`) VALUES (33, 'index', 'list', 'edit', 1);
 INSERT INTO `nikel693_stentors`.`Modules_ControllersActionsPermissions` (`MCAP_ModuleID`, `MCAP_ControllerTitle`, `MCAP_ControllerActionTitle`, `MCAP_PermissionTitle`, `MCAP_Position`) VALUES (34, 'index', 'list', 'edit', 1);
+
 INSERT INTO `nikel693_stentors`.`Modules_ControllersActionsPermissions` ( `MCAP_ModuleID`, `MCAP_ControllerTitle`, `MCAP_ControllerActionTitle`, `MCAP_PermissionTitle`) VALUES (35, 'index', 'list', 'edit');
+
+REPLACE INTO Static_Texts (ST_Identifier, ST_LangID, ST_Value, ST_Type, ST_Desc_backend, ST_Editable, `ST_ModuleID`) VALUES
+('dashboard_administration_reports_management', 1, 'Listes et rapports',  'cible', '', 0, 0),
+('dashboard_administration_reports_management', 2, 'Listings and reports',  'cible', '', 0, 0);
+
+ALTER TABLE `nikel693_stentors`.`Modules` ADD COLUMN `M_AllowFilters` TINYINT(1) NULL DEFAULT 0  AFTER `M_HasFrontEnd` ;
+

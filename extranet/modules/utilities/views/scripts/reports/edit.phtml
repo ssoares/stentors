@@ -1,0 +1,43 @@
+<?php
+
+if (!empty($this->category))
+    $headerText = str_replace('##CATEGORY##', $this->category, $this->getCibleText('header_edit_'.$this->cleaction.'_text'));
+else
+    $headerText = $this->getCibleText('header_edit_'.$this->cleaction.'_text');
+
+echo $this->partial('partials/header.pageDetails.phtml', array(
+    'pageTitle' => $headerText,
+    'pageDescription' => $this->getCibleText('header_edit_'.$this->cleaction.'_description'),
+    'breadcrumb' => ''
+));
+;
+?>
+<div id="default_form">
+    <div id="form_panel">
+        <?php echo($this->form);?>
+    </div>
+</div>
+<div class="" id="parameters">
+    <ul id="tablesSrc" class="tablesConnected">
+        <?php foreach ($this->modules as $module):?>
+            <?php $idVal = $module['M_MVCModuleTitle'] . '-' . $module['M_ID']; ?>
+        <li id="<?php echo $idVal; ?>" class="tableItem"><?php echo $module['M_Title']; ?></li>
+        <?php endforeach; ?>
+    </ul>
+    <ul id="tablesSelec" class="tablesConnected">
+
+    </ul>
+
+</div>
+<?php echo '';?>
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function(){
+        $().reports({
+            id: <?php echo $this->id; ?>,
+            baseUrl: '<?php echo $this->BaseUrl(); ?>',
+            urlAction: '<?php echo $this->request->getPathInfo(); ?>'
+        });
+    });
+    //]]>
+</script>

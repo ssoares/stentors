@@ -1,0 +1,45 @@
+/* Version SVN: $Id: print.css 426 2011-03-24 13:19:50Z ssoares $*/
+ul, li{
+    padding: 0;
+    margin: 0;
+}
+.tablesConnected{
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    float: left;
+    list-style: none;
+    margin: 0 15px;
+    min-height: 130px;
+    min-width: 200px;
+    padding: 5px;
+}
+.tableItem{
+    line-height: 20px;
+    margin: 3px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#tablesSrc .tableItem{
+    background-color: #F4F4F4;
+    border: 1px solid #EAE9E5;
+}
+#tablesSelec .tableItem{
+    background-color: #FFE45C;
+    border: 1px solid #FED22F;
+}
+#tablesSrc .placeholder{
+    background-color: #CAF4F7;
+    border: 2px dashed #5FBCC9;
+    height: 20px;
+    opacity: 0.2;
+    filter : alpha(opacity=20);
+}
+
+#tablesSelec .placeholder{
+    background-color: #FFE45C;
+    border: 2px dashed #ffb900;
+    height: 20px;
+    opacity: 0.4;
+    filter : alpha(opacity=40);
+}
