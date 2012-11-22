@@ -3,6 +3,7 @@ ul, li{
     padding: 0;
     margin: 0;
 }
+.fieldsConnected,
 .tablesConnected{
     background-color: #f9f9f9;
     border: 1px solid #ccc;
@@ -19,10 +20,26 @@ ul, li{
     padding: 5px;
     cursor: pointer;
 }
+.fieldsConnected{
+    margin: 0;
+    width: 150px;
+}
+#tablesSrc{
+    margin: 0;
+    width: 50%;
+}
 
 #tablesSrc .tableItem{
     background-color: #F4F4F4;
     border: 1px solid #EAE9E5;
+}
+.moduleItem{
+    display: inline-block;
+    width: 215px;
+    vertical-align: top;
+}
+#tablesSelec{
+    width: 43%;
 }
 #tablesSelec .tableItem{
     background-color: #FFE45C;
@@ -42,4 +59,18 @@ ul, li{
     height: 20px;
     opacity: 0.4;
     filter : alpha(opacity=40);
+}
+
+.moduleTitle{
+    border: 1px solid #CAF4F7;
+    display: block;
+    line-height: 18px;
+    margin-bottom: 2px;
+    padding: 5px;
+}
+.moduleTitle.closed{
+    background: transparent url('../images/treeview-open.gif') no-repeat 95% 50%;
+}
+.moduleTitle.opened{
+    background: transparent url('../images/treeview-close.gif') no-repeat 95% 50%;
 }
