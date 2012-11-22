@@ -21,13 +21,20 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
     <ul id="tablesSrc" class="tablesConnected">
         <?php foreach ($this->modules as $module):?>
             <?php $idVal = $module['M_MVCModuleTitle'] . '-' . $module['M_ID']; ?>
-        <li id="<?php echo $idVal; ?>" class="tableItem"><?php echo $module['M_Title']; ?></li>
+        <li id="<?php echo $idVal; ?>" class="tableItem moduleItem">
+            <span class="moduleTitle closed"><?php echo $module['M_Title']; ?></span>
+            <?php if (!empty($module['fields'])): ?>
+            <ul id="fieldsSrc" class="fieldsConnected" style="display: none;">
+                <?php foreach ($module['fields'] as $index => $field):?>
+                    <?php $idVal = $index; ?>
+                    <li id="<?php echo $idVal; ?>" class="tableItem column"><?php echo $this->getCibleText('form_label_' . $index); ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+        </li>
         <?php endforeach; ?>
     </ul>
-    <ul id="tablesSelec" class="tablesConnected">
-
-    </ul>
-
+    <ul id="tablesSelec" class="tablesConnected"></ul>
 </div>
 <?php echo '';?>
 <script type="text/javascript">

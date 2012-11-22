@@ -76,7 +76,8 @@ class Utilities_ReportsController extends Cible_Controller_Block_Abstract
                     . $this->_moduleTitle . "/"
                     . $this->_objectList[$this->_currentAction] . "/";
 
-        $this->_modules = Cible_FunctionsModules::modulesFilters();
+        $modules = Cible_FunctionsModules::modulesFilters();
+        $this->_modules = $this->_getModulesFields($modules);
         $this->view->headScript()->appendFile($this->view->locateFile('reportsAction.js'));
         $this->view->headLink()->appendStylesheet($this->view->locateFile('reports.css'));
     }
@@ -92,6 +93,9 @@ class Utilities_ReportsController extends Cible_Controller_Block_Abstract
     {
         if ($this->view->aclIsAllowed($this->_moduleTitle, 'edit', true))
         {
+            if ($this->_isXmlHttpRequest)
+                $this->disableView ();
+
 //            $this->_disableExportToExcel = true;
             $this->_colTitle = array(
                 'RE_ID'      => array('width' => '150px'),
@@ -244,18 +248,18 @@ class Utilities_ReportsController extends Cible_Controller_Block_Abstract
 
             // generate the form
             $form = new $this->_formName(
-                            array(
-                                'moduleName' => $this->_moduleTitle . "/"
-                                    . $this->_objectList[$this->_currentAction],
-                                'baseDir'    => $baseDir,
-                                'cancelUrl'  => $cancelUrl,
-                                'imageSrc'   => $imageSrc,
-                                'imgField'   => $this->_imageSrc,
-                                'dataId'     => $id,
-                                'data'       => $data,
-                                'object'     => $oData,
-                                'isNewImage' => 'true'
-                            )
+                array(
+                    'moduleName' => $this->_moduleTitle . "/"
+                        . $this->_objectList[$this->_currentAction],
+                    'baseDir'    => $baseDir,
+                    'cancelUrl'  => $cancelUrl,
+                    'imageSrc'   => $imageSrc,
+                    'imgField'   => $this->_imageSrc,
+                    'dataId'     => $id,
+                    'data'       => $data,
+                    'object'     => $oData,
+                    'isNewImage' => 'true'
+                )
             );
             $this->view->form = $form;
             $this->view->modules = $this->_modules;
@@ -713,5 +717,42 @@ class Utilities_ReportsController extends Cible_Controller_Block_Abstract
         }
 
         return $select;
+    }
+
+    private function _getModulesFields($data = array())
+    {
+        foreach ($data as $key => $module)
+        {
+            $objClass = ucfirst($module['M_MVCModuleTitle']) . 'ProfilesObject';
+            $oData =  new $objClass();
+            $dataFields = $oData->getColsData();
+            $indexFields = $oData->getColsIndex();
+            foreach ($dataFields as $index => $field)
+            {
+                if (preg_match('/exclude:true/', $field['COMMENT'])
+                    || preg_match('/elem:hidden/', $field['COMMENT'])
+                    || !empty($field['PRIMARY']))
+                    unset($dataFields[$index]);
+            }
+
+            if (!empty($indexFields))
+            {
+                    foreach ($indexFields as $index => $field)
+                    {
+                        if (preg_match('/exclude:true/', $field['COMMENT'])
+                        || preg_match('/elem:hidden/', $field['COMMENT'])
+                        || !empty($field['PRIMARY']))
+                        unset($indexFields[$index]);
+                    }
+                $columns = array_merge($dataFields, $indexFields);
+            }
+            else
+                $columns = $dataFields;
+
+            $data[$key]['fields'] = $columns;
+
+        }
+
+        return $data;
     }
 }
