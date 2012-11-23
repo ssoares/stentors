@@ -13,6 +13,7 @@
             },
             baseUrl: '',
             triggerFields: '.moduleTitle',
+            triggerCancel: '.cancel',
             urlAction: ''
 
         };
@@ -24,12 +25,13 @@
                 $(o.tablesSrc + ', ' + o.fieldsDest).sortable({
                     connectWith: o.tabConnect,
                     placeholder: 'placeholder',
+                    helper: 'clone',
                     start: function(event, ui){
                     },
                     beforeStop: function(){
                     },
                     stop: function(){
-//                        main.saveTableList();
+                        main.saveTableList();
                     }
                 }).disableSelection();
             },
@@ -55,22 +57,24 @@
                 var moduleSrc = elem.parents('li.moduleItem');
                 var moduleLabel = moduleSrc.children('span').text();
                 var cloneSrc = moduleSrc.clone();
-                cloneSrc.attr('id', moduleSrc.attr('id') +'-dest');
                 var cloneId = cloneSrc.attr('id');
-                var exists = $(o.tablesDest).find('#' + cloneId);
+                var exists = $(o.tablesDest).find('li[id^=' + cloneId + ']');
                 if (exists.length < 1)
                 {
+                    cloneSrc.attr('id', moduleSrc.attr('id') +'-dest');
                     cloneSrc.children('ul').children().remove();
                     cloneSrc.children('ul').attr('id', 'fieldsSelect');
                     cloneSrc.children('ul').attr('class', 'fieldsConnected');
+                    cloneSrc.children('.moduleTitle').prepend('<span class="cancel">&nbsp;</span>');
                     cloneSrc.appendTo(o.tablesDest);
                     cloneSrc.disableSelection();
                     cloneSrc.children('ul').disableSelection();
                     main.initSortable();
                 }
+                return false;
             },
             toggleFields: function(){
-                $(o.triggerFields).click(function(){
+                $(o.triggerFields).live('click', function(e){
                     var fields = $(this).next('ul');
                     if ($(this).hasClass('closed'))
                     {
@@ -86,12 +90,23 @@
 
                     }
                 });
+            },
+            cancelFields: function(){
+                $(o.triggerCancel).live('click', function(e){
+                    var container = $(this).parents('li.moduleItem');
+                    var origin = $('#' + container.attr('id').replace('-dest', ''));
+                    container.children(o.fieldsDest).children().appendTo(origin.children(o.tablesSrc));
+                    container.remove();
+                });
             }
         }
 
         main.initSortable();
         main.toggleFields();
-        $('.tableItem').mousedown(function(){main.setModuleContainer($(this));});
+        main.cancelFields();
+        $('#tablesSrc .tableItem').mousedown(function(){
+            main.setModuleContainer($(this));
+        });
     }
 
 })(jQuery);
