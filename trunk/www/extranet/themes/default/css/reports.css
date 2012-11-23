@@ -33,24 +33,25 @@ ul, li{
     background-color: #F4F4F4;
     border: 1px solid #EAE9E5;
 }
-.moduleItem{
-    display: inline-block;
-    width: 215px;
-    vertical-align: top;
-}
-#tablesSelec{
-    width: 43%;
-}
-#tablesSelec .tableItem{
-    background-color: #FFE45C;
-    border: 1px solid #FED22F;
-}
 #tablesSrc .placeholder{
     background-color: #CAF4F7;
     border: 2px dashed #5FBCC9;
     height: 20px;
     opacity: 0.2;
     filter : alpha(opacity=20);
+}
+.moduleItem{
+    display: inline-block;
+    width: 215px;
+    vertical-align: top;
+}
+#tablesSelec{
+    margin-right: 0;
+    width: 440px;
+}
+#tablesSelec .tableItem{
+    background-color: #FFE45C;
+    border: 1px solid #FED22F;
 }
 
 #tablesSelec .placeholder{
@@ -60,12 +61,20 @@ ul, li{
     opacity: 0.4;
     filter : alpha(opacity=40);
 }
-
+#tablesSelec .moduleItem{
+    width: 95%;
+}
+#tablesSelec .fieldsConnected{
+    width: 95%;
+}
+#tablesSelec span.label{
+    display: block;
+    width: 60%;
+}
 .moduleTitle{
     border: 1px solid #CAF4F7;
-    display: block;
     line-height: 18px;
-    margin-bottom: 2px;
+    margin: 0 0 2px;
     padding: 5px;
 }
 .moduleTitle.closed{
@@ -73,4 +82,9 @@ ul, li{
 }
 .moduleTitle.opened{
     background: transparent url('../images/treeview-close.gif') no-repeat 95% 50%;
+}
+span.cancel{
+    background: transparent url('../../../icons/button_cancel_16x16.png') no-repeat 90% 50%;
+    margin-right: 2px;
+    padding: 0 7px;
 }

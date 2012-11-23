@@ -22,12 +22,14 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
         <?php foreach ($this->modules as $module):?>
             <?php $idVal = $module['M_MVCModuleTitle'] . '-' . $module['M_ID']; ?>
         <li id="<?php echo $idVal; ?>" class="tableItem moduleItem">
-            <span class="moduleTitle closed"><?php echo $module['M_Title']; ?></span>
+            <p class="moduleTitle closed"><?php echo $module['M_Title']; ?></p>
             <?php if (!empty($module['fields'])): ?>
             <ul id="fieldsSrc" class="fieldsConnected" style="display: none;">
                 <?php foreach ($module['fields'] as $index => $field):?>
                     <?php $idVal = $index; ?>
-                    <li id="<?php echo $idVal; ?>" class="tableItem column"><?php echo $this->getCibleText('form_label_' . $index); ?></li>
+                    <li id="<?php echo $idVal; ?>" class="tableItem column">
+                        <span class="label"><?php echo $this->getCibleText('form_label_' . $index); ?></span>
+                    </li>
                 <?php endforeach; ?>
             </ul>
             <?php endif; ?>
