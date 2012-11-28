@@ -14,6 +14,8 @@
             baseUrl: '',
             triggerFields: '.moduleTitle',
             triggerCancel: '.cancel',
+            inputDisp: $('.chkDisplay'),
+            inputFilter: $('.chkFilters'),
             urlAction: ''
 
         };
@@ -30,8 +32,11 @@
                     },
                     beforeStop: function(){
                     },
-                    stop: function(){
-                        main.saveTableList();
+                    stop: function(event, ui){
+                        if (ui.item.children().length < 2)
+                            main.addControls(ui.item);
+
+//                        main.saveTableList();
                     }
                 }).disableSelection();
             },
@@ -52,6 +57,14 @@
                     },
                     'json'
                     );
+            },
+            addControls: function(obj){
+                var dispLabel = o.inputDisp.prev().clone().removeClass('hidden').removeClass('hidden');
+                var displayInput = o.inputDisp.clone().removeClass('hidden');
+                var filterLabel = o.inputFilter.prev().clone().removeClass('hidden');
+                var filterInput = o.inputFilter.clone().removeClass('hidden');
+                obj.append(dispLabel).append(displayInput);
+                obj.append(filterLabel).append(filterInput);
             },
             setModuleContainer: function(elem){
                 var moduleSrc = elem.parents('li.moduleItem');
@@ -98,6 +111,15 @@
                     container.children(o.fieldsDest).children().appendTo(origin.children(o.tablesSrc));
                     container.remove();
                 });
+            },
+            manageFilters: function(){
+                $('#tablesSelec .chkFilters').live('click', function(e){
+                    var obj = $(this);
+                    if (!obj.is(':checked'))
+                        obj.next('.showFilter').remove();
+                    else
+                        obj.parent().append('<span class="showFilters">[+]</span>')
+                });
             }
         }
 
@@ -107,6 +129,7 @@
         $('#tablesSrc .tableItem').mousedown(function(){
             main.setModuleContainer($(this));
         });
+        main.manageFilters();
     }
 
 })(jQuery);
