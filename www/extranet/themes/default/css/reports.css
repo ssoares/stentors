@@ -68,8 +68,18 @@ ul, li{
     width: 95%;
 }
 #tablesSelec span.label{
-    display: block;
+    display: inline-block;
     width: 60%;
+}
+#tablesSelec label{
+    display: inline;
+}
+#tablesSelec .chkDisplay{
+    margin-right: 10px;
+}
+#tablesSelec span.showFilters{
+    margin-left: 2px;
+    vertical-align: top;
 }
 .moduleTitle{
     border: 1px solid #CAF4F7;
@@ -87,4 +97,7 @@ span.cancel{
     background: transparent url('../../../icons/button_cancel_16x16.png') no-repeat 90% 50%;
     margin-right: 2px;
     padding: 0 7px;
+}
+.hidden{
+    display: none;
 }

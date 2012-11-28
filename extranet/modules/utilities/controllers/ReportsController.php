@@ -752,7 +752,10 @@ class Utilities_ReportsController extends Cible_Controller_Block_Abstract
             $data[$key]['fields'] = $columns;
 
         }
-
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        exit;
         return $data;
     }
 }

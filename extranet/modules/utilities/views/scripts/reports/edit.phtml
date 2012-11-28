@@ -38,6 +38,10 @@ echo $this->partial('partials/header.pageDetails.phtml', array(
     </ul>
     <ul id="tablesSelec" class="tablesConnected"></ul>
 </div>
+<label class="dispLabel hidden"><?php echo $this->getCibleText('field_to_display_label'); ?></label>
+<input type="checkbox" class="chkDisplay options hidden" value="" checked="checked" title="<?php echo $this->getCibleText('field_to_display'); ?>" />
+<label class="filterLabel hidden"><?php echo $this->getCibleText('field_to_filter_label'); ?></label>
+<input type="checkbox" class="chkFilters options hidden" value="" title="<?php echo $this->getCibleText('field_to_filter'); ?>" />
 <?php echo '';?>
 <script type="text/javascript">
     //<![CDATA[
